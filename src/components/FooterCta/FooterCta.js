@@ -67,7 +67,7 @@ function FooterCTA() {
         <div className='mt-7 text-4xl font-bold tracking-tighter leading-12 text-black max-md:max-w-full'>
           Install our extension and get 100 free credits to get started today!
         </div>
-        <div className='flex flex-col w-auto flex-wrap gap-5 items-center justify-center w-max mt-10 text-base font-medium tracking-normal leading-8'>
+        <div className='flex flex-col w-auto flex-wrap gap-5 items-center justify-center mt-10 text-base font-medium tracking-normal leading-8'>
           <div className='justify-center items-center flex-wrap rounded-full flex w-auto p-4 gap-4 pl-5 pr-5 text-sky-900 max-md:px-5'>
             <input
               type='email'
