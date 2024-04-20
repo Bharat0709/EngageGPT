@@ -30,7 +30,7 @@ function FooterCTA() {
 
     try {
       const response = await fetch(
-        'https://linkedai.onrender.com/api/v1/users/addtoguestuser',
+        'https://linkedai.onrender.com/api/v1/users/addtowaitlist',
         {
           method: 'POST',
           headers: {
