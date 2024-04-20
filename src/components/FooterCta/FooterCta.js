@@ -30,7 +30,7 @@ function FooterCTA() {
 
     try {
       const response = await fetch(
-        'https://linkedai.onrender.com/api/v1/users/addtoguestuser',
+        'https://linkedai.onrender.com/api/v1/users/addtowaitlist',
         {
           method: 'POST',
           headers: {
@@ -74,7 +74,7 @@ function FooterCTA() {
               placeholder='Your Email Address'
               value={email}
               onChange={handleInputChange}
-              className='border w-[15rem]  text-center hover:shadow-lg rounded-full p-2 focus:outline-none'
+              className='border w-auto xt-center hover:shadow-lg rounded-full p-2 focus:outline-none'
             />
             <button
               onClick={handleJoinWaitlist}

@@ -30,13 +30,16 @@ function HeroSection() {
     setLoading(true);
 
     try {
-      const response = await fetch('https://linkedai.onrender.com/api/v1/users/addtoguestuser', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email }),
-      });
+      const response = await fetch(
+        'https://linkedai.onrender.com/api/v1/users/addtowaitlist',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email }),
+        }
+      );
 
       if (!response.ok) {
         throw new Error('Failed to add email to guest user list');
@@ -67,18 +70,26 @@ function HeroSection() {
               placeholder='Your Email Address'
               value={email}
               onChange={handleInputChange}
-              className='border w-[15rem]  text-center hover:shadow-lg rounded-full p-2 focus:outline-none'
+              className='border w-auto  text-center hover:shadow-lg rounded-full p-2 focus:outline-none'
             />
             <button
               onClick={handleJoinWaitlist}
               disabled={loading}
-              className={`justify-center shadow-xl rounded-full p-2 pl-5 pr-5 text-white bg-sky-900 max-md:px-5 ${loading ? 'opacity-50 cursor-not-allowed' : 'hover:shadow-lg'}`}
+              className={`justify-center shadow-xl rounded-full p-2 pl-5 pr-5 text-white bg-sky-900 max-md:px-5 ${
+                loading ? 'opacity-50 cursor-not-allowed' : 'hover:shadow-lg'
+              }`}
             >
               {loading ? 'Joining...' : 'Join Waitlist'}
             </button>
           </div>
-          {error && <div className="text-red-500">Failed to add email... Try Again!!</div>}
-          {success && <div className="text-green-500">Email added successfully!</div>}
+          {error && (
+            <div className='text-red-500'>
+              Failed to add email... Try Again!!
+            </div>
+          )}
+          {success && (
+            <div className='text-green-500'>Email added successfully!</div>
+          )}
         </div>
       </div>
       <Slider />
