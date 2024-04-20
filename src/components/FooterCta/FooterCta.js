@@ -86,7 +86,11 @@ function FooterCTA() {
               {loading ? 'Joining...' : 'Join Waitlist'}
             </button>
           </div>
-          {error && <div className='text-red-500'>Failed to add email... Try Again!!</div>}
+          {error && (
+            <div className='text-red-500'>
+              Failed to add email... Try Again!!
+            </div>
+          )}
           {success && (
             <div className='text-green-500'>Email added successfully!</div>
           )}
