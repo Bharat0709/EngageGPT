@@ -118,5 +118,16 @@
   }
 }
 
+.curosel-animation {
+  transition: transform 0.5s ease-in-out;
+}
+
+.curosel-animation.slide-prev {
+  transform: translateX(100%);
+}
+
+.curosel-animation.slide-next {
+  transform: translateX(-100%);
+}
 
 

@@ -64,7 +64,7 @@ function Pricing() {
               </div>
             ))}
           </div>
-          <div className='justify-center items-center self-center px-16 py-4 mt-9 ml-3 text-lg font-medium text-center text-white bg-[#001482] rounded-[61px]'>
+          <div className='justify-center w-full items-center self-center px-16 py-4 mt-4 ml-3 text-lg font-medium text-center text-white bg-[#001482] rounded-[61px]'>
             Get Started
           </div>
         </div>
@@ -96,7 +96,7 @@ function Pricing() {
               </div>
             ))}
           </div>
-          <div className='justify-center items-center self-center px-16 py-4 mt-9 ml-3 text-lg font-medium text-center text-sky-900 bg-neutral-100 rounded-[61px]'>
+          <div className='justify-center items-center self-center px-16 w-full py-4 mt-4 ml-3 text-lg font-medium text-center text-sky-900 bg-white rounded-[61px]'>
             Coming Soon
           </div>
         </div>

@@ -8,6 +8,14 @@ const Header = () => {
     setIsOpen(!isOpen);
   };
 
+  const scrollToSection = (sectionId) => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+      setIsOpen(false); // Close the mobile menu after scrolling
+    }
+  };
+
   return (
     <nav className='p-4 self-center left-3 right-3 top-3 justify-between fixed w-full text-black rounded-xl bg-white/75 flex b items-center z-50 backdrop-blur-lg'>
       <div className='flex items-center'>
@@ -18,7 +26,7 @@ const Header = () => {
       <div className='lg:hidden'>
         <button
           onClick={toggleMenu}
-          className='text-black hover:text-gray-300 focus:outline-none focus:text-gray-300'
+          className='text-black hover:bg-blue-50  focus:outline-none focus:bg-gray-50 p-2 pl-3 pr-3 rounded-md'
         >
           <svg
             className='h-6 w-6 fill-current mr-2'
@@ -44,22 +52,37 @@ const Header = () => {
 
       {/* Desktop Menu Items */}
       <div className='hidden lg:flex lg:items-center lg:space-x-6'>
-        <a href='#home' className='text-base text-black hover:text-gray-300'>
+        <button
+          onClick={() => scrollToSection('home')}
+          className='text-base text-black hover:bg-blue-50  focus:outline-none p-2 pl-3 pr-3 rounded-md'
+        >
           Home
-        </a>
-        <a href='#features' className='text-base text-black hover:text-gray-300'>
+        </button>
+        <button
+          onClick={() => scrollToSection('features')}
+          className='text-base text-black hover:bg-blue-50  focus:outline-none p-2 pl-3 pr-3 rounded-md'
+        >
           Features
-        </a>
-        <a href='#pricing' className='text-base text-black hover:text-gray-300'>
+        </button>
+        <button
+          onClick={() => scrollToSection('pricing')}
+          className='text-base text-black hover:bg-blue-50  focus:outline-none p-2 pl-3 pr-3 rounded-md'
+        >
           Pricing
-        </a>
-        <a href='#faqs' className='text-base text-black hover:text-gray-300'>
+        </button>
+        <button
+          onClick={() => scrollToSection('faqs')}
+          className='text-base text-black hover:bg-blue-50  focus:outline-none p-2 pl-3 pr-3 rounded-md'
+        >
           FAQs
-        </a>
+        </button>
       </div>
 
       {/* View Demo Button */}
-      <button className='hidden lg:block mr-2 text-sm text-white bg-[#004182] p-2 pl-4 pr-4 rounded-lg'>
+      <button
+        className='hidden lg:block mr-2 text-sm text-white bg-[#004182] p-2 pl-3 pr-3 pl-4 pr-4 rounded-lg'
+        onClick={() => scrollToSection('demo')}
+      >
         View Demo
       </button>
 
@@ -67,30 +90,30 @@ const Header = () => {
       {isOpen && (
         <div className='lg:hidden absolute rounded-xl top-16 right-0 m-auto left-0 bg-white w-10/12 text-black'>
           <div className='flex flex-col p-4 space-y-2'>
-            <a
-              href='#home'
-              className='text-base hover:text-gray-300 border-t border-gray-200 pt-2'
+            <button
+              onClick={() => scrollToSection('home')}
+              className='text-base hover:bg-blue-50  focus:outline-none p-2 pl-3 pr-3 rounded-md border-b border-gray-300'
             >
               Home
-            </a>
-            <a
-              href='#features'
-              className='text-base hover:text-gray-300 border-t border-gray-200 pt-2'
+            </button>
+            <button
+              onClick={() => scrollToSection('features')}
+              className='text-base hover:bg-blue-50  focus:outline-none p-2 pl-3 pr-3 rounded-md border-b border-gray-300'
             >
               Features
-            </a>
-            <a
-              href='#pricing'
-              className='text-base hover:text-gray-300 border-t border-gray-200 pt-2'
+            </button>
+            <button
+              onClick={() => scrollToSection('pricing')}
+              className='text-base hover:bg-blue-50  focus:outline-none p-2 pl-3 pr-3 rounded-md border-b border-gray-300'
             >
               Pricing
-            </a>
-            <a
-              href='#faqs'
-              className='text-base hover:text-gray-300 border-t border-gray-200 pt-2'
+            </button>
+            <button
+              onClick={() => scrollToSection('faqs')}
+              className='text-base hover:bg-blue-50  focus:outline-none p-2 pl-3 pr-3 rounded-md border-b border-gray-300'
             >
               FAQs
-            </a>
+            </button>
           </div>
         </div>
       )}

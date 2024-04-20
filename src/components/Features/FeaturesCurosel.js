@@ -54,7 +54,7 @@ function CuroselFeatures() {
 
   return (
     <div className='relative'>
-      <div className='flex flex-col justify-center items-center px-20 py-12 text-2xl font-medium text-center text-sky-900 bg-sky-50 rounded-3xl max-md:px-5'>
+      <div className='flex flex-col justify-center items-center px-20 py-12 text-2xl font-medium text-center text-sky-900 bg-blue-50 rounded-3xl max-md:px-5'>
         <div className='justify-center px-8 py-2 shadow-xs bg-white rounded-xl max-md:px-5'>
           {features[currentIndex].text}
         </div>

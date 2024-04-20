@@ -6,26 +6,33 @@ import Pricing from './components/Pricing/Pricing';
 import Testimonials from './components/Testimonials/Testimonials';
 import FAQ from './components/FAQs/Faqs';
 import Footer from './components/Footer/Footer';
+import FooterCTA from './components/FooterCta/FooterCta';
 
 const faqs = [
   {
-    question: 'What is Lorem Ipsum?',
+    question: 'What is EngageGPT Extension?',
     answer:
-      'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+      'EngageGPT Extension is a browser extension that enhances your LinkedIn experience by providing AI-powered tools for generating comments, posts, message replies, and more.',
   },
   {
-    question: 'Why do we use it?',
+    question: 'How does the EngageGPT Extension work?',
     answer:
-      'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.',
+      'The EngageGPT Extension utilizes advanced natural language processing (NLP) algorithms to analyze LinkedIn content and generate personalized responses, comments, and posts.',
   },
   {
-    question: 'Where does it come from?',
+    question: 'Is the EngageGPT Extension free to use?',
     answer:
-      'Contrary to popular belief, Lorem Ipsum is not simply random text.',
+      'Yes, the basic features of the EngageGPT Extension are available for free. However, there may be premium features or subscriptions available for additional functionalities.',
   },
   {
-    question: 'Where can I get some?',
-    answer: 'There are many variations of passages of Lorem Ipsum available.',
+    question:
+      'Can I customize the responses generated?',
+    answer:
+      'Yes, the EngageGPT Extension allows users to customize and fine-tune the generated responses according to their preferences and style.',
+  },
+  {
+    question: 'Is the EngageGPT Extension safe to use?',
+    answer: `The EngageGPT Extension prioritizes user privacy and security. All data processing is performed locally on the user's device, and no personal information is stored or shared.`,
   },
 ];
 
@@ -41,8 +48,9 @@ function App() {
       <Features />
       <Pricing />
       <Testimonials />
+      <FooterCTA />
       <FAQ faqs={faqs} />
-      <Footer/>
+      <Footer />
     </div>
   );
 }

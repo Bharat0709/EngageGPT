@@ -8,14 +8,19 @@ function HeroSection() {
         <div className='mt-18 leading-[2.8rem] self-stretch w-full text-[1.7rem] lg:text-5xl font-semibold lg:leading-[5rem] xl:leading-[5rem] text-sky-900 max-md:max-w-full'>
           Cultivate Connections, Elevate Engagement Engage GPT: AI for LinkedIn
         </div>
-        <div className='mt-6 sm:mt-8 md:mt-10 lg:mt-12 text-xl leading-10 sm:text-xl lg:text-2xl text-sky-900 max-md:mt-10 max-md:max-w-full'>
+        <div className='mt-6 sm:mt-8 md:mt-10 lg:mt-8 text-xl leading-10 sm:text-xl lg:text-2xl text-sky-900 max-md:mt-10 max-md:max-w-full'>
           Revolutionizing Engagement on LinkedIn
         </div>
         <div className='flex flex-wrap gap-5 items-center justify-center mt-10 text-base font-medium tracking-normal leading-8'>
-          <div className='justify-center p-2 pl-5 pr-5 text-white bg-sky-900 rounded-xl max-md:px-5'>
+          <a
+            href='https://chromewebstore.google.com/detail/engagegpt-ai-for-linkedin/ldhdipkofibjleihomflebfklhadikio?hl=en'
+            target='_blank'
+            rel='noopener noreferrer'
+            className='justify-center p-2 pl-5 pr-5 text-white bg-sky-900 rounded-xl max-md:px-5 hover:shadow-lg' // Added hover:shadow-lg class for shadow effect on hover
+          >
             Get Extension
-          </div>
-          <div className='justify-center p-2 pl-5 pr-5 text-sky-900 bg-white rounded-xl max-md:px-5'>
+          </a>
+          <div className='justify-center hover:shadow-lg p-2 pl-5 pr-5 text-sky-900 bg-white rounded-xl max-md:px-5'>
             View Demo
           </div>
         </div>
