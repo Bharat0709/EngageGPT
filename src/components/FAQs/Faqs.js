@@ -7,7 +7,7 @@ function FAQ({ faqs }) {
 
   const toggleFAQ = (index) => {
     setOpenIndex((prevIndex) => (prevIndex === index ? null : index)); // Toggle open/close state
-  };github
+  };
   
 
   return (
