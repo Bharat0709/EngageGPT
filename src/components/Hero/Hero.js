@@ -30,7 +30,7 @@ function HeroSection() {
     setLoading(true);
 
     try {
-      const response = await fetch('https://linkedai.onrender.com/api/v1/users/addtoguestuser', {
+      const response = await fetch('https://linkedai.onrender.com/api/v1/users/addtowaitlist', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
