@@ -63,7 +63,7 @@ function HeroSection() {
         <div className='mt-3 sm:mt-8 md:mt-8 lg:mt-8 text-xl leading-10 sm:text-xl lg:text-2xl text-sky-900 max-md:mt-7 max-md:max-w-full'>
           Revolutionizing Engagement on LinkedIn
         </div>
-        <div className='flex flex-col w-auto flex-wrap gap-5 items-center justify-center w-max mt-10 text-base font-medium tracking-normal leading-8'>
+        <div className='flex flex-col w-auto flex-wrap gap-5 items-center justify-center mt-10 text-base font-medium tracking-normal leading-8'>
           <div className='justify-center items-center w-auto flex-wrap rounded-full flex p-4 gap-4 pl-5 pr-5 text-sky-900 max-md:px-5'>
             <input
               type='email'
