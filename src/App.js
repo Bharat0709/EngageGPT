@@ -47,7 +47,7 @@ function App() {
       </div>
       <Features />
       <Pricing />
-      <Testimonials />
+      {/* <Testimonials /> */}
       <FooterCTA />
       <FAQ faqs={faqs} />
       <Footer />
