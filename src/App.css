@@ -1,7 +1,7 @@
 .dot {
   width: 11px;
   height: 11px;
-  background-color: #1E40AF; /* Choose your desired dot color */
+  background-color: #1e40af; /* Choose your desired dot color */
   border-radius: 50%;
   opacity: 0; /* Initially hide the dot */
   animation: moveUpDown 1.5s infinite alternate;
@@ -16,7 +16,9 @@
     opacity: 1; /* Keep the dot visible while moving up */
   }
   100% {
-    transform: translateY(-30px); /* Adjust the distance you want the dot to move */
+    transform: translateY(
+      -30px
+    ); /* Adjust the distance you want the dot to move */
     opacity: 0; /* Hide the dot while moving down */
   }
 }
@@ -30,7 +32,9 @@
     transform: translateX(0%);
   }
   100% {
-    transform: translateX(calc(-100% - 10px)); /* Adjust -10px to create space between logos */
+    transform: translateX(
+      calc(-100% - 10px)
+    ); /* Adjust -10px to create space between logos */
   }
 }
 
@@ -91,7 +95,6 @@
   color: #777;
 }
 
-
 @media (min-width: 640px) {
   .faq-container {
     display: grid;
@@ -130,4 +133,17 @@
   transform: translateX(-100%);
 }
 
+.underlinestyle {
+  position: relative;
+}
 
+.underlinestyle:after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  border-top: solid 3px rgb(28, 0, 104);
+  left: 0;
+  bottom: -20px;
+  border-radius: 50%;
+  height: 12px;
+}

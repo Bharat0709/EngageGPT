@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { ChevronDownIcon } from '@heroicons/react/outline';
 import Headings from '../Heading';
 
-function FAQ({ faqs }) {
+function FAQ({ faqs, scrollToSection }) {
   const [openIndex, setOpenIndex] = useState(null);
 
   const toggleFAQ = (index) => {
@@ -10,15 +10,18 @@ function FAQ({ faqs }) {
   };
 
   return (
-    <div className='flex flex-col pb-8 p-2'>
+    <div id="faqs" className='flex flex-col pb-8 p-2'> {/* Added ID to the outermost container */}
       <Headings content={'FAQs'} />
       {faqs.map((faq, index) => (
-        <div key={index} className='border-b mt-1 border-gray-200'>
+        <div key={index} className={`border-b ${index === 0 ? 'mt-7' : 'mt-1'} border-gray-200`}>
           <button
             className={`flex items-center justify-between py-4 px-6 w-full transition-colors duration-300 hover:bg-gray-100 focus:outline-none ${
               openIndex === index ? 'bg-gray-100' : ''
             }`}
-            onClick={() => toggleFAQ(index)}
+            onClick={() => {
+              toggleFAQ(index);
+              scrollToSection('faq-section'); // Scroll to the FAQ section
+            }}
           >
             <div className={`text-lg text-left font-semibold sm:text-left`}>
               {faq.question}

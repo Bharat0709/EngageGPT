@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Headings from '../Heading';
 
-function Pricing() {
+function Pricing({ scrollToSection }) {
   // Define the icon URL
   const iconUrl =
     'https://cdn.builder.io/api/v1/image/assets/TEMP/e902688c5d7078b6c835b36f9323d644bbc6ba67f0a1f893d08fa44cf66d036d?';
@@ -33,7 +33,7 @@ function Pricing() {
   ];
 
   return (
-    <div className='flex items-center flex-col gap-[4rem] mt-10'>
+    <div id='pricing' className='flex items-center flex-col gap-[4rem] mt-10'>
       <Headings content='PRICING' />
       <div className='flex justify-center gap-10 flex-wrap items-start'>
         <div className='flex flex-col justify-center px-7 pt-9 pb-5 bg-blue-50 max-w-[442px] rounded-[50px] text-indigo-950'>
@@ -64,7 +64,10 @@ function Pricing() {
               </div>
             ))}
           </div>
-          <div className='justify-center w-full items-center self-center px-16 py-4 mt-4 ml-3 text-lg font-medium text-center text-white bg-[#001482] rounded-[61px]'>
+          <div
+            onClick={() => scrollToSection('footercta')} // Scroll to home section when clicked
+            className='justify-center w-full items-center self-center px-16 py-4 mt-4 ml-3 text-lg font-medium text-center text-white bg-[#001482] rounded-[61px] cursor-pointer'
+          >
             Get Started
           </div>
         </div>

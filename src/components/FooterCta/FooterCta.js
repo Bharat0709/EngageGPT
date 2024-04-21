@@ -1,4 +1,5 @@
 import * as React from 'react';
+import logo from '../../assets/images/EngageGPTLogo.png';
 
 function FooterCTA() {
   const [email, setEmail] = React.useState('');
@@ -54,27 +55,27 @@ function FooterCTA() {
   };
 
   return (
-    <div className='flex overflow-hidden relative flex-col justify-center items-center px-16 py-20 text-center fill-slate-50 min-h-[697px] max-md:px-5'>
+    <div id='footercta' className='flex overflow-hidden relative flex-col justify-center items-center px-16 py-20 text-center fill-slate-50 min-h-[697px] max-md:px-5'>
       <img
         loading='lazy'
         src='https://cdn.builder.io/api/v1/image/assets/TEMP/a5a163a55b06fe58ecb6719ccc945a065b29d705623d155d233aa1f2fa374e9d?'
         className='object-cover absolute inset-0 size-full'
       />
       <div className='flex relative justify-center items-center flex-col max-w-full w-[701px] max-md:mt-10'>
-        <div className='self-center text-xl font-bold text-[#004182]uppercase'>
-          Engage GPT
+        <div className='flex items-center'>
+          <img src={logo} alt='Logo' className='m-3 h-16' />
         </div>
-        <div className='mt-7 text-4xl font-bold tracking-tighter leading-12 text-black max-md:max-w-full'>
-          Install our extension and get 100 free credits to get started today!
+        <div className='mt-7 text-4xl font-bold tracking-tighter leading-normal text-black max-md:max-w-full'>
+          Free 100 credits per day! Join Waitlist Nowwwww
         </div>
-        <div className='flex flex-col w-auto flex-wrap gap-5 items-center justify-center w-max mt-10 text-base font-medium tracking-normal leading-8'>
-          <div className='justify-center items-center flex-wrap rounded-full flex w-auto p-4 gap-4 pl-5 pr-5 text-sky-900 max-md:px-5'>
+        <div className='flex flex-col w-auto flex-wrap gap-5 items-center justify-center mt-10 text-base font-medium tracking-normal leading-8'>
+          <div className='justify-center items-center w-auto flex-wrap rounded-full flex p-4 gap-4 pl-5 pr-5 text-sky-900 max-md:px-5'>
             <input
               type='email'
               placeholder='Your Email Address'
               value={email}
               onChange={handleInputChange}
-              className='border w-auto xt-center hover:shadow-lg rounded-full p-2 focus:outline-none'
+              className='border w-auto text-center hover:shadow-lg rounded-full p-2 focus:outline-none'
             />
             <button
               onClick={handleJoinWaitlist}

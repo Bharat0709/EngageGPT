@@ -1,19 +1,17 @@
 import React, { useState } from 'react';
 import logo from '../../assets/images/EngageGPTLogo.png';
 
-const Header = () => {
+const Header = ({ scrollToSection }) => {
+  // Pass scrollToSection as a prop
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
-  const scrollToSection = (sectionId) => {
-    const section = document.getElementById(sectionId);
-    if (section) {
-      section.scrollIntoView({ behavior: 'smooth' });
-      setIsOpen(false); // Close the mobile menu after scrolling
-    }
+  const handleMenuItemClick = (sectionId) => {
+    scrollToSection(sectionId); // Scroll to the selected section
+    setIsOpen(false); // Close the mobile menu
   };
 
   return (
@@ -53,25 +51,25 @@ const Header = () => {
       {/* Desktop Menu Items */}
       <div className='hidden lg:flex lg:items-center lg:space-x-6'>
         <button
-          onClick={() => scrollToSection('home')}
+          onClick={() => handleMenuItemClick('home')} // Modified to call handleMenuItemClick
           className='text-base text-black hover:bg-blue-50  focus:outline-none p-2 pl-3 pr-3 rounded-md'
         >
           Home
         </button>
         <button
-          onClick={() => scrollToSection('features')}
+          onClick={() => handleMenuItemClick('features')} // Modified to call handleMenuItemClick
           className='text-base text-black hover:bg-blue-50  focus:outline-none p-2 pl-3 pr-3 rounded-md'
         >
           Features
         </button>
         <button
-          onClick={() => scrollToSection('pricing')}
+          onClick={() => handleMenuItemClick('pricing')} // Modified to call handleMenuItemClick
           className='text-base text-black hover:bg-blue-50  focus:outline-none p-2 pl-3 pr-3 rounded-md'
         >
           Pricing
         </button>
         <button
-          onClick={() => scrollToSection('faqs')}
+          onClick={() => handleMenuItemClick('faqs')} // Modified to call handleMenuItemClick
           className='text-base text-black hover:bg-blue-50  focus:outline-none p-2 pl-3 pr-3 rounded-md'
         >
           FAQs
@@ -80,8 +78,8 @@ const Header = () => {
 
       {/* View Demo Button */}
       <button
-        className='hidden lg:block mr-2 text-sm text-white bg-[#004182] p-2 pl-3 pr-3 pl-4 pr-4 rounded-lg'
-        onClick={() => scrollToSection('demo')}
+        className='hidden lg:block mr-2 text-sm  text-white bg-[#004182] p-2 pl-4 pr-4 rounded-full'
+        onClick={() => handleMenuItemClick('demo')} // Modified to call handleMenuItemClick
       >
         View Demo
       </button>
@@ -91,25 +89,25 @@ const Header = () => {
         <div className='lg:hidden absolute rounded-xl top-16 right-0 m-auto left-0 bg-white w-10/12 text-black'>
           <div className='flex flex-col p-4 space-y-2'>
             <button
-              onClick={() => scrollToSection('home')}
+              onClick={() => handleMenuItemClick('home')} // Modified to call handleMenuItemClick
               className='text-base hover:bg-blue-50  focus:outline-none p-2 pl-3 pr-3 rounded-md border-b border-gray-300'
             >
               Home
             </button>
             <button
-              onClick={() => scrollToSection('features')}
+              onClick={() => handleMenuItemClick('features')} // Modified to call handleMenuItemClick
               className='text-base hover:bg-blue-50  focus:outline-none p-2 pl-3 pr-3 rounded-md border-b border-gray-300'
             >
               Features
             </button>
             <button
-              onClick={() => scrollToSection('pricing')}
+              onClick={() => handleMenuItemClick('pricing')} // Modified to call handleMenuItemClick
               className='text-base hover:bg-blue-50  focus:outline-none p-2 pl-3 pr-3 rounded-md border-b border-gray-300'
             >
               Pricing
             </button>
             <button
-              onClick={() => scrollToSection('faqs')}
+              onClick={() => handleMenuItemClick('faqs')} // Modified to call handleMenuItemClick
               className='text-base hover:bg-blue-50  focus:outline-none p-2 pl-3 pr-3 rounded-md border-b border-gray-300'
             >
               FAQs

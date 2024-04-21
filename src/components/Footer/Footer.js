@@ -5,12 +5,12 @@ import {
 } from '@heroicons/react/outline';
 import Logo from '../../assets/images/EngageGPTLogoIocn.png';
 
-function Footer() {
+function Footer({ scrollToSection }) {
   return (
     <footer className='bg-[#004182] text-white py-8'>
       <div className='container mx-auto px-4'>
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8'>
-          <div className='flex items-center'>
+          <div className='flex items-start md:lg:xl:justify-center'>
             <img src={Logo} alt='Logo' className='h-8 mr-2' />
             <span className='font-medium text-lg'>Engage GPT</span>
           </div>
@@ -36,17 +36,23 @@ function Footer() {
           <div>
             <h3 className='text-lg font-semibold mb-2'>Important Links</h3>
             <ul>
-              <li className='mb-2'>
-                <a href='/privacy-policy'>Privacy Policy</a>
+              <li className='mb-2 cursor-pointer'>
+                <a onClick={() => scrollToSection('home')}>About Us</a>
               </li>
-              <li className='mb-2'>
-                <a href='/terms-of-service'>Terms of Service</a>
+              <li className='mb-2 cursor-pointer'>
+                <a onClick={() => scrollToSection('features')}>Features</a>
+              </li>{' '}
+              <li className='mb-2 cursor-pointer'>
+                <a onClick={() => scrollToSection('pricing')}>Pricing</a>
               </li>
-              <li className='mb-2'>
-                <a href='/about-us'>About Us</a>
+              <li className='mb-2 cursor-pointer'>
+                <a onClick={() => scrollToSection('faqs')}>FAQs</a>
               </li>{' '}
               <li className='mb-2'>
-                <a href='/about-us'>Features</a>
+                <a href='#privacy-policy'>Privacy Policy</a>
+              </li>
+              <li className='mb-2'>
+                <a href='#terms-of-service'>Terms of Service</a>
               </li>
             </ul>
           </div>

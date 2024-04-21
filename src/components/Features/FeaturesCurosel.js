@@ -7,7 +7,7 @@ import CuroselMessageTemplates from '../../assets/images/CuroselMessageTemplates
 import CuroselMessageReplies from '../../assets/images/CuroseMessageReplies.png';
 import CuroselPostCollections from '../../assets/images/CuroselPostCollections.png';
 
-function CuroselFeatures() {
+function CuroselFeatures({ scrollToSection }) {
   // Define the features array with text and image URL
   const features = [
     {
@@ -54,6 +54,8 @@ function CuroselFeatures() {
 
   return (
     <div className='relative'>
+      {' '}
+      {/* Added ID to the outermost container */}
       <div className='flex flex-col justify-center items-center px-20 py-12 text-2xl font-medium text-center text-sky-900 bg-blue-50 rounded-3xl max-md:px-5'>
         <div className='justify-center px-8 py-2 shadow-xs bg-white rounded-xl max-md:px-5'>
           {features[currentIndex].text}
@@ -66,16 +68,30 @@ function CuroselFeatures() {
             className='mt-8 w-full aspect-[1.6] max-w-[788px] max-md:max-w-full'
           />
           <button
-            onClick={() => handleArrowClick('prev')}
+            onClick={() => {
+              handleArrowClick('prev');
+              // Scroll to the features section
+            }}
             className='absolute top-1/2 left-1 transform translate-x-[-10px] -translate-y-1/2 max-md:translate-x-[-20px]'
           >
-            <img src={Arrow} alt='Left Arrow' className=' shadow-lg rounded-full h-10 max-md:h-6' />
+            <img
+              src={Arrow}
+              alt='Left Arrow'
+              className=' shadow-lg rounded-full h-10 max-md:h-6'
+            />
           </button>
           <button
-            onClick={() => handleArrowClick('next')}
+            onClick={() => {
+              handleArrowClick('next');
+              // Scroll to the features section
+            }}
             className='absolute top-1/2 right-1 transform translate-x-[10px] -translate-y-1/2 max-md:translate-x-[20px]'
           >
-            <img src={Arrow} alt='Right Arrow' className='h-10 shadow-lg rounded-full max-md:h-6 rotate-180' />
+            <img
+              src={Arrow}
+              alt='Right Arrow'
+              className='h-10 shadow-lg rounded-full max-md:h-6 rotate-180'
+            />
           </button>
         </div>
       </div>
