@@ -10,6 +10,7 @@ import FAQ from './components/FAQs/Faqs';
 import Footer from './components/Footer/Footer';
 import FooterCTA from './components/FooterCta/FooterCta';
 
+
 const faqs = [
   {
     question: 'What is EngageGPT Extension?',

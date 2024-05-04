@@ -32,6 +32,7 @@ function HeroSection() {
       const res = await handleAddUser(email);
       if (res === 'success') {
         setSuccess(true);
+        setLoading(false);
         const response = await sendEmailToUser(email);
         if (response === 'success') {
           alert('Mail sent successfully');
