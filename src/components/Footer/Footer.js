@@ -1,7 +1,4 @@
-import {
-  MailIcon,
-  GlobeIcon,
-} from '@heroicons/react/outline';
+import { MailIcon, GlobeIcon } from '@heroicons/react/outline';
 import Logo from '../../assets/images/EngageGPTLogoIocn.png';
 
 function Footer({ scrollToSection }) {
@@ -18,16 +15,16 @@ function Footer({ scrollToSection }) {
             <ul>
               <li className='flex items-center mb-2'>
                 <MailIcon className='h-5 w-5 mr-2' />
-                <a href='mailto:info@example.com'>Engagegpt@gmail.com</a>
+                <a href='mailto:info@example.com'>engagegpt@gmail.com</a>
               </li>
               <li className='flex items-center mb-2'>
                 <GlobeIcon className='h-5 w-5 mr-2' />
                 <a
-                  href='https://www.example.com'
+                  href='https://engage-gpt-y2ne.vercel.app/'
                   target='_blank'
                   rel='noopener noreferrer'
                 >
-                  www.engagegpt.co.in
+                  Our Website
                 </a>
               </li>
             </ul>
@@ -36,16 +33,16 @@ function Footer({ scrollToSection }) {
             <h3 className='text-lg font-semibold mb-2'>Important Links</h3>
             <ul>
               <li className='mb-2 cursor-pointer'>
-                <p  onClick={() => scrollToSection('home')}>About Us</p>
+                <p onClick={() => scrollToSection('home')}>About Us</p>
               </li>
               <li className='mb-2 cursor-pointer'>
-                <p  onClick={() => scrollToSection('features')}>Features</p>
+                <p onClick={() => scrollToSection('features')}>Features</p>
               </li>{' '}
               <li className='mb-2 cursor-pointer'>
-                <p  onClick={() => scrollToSection('pricing')}>Pricing</p>
+                <p onClick={() => scrollToSection('pricing')}>Pricing</p>
               </li>
               <li className='mb-2 cursor-pointer'>
-                <p  onClick={() => scrollToSection('faqs')}>FAQs</p>
+                <p onClick={() => scrollToSection('faqs')}>FAQs</p>
               </li>{' '}
               <li className='mb-2'>
                 <a href='#privacy-policy'>Privacy Policy</a>
@@ -58,7 +55,7 @@ function Footer({ scrollToSection }) {
           <div>
             <h3 className='text-lg font-semibold mb-2'>Connect with Us</h3>
             <ul>
-              <li className='mb-2'>
+              {/* <li className='mb-2'>
                 <a
                   href='https://www.linkedin.com/company/your-company'
                   target='_blank'
@@ -66,9 +63,9 @@ function Footer({ scrollToSection }) {
                 >
                   LinkedIn
                 </a>
-              </li>
+              </li> */}
               <li className='mb-2'>
-                <a href='mailto:info@example.com'>Gmail</a>
+                <a href='mailto:engagegpt@gmail.com'>Gmail</a>
               </li>
               <li className='mb-2'>
                 <a
