@@ -1,7 +1,10 @@
 import * as React from 'react';
 import Slider from './Slider';
+import { useFirebase } from '../../contexts/Firebase';
+import { sendEmailToUser } from '../../MailService/waitlistMail';
 
 function HeroSection() {
+  const { handleAddUser } = useFirebase();
   const [email, setEmail] = React.useState('');
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(null);
@@ -12,7 +15,6 @@ function HeroSection() {
   };
 
   const validateEmail = (email) => {
-    // Regular expression for email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
@@ -21,32 +23,25 @@ function HeroSection() {
     setError(null);
     setSuccess(false);
 
-    // Validate email address
     if (!validateEmail(email)) {
       setError('Please enter a valid email address');
       return;
     }
-
     setLoading(true);
-
     try {
-      const response = await fetch(
-        'https://linkedai.onrender.com/api/v1/users/addtowaitlist',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ email }),
+      const res = await handleAddUser(email);
+      if (res === 'success') {
+        setSuccess(true);
+        const response = await sendEmailToUser(email);
+        if (response === 'success') {
+          alert('Mail sent successfully');
+        } else {
+          alert('Error sending welcome mail!');
         }
-      );
-
-      if (!response.ok) {
-        throw new Error('Failed to add email to guest user list');
+        setEmail('');
+      } else if (res === 'error') {
+        setError('Error Adding your Email! Please Try Again');
       }
-
-      setSuccess(true);
-      setEmail('');
     } catch (error) {
       setError(error.message);
     } finally {
@@ -68,7 +63,6 @@ function HeroSection() {
         </div>
         <div className='flex w-full flex-wrap gap-5 items-center justify-center mt-10 text-base font-medium tracking-normal leading-8'>
           <div className=' p-0 pl-0 items-center w-full justify-center flex-wrap rounded-full flex sm:p-4 lg:p-4 md:p-4 xl:p-4 gap-4 lg:sm:xl:pl-5 sm:md:lg:xl:pr-5 text-sky-900'>
-
             <input
               type='email'
               placeholder='Your Email Address'

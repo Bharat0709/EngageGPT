@@ -40,6 +40,7 @@ function Pricing({ scrollToSection }) {
           <div className='-ml-3 flex justify-center gap-5'>
             <img
               loading='lazy'
+              alt='pricing'
               src='https://cdn.builder.io/api/v1/image/assets/TEMP/0afd338468d800971f2bb1e20366de0ad534f1e0d13a72bc1fb1ff2a5020a912?'
               className='shrink-0 aspect-square w-[90px]'
             />
@@ -56,6 +57,7 @@ function Pricing({ scrollToSection }) {
                 className='flex gap-5 mt-5 text-base font-medium'
               >
                 <img
+                alt='feature'
                   loading='lazy'
                   src={iconUrl}
                   className='shrink-0 w-6 aspect-square'
@@ -74,6 +76,7 @@ function Pricing({ scrollToSection }) {
         <div className='flex flex-col items-center justify-center px-7 pt-9 pb-5 bg-blue-100 max-w-[442px] rounded-[50px] text-indigo-950'>
           <div className='-ml-3 flex gap-5'>
             <img
+            alt='pricing'
               loading='lazy'
               src='https://cdn.builder.io/api/v1/image/assets/TEMP/0afd338468d800971f2bb1e20366de0ad534f1e0d13a72bc1fb1ff2a5020a912?'
               className='shrink-0 aspect-square w-[90px]'
@@ -91,6 +94,7 @@ function Pricing({ scrollToSection }) {
                 className='flex gap-5 mt-5 text-base font-medium'
               >
                 <img
+                alt='feature'
                   loading='lazy'
                   src={iconUrl}
                   className='shrink-0 w-6 aspect-square'

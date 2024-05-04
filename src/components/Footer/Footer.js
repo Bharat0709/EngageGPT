@@ -1,7 +1,6 @@
 import {
   MailIcon,
   GlobeIcon,
-  DocumentTextIcon,
 } from '@heroicons/react/outline';
 import Logo from '../../assets/images/EngageGPTLogoIocn.png';
 
@@ -37,16 +36,16 @@ function Footer({ scrollToSection }) {
             <h3 className='text-lg font-semibold mb-2'>Important Links</h3>
             <ul>
               <li className='mb-2 cursor-pointer'>
-                <a onClick={() => scrollToSection('home')}>About Us</a>
+                <p  onClick={() => scrollToSection('home')}>About Us</p>
               </li>
               <li className='mb-2 cursor-pointer'>
-                <a onClick={() => scrollToSection('features')}>Features</a>
+                <p  onClick={() => scrollToSection('features')}>Features</p>
               </li>{' '}
               <li className='mb-2 cursor-pointer'>
-                <a onClick={() => scrollToSection('pricing')}>Pricing</a>
+                <p  onClick={() => scrollToSection('pricing')}>Pricing</p>
               </li>
               <li className='mb-2 cursor-pointer'>
-                <a onClick={() => scrollToSection('faqs')}>FAQs</a>
+                <p  onClick={() => scrollToSection('faqs')}>FAQs</p>
               </li>{' '}
               <li className='mb-2'>
                 <a href='#privacy-policy'>Privacy Policy</a>

@@ -55,8 +55,12 @@ function FooterCTA() {
   };
 
   return (
-    <div id='footercta' className='flex overflow-hidden relative flex-col justify-center items-center px-16 py-20 text-center fill-slate-50 min-h-[697px] max-md:px-5'>
+    <div
+      id='footercta'
+      className='flex overflow-hidden relative flex-col justify-center items-center px-16 py-20 text-center fill-slate-50 min-h-[697px] max-md:px-5'
+    >
       <img
+        alt='footer'
         loading='lazy'
         src='https://cdn.builder.io/api/v1/image/assets/TEMP/a5a163a55b06fe58ecb6719ccc945a065b29d705623d155d233aa1f2fa374e9d?'
         className='object-cover absolute inset-0 size-full'
@@ -70,7 +74,6 @@ function FooterCTA() {
         </div>
         <div className='flex flex-col w-auto flex-wrap gap-5 items-center justify-center mt-10 text-base font-medium tracking-normal leading-8'>
           <div className='justify-center items-center w-auto flex-wrap rounded-full flex p-4 gap-4 pl-5 pr-5 text-sky-900 max-md:px-5'>
-
             <input
               type='email'
               placeholder='Your Email Address'

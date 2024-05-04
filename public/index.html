@@ -4,26 +4,69 @@
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <script id="mcjs">
-      !(function (c, h, i, m, p) {
-        (m = c.createElement(h)),
-          (p = c.getElementsByTagName(h)[0]),
-          (m.async = 1),
-          (m.src = i),
-          p.parentNode.insertBefore(m, p);
-      })(
-        document,
-        'script',
-        'https://chimpstatic.com/mcjs-connected/js/users/48b3753daa4f663e09e2e5a3f/c3ecddfc2e066e14ebd231668.js'
-      );
-    </script>
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-795CCW4BVW"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
 
+      gtag('config', 'G-795CCW4BVW');
+    </script>
+    <script type="text/javascript">
+      (function (c, l, a, r, i, t, y) {
+        c[a] =
+          c[a] ||
+          function () {
+            (c[a].q = c[a].q || []).push(arguments);
+          };
+        t = l.createElement(r);
+        t.async = 1;
+        t.src = 'https://www.clarity.ms/tag/' + i;
+        y = l.getElementsByTagName(r)[0];
+        y.parentNode.insertBefore(t, y);
+      })(window, document, 'clarity', 'script', 'm6vny9nri3');
+    </script>
+    <div id="magicform-root" style="z-index: 9999; position: relative"></div>
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <style>
+      .debug-info-toggle {
+        display: none !important;
+      }
+
+      .magicform-header {
+        background-color: #00335a;
+      }
+
+      .magicform-chat-icon-content {
+        width: 50px; /* Adjust as needed */
+        height: 50px; /* Adjust as needed */
+      }
+
+      #magicform-bubble-widget-chat-panel {
+        border: 1px solid #00335a;
+        backdrop-filter: none;
+        box-shadow: none;
+      }
+
+      #magicform-chat-input-field {
+        border-radius: 80px;
+      }
+
+      /* Adjust the border radius of the chatbot bubble */
+      .magicform-chat-content {
+        border-radius: 20px; /* Adjust as needed */
+      }
+    </style>
     <title>Engage GPT: AI for LinkedIn</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <script src="script.js"></script>
   </body>
 </html>

@@ -56,8 +56,8 @@ function CuroselFeatures({ scrollToSection }) {
     <div className='relative'>
       {' '}
       {/* Added ID to the outermost container */}
-      <div className='flex flex-col justify-center items-center px-20 py-12 text-2xl font-medium text-center text-sky-900 bg-blue-50 rounded-3xl max-md:px-5'>
-        <div className='justify-center px-8 py-2 shadow-xs bg-white rounded-xl max-md:px-5'>
+      <div className='flex flex-col justify-center items-center px-20 py-12 text-2xl font-medium text-center text-sky-90 rounded-3xl max-md:px-5'>
+        <div className='justify-center px-8 py-2 shadow-xs bg-blue-50 rounded-full max-md:px-5'>
           {features[currentIndex].text}
         </div>
         <div className='relative'>

@@ -5,7 +5,7 @@ import Header from './components/Hero/Navbar';
 import HeroSection from './components/Hero/Hero';
 import Features from './components/Features/Features';
 import Pricing from './components/Pricing/Pricing';
-import Testimonials from './components/Testimonials/Testimonials';
+// import Testimonials from './components/Testimonials/Testimonials';
 import FAQ from './components/FAQs/Faqs';
 import Footer from './components/Footer/Footer';
 import FooterCTA from './components/FooterCta/FooterCta';
@@ -75,7 +75,7 @@ function App() {
 
   return (
     <div className='flex flex-col justify-center self-center gap-6'>
-      <div className='flex-col justify-between gap-10 items-center flex bg-blue-50'>
+      <div className='flex-col justify-between gap-10 items-center flex bg-[#F9F9F9'>
         <header className='min-h-fit h-full rounded-es-xl'>
           <Header scrollToSection={scrollToSection} />{' '}
           {/* Pass scrollToSection as prop */}
