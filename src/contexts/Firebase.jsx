@@ -25,15 +25,18 @@ export const FirebaseProvider = (props) => {
       const result = await addDoc(collection(firestore, 'waitlistedUsers'), {
         user: email,
       });
+
       if (result) {
         return 'success';
       } else {
         return 'error';
       }
     } catch (error) {
+      console.error('Error adding user to waitlist:', error.message);
       return 'error';
     }
   };
+
   return (
     <FirebaseContext.Provider value={{ handleAddUser }}>
       {props.children}

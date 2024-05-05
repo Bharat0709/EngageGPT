@@ -34,8 +34,11 @@ function HeroSection() {
         setSuccess(true);
         setLoading(false);
         const response = await sendEmailToUser(email);
+        console.log(response);
         if (response === 'success') {
           alert('Mail sent successfully');
+        } else if (response === 'toomanyrequests') {
+          alert('Too many requests; unable to send welcome mail.');
         } else {
           alert('Error sending welcome mail!');
         }
@@ -69,7 +72,7 @@ function HeroSection() {
               placeholder='Your Email Address'
               value={email}
               onChange={handleInputChange}
-              className='border sm:md:xl:w-[17rem] w-auto text-center font-medium hover:shadow-lg rounded-full sm:lg:md:xl:pl-4 sm:lg:md:xl:text-left p-2 focus:outline-none'
+              className='border-black border sm:md:xl:w-[17rem] w-auto text-center font-medium hover:shadow-lg rounded-full sm:lg:md:xl:pl-4 sm:lg:md:xl:text-left p-2 focus:outline-none'
             />
             <button
               onClick={handleJoinWaitlist}
@@ -89,6 +92,11 @@ function HeroSection() {
           {success && (
             <div className='text-green-500'>Email added successfully!</div>
           )}
+        </div>
+        <div>
+          <p className='mt-4 mb-4 p-2 border text-sky-950 rounded-full px-8'>
+            Join now! Slots are filling up fast! 🚀
+          </p>
         </div>
       </div>
       <Slider />

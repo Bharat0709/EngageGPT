@@ -97,6 +97,11 @@ function FooterCTA() {
             <div className='text-green-500'>Email added successfully!</div>
           )}
         </div>
+        <div>
+          <p className='mt-4 mb-4 p-2 border text-sky-950 rounded-full px-8'>
+            Join now! Slots are filling up fast! 🚀
+          </p>
+        </div>
       </div>
     </div>
   );
