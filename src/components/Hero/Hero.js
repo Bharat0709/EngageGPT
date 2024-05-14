@@ -60,10 +60,10 @@ function HeroSection() {
     >
       <div className='self-center gap-1 m-auto flex flex-col justify-between items-center px-5 text-center max-w-[1186px] min-w-screen-lg'>
         <div className='mt-24  sm:text-center leading-[2.6rem]  self-stretch w-full text-[1.5rem] lg:text-5xl lg:text-center font-semibold lg:leading-[5rem] xl:leading-[5rem] text-sky-900 max-md:max-w-full'>
-          Enhanced Engagement, Seamless Networking: Powered by ChatGPT | Gemini
+        Struggling to stand out on LinkedIn?
         </div>
-        <div className='mt-3 sm:text-center sm:mt-8 sm:w-full  lg:text-center md:mt-8 lg:mt-8 text-xl leading-10 sm:text-xl lg:text-2xl text-sky-900 max-md:mt-7 max-md:max-w-full'>
-          Revolutionizing Engagement on LinkedIn using AI
+        <div className='mt-3 sm:text-center sm:mt-8 sm:w-full  lg:text-center md:mt-8 lg:mt-8 text-xl leading-10 sm:text-xl lg:text-3xl text-sky-900 max-md:mt-7 max-md:max-w-full'>
+          EngageGPT simplifies your networking journey using AI.
         </div>
         <div className='flex w-full flex-wrap gap-5 items-center justify-center mt-10 text-base font-medium tracking-normal leading-8'>
           <div className=' p-0 pl-0 items-center w-full justify-center flex-wrap rounded-full flex sm:p-4 lg:p-4 md:p-4 xl:p-4 gap-4 lg:sm:xl:pl-5 sm:md:lg:xl:pr-5 text-sky-900'>
@@ -94,8 +94,8 @@ function HeroSection() {
           )}
         </div>
         <div>
-          <p className='mt-4 mb-4 p-2 border text-sky-950 rounded-full px-8'>
-            Join now! Slots are filling up fast! 🚀
+          <p className='blinking mt-4 mb-4 p-2 border text-sky-950 rounded-full px-3'>
+            Join now! Slots are filling up fast!
           </p>
         </div>
       </div>

@@ -56,8 +56,8 @@ function CuroselFeatures({ scrollToSection }) {
     <div className='relative'>
       {' '}
       {/* Added ID to the outermost container */}
-      <div className='flex flex-col justify-center items-center px-20 py-12 text-2xl font-medium text-center text-sky-90 rounded-3xl max-md:px-5'>
-        <div className='justify-center px-8 py-2 shadow-xs bg-blue-50 rounded-full max-md:px-5'>
+      <div className='flex flex-col justify-center lg:xl:sm:md:text-3xl items-center px-20 py-12 text-xl font-medium text-center text-sky-90 rounded-3xl max-md:px-5'>
+        <div className='justify-center px-4 py-2  shadow-xs bg-blue-50 rounded-full max-md:px-5'>
           {features[currentIndex].text}
         </div>
         <div className='relative'>
@@ -77,7 +77,7 @@ function CuroselFeatures({ scrollToSection }) {
             <img
               src={Arrow}
               alt='Left Arrow'
-              className=' shadow-lg rounded-full h-10 max-md:h-6'
+              className='bg-blue-100 shadow-lg rounded-full h-10 max-md:h-6'
             />
           </button>
           <button
