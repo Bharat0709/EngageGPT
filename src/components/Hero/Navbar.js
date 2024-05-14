@@ -77,12 +77,14 @@ const Header = ({ scrollToSection }) => {
       </div>
 
       {/* View Demo Button */}
-      <button
+      <a
+        href='https://www.youtube.com/watch?v=jpj5SYu28b0'
+        target='_blank'
         className='hidden lg:block mr-2 text-sm  text-white bg-[#004182] p-2 pl-4 pr-4 rounded-full'
         onClick={() => handleMenuItemClick('demo')} // Modified to call handleMenuItemClick
       >
         View Demo
-      </button>
+      </a>
 
       {/* Mobile Menu Items */}
       {isOpen && (

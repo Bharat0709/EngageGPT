@@ -8,19 +8,19 @@ function Footer({ scrollToSection }) {
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8'>
           <div className='flex items-start md:lg:xl:justify-center'>
             <img src={Logo} alt='Logo' className='h-8 mr-2' />
-            <span className='font-medium text-lg'>Engage GPT</span>
+            <span className='font-medium text-lg'>EngageGPT</span>
           </div>
           <div>
             <h3 className='text-lg font-semibold mb-2'>Contact Us</h3>
             <ul>
               <li className='flex items-center mb-2'>
                 <MailIcon className='h-5 w-5 mr-2' />
-                <a href='mailto:info@example.com'>engagegpt@gmail.com</a>
+                <a href='mailto:engagegpt@gmail.com'>engagegpt@gmail.com</a>
               </li>
               <li className='flex items-center mb-2'>
                 <GlobeIcon className='h-5 w-5 mr-2' />
                 <a
-                  href='https://engage-gpt-y2ne.vercel.app/'
+                  href='https://www.engagegpt.in'
                   target='_blank'
                   rel='noopener noreferrer'
                 >
