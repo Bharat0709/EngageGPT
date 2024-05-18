@@ -70,7 +70,7 @@ function FooterCTA() {
           Free 100 credits per day! Join Waitlist Nowwwww
         </div>
         <div className='flex w-full flex-wrap gap-5 items-center justify-center mt-10 text-base font-medium tracking-normal leading-8'>
-          <div className=' p-0 pl-0 items-center w-full justify-center flex-wrap rounded-full flex sm:p-4 lg:p-4 md:p-4 xl:p-4 gap-4 lg:sm:xl:pl-5 sm:md:lg:xl:pr-5 text-sky-900'>
+          <div className='p-0 pl-0 items-center w-full justify-center flex-wrap rounded-full flex sm:p-4 lg:p-4 md:p-4 xl:p-4 gap-4 lg:sm:xl:pl-5 sm:md:lg:xl:pr-5 text-sky-900'>
             <input
               type='email'
               placeholder='Your Email Address'
@@ -85,7 +85,7 @@ function FooterCTA() {
                 loading ? 'opacity-50 cursor-not-allowed' : 'hover:shadow-lg'
               }`}
             >
-              {loading ? 'Joining...' : 'Join Waitlist'}
+              {loading ? 'Joining...' : 'Get Access'}
             </button>
           </div>
           {error && (
@@ -98,8 +98,8 @@ function FooterCTA() {
           )}
         </div>
         <div>
-          <p className='mt-4 mb-4 p-2 border text-sky-950 rounded-full px-8'>
-            Join now! Slots are filling up fast! 🚀
+          <p className='blinking mt-6 mb-4 font-medium p-2 border border-sky-200 self-start sm:self-center text-sky-950 rounded-full px-6'>
+            Your Network Is Your Net Worth
           </p>
         </div>
       </div>

@@ -58,21 +58,21 @@ function HeroSection() {
       id='home'
       className='h-dvh m-auto flex flex-col justify-between items-center px-5 text-center max-w-[1186px] min-w-screen-lg'
     >
-      <div className='self-center gap-1 m-auto flex flex-col justify-between items-center px-5 text-center max-w-[1186px] min-w-screen-lg'>
-        <div className='mt-24  sm:text-center leading-[2.6rem]  self-stretch w-full text-[1.5rem] lg:text-5xl lg:text-center font-semibold lg:leading-[5rem] xl:leading-[5rem] text-sky-900 max-md:max-w-full'>
-        Struggling to stand out on LinkedIn?
+      <div className='self-center gap-1 m-auto flex flex-col justify-between items-start sm:items-center px-2 text-left sm:text-center max-w-[1186px] min-w-screen-lg'>
+        <div className='lg:mt-[6rem] mt-20 leading-[3.1rem] self-stretch w-full text-left text-[2rem] lg:text-[3.5rem] sm:text-center font-bold lg:font-bold lg:leading-[5rem] text-sky-900'>
+          Confused About How to Grow Your LinkedIn Network?
         </div>
-        <div className='mt-3 sm:text-center sm:mt-8 sm:w-full  lg:text-center md:mt-8 lg:mt-8 text-xl leading-10 sm:text-xl lg:text-3xl text-sky-900 max-md:mt-7 max-md:max-w-full'>
-          EngageGPT simplifies your networking journey using AI.
+        <div className='mt-5 text-left sm:text-center text-[1.5rem] leading-10 sm:text-xl lg:text-3xl font-medium text-sky-900'>
+          Simplify your networking journey using AI.
         </div>
-        <div className='flex w-full flex-wrap gap-5 items-center justify-center mt-10 text-base font-medium tracking-normal leading-8'>
-          <div className=' p-0 pl-0 items-center w-full justify-center flex-wrap rounded-full flex sm:p-4 lg:p-4 md:p-4 xl:p-4 gap-4 lg:sm:xl:pl-5 sm:md:lg:xl:pr-5 text-sky-900'>
+        <div className='flex w-full flex-wrap gap-5 justify-start sm:justify-center items-center self-center mt-7 text-base font-medium tracking-normal leading-8'>
+          <div className='p-0 pl-0 w-full flex justify-start sm:justify-center flex-wrap rounded-full sm:py-4 items-center gap-4 lg:pl-5 sm:pr-5 text-sky-900'>
             <input
               type='email'
               placeholder='Your Email Address'
               value={email}
               onChange={handleInputChange}
-              className='border-black border sm:md:xl:w-[17rem] w-auto text-center font-medium hover:shadow-lg rounded-full sm:lg:md:xl:pl-4 sm:lg:md:xl:text-left p-2 focus:outline-none'
+              className='border-black border w-[17rem] sm:w-[15rem] text-left font-medium hover:shadow-lg rounded-full sm:text-center pl-6 sm:pl-3 p-2 focus:outline-none'
             />
             <button
               onClick={handleJoinWaitlist}
@@ -81,7 +81,7 @@ function HeroSection() {
                 loading ? 'opacity-50 cursor-not-allowed' : 'hover:shadow-lg'
               }`}
             >
-              {loading ? 'Joining...' : 'Join Waitlist'}
+              {loading ? 'Joining...' : 'Get Access'}
             </button>
           </div>
           {error && (
@@ -94,11 +94,12 @@ function HeroSection() {
           )}
         </div>
         <div>
-          <p className='blinking mt-4 mb-4 p-2 border text-sky-950 rounded-full px-3'>
-            Join now! Slots are filling up fast!
+          <p className='blinking mt-6 mb-4 font-medium p-2 border border-sky-200 self-start sm:self-center text-sky-950 rounded-full px-6'>
+            Your Network Is Your Net Worth
           </p>
         </div>
       </div>
+
       <Slider />
     </div>
   );
