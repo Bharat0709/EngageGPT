@@ -81,7 +81,7 @@ function HeroSection() {
                 loading ? 'opacity-50 cursor-not-allowed' : 'hover:shadow-lg'
               }`}
             >
-              {loading ? 'Joining...' : 'Join Waitlist'}
+              {loading ? 'Joining...' : 'Get Access'}
             </button>
           </div>
           {error && (
