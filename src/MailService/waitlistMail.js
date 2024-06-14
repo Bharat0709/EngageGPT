@@ -1,7 +1,7 @@
 const sendEmailToUser = async (email) => {
   try {
     const response = await fetch(
-      `http://localhost:8000/api/v1/user/invite/${email}`,
+      `https://linkedai.onrender.com/api/v1/user/invite/${email}`,
       {
         method: 'POST',
         headers: {

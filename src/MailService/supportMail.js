@@ -1,7 +1,7 @@
 const sendSupportEmail = async (email) => {
   try {
     const response = await fetch(
-      `http://localhost:8000/api/v1/user/support/${email}`,
+      `https://linkedai.onrender.com/api/v1/user/support/${email}`,
       {
         method: 'POST',
         headers: {
