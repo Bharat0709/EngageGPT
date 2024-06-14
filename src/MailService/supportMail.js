@@ -1,7 +1,7 @@
-const sendEmailToUser = async (email) => {
+const sendSupportEmail = async (email) => {
   try {
     const response = await fetch(
-      `http://localhost:8000/api/v1/user/invite/${email}`,
+      `http://localhost:8000/api/v1/user/support/${email}`,
       {
         method: 'POST',
         headers: {
@@ -21,4 +21,4 @@ const sendEmailToUser = async (email) => {
   }
 };
 
-export { sendEmailToUser };
+export { sendSupportEmail };
