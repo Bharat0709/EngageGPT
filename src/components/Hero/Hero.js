@@ -35,7 +35,7 @@ function HeroSection() {
         setLoading(false);
         const response = await sendEmailToUser(email);
         if (response === 'success') {
-          alert('Mail sent successfully (Also check spam folder)';
+          alert('Mail sent successfully (Also check the spam folder)');
         } else if (response === 'toomanyrequests') {
           alert('Too many requests; unable to send welcome mail.');
         } else {
