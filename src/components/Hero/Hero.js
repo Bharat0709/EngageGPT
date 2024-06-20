@@ -2,7 +2,6 @@ import * as React from 'react';
 import Slider from './Slider';
 import { useFirebase } from '../../contexts/Firebase';
 import { sendEmailToUser } from '../../MailService/waitlistMail';
-import { sendSupportEmail } from '../../MailService/supportMail.js';
 
 function HeroSection() {
   const { handleAddUser } = useFirebase();
@@ -35,8 +34,7 @@ function HeroSection() {
         setSuccess(true);
         setLoading(false);
         const response = await sendEmailToUser(email);
-        const res2 = await sendSupportEmail(email);
-        if (response === 'success' || res2 === 'success') {
+        if (response === 'success') {
           alert('Mail sent successfully (Also check spam folder)';
         } else if (response === 'toomanyrequests') {
           alert('Too many requests; unable to send welcome mail.');
