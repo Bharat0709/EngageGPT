@@ -76,12 +76,12 @@ function FooterCTA() {
               placeholder='Your Email Address'
               value={email}
               onChange={handleInputChange}
-              className='border sm:md:xl:w-[17rem] w-auto text-center font-medium hover:shadow-lg rounded-full sm:lg:md:xl:pl-4 sm:lg:md:xl:text-left p-2 focus:outline-none'
+              className='border sm:md:xl:w-[17rem] w-auto text-center font-medium hover:shadow-lg rounded-xl sm:lg:md:xl:pl-4 sm:lg:md:xl:text-left p-2 focus:outline-none'
             />
             <button
               onClick={handleJoinWaitlist}
               disabled={loading}
-              className={`justify-center shadow-xl rounded-full p-2 pl-5 pr-5 text-white bg-sky-900 max-md:px-5 ${
+              className={`justify-center shadow-xl rounded-xl p-2 pl-5 pr-5 text-white bg-sky-900 max-md:px-5 ${
                 loading ? 'opacity-50 cursor-not-allowed' : 'hover:shadow-lg'
               }`}
             >

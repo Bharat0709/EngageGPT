@@ -3,7 +3,7 @@ import Logo from '../../assets/images/EngageGPTLogoIocn.png';
 
 function Footer({ scrollToSection }) {
   return (
-    <footer className='bg-[#004182] text-white py-8'>
+    <footer className='bg-sky-900 text-white py-8'>
       <div className='container mx-auto px-4'>
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8'>
           <div className='flex items-start md:lg:xl:justify-center'>

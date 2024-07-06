@@ -10,7 +10,6 @@ import FAQ from './components/FAQs/Faqs';
 import Footer from './components/Footer/Footer';
 import FooterCTA from './components/FooterCta/FooterCta';
 
-
 const faqs = [
   {
     question: 'What is EngageGPT Extension?',
@@ -76,32 +75,20 @@ function App() {
 
   return (
     <div className='flex flex-col justify-center self-center gap-6'>
-      <div className='flex-col justify-between gap-10 items-center flex bg-[#F9F9F9'>
-        <header className='min-h-fit h-full rounded-es-xl'>
+      <div className='flex-col justify-between gap-10 items-center flex bg-white'>
+        <header className=' h-full rounded-es-xl'>
           <Header scrollToSection={scrollToSection} />{' '}
           {/* Pass scrollToSection as prop */}
         </header>
-        <animated.div style={fadeHero}>
-          <HeroSection />
-        </animated.div>
+        <HeroSection />
       </div>
-      <animated.div style={fadeOnScroll}>
-        <Features />
-      </animated.div>
-      <animated.div style={fadeOnScroll}>
-        <Pricing scrollToSection={scrollToSection} />{' '}
-      </animated.div>
-      <animated.div style={fadeOnScroll}>{/* <Testimonials /> */}</animated.div>
-      <animated.div style={fadeOnScroll}>
-        <FooterCTA />
-      </animated.div>
-      <animated.div style={fadeOnScroll}>
-        <FAQ faqs={faqs} scrollToSection={scrollToSection} />{' '}
-        {/* Pass scrollToSection as prop */}
-      </animated.div>
-      <animated.div style={fadeOnScroll}>
-        <Footer scrollToSection={scrollToSection} />
-      </animated.div>
+      <Features />
+      <Pricing scrollToSection={scrollToSection} />
+      {/* <Testimonials /> */}
+      <FooterCTA />
+      <FAQ faqs={faqs} scrollToSection={scrollToSection} />{' '}
+      {/* Pass scrollToSection as prop */}
+      <Footer scrollToSection={scrollToSection} />
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import logo from '../../assets/images/EngageGPTLogo.png';
+import { motion } from 'framer-motion';
 
 const Header = ({ scrollToSection }) => {
   // Pass scrollToSection as a prop
@@ -76,17 +77,20 @@ const Header = ({ scrollToSection }) => {
         </button>
       </div>
 
-      {/* View Demo Button */}
       <a
         href='https://www.youtube.com/watch?v=jpj5SYu28b0'
         target='_blank'
-        className='hidden lg:block mr-2 text-sm  text-white bg-[#004182] p-2 pl-4 pr-4 rounded-full'
+        className='hidden lg:block mr-2 text-sm  p-2 pt-2 pl-4 pr-4 rounded-xl'
         onClick={() => handleMenuItemClick('demo')} // Modified to call handleMenuItemClick
       >
-        View Demo
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className='whitespace-nowrap rounded-lg bg-sky-900 px-4 py-2 font-medium text-white shadow-xl transition-colors hover:bg-slate-700'
+        >
+          View Demo
+        </motion.button>
       </a>
-
-      {/* Mobile Menu Items */}
       {isOpen && (
         <div className='lg:hidden absolute rounded-xl top-16 right-0 m-auto left-0 bg-white w-10/12 text-black'>
           <div className='flex flex-col p-4 space-y-2'>

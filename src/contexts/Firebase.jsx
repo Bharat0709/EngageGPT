@@ -1,3 +1,4 @@
+import { getDocs } from 'firebase/firestore';
 import React, { createContext, useContext } from 'react';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, addDoc } from 'firebase/firestore';
@@ -21,6 +22,7 @@ export const useFirebase = () => useContext(FirebaseContext);
 
 export const FirebaseProvider = (props) => {
   const handleAddUser = async (email) => {
+    console.log('HI');
     try {
       const result = await addDoc(collection(firestore, 'waitlistedUsers'), {
         user: email,
@@ -36,6 +38,20 @@ export const FirebaseProvider = (props) => {
       return 'error';
     }
   };
+
+  const fetchAllEmails = async () => {
+    try {
+      const querySnapshot = await getDocs(
+        collection(firestore, 'waitlistedUsers')
+      );
+      const emails = querySnapshot.docs.map((doc) => doc.data().user);
+      console.log(emails);
+    } catch (error) {
+      console.error('Error fetching emails from waitlist:', error.message);
+      return [];
+    }
+  };
+  fetchAllEmails();
 
   return (
     <FirebaseContext.Provider value={{ handleAddUser }}>
