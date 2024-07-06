@@ -10,10 +10,17 @@ function FAQ({ faqs, scrollToSection }) {
   };
 
   return (
-    <div id="faqs" className='flex flex-col pb-8 p-2'> {/* Added ID to the outermost container */}
+    <div id='faqs' className='flex flex-col pb-8 p-2'>
+      {' '}
+      {/* Added ID to the outermost container */}
       <Headings content={'FAQs'} />
       {faqs.map((faq, index) => (
-        <div key={index} className={`border-b ${index === 0 ? 'mt-7' : 'mt-1'} border-gray-200`}>
+        <div
+          key={index}
+          className={`border-b ${
+            index === 0 ? 'mt-7' : 'mt-1'
+          } border-gray-200`}
+        >
           <button
             className={`flex items-center justify-between py-4 px-6 w-full transition-colors duration-300 hover:bg-gray-100 focus:outline-none ${
               openIndex === index ? 'bg-gray-100' : ''

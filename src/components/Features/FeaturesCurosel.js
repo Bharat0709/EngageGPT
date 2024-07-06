@@ -1,102 +1,60 @@
-import React, { useState } from 'react';
-import Arrow from '../../assets/images/Arrow.png';
-import CuroselGenerateComment from '../../assets/images/CuroseGenerateComments.png';
-import CuroselGeneratePost from '../../assets/images/CuroselGeneratePost.png';
-import CuroselDailyTargets from '../../assets/images/CuroselDailyTragets.png';
-import CuroselMessageTemplates from '../../assets/images/CuroselMessageTemplates.png';
-import CuroselMessageReplies from '../../assets/images/CuroseMessageReplies.png';
-import CuroselPostCollections from '../../assets/images/CuroselPostCollections.png';
+import React, { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { FiArrowUpRight } from 'react-icons/fi';
 
-function CuroselFeatures({ scrollToSection }) {
-  // Define the features array with text and image URL
-  const features = [
-    {
-      text: 'Generate Comments',
-      image: CuroselGenerateComment,
-    },
-    {
-      text: 'Generate Post Content',
-      image: CuroselGeneratePost,
-    },
-    {
-      text: 'Generate Message Replies',
-      image: CuroselMessageReplies,
-    },
-    {
-      text: 'Generate Message Templates',
-      image: CuroselMessageTemplates,
-    },
-    {
-      text: 'Create Post Collections',
-      image: CuroselPostCollections,
-    },
-    {
-      text: 'Daily Targets',
-      image: CuroselDailyTargets,
-    },
-  ];
-
-  // State to track the current index
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  // Function to handle clicking on the arrows
-  const handleArrowClick = (direction) => {
-    if (direction === 'prev') {
-      setCurrentIndex((prevIndex) =>
-        prevIndex === 0 ? features.length - 1 : prevIndex - 1
-      );
-    } else {
-      setCurrentIndex((prevIndex) =>
-        prevIndex === features.length - 1 ? 0 : prevIndex + 1
-      );
-    }
-  };
-
+export const MoreFeatures = () => {
   return (
-    <div className='relative'>
-      {' '}
-      {/* Added ID to the outermost container */}
-      <div className='flex flex-col justify-center lg:xl:sm:md:text-3xl items-center px-20 py-12 text-xl font-medium text-center text-sky-90 rounded-3xl max-md:px-5'>
-        <div className='justify-center px-4 py-2  shadow-xs bg-blue-50 rounded-full max-md:px-5'>
-          {features[currentIndex].text}
-        </div>
-        <div className='relative'>
-          <img
-            loading='lazy'
-            src={features[currentIndex].image}
-            alt={`Feature ${currentIndex + 1}`}
-            className='mt-8 w-full aspect-[1.6] max-w-[788px] max-md:max-w-full'
-          />
-          <button
-            onClick={() => {
-              handleArrowClick('prev');
-              // Scroll to the features section
-            }}
-            className='absolute top-1/2 left-1 transform translate-x-[-10px] -translate-y-1/2 max-md:translate-x-[-20px]'
-          >
-            <img
-              src={Arrow}
-              alt='Left Arrow'
-              className='bg-blue-100 shadow-lg rounded-full h-10 max-md:h-6'
-            />
-          </button>
-          <button
-            onClick={() => {
-              handleArrowClick('next');
-              // Scroll to the features section
-            }}
-            className='absolute top-1/2 right-1 transform translate-x-[10px] -translate-y-1/2 max-md:translate-x-[20px]'
-          >
-            <img
-              src={Arrow}
-              alt='Right Arrow'
-              className='h-10 shadow-lg rounded-full max-md:h-6 rotate-180'
-            />
-          </button>
-        </div>
-      </div>
+    <div className='bg-white w-full grid group-hover:translate-y-2 group-hover:rotate-[2deg] '>
+      <TextParallaxContent>
+        <Content
+          heading={'Tracks Active Days on Linkedin'}
+          description={
+            'Gain insights into your LinkedIn activity. Monitor your presence and engagement over time.'
+          }
+        />
+      </TextParallaxContent>
+      <TextParallaxContent>
+        <Content
+          heading={'Create Posts Collections'}
+          description={
+            'Curate and categorize your posts according to themes, campaigns, or target audiences.'
+          }
+        />
+      </TextParallaxContent>
+      <TextParallaxContent>
+        <Content
+          heading={'Custom Connection Note'}
+          description={
+            'Make a lasting impression by personalizing your connection requests on LinkedIn.'
+          }
+        />
+      </TextParallaxContent>
     </div>
   );
-}
+};
 
-export default CuroselFeatures;
+const IMG_PADDING = 12;
+
+const TextParallaxContent = ({ children }) => {
+  return (
+    <div
+      style={{
+        paddingLeft: IMG_PADDING,
+        paddingRight: IMG_PADDING,
+      }}
+    >
+      {children}
+    </div>
+  );
+};
+
+const Content = ({ heading, description }) => (
+  <div className='grid lg:md:xl:mx-16 w-auto grid-cols-1 gap-8 px-8 m-2 mb-2 rounded-xl pt-8 bg-slate-100 pb-8 md:grid-cols-12'>
+    <h2 className='col-span-1 text-3xl font-bold md:col-span-4'>{heading}</h2>
+    <div className='col-span-1 md:col-span-8'>
+      <p className='mb-4 text-xl text-neutral-600 md:text-2xl'>{description}</p>
+    </div>
+  </div>
+);
+
+export default MoreFeatures;

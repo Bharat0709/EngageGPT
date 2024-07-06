@@ -34,9 +34,9 @@ function Pricing({ scrollToSection }) {
 
   return (
     <div id='pricing' className='flex items-center flex-col gap-[4rem] mt-10'>
-      <Headings content='PRICING' />
+      <Headings content='Pricing' />
       <div className='flex justify-center gap-10 flex-wrap items-start'>
-        <div className='flex flex-col justify-center px-7 pt-9 pb-5 bg-blue-50 max-w-[442px] rounded-[50px] text-indigo-950'>
+        <div className='flex flex-col justify-center px-7 pt-9 pb-5 bg-slate-50 max-w-[442px] rounded-2xl text-indigo-950'>
           <div className='-ml-3 flex justify-center gap-5'>
             <img
               loading='lazy'
@@ -57,7 +57,7 @@ function Pricing({ scrollToSection }) {
                 className='flex gap-5 mt-5 text-base font-medium'
               >
                 <img
-                alt='feature'
+                  alt='feature'
                   loading='lazy'
                   src={iconUrl}
                   className='shrink-0 w-6 aspect-square'
@@ -68,15 +68,15 @@ function Pricing({ scrollToSection }) {
           </div>
           <div
             onClick={() => scrollToSection('footercta')} // Scroll to home section when clicked
-            className='justify-center w-full items-center self-center px-16 py-4 mt-4 ml-3 text-lg font-medium text-center text-white bg-[#001482] rounded-[61px] cursor-pointer'
+            className='justify-center w-full items-center shadow-xl self-center px-16 py-4 mt-4 ml-3 text-lg font-medium text-center text-white bg-sky-900 rounded-xl cursor-pointer'
           >
             Get Started
           </div>
         </div>
-        <div className='flex flex-col items-center justify-center px-7 pt-9 pb-5 bg-blue-100 max-w-[442px] rounded-[50px] text-indigo-950'>
+        <div className='flex flex-col items-center justify-center px-7 pt-9 pb-5 bg-sky-100 max-w-[442px] rounded-2xl text-indigo-950'>
           <div className='-ml-3 flex gap-5'>
             <img
-            alt='pricing'
+              alt='pricing'
               loading='lazy'
               src='https://cdn.builder.io/api/v1/image/assets/TEMP/0afd338468d800971f2bb1e20366de0ad534f1e0d13a72bc1fb1ff2a5020a912?'
               className='shrink-0 aspect-square w-[90px]'
@@ -94,7 +94,7 @@ function Pricing({ scrollToSection }) {
                 className='flex gap-5 mt-5 text-base font-medium'
               >
                 <img
-                alt='feature'
+                  alt='feature'
                   loading='lazy'
                   src={iconUrl}
                   className='shrink-0 w-6 aspect-square'
@@ -103,7 +103,7 @@ function Pricing({ scrollToSection }) {
               </div>
             ))}
           </div>
-          <div className='justify-center items-center self-center px-16 w-full py-4 mt-4 ml-3 text-lg font-medium text-center text-sky-900 bg-white rounded-[61px]'>
+          <div className='justify-center items-center self-center px-16 w-full py-4 mt-4 ml-3 text-lg font-medium text-center text-sky-900 bg-white rounded-xl'>
             Coming Soon
           </div>
         </div>
