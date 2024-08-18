@@ -93,7 +93,7 @@ function HeroSection() {
               </div>
             )}
             {success && (
-              <div className='text-green-500'>Email added successfully!</div>
+              <div className='text-green-500'>Email added successfully! (Check Spam Folder Also)</div>
             )}
           </div>
         </div>
