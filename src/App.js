@@ -1,6 +1,7 @@
 import './App.css';
 import { useState, useEffect } from 'react';
 import { useSpring, animated } from 'react-spring';
+import { Analytics } from '@vercel/analytics/react';
 import Header from './components/Hero/Navbar';
 import HeroSection from './components/Hero/Hero';
 import Features from './components/Features/Features';
@@ -86,6 +87,7 @@ function App() {
       <Pricing scrollToSection={scrollToSection} />
       {/* <Testimonials /> */}
       <FooterCTA />
+      <Analytics />
       <FAQ faqs={faqs} scrollToSection={scrollToSection} />{' '}
       {/* Pass scrollToSection as prop */}
       <Footer scrollToSection={scrollToSection} />
