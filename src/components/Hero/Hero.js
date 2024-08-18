@@ -37,7 +37,7 @@ function HeroSection() {
         setLoading(false);
         const response = await sendEmailToUser(email);
         if (response === 'success') {
-          alert('Mail sent successfully');
+          alert('Mail sent successfully (Check Spam Folder)');
         } else {
           alert('Error sending welcome mail!');
         }
@@ -93,7 +93,9 @@ function HeroSection() {
               </div>
             )}
             {success && (
-              <div className='text-green-500'>Email added successfully! (Check Spam Folder Also)</div>
+              <div className='text-green-500'>
+                Email added successfully! (Check Spam Folder Also)
+              </div>
             )}
           </div>
         </div>
