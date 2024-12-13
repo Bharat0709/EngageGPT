@@ -86,7 +86,7 @@ const Header = ({ scrollToSection }) => {
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className='whitespace-nowrap rounded-lg bg-sky-900 px-4 py-2 font-medium text-white shadow-xl transition-colors hover:bg-slate-700'
+          className='whitespace-nowrap rounded-lg bg-white border-sky-600 px-4 py-2 font-medium text-sky-900 border transition-colors hover:bg-slate-700'
         >
           View Demo
         </motion.button>

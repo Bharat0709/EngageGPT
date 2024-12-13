@@ -39,19 +39,19 @@ export const FirebaseProvider = (props) => {
     }
   };
 
-  const fetchAllEmails = async () => {
-    try {
-      const querySnapshot = await getDocs(
-        collection(firestore, 'waitlistedUsers')
-      );
-      const emails = querySnapshot.docs.map((doc) => doc.data().user);
-      console.log(emails);
-    } catch (error) {
-      console.error('Error fetching emails from waitlist:', error.message);
-      return [];
-    }
-  };
-  fetchAllEmails();
+  // const fetchAllEmails = async () => {
+  //   try {
+  //     const querySnapshot = await getDocs(
+  //       collection(firestore, 'waitlistedUsers')
+  //     );
+  //     const emails = querySnapshot.docs.map((doc) => doc.data().user);
+  //     console.log(emails);
+  //   } catch (error) {
+  //     console.error('Error fetching emails from waitlist:', error.message);
+  //     return [];
+  //   }
+  // };
+  // fetchAllEmails();
 
   return (
     <FirebaseContext.Provider value={{ handleAddUser }}>

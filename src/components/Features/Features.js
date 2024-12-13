@@ -1,11 +1,5 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import videoFileComment from '../../assets/images/commentVideo.mp4';
-import videoFileReply from '../../assets/images/replyVideo.mp4';
-import videoFilePost from '../../assets/images/postVideo.mp4';
-import commentIcon from '../../assets/images/commenticon.png';
-import postIcon from '../../assets/images/postIcon.png';
-import replyIcon from '../../assets/images/replyIcon.png';
 import MoreFeatures from './FeaturesCurosel';
 
 export const Features = () => {
@@ -15,10 +9,7 @@ export const Features = () => {
         <div className='mb-8 flex flex-col items-start justify-between gap-4 md:flex-row md:items-end sm:leading-22 md:px-2'>
           <h2 className='max-w-lg text-3xl mb-4 leading-[3rem] lg:md:xl:leading-[4.4rem] font-bold md:text-5xl'>
             Engage faster with our
-            <span className='text-slate-400 leading-16'>
-              {' '}
-              all in one solution
-            </span>
+            <span className='text-slate-400 leading-16'> all in one solution</span>
           </h2>
           <a
             href='https://chromewebstore.google.com/detail/ldhdipkofibjleihomflebfklhadikio?hl=en-GB&authuser=1'
@@ -34,83 +25,51 @@ export const Features = () => {
             </motion.button>
           </a>
         </div>
-        <div className='mb-6 grid grid-cols-12 gap-4'>
+        <div className='mb-3 grid grid-cols-12 gap-4'>
           <BounceCard className='col-span-12 md:col-span-4'>
             <CardTitle>Generate Comments</CardTitle>
-            <div className='absolute bottom-0 left-4 right-4 sm:text-[12px] top-16 translate-y-1 rounded-t-2xl p-4 transition-transform duration-[250ms] group-hover:translate-y-4 group-hover:rotate-[2deg]'>
-              <span className='block text-center font-semibold text-indigo-50'>
-                <img className='h-44 m-auto' src={commentIcon}></img>
-              </span>
+            <div className='absolute bottom-0 left-4 right-4 sm:text-[12px] top-14 translate-y-1 rounded-t-2xl p-2 transition-transform duration-[250ms] group-hover:translate-y-4 group-hover:rotate-[2deg]'>
+              <iframe
+              height="200"
+              width="550"
+                className='rounded-xl self-center w-full mx-auto'
+                src='https://www.youtube.com/embed/8K7xou2gUk4?si=H7Wb9eLD1GrkUZnX'
+                title='Generate Comments'
+                frameBorder='0'
+                allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+                allowFullScreen
+              ></iframe>
             </div>
           </BounceCard>
-          <BounceCard className='col-span-12 md:col-span-8'>
-            <div className='absolute bottom-0 left-4 right-4 top-4 translate-y-1 rounded-t-2xl bg-gradient-to-br from-pink-400 to-red-400 p-4 transition-transform duration-[250ms] group-hover:translate-y-4 group-hover:rotate-[2deg]'>
-              <span className='block text-center font-semibold text-orange-50'>
-                <div className='rounded-xl mt-2 '>
-                  <video
-                    className='rounded-xl self-center w-full mx-auto'
-                    autoPlay
-                    muted
-                    loop
-                    width='600'
-                  >
-                    <source src={videoFileComment} type='video/mp4' />
-                    Your browser does not support the video tag.
-                  </video>
-                </div>
-              </span>
-            </div>
-          </BounceCard>
-        </div>
-        <div className='mb-6 grid grid-cols-12 gap-4'>
-          <BounceCard className='col-span-12 md:col-span-4 order-1 md:order-none'>
-            <CardTitle>Generate Reply</CardTitle>
-            <div className='absolute bottom-0 left-4 right-4 top-12 translate-y-8 rounded-t-2xl b p-4 transition-transform duration-[250ms] group-hover:translate-y-4 group-hover:rotate-[2deg]'>
-              <span className='block text-center font-semibold text-red-50'>
-                <img className='h-44 m-auto' src={replyIcon}></img>
-              </span>
-            </div>
-          </BounceCard>
-          <BounceCard className='col-span-12 md:col-span-8 order-2 md:order-none'>
-            <div className='absolute bottom-0 left-4 right-4 top-4 translate-y-1 rounded-t-2xl bg-gradient-to-br from-green-400 to-emerald-400 p-4 transition-transform duration-[250ms] group-hover:translate-y-4 group-hover:rotate-[2deg]'>
-              <span className='block text-center font-semibold text-emerald-50'>
-                <video
-                  className='rounded-xl self-center w-full mx-auto'
-                  autoPlay
-                  muted
-                  loop
-                  width='600'
-                >
-                  <source src={videoFileReply} type='video/mp4' />
-                  Your browser does not support the video tag.
-                </video>
-              </span>
-            </div>
-          </BounceCard>
-        </div>
-        <div className='grid grid-cols-12 gap-4'>
           <BounceCard className='col-span-12 md:col-span-4'>
-            <CardTitle>Generate Post</CardTitle>
-            <div className='absolute bottom-0 left-4 right-4 top-10 translate-y-8 rounded-t-2xl b p-4 transition-transform duration-[250ms] group-hover:translate-y-4 group-hover:rotate-[2deg]'>
-              <span className='block text-center font-semibold text-red-50'>
-                <img className='h-44 m-auto' src={postIcon}></img>
-              </span>
+            <CardTitle>Generate Message Replies</CardTitle>
+            <div className='absolute bottom-0 left-4 right-4 sm:text-[12px] lg:top-14 top-14 translate-y-1 rounded-t-2xl p-2 transition-transform duration-[250ms] group-hover:translate-y-4 group-hover:rotate-[2deg]'>
+              <iframe
+                height="200"
+              width="550"
+                className='rounded-xl self-center w-full mx-auto'
+                src='https://www.youtube.com/embed/cfCRBYtAzFw?si=KmHwTC4GnucYSAi1'
+                title='Generate Message Replies'
+                frameBorder='0'
+                allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+                allowFullScreen
+              ></iframe>
+              
             </div>
           </BounceCard>
-          <BounceCard className='col-span-12 md:col-span-8'>
-            <div className='absolute bottom-0 left-4 right-4 top-4 translate-y-1 rounded-t-2xl bg-gradient-to-br from-orange-400 to-yellow-400 p-4 transition-transform duration-[250ms] group-hover:translate-y-4 group-hover:rotate-[2deg]'>
-              <span className='block text-center font-semibold text-emerald-50'>
-                <video
-                  className='rounded-xl self-center w-full mx-auto'
-                  autoPlay
-                  muted
-                  loop
-                  width='600'
-                >
-                  <source src={videoFilePost} type='video/mp4' />
-                  Your browser does not support the video tag.
-                </video>
-              </span>
+          <BounceCard className='col-span-12 md:col-span-4'>
+            <CardTitle>Generate viral Posts</CardTitle>
+            <div className='absolute bottom-0 left-4 right-4 top-8 translate-y-8 rounded-t-2xl p-2 transition-transform duration-[250ms] group-hover:translate-y-4 group-hover:rotate-[2deg]'>
+              <iframe
+                height="200"
+              width="550"
+                className='rounded-xl self-center w-full mx-auto'
+                src='https://www.youtube.com/embed/rw-QI7jKVh0?si=ZV1u_r1uQ4PV_0ns'
+                title='Generate Post'
+                frameBorder='0'
+                allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+                allowFullScreen
+              ></iframe>
             </div>
           </BounceCard>
         </div>
@@ -124,7 +83,7 @@ const BounceCard = ({ className, children }) => {
   return (
     <motion.div
       whileHover={{ scale: 0.95, rotate: '-1deg' }}
-      className={`group relative min-h-[300px] cursor-default overflow-hidden rounded-2xl bg-slate-100 p-8 ${className}`}
+      className={`group relative min-h-[300px] cursor-default overflow-hidden rounded-2xl bg-slate-100 p-4 ${className}`}
     >
       {children}
     </motion.div>
@@ -133,7 +92,7 @@ const BounceCard = ({ className, children }) => {
 
 const CardTitle = ({ children }) => {
   return (
-    <h3 className='mx-auto text-black  text-center text-2xl font-semibold'>
+    <h3 className='mx-auto text-black mt-0 text-center text-xl font-semibold'>
       {children}
     </h3>
   );

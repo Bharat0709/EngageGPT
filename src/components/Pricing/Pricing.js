@@ -70,7 +70,7 @@ function Pricing({ scrollToSection }) {
             onClick={() => scrollToSection('footercta')} // Scroll to home section when clicked
             className='justify-center w-full items-center shadow-xl self-center px-16 py-4 mt-4 ml-3 text-lg font-medium text-center text-white bg-sky-900 rounded-xl cursor-pointer'
           >
-            Get Started
+            Get Started for free
           </div>
         </div>
         <div className='flex flex-col items-center justify-center px-7 pt-9 pb-5 bg-sky-100 max-w-[442px] rounded-2xl text-indigo-950'>

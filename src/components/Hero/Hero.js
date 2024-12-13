@@ -27,10 +27,11 @@ function HeroSection() {
                 href='https://chromewebstore.google.com/detail/engagegpt-ai-for-linkedin/ldhdipkofibjleihomflebfklhadikio?hl=en-GB&authuser=1'
                 className={`justify-center shadow-xl rounded-xl p-2 pl-5 pr-5 text-white bg-sky-900 max-md:px-5`}
               >
-                Add to Chrome
+                Add to chrome for free
               </a>
             </div>
           </div>
+          
         </div>
       </div>
       <div className='left-portion'>

@@ -67,35 +67,21 @@ function FooterCTA() {
           <img src={logo} alt='Logo' className='m-3 h-16' />
         </div>
         <div className='mt-7 text-4xl font-bold tracking-tighter leading-normal text-black max-md:max-w-full'>
-          Free 100 credits per day! Join Waitlist Nowwwww
+          Free 100 credits per d<span className='text-gray-400'>y</span>ay<span className='text-gray-400'>yyyy</span>!
         </div>
-        <div className='flex w-full flex-wrap gap-5 items-center justify-center mt-10 text-base font-medium tracking-normal leading-8'>
-          <div className='p-0 pl-0 items-center w-full justify-center flex-wrap rounded-full flex sm:p-4 lg:p-4 md:p-4 xl:p-4 gap-4 lg:sm:xl:pl-5 sm:md:lg:xl:pr-5 text-sky-900'>
-            <input
-              type='email'
-              placeholder='Your Email Address'
-              value={email}
-              onChange={handleInputChange}
-              className='border sm:md:xl:w-[17rem] w-auto text-center font-medium hover:shadow-lg rounded-xl sm:lg:md:xl:pl-4 sm:lg:md:xl:text-left p-2 focus:outline-none'
-            />
-            <button
-              onClick={handleJoinWaitlist}
-              disabled={loading}
-              className={`justify-center shadow-xl rounded-xl p-2 pl-5 pr-5 text-white bg-sky-900 max-md:px-5 ${
-                loading ? 'opacity-50 cursor-not-allowed' : 'hover:shadow-lg'
-              }`}
-            >
-              {loading ? 'Joining...' : 'Get Access'}
-            </button>
-          </div>
-          {error && (
-            <div className='text-red-500'>
-              Failed to add email... Try Again!!
+        <div className='flex w-full flex-wrap mt-8 gap-5 justify-start sm:justify-start items-start self-start text-base font-medium tracking-normal leading-8'>
+          <div className='flex w-full flex-wrap gap-5 items-center justify-center text-base font-medium tracking-normal leading-8'>
+            <div className='p-0 pl-0 items-center flex-wrap rounded-full flex gap-4 lg:sm:xl:pl-0 sm:md:lg:xl:pr-5 text-sky-900'>
+              <a
+                target='_blank'
+                rel='noopener noreferrer'
+                href='https://chromewebstore.google.com/detail/engagegpt-ai-for-linkedin/ldhdipkofibjleihomflebfklhadikio?hl=en-GB&authuser=1'
+                className={`justify-center shadow-xl rounded-xl p-2 pl-5 pr-5 text-white bg-sky-900 max-md:px-5`}
+              >
+                Add to chrome for free
+              </a>
             </div>
-          )}
-          {success && (
-            <div className='text-green-500'>Email added successfully!</div>
-          )}
+          </div>
         </div>
         <div>
           <p className='blinking mt-6 mb-4 font-medium p-2 border border-sky-200 self-start sm:self-center text-sky-950 rounded-full px-6'>
