@@ -1,0 +1,38 @@
+export const mockData = [
+  {
+    id: 1,
+    profileImage: 'https://via.placeholder.com/50',
+    name: 'John Doe',
+    email: 'john.doe@example.com',
+    connectionStatus: 'Connected',
+    userType: 'Owner',
+    connectionToken: 'abc123xyz',
+  },
+  {
+    id: 2,
+    profileImage: 'https://via.placeholder.com/50',
+    name: 'Jane Smith',
+    email: 'jane.smith@example.com',
+    connectionStatus: 'Disconnected',
+    userType: 'Member',
+    connectionToken: 'def456uvw',
+  },
+  {
+    id: 3,
+    profileImage: 'https://via.placeholder.com/50',
+    name: 'Michael Brown',
+    email: 'michael.brown@example.com',
+    connectionStatus: 'Connected',
+    userType: 'Member',
+    connectionToken: 'ghi789rst',
+  },
+  {
+    id: 4,
+    profileImage: 'https://via.placeholder.com/50',
+    name: 'Michael Brown',
+    email: 'michael.brown@example.com',
+    connectionStatus: 'Connected',
+    userType: 'Member',
+    connectionToken: 'ghi789rst',
+  },
+];
