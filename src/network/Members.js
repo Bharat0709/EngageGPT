@@ -29,7 +29,6 @@ export const getAllMembers = async () => {
 
 export const disconnectLinkedIn = async (memberId) => {
   try {
-    console.log(memberId);
     const response = await axiosInstance.post(
       `${MEMBER_API_URL}/linkedin/disconnect/${memberId}`,
     );

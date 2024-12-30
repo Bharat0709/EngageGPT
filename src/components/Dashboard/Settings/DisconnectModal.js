@@ -2,17 +2,22 @@ import React from 'react';
 import { message } from 'antd';
 import { disconnectLinkedIn } from '../../../network/Members';
 
-const DisconnectConfirmationModal = ({ isVisible, onClose, memberId }) => {
+const DisconnectConfirmationModal = ({
+  isVisible,
+  onClose,
+  memberId,
+  refreshPage,
+}) => {
   if (!isVisible) return null;
-  console.log(memberId);
 
   const handleDisconnectLinkedIn = async () => {
     try {
       await disconnectLinkedIn(memberId);
+      refreshPage(true);
       message.success('Account disconnected successfully!');
       onClose();
     } catch (err) {
-      message.error('Error disconnecting account! Try Again');
+      message.error(err.message);
     }
   };
 

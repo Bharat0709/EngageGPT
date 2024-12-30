@@ -7,6 +7,7 @@ import { Button, message, Skeleton } from 'antd';
 import AddPeopleModal from '../Global/AddPeopleModal';
 import DisconnectConfirmationModal from './DisconnectModal';
 import { getAllMembers, addNewMember } from '../../../network/Members';
+import { FaLinkedin } from 'react-icons/fa';
 import 'antd/dist/reset.css';
 
 const People = () => {
@@ -54,7 +55,6 @@ const People = () => {
   const handleDisconnectLinkedIn = (personId) => {
     setSelectedPersonId(personId);
     setDisconnectModalVisible(true);
-    setRefeshPeoplePage(true);
   };
 
   const handleConnectLinkedIn = () => {
@@ -246,9 +246,10 @@ const People = () => {
                   <button
                     onClick={handleConnectLinkedIn}
                     disabled={person.isLinkedinConnected}
-                    className={`rounded-lg text-black bg-gray-50 p-2 border border-gray-900 px-4 flex items-center gap-2 text-xs`}
+                    className={`rounded-lg text-black bg-gray-50 p-2 border border-gray-900 px-3 flex items-center gap-2 text-xs`}
                   >
-                    Connect LinkedIn
+                    Connect
+                    <FaLinkedin className="text-sky-800" size={20} />
                   </button>
                 )}
                 <div className="copy-token text-sm">
@@ -274,6 +275,7 @@ const People = () => {
         isVisible={disconnectModalVisible}
         onClose={() => setDisconnectModalVisible(false)}
         memberId={selectedPersonId}
+        refreshPage={setRefeshPeoplePage}
       />
     </div>
   );

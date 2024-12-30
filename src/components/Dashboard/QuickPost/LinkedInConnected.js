@@ -46,7 +46,6 @@ const LinkedInConnection = ({
           )}
         </div>
 
-        {/* Skeleton for button */}
         {isLoading ? (
           <Skeleton.Button active size="default" style={{ width: '150px' }} />
         ) : (
