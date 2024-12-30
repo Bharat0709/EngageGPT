@@ -22,7 +22,7 @@ const OrganizationProfileSettings = () => {
         }, 1000);
       } catch (err) {
         console.error('Failed to fetch user data:', err.message);
-        message.error('Failed to load user data. Please try again later.');
+        message.error(err.message);
       }
     };
 

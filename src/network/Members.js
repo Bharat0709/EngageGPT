@@ -6,7 +6,6 @@ const MEMBER_API_URL = '/members';
 export const fetchOrganizationData = async () => {
   try {
     const response = await axiosInstance.get(`/organization/auth`);
-    console.log(response.data.user);
     return response.data.user;
   } catch (error) {
     const errorMsg = getErrorMessage(error);
@@ -21,7 +20,6 @@ export const addNewMember = async (newMemberDetails) => {
       name,
       email,
     });
-    console.log(response.data);
     return response.data.data;
   } catch (error) {
     const errorMsg = getErrorMessage(error);
@@ -32,7 +30,6 @@ export const addNewMember = async (newMemberDetails) => {
 export const getAllMembers = async () => {
   try {
     const response = await axiosInstance.get(`${MEMBER_API_URL}/all`);
-    console.log(response.data.data);
     return response.data.data;
   } catch (error) {
     const errorMsg = getErrorMessage(error);

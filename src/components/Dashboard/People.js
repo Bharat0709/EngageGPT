@@ -16,13 +16,15 @@ const People = () => {
   useEffect(() => {
     const fetchMembers = async () => {
       setIsLoading(true);
-      const members = await getAllMembers();
-      if (members.length > 0) {
-        setPeople(members);
-      }
-      setTimeout(() => {
+      try {
+        const members = await getAllMembers();
+        if (members.length > 0) {
+          setPeople(members);
+        }
         setIsLoading(false);
-      }, 1000);
+      } catch (error) {
+        message.error(error.message);
+      }
     };
     fetchMembers();
   }, []);
@@ -41,6 +43,11 @@ const People = () => {
       console.error('Failed to fetch user data:', err.message);
       message.error(err.message);
     }
+  };
+
+  const handleConnectLinkedIn = () => {
+    const authUrl = `http://localhost:8000/api/v1/members/auth/linkedin`;
+    window.location.href = authUrl;
   };
 
   const handleCopy = (token) => {
@@ -76,16 +83,16 @@ const People = () => {
           <button
             type="primary"
             onClick={() => setIsAddPeopleModalOpen(true)}
-            className="global-button-primary text-sm flex items-center gap-1 py-1 px-2 rounded-md"
+            className="global-button-primary text-sm flex items-center gap-1 py-2 px-3 rounded-lg"
           >
             <AiOutlinePlus size={14} />
-            Add
+            Add Profile
           </button>
         </div>
       </div>
 
       {/* Toggle Section */}
-      <div className="toggles bg-gray-50 p-3 rounded-xl flex justify-between items-center mb-2">
+      <div className="toggles bg-gray-50 p-3 lg:flex hidden rounded-xl  justify-between items-center mb-2">
         {isLoading ? (
           <div className="flex items-center gap-4">
             <Skeleton.Input
@@ -182,9 +189,9 @@ const People = () => {
           filteredPeople.map((person) => (
             <div
               key={person?.id}
-              className="person-card w-full bg-white p-4 rounded-xl flex justify-between items-center"
+              className="person-card w-full bg-white p-4 rounded-xl lg:flex-row flex-col flex justify-between items-center"
             >
-              <div className="flex gap-4 items-center">
+              <div className="flex lg:flex-row flex-col gap-3 items-center">
                 <img
                   src={person?.profilePicture}
                   alt={`${person?.name}'s profile`}
@@ -205,30 +212,45 @@ const People = () => {
                 <div className="flex rounded-full text-green-600 items-center">
                   <p
                     className={`text-sm p-0 m-0 font-medium ${
-                      person.isConnected === true
-                        ? 'text-green-500'
-                        : 'text-red-500'
+                      person.isConnected === 'connected'
+                        ? 'text-green-700'
+                        : 'text-red-600'
                     }`}
                   >
                     •{' '}
                     {person.isConnected === 'connected'
-                      ? 'Connected'
+                      ? 'Analytics Connected'
                       : person.isConnected === 'invited'
                       ? 'Invited'
                       : 'Disconnected'}
                   </p>
                 </div>
+                <button
+                  onClick={handleConnectLinkedIn}
+                  disabled={person.isLinkedinConnected}
+                  className={`p-2 rounded-lg text-sm  ${
+                    person.isLinkedinConnected
+                      ? 'text-green-700'
+                      : 'text-black bg-gray-50 p-2 mx-3 border border-gray-900 px-4'
+                  }`}
+                >
+                  {person.isLinkedinConnected
+                    ? '•  LinkedIn Connected'
+                    : 'Connect LinkedIn'}
+                </button>
               </div>
-              <div className="copy-token text-sm">
-                Connection Token
-                <Tooltip title="Copy Connection Token">
-                  <Button
-                    className="text-black hover:text-black"
-                    icon={<MdContentCopy />}
-                    onClick={() => handleCopy(person.connectionToken)}
-                    type="link"
-                  ></Button>
-                </Tooltip>
+              <div className="flex gap-4 lg:mt-0 mt-2 items-center">
+                <div className="copy-token text-sm">
+                  Connection Token
+                  <Tooltip title="Copy Connection Token">
+                    <Button
+                      className="text-black hover:text-black"
+                      icon={<MdContentCopy />}
+                      onClick={() => handleCopy(person.connectionToken)}
+                      type="link"
+                    ></Button>
+                  </Tooltip>
+                </div>
               </div>
             </div>
           ))

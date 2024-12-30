@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { Skeleton, message, Button, Avatar, Card } from 'antd';
+import { MdContentCopy } from 'react-icons/md';
+import { Skeleton, message, Button, Tooltip } from 'antd';
 import { FiUsers } from 'react-icons/fi';
-import { AiOutlinePlus } from 'react-icons/ai';
-import { AiOutlineEye, AiOutlineSearch, AiOutlineUser } from 'react-icons/ai';
+import { formatDate } from '../../utils/formatDate';
+import { AiOutlinePlus, AiOutlineDown, AiOutlineUp } from 'react-icons/ai';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { toast } from 'react-toastify';
 import { encodeToken } from '../../utils/tokenUtils';
 import { setAuthTokenAction } from '../../redux/auth/authActions';
 import Cookies from 'js-cookie';
-import { getAllMembers } from '../../network/Members';
+import { getAllMembers, addNewMember } from '../../network/Members';
+import AddMembersModal from './AddPeopleModal';
+import AddProfile from '../../assets/images/AddProfile.png';
+import PostDetails from './PostsAnalytics';
+import Stats from './Stats';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -18,12 +22,17 @@ const Home = () => {
   const authToken = Cookies.get('engage-gpt');
   const [profiles, setProfiles] = useState([]);
   const [selectedProfile, setSelectedProfile] = useState(null);
+  const [isAddMemberModalOpen, setIsAddMemberModalOpen] = useState(false);
+  const [invitedProfiles, setInvitedProfiles] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [refreshMembers, setRefreshMembers] = useState(false);
+  const [stats, setStats] = useState([]);
 
   useEffect(() => {
     const token = new URLSearchParams(location.search).get('token');
 
     if (!token && !authToken) {
-      toast.error('Session expired, please log in again.');
+      message.error('Session expired, please log in again.');
       navigate('/login');
       return;
     }
@@ -43,161 +52,294 @@ const Home = () => {
 
   useEffect(() => {
     const fetchAndSetUserData = async () => {
+      setIsLoading(true);
       try {
         const data = await getAllMembers();
-        console.log(data);
-        if (data.length > 0) {
-          setSelectedProfile(data[0]  );
-        }
-
-        // for (const member of data) {
-        //   if (member.isConnected === 'connected') {
-        //     setSelectedProfile(member);
-        //   }
-        // }
-        console.log(data);
-        setProfiles(data); // Assuming API fetches multiple profiles if available
+        const invited = data.filter(
+          (member) => member.isConnected === 'invited',
+        );
+        const connected = data.find(
+          (member) => member.isConnected === 'connected',
+        );
+        setProfiles(data);
+        setIsLoading(false);
+        setInvitedProfiles(invited);
+        setSelectedProfile(connected || null);
       } catch (err) {
         console.error('Failed to fetch user data:', err.message);
-        message.error('Failed to load user data. Please try again later.');
+        message.error(err.message);
       }
     };
 
     fetchAndSetUserData();
-  }, []);
+  }, [refreshMembers]);
+
+  const handleAddMembers = async (newPerson) => {
+    try {
+      for (const person of newPerson) {
+        const addMember = await addNewMember(person);
+        console.log(addMember);
+      }
+      message.success('Invite sent successfully!');
+      setRefreshMembers(!refreshMembers);
+      setIsAddMemberModalOpen(false);
+    } catch (err) {
+      console.error('Failed to fetch user data:', err.message);
+      message.error(err.message);
+    }
+  };
+
+  const handleConnectLinkedIn = () => {
+    const authUrl = `http://localhost:8000/api/v1/members/auth/linkedin`;
+    window.location.href = authUrl;
+  };
+
+  const handleCopy = (token) => {
+    navigator.clipboard.writeText(token);
+    message.success('Connection token copied!');
+  };
 
   const handleProfileChange = (profile) => {
     setSelectedProfile(profile);
   };
 
-  if (!selectedProfile) {
+  if (isLoading) {
     return (
-      <div className="dashboard-container bg-gray-100 min-h-screen flex flex-col items-center p-8">
-        <Skeleton active />
+      <div className="dashboard-container bg-white min-h-screen p-6">
+        <div className="flex items-center justify-between pr-3">
+          <h2 className="text-2xl">Home</h2>
+          <div className="w-min">
+            <Skeleton.Button style={{ height: 30 }} active />
+          </div>
+        </div>
+        <div className="person-card w-full py-4 rounded-xl flex justify-between items-center">
+          <div className="flex justify-center items-center flex-wrap w-full gap-4">
+            {[...Array(5)].map((_, index) => (
+              <div key={index} className="bg-gray-50  py-4 px-4 rounded-xl">
+                <Skeleton.Input
+                  active
+                  style={{
+                    width: 70,
+                    height: 10,
+                    backgroundColor: '#f9fafb',
+                    marginLeft: 12,
+                    marginTop: 5,
+                  }}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     );
   }
-  const statistics = [
-    {
-      title: 'Followers',
-      value: selectedProfile.followersCount,
-      icon: <FiUsers />,
-    },
-    {
-      title: 'Following',
-      value: selectedProfile.followingCount,
-      icon: <AiOutlineUser />,
-    },
-    {
-      title: 'Connections',
-      value: selectedProfile.connectionsCount,
-      icon: <AiOutlinePlus />,
-    },
-    {
-      title: 'Profile Views',
-      value: selectedProfile.profileViews,
-      icon: <AiOutlineEye />,
-    },
-    {
-      title: 'Search Appearances',
-      value: selectedProfile.searchAppearances,
-      icon: <AiOutlineSearch />,
-    },
-    {
-      title: 'Profile Completion',
-      value: selectedProfile.completedProfileAspects?.length,
-      suffix: `/${
-        selectedProfile.completedProfileAspects?.length +
-        selectedProfile.missingProfileAspects?.length
-      }`,
-      icon: <AiOutlineUser />,
-    },
-  ];
 
-  return (
-    <div className="bg-white h-full p-6">
-      {/* Header Section */}
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl">Home</h1>
-        <div className="flex items-center space-x-6">
-          <select
-            value={selectedProfile.connectionToken}
-            onChange={(e) =>
-              handleProfileChange(
-                profiles.find(
-                  (profile) => profile.connectionToken === e.target.value,
-                ),
-              )
-            }
-            className="cursor-pointer rounded-xl border px-4 py-2"
+  if (!selectedProfile && invitedProfiles.length === 0) {
+    return (
+      <div className="bg-white min-h-screen flex justify-center gap-8 flex-col items-center p-8">
+        <img className="h-32 w-32" src={AddProfile} alt="AddProfile" />
+        <button
+          type="primary"
+          onClick={() => setIsAddMemberModalOpen(true)}
+          className="global-button-primary text-md flex items-center gap-1 py-2 px-3 rounded-lg"
+        >
+          <AiOutlinePlus size={14} />
+          Add Profile
+        </button>
+        <AddMembersModal
+          isOpen={isAddMemberModalOpen}
+          onClose={() => setIsAddMemberModalOpen(false)}
+          onSubmit={handleAddMembers}
+        />
+      </div>
+    );
+  }
+
+  if (!selectedProfile && invitedProfiles.length > 0) {
+    return (
+      <div className="dashboard-container bg-white min-h-screen p-6">
+        <div className="flex items-center mb-6 justify-between">
+          <h2 className="text-xl">Invited Profiles</h2>
+          <button
+            type="primary"
+            onClick={() => setIsAddMemberModalOpen(true)}
+            className="global-button-primary text-xs flex items-center gap-1 py-2 px-3 rounded-lg"
           >
-            {profiles.map((profile) => (
-              <option
-                key={profile.connectionToken}
-                value={profile.connectionToken}
-              >
-                {profile.name}
-              </option>
-            ))}
-          </select>
-
-          <div className="flex items-center space-x-4">
-            <FiUsers />
-            <span className="text-gray-600">{profiles.length}</span>
-            <Button
-              type="primary"
-              icon={<AiOutlinePlus />}
-              className="global-button-primary rounded-md"
+            <AiOutlinePlus size={14} />
+            Add Profile
+          </button>
+        </div>
+        <div className="flex flex-col gap-2 mb-2">
+          <p className="p-2 text-xs bg-sky-50 rounded-lg">
+            Connect to LinkedIn to share content
+          </p>
+          <div className="p-2 text-xs flex justify-between bg-sky-50 rounded-lg">
+            <p>Connect via connection token to view Profile Analytics</p>
+            <a
+              className="text-sky-700"
+              href="https://chromewebstore.google.com/detail/engagegpt-ai-for-linkedin/ldhdipkofibjleihomflebfklhadikio?hl=en-GB&authuser=1"
+              target="_blank"
+              rel="noreferrer"
             >
-              Add
-            </Button>
+              Connect via token
+            </a>
           </div>
         </div>
-      </div>
-
-      {/* Profile Stats Section */}
-      <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {statistics.map((stat, index) => (
-          <Card className="rounded-xl bg-gray-50" key={index}>
-            <div className="flex  items-start">
-              <div key={index} className="flex items-center gap-2 rounded">
-                <div className="flex items-center">
-                  <span className="text-lg mr-2">{stat.icon}</span>
-                  <span className="">{stat.title}</span>
+        <ul className="space-y-4">
+          {invitedProfiles.map((person) => (
+            <div
+              key={person?.id}
+              className="person-card w-full bg-gray-50 p-4 rounded-xl gap-2 flex lg:flex-row flex-col justify-between items-center"
+            >
+              <div className="flex lg:flex-row flex-col lg:gap-4 gap-2 items-center">
+                <img
+                  src={person?.profilePicture}
+                  alt={`${person?.name}'s profile`}
+                  className="w-10 h-10 rounded-full border border-gray-300"
+                />
+                <h3 className="text-sm p-0 m-0 font-semibold text-gray-800">
+                  {person?.name}
+                </h3>
+                <p className="text-sm rounded-lg p-0 m-0 text-gray-600">
+                  {person?.email}
+                </p>
+                <div className="flex  rounded-full text-green-600 items-center">
+                  <p
+                    className={`text-sm p-0 m-0 font-medium ${
+                      person.isConnected === true
+                        ? 'text-green-500'
+                        : 'text-red-500'
+                    }`}
+                  >
+                    •{' '}
+                    {person.isConnected === 'connected'
+                      ? 'Connected'
+                      : person.isConnected === 'invited'
+                      ? 'Invited'
+                      : 'Disconnected'}
+                  </p>
                 </div>
-                <div className="text-lg">
-                  {stat.value}
-                  {stat.suffix && (
-                    <span className="text-lg ml-1">{stat.suffix}</span>
-                  )}
+              </div>
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={handleConnectLinkedIn}
+                  disabled={person.isLinkedinConnected}
+                  className="border-black text-black bg-white border p-2 rounded-lg text-xs"
+                >
+                  {person.isLinkedinConnected
+                    ? 'LinkedIn Connected'
+                    : 'Connect LinkedIn'}
+                </button>
+                <div className="copy-token text-sm">
+                  Connection Token
+                  <Tooltip title="Copy Connection Token">
+                    <Button
+                      className="text-black hover:text-black"
+                      icon={<MdContentCopy />}
+                      onClick={() => handleCopy(person.connectionToken)}
+                      type="link"
+                    ></Button>
+                  </Tooltip>
                 </div>
               </div>
             </div>
-          </Card>
-        ))}
+          ))}
+        </ul>
+        <AddMembersModal
+          isOpen={isAddMemberModalOpen}
+          onClose={() => setIsAddMemberModalOpen(false)}
+          onSubmit={handleAddMembers}
+        />
       </div>
+    );
+  }
 
-      <div className="mt-6 p-6 bg-white rounded shadow">
-        <div className="flex items-center space-x-4">
-          <Avatar src={selectedProfile.profilePicture} size={64} />
-          <div>
-            <h2 className="text-lg font-bold">{selectedProfile.name}</h2>
-            <p className="text-gray-600">{selectedProfile.email}</p>
+  return (
+    <div className="bg-white h-full overflow-y-scroll">
+      <div className="flex lg:flex-row lg:px-6 lg:py-5 p-3 flex-col gap-3 justify-between items-center ">
+        <h1 className="text-xl font-semibold">Home</h1>
+        <p className="text-xs p-2 bg-blue-50 font-semibold rounded-lg px-4">
+          {selectedProfile?.lastSyncedAt
+            ? `Last Synced at ${formatDate(selectedProfile.lastSyncedAt)}`
+            : 'Profile analytics not synced yet!'}
+        </p>
+        <div className="flex items-center space-x-2">
+          <div className="relative flex py-2 px-2 pl-6 hover:bg-gray-50 rounded-lg justify-center items-center gap-2 group">
+            <FiUsers />
+            <span className="text-black">{profiles.length}</span>
+            <div className="flex flex-col">
+              <AiOutlineUp className="h-2" />
+              <AiOutlineDown className="h-2" />
+            </div>
+            <div className="relative">
+              <div className="absolute -left-40 top-4 mt-2 w-64 bg-white border rounded-lg hidden group-hover:block z-10">
+                <ul className="divide-y divide-gray-200">
+                  {profiles.map((profile) => (
+                    <li
+                      key={profile.id}
+                      onClick={(e) => handleProfileChange(profile)}
+                      className="flex items-center cursor-pointer justify-between p-2 hover:bg-gray-100"
+                    >
+                      <div className="flex items-center gap-3">
+                        <img
+                          src={profile.profilePicture}
+                          alt={profile.name}
+                          className="h-10 w-10 rounded-full"
+                        />
+                        <div className="flex flex-col gap-1">
+                          <h4 className="text-sm p-0 m-0 font-medium text-gray-800">
+                            {profile.name}
+                          </h4>
+                          <p
+                            className={`text-xs m-0 p-0 ${
+                              profile.isConnected === 'connected'
+                                ? 'text-green-600'
+                                : 'text-red-500'
+                            }`}
+                          >
+                            {profile.isConnected === 'connected'
+                              ? 'Connected'
+                              : profile.isConnected === 'invited'
+                              ? 'Invited'
+                              : 'Disconnected'}
+                          </p>
+                        </div>
+                      </div>
+                      <Tooltip title="Copy Connection Token">
+                        <Button
+                          className="text-gray-500 hover:text-gray-700"
+                          icon={<MdContentCopy />}
+                          onClick={() => handleCopy(profile.connectionToken)}
+                          type="link"
+                        />
+                      </Tooltip>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
           </div>
-        </div>
-        <div className="mt-4">
-          <h3 className="font-semibold">Steps to Complete Profile:</h3>
-          <ul className="list-disc ml-6">
-            {selectedProfile?.missingProfileAspects?.length === 0 ? (
-              <li className="text-green-500">Profile is fully completed!</li>
-            ) : (
-              selectedProfile?.missingProfileAspects?.map((aspect, index) => (
-                <li key={index}>{aspect}</li>
-              ))
-            )}
-          </ul>
+          <button
+            type="primary"
+            onClick={() => setIsAddMemberModalOpen(true)}
+            className="global-button-primary text-xs flex items-center gap-1 py-2 px-3 rounded-lg"
+          >
+            <AiOutlinePlus size={14} />
+            Add Profile
+          </button>
         </div>
       </div>
+      <Stats
+        isLoading={isLoading}
+        selectedProfile={selectedProfile}
+        stats={stats}
+      />
+      <PostDetails setStats={setStats} memberId={selectedProfile._id} />
+      <AddMembersModal
+        isOpen={isAddMemberModalOpen}
+        onClose={() => setIsAddMemberModalOpen(false)}
+        onSubmit={handleAddMembers}
+      />
     </div>
   );
 };

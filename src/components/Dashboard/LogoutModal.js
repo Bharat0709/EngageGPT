@@ -27,7 +27,7 @@ const LogoutConfirmationModal = ({ isVisible, onClose, onConfirm }) => {
           <button
             type="button"
             onClick={onConfirm}
-            className="global-button-primary"
+            className="global-button-primary bg-red-600"
           >
             <LogoutButton />
           </button>

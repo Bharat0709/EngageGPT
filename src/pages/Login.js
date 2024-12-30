@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { FcGoogle } from 'react-icons/fc';
 import { message } from 'antd';
+import { FcGoogle } from 'react-icons/fc';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import EngageGPTLogo from '../assets/images/EngageGPTLogoIocn.png';
@@ -38,8 +38,9 @@ const Login = () => {
     }
     try {
       const loginResponse = await login(formData.email, formData.password);
-      console.log(loginResponse);
-      navigate(`/dashboard?token=${loginResponse.token}`);
+      if (loginResponse.token) {
+        navigate(`/dashboard?token=${loginResponse.token}`);
+      }
       message.success('Login successful!');
     } catch (error) {
       message.error(error.message);
@@ -126,7 +127,7 @@ const Login = () => {
             </div>
 
             <a
-              href="http://localhost:8000/api/v1/organization/auth/google"
+              href={process.env.REACT_APP_OAUTH_URL}
               className="flex items-center justify-center border border-gray-300 bg-white text-sky-900 py-2 px-4 rounded-full"
             >
               <FcGoogle className="mr-2" size={20} />

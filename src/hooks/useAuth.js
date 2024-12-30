@@ -10,7 +10,6 @@ import { useNavigate } from 'react-router-dom';
 const useAuthCheck = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -23,7 +22,6 @@ const useAuthCheck = () => {
         } catch (error) {
           console.error('Token decoding failed:', error);
           Cookies.remove('engage-gpt');
-          alert('Session expired. Please log in.');
         }
       }
     };

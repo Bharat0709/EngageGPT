@@ -1,5 +1,4 @@
 export const getErrorMessage = (error) => {
-  console.log(error);
   if (error.response && error.response.data) {
     if (Array.isArray(error.response.data.errors) && error.response.data.errors.length > 0) {
       return error.response.data.message;

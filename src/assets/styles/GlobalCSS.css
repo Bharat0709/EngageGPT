@@ -53,3 +53,35 @@
   background-color: #f3f4f6;
   transition: all 0.1s ease-in-out;
 }
+
+.ant-drawer-body {
+  padding: 0px !important;
+  scrollbar-width: none !important;
+}
+
+.ant-drawer-body::-webkit-scrollbar {
+  display: none !important;
+}
+.ant-drawer-header-close-only {
+  padding: 18px 6px !important;
+}
+
+.group:hover .group-hover\:opacity-100 {
+  opacity: 1 !important;
+}
+
+.whitespace-nowrap {
+  white-space: nowrap;
+}
+
+.bg-gray-900 {
+  background-color: #1a202c;
+}
+
+.text-xs {
+  font-size: 0.75rem;
+}
+
+.transition-opacity {
+  transition: opacity 0.3s;
+}

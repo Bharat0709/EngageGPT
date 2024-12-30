@@ -9,7 +9,6 @@ export const login = async (email, password) => {
       email,
       password,
     });
-    console.log(response);
     return response.data;
   } catch (error) {
     throw new Error(getErrorMessage(error));
@@ -24,7 +23,6 @@ export const signup = async (email, password, passwordConfirm) => {
       password,
       passwordConfirm,
     });
-    console.log(response);
     return response.data;
   } catch (error) {
     throw new Error(getErrorMessage(error));

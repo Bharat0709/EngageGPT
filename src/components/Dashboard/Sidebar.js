@@ -10,16 +10,16 @@ import {
   FiFolder,
   FiHelpCircle,
   FiUser,
-  FiUsers,
+  FiZap,
   FiFileText,
   FiMessageSquare,
-  FiPieChart,
   FiHome,
   FiChevronLeft,
 } from 'react-icons/fi';
 import EngageGPTLogo from '../../assets/images/EngageGPTLogoIocn.png';
 import FeedbackModal from './FeebackModal';
 import HelpModal from './HelpModal';
+import Tooltip from './ToolTip';
 
 const menuItems = [
   {
@@ -29,33 +29,18 @@ const menuItems = [
     activeClass: 'global-sidebar-button-primary bg-[#004265]',
     hoverClass: 'hover:bg-[#004265] hover:text-white',
   },
-
   {
-    to: '/dashboard/analytics',
-    icon: <FiPieChart size={20} />,
-    label: 'Analytics',
-    activeClass: 'global-sidebar-button-primary bg-[#004265]',
-    hoverClass: 'hover:bg-[#004265] hover:text-white',
-  },
-  {
-    to: '/dashboard/profiles',
-    icon: <FiUsers size={20} />,
-    label: 'Profiles',
+    to: '/dashboard/quick-post',
+    icon: <FiZap size={20} />,
+    label: 'Quick Post',
     activeClass: 'global-sidebar-button-primary bg-[#006da7fb]',
     hoverClass: 'hover:bg-[#004265] hover:text-white',
   },
   {
-    to: '/dashboard/viral-post-generator',
+    to: '/dashboard/create-post',
     icon: <FiFileText size={20} />,
-    label: 'Viral Post Generator',
+    label: 'Post Generator',
     activeClass: 'global-sidebar-button-primary bg-[#00 6da7fb]',
-    hoverClass: 'hover:bg-[#004265] hover:text-white',
-  },
-  {
-    to: '/dashboard/cold-email-generator',
-    icon: <FiMessageSquare size={20} />,
-    label: 'Cold Email Generator',
-    activeClass: 'global-sidebar-button-primary bg-[#004265]',
     hoverClass: 'hover:bg-[#004265] hover:text-white',
   },
   {
@@ -77,24 +62,22 @@ const SidebarLink = ({
   activeClass,
   hoverClass,
 }) => (
-  <Link
-    to={to}
-    onClick={onClick}
-    className={`flex items-center gap-3 py-2 pl-3 rounded-md transition-opacity duration-500 ${
-      isActive ? activeClass : hoverClass
-    }`}
-  >
-    {React.cloneElement(icon, {
-      className: 'text-white',
-    })}
-    <span
-      className={`text-white text-sm ${
-        isActive ? 'text-white' : 'text-white'
-      } ${isOpen ? '' : 'hidden'}`}
+  <Tooltip text={label} position="right">
+    <Link
+      to={to}
+      onClick={onClick}
+      className={`flex items-center gap-3 pr-3 w-full py-2 pl-3 rounded-md transition-opacity duration-500 ${
+        isActive ? activeClass : hoverClass
+      }`}
     >
-      {label}
-    </span>
-  </Link>
+      {React.cloneElement(icon, {
+        className: 'text-white',
+      })}
+      <span className={`text-white text-sm ${isOpen ? '' : 'hidden'}`}>
+        {label}
+      </span>
+    </Link>
+  </Tooltip>
 );
 
 function Sidebar() {
@@ -185,20 +168,24 @@ function Sidebar() {
           </div>
 
           <div className="flex flex-col rounded-lg p-2 bg-[#004265] lg:mr-1 space-y-3">
-            <button
-              onClick={() => setIsFeedbackModalOpen(true)}
-              className="flex text-white text-sm items-center gap-3 py-2 pl-3 rounded-md hover:bg-[#145a7f]"
-            >
-              <FiMessageSquare size={20} />
-              <span className={`${isOpen ? '' : 'hidden'}`}>Feedback</span>
-            </button>
-            <button
-              onClick={() => setIsHelpModalOpen(true)}
-              className="flex text-white items-center text-sm gap-3  py-2 pl-3 rounded-md hover:bg-[#145a7f]"
-            >
-              <FiHelpCircle size={20} />
-              <span className={`${isOpen ? '' : 'hidden'}`}>Help</span>
-            </button>
+            <Tooltip text="Feedback" position="right">
+              <button
+                onClick={() => setIsFeedbackModalOpen(true)}
+                className="flex text-white text-sm items-center gap-3 py-2 pr-3 pl-3 rounded-md hover:bg-[#145a7f]"
+              >
+                <FiMessageSquare size={20} />
+                <span className={`${isOpen ? '' : 'hidden'}`}>Feedback</span>
+              </button>
+            </Tooltip>
+            <Tooltip text="Need Help?" position="right">
+              <button
+                onClick={() => setIsHelpModalOpen(true)}
+                className="flex text-white items-center text-sm gap-3 py-3 pr-3 pl-3 rounded-md hover:bg-[#145a7f]"
+              >
+                <FiHelpCircle size={20} />
+                <span className={`${isOpen ? '' : 'hidden'}`}>Help</span>
+              </button>
+            </Tooltip>
             <SidebarLink
               key="/dashboard/settings"
               to="/dashboard/settings"
@@ -210,13 +197,15 @@ function Sidebar() {
               activeClass="global-sidebar-button-primary text-sm bg-[#145a7f]"
               hoverClass="hover:bg-[#145a7f]"
             />
-            <button
-              onClick={() => setIsLogoutModalOpen(true)}
-              className="flex text-white items-center gap-3 py-2 text-sm pl-3 rounded-md hover:bg-[#145a7f]"
-            >
-              <FiLogOut size={20} />
-              <span className={`${isOpen ? '' : 'hidden'}`}>Logout</span>
-            </button>
+            <Tooltip text="Logout" position="right">
+              <button
+                onClick={() => setIsLogoutModalOpen(true)}
+                className="flex text-white items-center gap-3 w-full py-2 text-sm pl-3 rounded-md hover:bg-[#145a7f]"
+              >
+                <FiLogOut size={20} />
+                <span className={`${isOpen ? '' : 'hidden'}`}>Logout</span>
+              </button>
+            </Tooltip>
           </div>
         </nav>
       </div>

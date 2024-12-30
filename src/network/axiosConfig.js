@@ -16,7 +16,6 @@ axiosInstance.interceptors.request.use(
     const token = Cookies.get('engage-gpt');
     if (token) {
       const decodedToken = decodeToken(token);
-      console.log(decodedToken);
       config.headers.Authorization = `Bearer ${decodedToken}`;
     }
     return config;

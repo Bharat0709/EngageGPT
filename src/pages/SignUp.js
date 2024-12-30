@@ -159,11 +159,11 @@ const Signup = () => {
               <span className="h-px w-16 bg-gray-300"></span>
             </div>
             <a
-              href="http://localhost:8000/api/v1/organization/auth/google"
+              href={process.env.REACT_APP_OAUTH_URL}
               className="flex items-center justify-center border border-gray-300 bg-white text-sky-900 py-2 px-4 rounded-full"
             >
               <FcGoogle className="mr-2" size={20} />
-              Sign in with Google 
+              Sign in with Google
             </a>
 
             <div className="flex items-center justify-center">
