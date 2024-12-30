@@ -22,7 +22,6 @@ const AddMembersModal = ({ isOpen, onClose, onSubmit }) => {
     setMembers(updatedMembers);
   };
 
-  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
     if (

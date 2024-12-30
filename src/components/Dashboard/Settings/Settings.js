@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { fetchOrganizationData } from '../../network/Members';
+import { fetchOrganizationData } from '../../../network/Organization';
 import { message, Skeleton } from 'antd';
 import { FiEdit } from 'react-icons/fi';
 import EditOrgModal from './EditOrgModal';
@@ -21,8 +21,7 @@ const OrganizationProfileSettings = () => {
           setLoading(false);
         }, 1000);
       } catch (err) {
-        console.error('Failed to fetch user data:', err.message);
-        message.error(err.message);
+        message.error('Error fetching organization details');
       }
     };
 
@@ -35,14 +34,11 @@ const OrganizationProfileSettings = () => {
         content: 'Sending password reset email...',
         key: 'reset',
       });
-      // Mock API call to send password reset email
-      console.log('Sending password reset email to:', userData.email);
       message.success({
         content: 'Password reset email sent successfully!',
         key: 'reset',
       });
     } catch (err) {
-      console.error('Failed to send password reset email:', err.message);
       message.error('Failed to send password reset email. Please try again.');
     }
   };
@@ -52,7 +48,6 @@ const OrganizationProfileSettings = () => {
   };
 
   const handleSaveProfile = (updatedData) => {
-    console.log('Updated data:', updatedData);
     setUserData((prevData) => ({ ...prevData, ...updatedData }));
   };
 
@@ -69,14 +64,6 @@ const OrganizationProfileSettings = () => {
             }`}
           >
             General
-          </button>
-          <button
-            onClick={() => handleViewToggle('billing')}
-            className={`${
-              view === 'billing' ? ' text-black font-semibold' : 'text-gray-600'
-            }`}
-          >
-            Billing
           </button>
         </>
       </div>
@@ -122,16 +109,24 @@ const OrganizationProfileSettings = () => {
               ) : (
                 <>
                   <p className="text-lg text-gray-900">
-                    {userData.name || 'N/A'}
+                    {userData?.name || 'N/A'}
                   </p>
                   <p className="text-sm text-gray-900">
-                    {userData.email || 'N/A'}
+                    {userData?.email || 'N/A'}
                   </p>
                 </>
               )}
             </div>
           </div>
-          <button onClick={() => setIsModalOpen(true)} className="text-black">
+          <button
+            disabled={userData?.oauthProvider === 'google'}
+            onClick={() => setIsModalOpen(true)}
+            className={`text-black ${
+              userData?.oauthProvider === 'google'
+                ? 'cursor-not-allowed'
+                : 'cursor-pointer'
+            }`}
+          >
             {loading ? (
               <Skeleton.Button
                 style={{ width: 12, height: 24 }}

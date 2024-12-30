@@ -1,7 +1,7 @@
     import React from 'react';
     import { motion } from 'framer-motion';
     import MoreFeatures from './FeaturesCurosel';
-    import { featureCards } from '../assets/data/featureCards';
+    import { featureCards } from '../../assets/data/featureCards';
     
     export const Features = () => {
       return (

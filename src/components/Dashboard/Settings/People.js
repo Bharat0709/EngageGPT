@@ -2,16 +2,21 @@ import React, { useState, useEffect } from 'react';
 import { MdContentCopy } from 'react-icons/md';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { FiUserPlus } from 'react-icons/fi';
-import { Button, message, Tooltip, Skeleton } from 'antd';
-import AddPeopleModal from './AddPeopleModal';
-import { getAllMembers, addNewMember } from '../../network/Members';
+import { BiUnlink } from 'react-icons/bi';
+import { Button, message, Skeleton } from 'antd';
+import AddPeopleModal from '../Global/AddPeopleModal';
+import DisconnectConfirmationModal from './DisconnectModal';
+import { getAllMembers, addNewMember } from '../../../network/Members';
 import 'antd/dist/reset.css';
 
 const People = () => {
   const [people, setPeople] = useState([]);
   const [isAddPeopleModalOpen, setIsAddPeopleModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [disconnectModalVisible, setDisconnectModalVisible] = useState(false);
+  const [selectedPersonId, setSelectedPersonId] = useState(null);
   const [selectedFilter, setSelectedFilter] = useState('All');
+  const [refreshPeoplePage, setRefeshPeoplePage] = useState(false);
 
   useEffect(() => {
     const fetchMembers = async () => {
@@ -21,13 +26,15 @@ const People = () => {
         if (members.length > 0) {
           setPeople(members);
         }
-        setIsLoading(false);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 1000);
       } catch (error) {
         message.error(error.message);
       }
     };
     fetchMembers();
-  }, []);
+  }, [refreshPeoplePage]);
 
   const handleAddPerson = async (newPerson) => {
     try {
@@ -40,13 +47,18 @@ const People = () => {
       message.success('Invite sent successfully!');
       setIsAddPeopleModalOpen(false);
     } catch (err) {
-      console.error('Failed to fetch user data:', err.message);
       message.error(err.message);
     }
   };
 
+  const handleDisconnectLinkedIn = (personId) => {
+    setSelectedPersonId(personId);
+    setDisconnectModalVisible(true);
+    setRefeshPeoplePage(true);
+  };
+
   const handleConnectLinkedIn = () => {
-    const authUrl = `http://localhost:8000/api/v1/members/auth/linkedin`;
+    const authUrl = `${process.env.REACT_APP_LINKEDIN_AUTH_URL}`;
     window.location.href = authUrl;
   };
 
@@ -145,7 +157,7 @@ const People = () => {
               className="person-card w-full bg-gray-50 p-4 rounded-xl flex justify-between items-center"
             >
               <Skeleton.Avatar active size="large" />
-              <div className="flex-grow items-center gap-4">
+              <div className="flex-grow items-center mt-1 gap-4">
                 <Skeleton.Input
                   active
                   style={{
@@ -158,26 +170,13 @@ const People = () => {
                 <Skeleton.Input
                   active
                   style={{
-                    width: 250,
-                    height: 12,
-                    marginLeft: 12,
-                    marginTop: 3,
-                  }}
-                />
-                <Skeleton.Input
-                  active
-                  style={{
                     width: 100,
-                    height: 12,
+                    height: 10,
                     marginLeft: 12,
                     marginTop: 3,
                   }}
                 />
               </div>
-              <Skeleton.Input
-                active
-                style={{ width: 100, height: 12, marginLeft: 12, marginTop: 3 }}
-              />
             </div>
           ))
         ) : filteredPeople.length === 0 ? (
@@ -188,7 +187,7 @@ const People = () => {
         ) : (
           filteredPeople.map((person) => (
             <div
-              key={person?.id}
+              key={person?._id}
               className="person-card w-full bg-white p-4 rounded-xl lg:flex-row flex-col flex justify-between items-center"
             >
               <div className="flex lg:flex-row flex-col gap-3 items-center">
@@ -203,12 +202,10 @@ const People = () => {
                 <p className="text-sm rounded-lg p-0 m-0 text-gray-600">
                   {person?.email}
                 </p>
-                <Tooltip title="Role">
-                  <p className="text-sm rounded-lg bg-gray-200 p-1 px-3 m-0 text-gray-600">
-                    {person?.role?.charAt(0).toUpperCase() +
-                      person?.role?.slice(1)}
-                  </p>
-                </Tooltip>
+                <p className="text-sm rounded-lg bg-gray-200 p-1 px-3 m-0 text-gray-600">
+                  {person?.role?.charAt(0).toUpperCase() +
+                    person?.role?.slice(1)}
+                </p>
                 <div className="flex rounded-full text-green-600 items-center">
                   <p
                     className={`text-sm p-0 m-0 font-medium ${
@@ -225,31 +222,43 @@ const People = () => {
                       : 'Disconnected'}
                   </p>
                 </div>
-                <button
-                  onClick={handleConnectLinkedIn}
-                  disabled={person.isLinkedinConnected}
-                  className={`p-2 rounded-lg text-sm  ${
-                    person.isLinkedinConnected
-                      ? 'text-green-700'
-                      : 'text-black bg-gray-50 p-2 mx-3 border border-gray-900 px-4'
-                  }`}
-                >
-                  {person.isLinkedinConnected
-                    ? '•  LinkedIn Connected'
-                    : 'Connect LinkedIn'}
-                </button>
+                {person.isLinkedinConnected && (
+                  <p
+                    className={`text-sm p-0 m-0 font-medium  ${
+                      person.isLinkedinConnected
+                        ? 'text-green-700'
+                        : 'text-black bg-gray-50 p-2 mx-3 border border-gray-900 px-4'
+                    }`}
+                  >
+                    • LinkedIn Connected
+                  </p>
+                )}
               </div>
               <div className="flex gap-4 lg:mt-0 mt-2 items-center">
+                {person?.isLinkedinConnected ? (
+                  <button
+                    onClick={() => handleDisconnectLinkedIn(person._id)}
+                    className={`rounded-lg text-black  p-2 bg-gray-50 flex items-center gap-2 text-xs `}
+                  >
+                    <BiUnlink size={15} />
+                  </button>
+                ) : (
+                  <button
+                    onClick={handleConnectLinkedIn}
+                    disabled={person.isLinkedinConnected}
+                    className={`rounded-lg text-black bg-gray-50 p-2 border border-gray-900 px-4 flex items-center gap-2 text-xs`}
+                  >
+                    Connect LinkedIn
+                  </button>
+                )}
                 <div className="copy-token text-sm">
                   Connection Token
-                  <Tooltip title="Copy Connection Token">
-                    <Button
-                      className="text-black hover:text-black"
-                      icon={<MdContentCopy />}
-                      onClick={() => handleCopy(person.connectionToken)}
-                      type="link"
-                    ></Button>
-                  </Tooltip>
+                  <Button
+                    className="text-black hover:text-black"
+                    icon={<MdContentCopy />}
+                    onClick={() => handleCopy(person.connectionToken)}
+                    type="link"
+                  ></Button>
                 </div>
               </div>
             </div>
@@ -260,6 +269,11 @@ const People = () => {
         isOpen={isAddPeopleModalOpen}
         onClose={() => setIsAddPeopleModalOpen(false)}
         onSubmit={handleAddPerson}
+      />
+      <DisconnectConfirmationModal
+        isVisible={disconnectModalVisible}
+        onClose={() => setDisconnectModalVisible(false)}
+        memberId={selectedPersonId}
       />
     </div>
   );

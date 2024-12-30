@@ -1,5 +1,5 @@
 import React from 'react';
-import testimonials from '../assets/data/testimonials';
+import testimonials from '../../assets/data/testimonials';
 import Headings from './Heading';
 
 function Testimonials() {

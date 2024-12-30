@@ -1,18 +1,24 @@
 import React, { useState } from 'react';
 import { message } from 'antd';
+import { sendHelpMail } from '../../../network/Organization';
 
 const HelpModal = ({ isVisible, onClose }) => {
   const [helpQuery, setHelpQuery] = useState('');
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!helpQuery) {
       message.info('Please describe your issue before submitting.');
       return;
     }
 
-    console.log('Help Query Submitted:', helpQuery);
-    setHelpQuery(''); // Reset input
-    onClose(); // Close modal
+    try {
+      await sendHelpMail(helpQuery);
+      message.success(`Help Query Submitted`);
+      setHelpQuery('');
+      onClose();
+    } catch (error) {
+      message.error('An error occurred while submitting your help request.');
+    }
   };
 
   if (!isVisible) return null;
@@ -26,7 +32,9 @@ const HelpModal = ({ isVisible, onClose }) => {
         className="bg-white flex flex-col p-6 rounded-xl lg:w-1/2 w-11/12 relative"
         onClick={(e) => e.stopPropagation()}
       >
-        <h2 className="text-xl text-center mt-2 mb-4">How can we assist you?</h2>
+        <h2 className="text-xl text-center mt-2 mb-4">
+          How can we assist you?
+        </h2>
         <textarea
           rows="4"
           className="w-full border border-gray-300 rounded-xl p-2 mb-4"

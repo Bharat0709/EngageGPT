@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { Drawer } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import linkedInIcon from '../../assets/images/linkedInIcon.png';
+import linkedInIcon from '../../../assets/images/linkedInIcon.png';
 import {
   AiOutlineBarChart,
   AiOutlineEye,
@@ -9,7 +9,7 @@ import {
   AiOutlineMessage,
   AiOutlineShareAlt,
 } from 'react-icons/ai';
-import Tooltip from './ToolTip';
+import Tooltip from '../Global/ToolTip';
 
 const PostDrawer = ({ post, handleDrawerClose, isOpen }) => {
   const drawerRef = useRef(null);

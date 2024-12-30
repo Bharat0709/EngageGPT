@@ -15,7 +15,6 @@ import {
 } from 'react-icons/ai';
 
 const Stats = ({ isLoading, selectedProfile, stats }) => {
-  console.log(selectedProfile);
   const statistics = [
     {
       title: 'Followers',

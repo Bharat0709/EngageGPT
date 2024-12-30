@@ -1,7 +1,7 @@
 import React from 'react';
-import LogoutButton from '../Logout';
+import LogoutButton from '../../Logout';
 
-const LogoutConfirmationModal = ({ isVisible, onClose, onConfirm }) => {
+const LogoutConfirmationModal = ({ isVisible, onClose, onConfirm  }) => {
   if (!isVisible) return null;
 
   return (

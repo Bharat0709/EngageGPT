@@ -1,6 +1,6 @@
 import React from 'react';
 import { Skeleton } from 'antd';
-import CustomDropdown from '../CustomDropDown';
+import CustomDropdown from '../Global/CustomDropDown';
 
 const LinkedInConnection = ({
   isLoading,
@@ -17,7 +17,7 @@ const LinkedInConnection = ({
   return (
     <div className="mb-4">
       <div className="flex lg:flex-row flex-col gap-4 items-center justify-between mb-2">
-        <h3 className="text-xl p-0 m-0 font-medium">Share on LinkedIn</h3>
+        <h3 className="text-xl p-0 m-0 font-medium">Share Content</h3>
 
         <div className="flex items-center text-sm gap-4">
           {isLoading ? (
@@ -57,7 +57,7 @@ const LinkedInConnection = ({
               linkedInConnected
                 ? 'global-button-primary bg-green-500 text-white border-green-600 hover:bg-green-600'
                 : selectedProfile
-                ? 'global-button-primary bg-white border border-gray-300 hover:bg-gray-100 text-black'
+                ? 'global-button-primary bg-white hover:bg-gray-100 text-black'
                 : 'global-button-primary  text-white hover:bg-sky-950 transition-all'
             }`}
           >

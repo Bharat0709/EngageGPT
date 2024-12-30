@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import CustomDropdown from './CustomDropDown';
+import CustomDropdown from './Global/CustomDropDown';
 import { generatePost } from '../../network/GenerateContent';
 import { message } from 'antd';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
@@ -20,8 +20,8 @@ const LinkedInPostGenerator = () => {
   const topicOptions = [
     {
       value: 'description',
-      label: 'Short description',
-      placeholder: 'Enter description here',
+      label: 'Short Prompt',
+      placeholder: 'Enter prompt here',
     },
     {
       value: 'paragraph',
@@ -58,7 +58,6 @@ const LinkedInPostGenerator = () => {
 
   const handleGeneratePost = async () => {
     try {
-      console.log(topic, selectedTone, language);
       if (!topic) {
         message.error('Please enter a topic.');
         document.querySelector('input[type="text"]').focus();
@@ -82,7 +81,6 @@ const LinkedInPostGenerator = () => {
       setPost(generatedPost.generatedPostContent);
       setLoading(false);
     } catch (err) {
-      console.error('Failed to fetch user data:', err.message);
       message.error(err.message);
       setLoading(false);
     }

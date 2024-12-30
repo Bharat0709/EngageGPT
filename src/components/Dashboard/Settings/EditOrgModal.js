@@ -42,7 +42,7 @@ const EditOrgModal = ({ isOpen, onClose, userData, onSave }) => {
           </label>
           <input
             type="text"
-            value={name}
+            value={userData.name}
             onChange={(e) => setName(e.target.value)}
             className="mt-1 block w-full border border-gray-300 text-sm rounded-xl p-2"
           />

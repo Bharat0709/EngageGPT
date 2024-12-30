@@ -1,5 +1,5 @@
 import * as React from 'react';
-import logo from '../assets/images/EngageGPTLogo.png';
+import logo from '../../assets/images/EngageGPTLogo.png';
 
 function FooterCTA() {
 

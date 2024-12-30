@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { FiX } from 'react-icons/fi';
 import { message } from 'antd';
+import { sendFeeback } from '../../../network/Organization';
 
-const FeedbackModal = ({ isVisible, onClose, onSubmit }) => {
+const FeedbackModal = ({ isVisible, onClose }) => {
   const [rating, setRating] = useState(0);
   const [feedback, setFeedback] = useState('');
 
@@ -10,16 +11,26 @@ const FeedbackModal = ({ isVisible, onClose, onSubmit }) => {
     setRating(hoverIndex);
   };
 
-  const handleFeedbackSubmit = () => {
-    if (!rating || !feedback) {
-      message.info('Please provide a rating and feedback before submitting.');
+  const handleFeedbackSubmit = async () => {
+    if (!feedback) {
+      message.info('Please provide feedback before submitting.');
       return;
     }
 
-    onSubmit({ rating, feedback });
-    setRating(0); // Reset rating
-    setFeedback(''); // Reset feedback
-    onClose(); // Close modal
+    if (!rating) {
+      message.info('Please provide a rating before submitting.');
+      return;
+    }
+
+    try {
+      await sendFeeback(feedback, rating);
+      message.success(`Thank you for your feedback`);
+      setRating(0);
+      setFeedback('');
+      onClose();
+    } catch (error) {
+      message.error('An error occurred while submitting your help request.');
+    }
   };
 
   if (!isVisible) return null;

@@ -1,0 +1,45 @@
+import axiosInstance from './axiosConfig';
+import { getErrorMessage } from '../utils/errorHandler';
+
+const ORGANIZATION_API_URL = '/organization';
+
+export const sendHelpMail = async (helpTextContent) => {
+  try {
+    const response = await axiosInstance.post(
+      `${ORGANIZATION_API_URL}/mail/help`,
+      {
+        helpTextContent,
+      },
+    );
+    return response.data;
+  } catch (error) {
+    const errorMsg = getErrorMessage(error);
+    throw new Error(errorMsg);
+  }
+};
+
+export const sendFeeback = async (feedbackContent, rating) => {
+  try {
+    const response = await axiosInstance.post(
+      `${ORGANIZATION_API_URL}/mail/feedback`,
+      {
+        feedbackContent,
+        rating,
+      },
+    );
+    return response.data;
+  } catch (error) {
+    const errorMsg = getErrorMessage(error);
+    throw new Error(errorMsg);
+  }
+};
+
+export const fetchOrganizationData = async () => {
+  try {
+    const response = await axiosInstance.get(`${ORGANIZATION_API_URL}/auth`);
+    return response.data.user;
+  } catch (error) {
+    const errorMsg = getErrorMessage(error);
+    throw new Error(errorMsg);
+  }
+};

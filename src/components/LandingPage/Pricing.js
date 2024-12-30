@@ -1,6 +1,6 @@
 import * as React from 'react';
-import Headings from '../components/Heading';
-import { featuresFree, featuresPro } from '../assets/data/pricingfeatures';
+import Headings from './Heading';
+import { featuresFree, featuresPro } from '../../assets/data/pricingfeatures';
 
 function Pricing() {
 

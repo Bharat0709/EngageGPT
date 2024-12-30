@@ -2,7 +2,6 @@ import React from 'react';
 
 const PostContentEditor = ({ postDetails, setPostDetails }) => {
   const handlePostChange = (e) => {
-    console.log(postDetails.content);
     setPostDetails((prevDetails) => ({
       ...prevDetails,
       content: e.target.value,

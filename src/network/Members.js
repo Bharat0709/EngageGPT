@@ -3,16 +3,6 @@ import { getErrorMessage } from '../utils/errorHandler';
 
 const MEMBER_API_URL = '/members';
 
-export const fetchOrganizationData = async () => {
-  try {
-    const response = await axiosInstance.get(`/organization/auth`);
-    return response.data.user;
-  } catch (error) {
-    const errorMsg = getErrorMessage(error);
-    throw new Error(errorMsg);
-  }
-};
-
 export const addNewMember = async (newMemberDetails) => {
   const { name, email } = newMemberDetails;
   try {
@@ -30,6 +20,19 @@ export const addNewMember = async (newMemberDetails) => {
 export const getAllMembers = async () => {
   try {
     const response = await axiosInstance.get(`${MEMBER_API_URL}/all`);
+    return response.data.data;
+  } catch (error) {
+    const errorMsg = getErrorMessage(error);
+    throw new Error(errorMsg);
+  }
+};
+
+export const disconnectLinkedIn = async (memberId) => {
+  try {
+    console.log(memberId);
+    const response = await axiosInstance.post(
+      `${MEMBER_API_URL}/linkedin/disconnect/${memberId}`,
+    );
     return response.data.data;
   } catch (error) {
     const errorMsg = getErrorMessage(error);

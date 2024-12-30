@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { MdContentCopy } from 'react-icons/md';
-import { Skeleton, message, Button, Tooltip } from 'antd';
+import { Skeleton, message, Button } from 'antd';
 import { FiUsers } from 'react-icons/fi';
-import { formatDate } from '../../utils/formatDate';
+import { formatDate } from '../../../utils/formatDate';
 import { AiOutlinePlus, AiOutlineDown, AiOutlineUp } from 'react-icons/ai';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { encodeToken } from '../../utils/tokenUtils';
-import { setAuthTokenAction } from '../../redux/auth/authActions';
+import { encodeToken } from '../../../utils/tokenUtils';
+import { setAuthTokenAction } from '../../../redux/auth/authActions';
 import Cookies from 'js-cookie';
-import { getAllMembers, addNewMember } from '../../network/Members';
-import AddMembersModal from './AddPeopleModal';
-import AddProfile from '../../assets/images/AddProfile.png';
+import { getAllMembers, addNewMember } from '../../../network/Members';
+import AddMembersModal from '../Global/AddPeopleModal';
+import AddProfile from '../../../assets/images/AddProfile.png';
 import PostDetails from './PostsAnalytics';
 import Stats from './Stats';
 
@@ -66,8 +66,7 @@ const Home = () => {
         setInvitedProfiles(invited);
         setSelectedProfile(connected || null);
       } catch (err) {
-        console.error('Failed to fetch user data:', err.message);
-        message.error(err.message);
+        message.error('Unable to get user details');
       }
     };
 
@@ -77,15 +76,13 @@ const Home = () => {
   const handleAddMembers = async (newPerson) => {
     try {
       for (const person of newPerson) {
-        const addMember = await addNewMember(person);
-        console.log(addMember);
+        await addNewMember(person);
       }
       message.success('Invite sent successfully!');
       setRefreshMembers(!refreshMembers);
       setIsAddMemberModalOpen(false);
     } catch (err) {
-      console.error('Failed to fetch user data:', err.message);
-      message.error(err.message);
+      message.error('Something went wrong try again');
     }
   };
 
@@ -232,14 +229,12 @@ const Home = () => {
                 </button>
                 <div className="copy-token text-sm">
                   Connection Token
-                  <Tooltip title="Copy Connection Token">
-                    <Button
-                      className="text-black hover:text-black"
-                      icon={<MdContentCopy />}
-                      onClick={() => handleCopy(person.connectionToken)}
-                      type="link"
-                    ></Button>
-                  </Tooltip>
+                  <Button
+                    className="text-black hover:text-black"
+                    icon={<MdContentCopy />}
+                    onClick={() => handleCopy(person.connectionToken)}
+                    type="link"
+                  ></Button>
                 </div>
               </div>
             </div>
@@ -305,14 +300,12 @@ const Home = () => {
                           </p>
                         </div>
                       </div>
-                      <Tooltip title="Copy Connection Token">
-                        <Button
-                          className="text-gray-500 hover:text-gray-700"
-                          icon={<MdContentCopy />}
-                          onClick={() => handleCopy(profile.connectionToken)}
-                          type="link"
-                        />
-                      </Tooltip>
+                      <Button
+                        className="text-gray-500 hover:text-gray-700"
+                        icon={<MdContentCopy />}
+                        onClick={() => handleCopy(profile.connectionToken)}
+                        type="link"
+                      />
                     </li>
                   ))}
                 </ul>

@@ -1,8 +1,8 @@
 // Start of Selection
 import React, { useState } from 'react';
-import '../../assets/styles/GlobalCSS.css';
+import '../../../assets/styles/GlobalCSS.css';
 import { Link, useLocation } from 'react-router-dom';
-import LogoutModal from './LogoutModal';
+import LogoutModal from '../Global/LogoutModal';
 import { FiLogOut } from 'react-icons/fi';
 import {
   FiMenu,
@@ -16,10 +16,10 @@ import {
   FiHome,
   FiChevronLeft,
 } from 'react-icons/fi';
-import EngageGPTLogo from '../../assets/images/EngageGPTLogoIocn.png';
+import EngageGPTLogo from '../../../assets/images/EngageGPTLogoIocn.png';
 import FeedbackModal from './FeebackModal';
 import HelpModal from './HelpModal';
-import Tooltip from './ToolTip';
+import Tooltip from '../Global/ToolTip';
 
 const menuItems = [
   {
@@ -62,22 +62,20 @@ const SidebarLink = ({
   activeClass,
   hoverClass,
 }) => (
-  <Tooltip text={label} position="right">
-    <Link
-      to={to}
-      onClick={onClick}
-      className={`flex items-center gap-3 pr-3 w-full py-2 pl-3 rounded-md transition-opacity duration-500 ${
-        isActive ? activeClass : hoverClass
-      }`}
-    >
-      {React.cloneElement(icon, {
-        className: 'text-white',
-      })}
-      <span className={`text-white text-sm ${isOpen ? '' : 'hidden'}`}>
-        {label}
-      </span>
-    </Link>
-  </Tooltip>
+  <Link
+    to={to}
+    onClick={onClick}
+    className={`flex items-center gap-3 pr-3 w-full py-2 pl-3 rounded-md transition-opacity duration-500 ${
+      isActive ? activeClass : hoverClass
+    }`}
+  >
+    {React.cloneElement(icon, {
+      className: 'text-white',
+    })}
+    <span className={`text-white text-sm ${isOpen ? '' : 'hidden'}`}>
+      {label}
+    </span>
+  </Link>
 );
 
 function Sidebar() {
@@ -96,14 +94,6 @@ function Sidebar() {
     if (isMobile) {
       setIsOpen(false);
     }
-  };
-
-  const handleFeedbackSubmit = (feedback) => {
-    console.log('Feedback submitted:', feedback);
-  };
-
-  const handleHelpSubmit = (help) => {
-    console.log('Help submitted:', help);
   };
 
   return (
@@ -171,7 +161,7 @@ function Sidebar() {
             <Tooltip text="Feedback" position="right">
               <button
                 onClick={() => setIsFeedbackModalOpen(true)}
-                className="flex text-white text-sm items-center gap-3 py-2 pr-3 pl-3 rounded-md hover:bg-[#145a7f]"
+                className="flex text-white w-full text-sm items-center gap-3 py-2 pr-3 pl-3 rounded-md hover:bg-[#145a7f]"
               >
                 <FiMessageSquare size={20} />
                 <span className={`${isOpen ? '' : 'hidden'}`}>Feedback</span>
@@ -180,7 +170,7 @@ function Sidebar() {
             <Tooltip text="Need Help?" position="right">
               <button
                 onClick={() => setIsHelpModalOpen(true)}
-                className="flex text-white items-center text-sm gap-3 py-3 pr-3 pl-3 rounded-md hover:bg-[#145a7f]"
+                className="flex text-white w-full items-center text-sm gap-3 py-2 pr-3 pl-3 rounded-md hover:bg-[#145a7f]"
               >
                 <FiHelpCircle size={20} />
                 <span className={`${isOpen ? '' : 'hidden'}`}>Help</span>
@@ -213,12 +203,10 @@ function Sidebar() {
       <FeedbackModal
         isVisible={isFeedbackModalOpen}
         onClose={() => setIsFeedbackModalOpen(false)}
-        onSubmit={handleFeedbackSubmit}
       />
       <HelpModal
         isVisible={isHelpModalOpen}
         onClose={() => setIsHelpModalOpen(false)}
-        onSubmit={handleHelpSubmit}
       />
       <LogoutModal
         isVisible={isLogoutModalOpen}

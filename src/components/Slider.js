@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 function Slider() {
   return (
@@ -9,6 +9,5 @@ function Slider() {
     </div>
   );
 }
-
 
 export default Slider;

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import heroImage from '../assets/images/networking.png';
+import heroImage from '../../assets/images/networking.png';
 
 function HeroSection() {
   return (

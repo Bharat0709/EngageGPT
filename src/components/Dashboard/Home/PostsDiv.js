@@ -3,7 +3,7 @@ import {
   AiOutlineBarChart,
   AiOutlineArrowRight,
 } from 'react-icons/ai';
-import linkedInIcon from '../../assets/images/linkedInIcon.png';
+import linkedInIcon from '../../../assets/images/linkedInIcon.png';
 import { Skeleton, Popover, Button } from 'antd';
 
 
