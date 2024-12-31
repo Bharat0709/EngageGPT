@@ -46,7 +46,6 @@ const LinkedInConnection = ({
             </>
           )}
         </div>
-
         {isLoading ? (
           <Skeleton.Button active size="default" style={{ width: '150px' }} />
         ) : (
@@ -57,8 +56,8 @@ const LinkedInConnection = ({
               linkedInConnected
                 ? 'global-button-primary bg-green-500 text-white border-green-600 hover:bg-green-600'
                 : selectedProfile
-                ? 'global-button-primary bg-white hover:bg-gray-100 text-black'
-                : 'global-button-primary  text-white hover:bg-sky-950 transition-all'
+                ? 'global-button-primary hover:bg-sky-950'
+                : 'global-button-primary text-white hover:bg-sky-950 transition-all'
             }`}
           >
             <FaLinkedin className="text-white" size={20} />

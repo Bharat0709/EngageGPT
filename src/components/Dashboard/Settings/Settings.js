@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { fetchOrganizationData } from '../../../network/Organization';
+import {
+  fetchOrganizationData,
+  forgotPassword,
+} from '../../../network/Organization';
 import { message, Skeleton } from 'antd';
 import { FiEdit } from 'react-icons/fi';
 import EditOrgModal from './EditOrgModal';
@@ -16,6 +19,7 @@ const OrganizationProfileSettings = () => {
       setLoading(true);
       try {
         const data = await fetchOrganizationData();
+        console.log(data);
         setUserData(data);
         setTimeout(() => {
           setLoading(false);
@@ -34,6 +38,7 @@ const OrganizationProfileSettings = () => {
         content: 'Sending password reset email...',
         key: 'reset',
       });
+      await forgotPassword(userData.email);
       message.success({
         content: 'Password reset email sent successfully!',
         key: 'reset',

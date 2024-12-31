@@ -97,7 +97,7 @@ const PostDetails = ({ setStats, memberId }) => {
     <div className="flex flex-col lg:p-6 p-3">
       {posts.length > 0 ? (
         <div>
-          <p className="p-3 w-full rounded-lg border border-gray-300 bg-white text-sm">
+          <p className="p-3 w-full rounded-lg border bg-white border-gray-300 text-sm">
             {' '}
             Top Posts{' '}
           </p>

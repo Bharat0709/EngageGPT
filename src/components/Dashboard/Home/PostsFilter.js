@@ -11,7 +11,6 @@ const PostFilters = ({ posts, handleSortChange }) => {
     'Comments',
   ];
 
- 
   //   // Helper function to extract months, years, days, weeks from the 'postedAround' field
   //   const extractTimeUnits = (time) => {
   //     const match = time.match(
@@ -44,11 +43,11 @@ const PostFilters = ({ posts, handleSortChange }) => {
   // const oldestPost = getOldestPostTime(posts);
 
   return (
-    <div className="bg-white rounded-lg flex flex-col gap-2 py-3">
+    <div className="rounded-lg flex-col gap-2 py-3">
       <div className="toggle-buttons flex justify-between bg-white border border-gray-300 p-3 rounded-lg  gap-4">
         <p className="text-sm">{posts.length} Posts Collected</p>
 
-        <div className="flex items-center gap-4">
+        <div className="items-center lg:flex hidden  gap-4">
           <FiFilter className="text-gray-400" />
           {filters.map((filter) => (
             <p

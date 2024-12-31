@@ -14,6 +14,7 @@ import AddMembersModal from '../Global/AddPeopleModal';
 import AddProfile from '../../../assets/images/AddProfile.png';
 import PostDetails from './PostsAnalytics';
 import Stats from './Stats';
+import { FaLinkedin } from 'react-icons/fa';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -154,7 +155,7 @@ const Home = () => {
 
   if (!selectedProfile && invitedProfiles.length > 0) {
     return (
-      <div className="dashboard-container bg-white min-h-screen p-6">
+      <div className="dashboard-container bg-gray-50 min-h-screen lg:p-6 p-4">
         <div className="flex items-center mb-6 justify-between">
           <h2 className="text-xl">Invited Profiles</h2>
           <button
@@ -167,65 +168,80 @@ const Home = () => {
           </button>
         </div>
         <div className="flex flex-col gap-2 mb-2">
-          <p className="p-2 text-xs bg-sky-50 rounded-lg">
+          <p className="p-2 text-xs lg:text-left text-center bg-sky-100 rounded-lg">
             Connect to LinkedIn to share content
           </p>
-          <div className="p-2 text-xs flex justify-between bg-sky-50 rounded-lg">
+          <div className="p-2 text-xs flex lg:flex-row flex-col justify-between items-center gap-3 bg-sky-100 rounded-lg">
             <p>Connect via connection token to view Profile Analytics</p>
-            <a
-              className="text-sky-700"
-              href="https://chromewebstore.google.com/detail/engagegpt-ai-for-linkedin/ldhdipkofibjleihomflebfklhadikio?hl=en-GB&authuser=1"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Connect via token
-            </a>
+            <div className="flex  lg:w-fit w-full justify-between items-center gap-4">
+              <a
+                className="text-sky-700 lg:p-0 p-2 lg:px-0 px-3 rounded-lg lg:bg-sky-100 bg-white"
+                href="https://chromewebstore.google.com/detail/engagegpt-ai-for-linkedin/ldhdipkofibjleihomflebfklhadikio?hl=en-GB&authuser=1"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Add Extension
+              </a>{' '}
+              <a
+                className="text-sky-700 lg:p-0 p-2 rounded-lg  lg:px-0 px-3 lg:bg-sky-100 bg-white"
+                href="https://chromewebstore.google.com/detail/engagegpt-ai-for-linkedin/ldhdipkofibjleihomflebfklhadikio?hl=en-GB&authuser=1"
+                target="_blank"
+                rel="noreferrer"
+              >
+                How to connect?
+              </a>
+            </div>
           </div>
         </div>
-        <ul className="space-y-4">
+        <ul className="space-y-4 mt-4">
           {invitedProfiles.map((person) => (
             <div
               key={person?.id}
-              className="person-card w-full bg-gray-50 p-4 rounded-xl gap-2 flex lg:flex-row flex-col justify-between items-center"
+              className="person-card w-full border bg-white  lg:p-4 p-3 rounded-xl gap-6 flex lg:flex-row flex-col justify-between items-center"
             >
-              <div className="flex lg:flex-row flex-col lg:gap-4 gap-2 items-center">
-                <img
-                  src={person?.profilePicture}
-                  alt={`${person?.name}'s profile`}
-                  className="w-10 h-10 rounded-full border border-gray-300"
-                />
-                <h3 className="text-sm p-0 m-0 font-semibold text-gray-800">
-                  {person?.name}
-                </h3>
-                <p className="text-sm rounded-lg p-0 m-0 text-gray-600">
-                  {person?.email}
-                </p>
-                <div className="flex  rounded-full text-green-600 items-center">
-                  <p
-                    className={`text-sm p-0 m-0 font-medium ${
-                      person.isConnected === true
-                        ? 'text-green-500'
-                        : 'text-red-500'
-                    }`}
-                  >
-                    •{' '}
-                    {person.isConnected === 'connected'
-                      ? 'Connected'
-                      : person.isConnected === 'invited'
-                      ? 'Invited'
-                      : 'Disconnected'}
-                  </p>
+              <div className="flex w-full lg:flex-row flex-col lg:gap-4 gap-2 items-center">
+                <div className="flex w-full flex-row justify-start items-center gap-3">
+                  <img
+                    src={person?.profilePicture}
+                    alt={`${person?.name}'s profile`}
+                    className="w-10 h-10 rounded-full border border-gray-300"
+                  />
+                  <div className="flex  lg:flex-row flex-col lg:gap-3 gap-1">
+                    <div className="flex justify-between items-center w-full gap-3 ">
+                      <h3 className="text-sm p-0 m-0 font-semibold text-gray-800">
+                        {person?.name}
+                      </h3>
+                      <div className="flex text-left rounded-full text-green-600 items-center">
+                        <p
+                          className={`text-sm p-0 m-0 font-medium ${
+                            person.isConnected === true
+                              ? 'text-green-500'
+                              : 'text-red-500'
+                          }`}
+                        >
+                          •{' '}
+                          {person.isConnected === 'connected'
+                            ? 'Connected'
+                            : person.isConnected === 'invited'
+                            ? 'Invited'
+                            : 'Disconnected'}
+                        </p>
+                      </div>
+                    </div>
+                    <p className="text-sm rounded-lg p-0 m-0 text-gray-600">
+                      {person?.email}
+                    </p>
+                  </div>
                 </div>
               </div>
-              <div className="flex items-center gap-3">
+              <div className="flex w-full lg:justify-end justify-between items-center gap-3">
                 <button
                   onClick={handleConnectLinkedIn}
                   disabled={person.isLinkedinConnected}
-                  className="border-black text-black bg-white border p-2 rounded-lg text-xs"
+                  className="border-black text-black flex items-center gap-2  bg-white border p-2 rounded-lg text-xs"
                 >
-                  {person.isLinkedinConnected
-                    ? 'LinkedIn Connected'
-                    : 'Connect LinkedIn'}
+                  <FaLinkedin className="text-sky-800" size={20} />
+                  {person.isLinkedinConnected ? 'Connected' : 'Connect'}
                 </button>
                 <div className="copy-token text-sm">
                   Connection Token
@@ -250,16 +266,16 @@ const Home = () => {
   }
 
   return (
-    <div className="bg-white h-full overflow-y-scroll">
+    <div className="bg-gray-50 h-full overflow-y-scroll">
       <div className="flex lg:flex-row lg:px-6 lg:py-5 p-3 flex-col gap-3 justify-between items-center ">
         <h1 className="text-xl font-semibold">Home</h1>
-        <p className="text-xs p-2 bg-blue-50 font-semibold rounded-lg px-4">
+        <p className="text-xs p-2  font-semibold rounded-lg px-4">
           {selectedProfile?.lastSyncedAt
             ? `Last Synced at ${formatDate(selectedProfile.lastSyncedAt)}`
             : 'Profile analytics not synced yet!'}
         </p>
         <div className="flex items-center space-x-2">
-          <div className="relative flex py-2 px-2 pl-6 hover:bg-gray-50 rounded-lg justify-center items-center gap-2 group">
+          <div className="relative flex py-2 px-2 pl-6 bg-white hover:bg-gray-50 rounded-lg justify-center items-center gap-2 group">
             <FiUsers />
             <span className="text-black">{profiles.length}</span>
             <div className="flex flex-col">

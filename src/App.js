@@ -6,6 +6,7 @@ import Signup from './pages/SignUp';
 import LandingPage from './pages/LandingPage';
 import Dashboard from './pages/DashboardPage';
 import NotFound from './pages/NotFound';
+import ResetPassword from './pages/ResetPasword';
 import './assets/styles/GlobalCSS.css';
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/" element={<LandingPage />} />
           <Route path="/dashboard/*" element={<Dashboard />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>

@@ -79,7 +79,7 @@ const Stats = ({ isLoading, selectedProfile, stats }) => {
   ];
 
   return (
-    <div className="bg-white lg:px-6 lg:py-4 p-3">
+    <div className="lg:px-6 lg:py-4 p-3">
       <div className="flex flex-wrap lg:justify-start justify-center gap-4">
         {isLoading
           ? Array(10)
@@ -94,7 +94,7 @@ const Stats = ({ isLoading, selectedProfile, stats }) => {
               ))
           : statistics.map((stat, index) => (
               <div
-                className="rounded-xl hover:bg-gray-50 lg:min-w-44 min-w-36 p-3 py-3 bg-sky-50"
+                className="rounded-xl hover:border hover:bg-white lg:min-w-44 min-w-36 p-3 py-3 bg-sky-100"
                 key={index}
               >
                 <div>

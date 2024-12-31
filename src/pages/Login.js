@@ -7,6 +7,7 @@ import EngageGPTLogo from '../assets/images/EngageGPTLogoIocn.png';
 import loginIllustration from '../assets/images/engagegptLogin.png';
 import { login } from '../network/Auth';
 import useAuthCheck from '../hooks/useAuth';
+import { forgotPassword } from '../network/Organization';
 
 const Login = () => {
   useAuthCheck();
@@ -27,6 +28,24 @@ const Login = () => {
   };
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
+  };
+
+  const handleSendResetPasswordEmail = async () => {
+    try {
+      if (!formData.email) {
+        message.error('Please enter your email');
+        return;
+      }
+
+      await forgotPassword(formData.email);
+      message.success({
+        content:
+          'Password reset email sent successfully! (Check spam folder as well)',
+        key: 'reset',
+      });
+    } catch (err) {
+      message.error(err.message);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -119,6 +138,17 @@ const Login = () => {
             >
               Login
             </button>
+
+            <div className="mt-4 flex  w-full justify-between text-center">
+              <p className="text-white mt-2">Forgot your password? </p>
+              <button
+                type="button"
+                onClick={handleSendResetPasswordEmail}
+                className="text-sky-100 underline ml-1"
+              >
+                Reset Password
+              </button>
+            </div>
 
             <div className="flex items-center justify-center space-x-2">
               <span className="h-px w-16 bg-gray-300"></span>

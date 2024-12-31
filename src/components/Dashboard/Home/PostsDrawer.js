@@ -39,7 +39,7 @@ const PostDrawer = ({ post, handleDrawerClose, isOpen }) => {
         className="min-w-72 bg-gray-100 scrollbar-hide"
       >
         <div className="p-3 bg-white rounded-xl flex flex-col gap-4">
-          <div className="flex gap-4 items-center justify-between scrollbar-hide">
+          <div className="flex lg:flex-row flex-col gap-4 items-center justify-between scrollbar-hide">
             <div className="flex items-center gap-4">
               <img
                 className="h-10 w-10 rounded-full"
