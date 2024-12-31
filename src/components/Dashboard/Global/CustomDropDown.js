@@ -32,7 +32,7 @@ const CustomDropdownMenu = ({ options, selected, onSelect, label }) => {
       onMouseLeave={() => setIsOpen(false)}
       className="relative w-fit inline-block text-left"
     >
-      <button className="flex items-center gap-2 text-xs border border-gray-400 px-3 py-2 text-black rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500">
+      <button className="flex items-center gap-2 text-xs border bg-white border-gray-400 px-3 py-2 text-black rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500">
         {selectedValue
           ? options.find((opt) => opt.value === selectedValue)?.label
           : label}
@@ -51,7 +51,7 @@ const CustomDropdownMenu = ({ options, selected, onSelect, label }) => {
           <ul className="py-2">
             {options.map((option, index) => (
               <li
-                key={`${option.value}-${index}`} 
+                key={`${option.value}-${index}`}
                 onMouseEnter={() => setIsOpen(true)}
                 onMouseLeave={() => setIsOpen(false)}
               >

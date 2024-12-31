@@ -133,7 +133,7 @@ const Home = () => {
 
   if (!selectedProfile && invitedProfiles.length === 0) {
     return (
-      <div className="bg-white min-h-screen flex justify-center gap-8 flex-col items-center p-8">
+      <div className="bg-gray-50 min-h-screen flex justify-start pt-10 gap-8 flex-col items-center">
         <img className="h-32 w-32" src={AddProfile} alt="AddProfile" />
         <button
           type="primary"

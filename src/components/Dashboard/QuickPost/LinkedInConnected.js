@@ -1,6 +1,7 @@
 import React from 'react';
 import { Skeleton } from 'antd';
 import CustomDropdown from '../Global/CustomDropDown';
+import { FaLinkedin } from 'react-icons/fa';
 
 const LinkedInConnection = ({
   isLoading,
@@ -16,7 +17,7 @@ const LinkedInConnection = ({
 
   return (
     <div className="mb-4">
-      <div className="flex lg:flex-row flex-col gap-4 items-center justify-between mb-2">
+      <div className="flex lg:flex-row flex-col gap-2 items-center justify-between mb-2">
         <h3 className="text-xl p-0 m-0 font-medium">Share Content</h3>
 
         <div className="flex items-center text-sm gap-4">
@@ -27,7 +28,7 @@ const LinkedInConnection = ({
           ) : (
             <>
               {connectedProfiles?.length > 0 ? (
-                <div>
+                <div className="my-2">
                   Selected Account:{' '}
                   <CustomDropdown
                     options={connectedProfiles.map((profile) => ({
@@ -52,7 +53,7 @@ const LinkedInConnection = ({
           <button
             onClick={handleConnectLinkedIn}
             disabled={linkedInConnected}
-            className={`py-2 border-2 rounded-lg text-sm transition-all duration-300 ${
+            className={`py-2 flex items-center gap-2 px-3 rounded-lg text-sm transition-all duration-300 ${
               linkedInConnected
                 ? 'global-button-primary bg-green-500 text-white border-green-600 hover:bg-green-600'
                 : selectedProfile
@@ -60,11 +61,12 @@ const LinkedInConnection = ({
                 : 'global-button-primary  text-white hover:bg-sky-950 transition-all'
             }`}
           >
+            <FaLinkedin className="text-white" size={20} />
             {linkedInConnected
               ? 'Connected'
               : selectedProfile
               ? 'Connect another account'
-              : 'Connect LinkedIn'}
+              : 'Connect'}
           </button>
         )}
       </div>

@@ -88,8 +88,8 @@ const PostScheduler = () => {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row py-2 gap-2 bg-white scrollbar-hide h-screen overflow-y-scroll">
-      <div className="flex-1 bg-white rounded-lg p-4">
+    <div className="flex flex-col bg-gray-50 lg:flex-row py-2 scrollbar-hide h-screen overflow-y-scroll">
+      <div className="flex-1 bg-gray-50 rounded-lg lg:p-4 p-2">
         <>
           <LinkedInConnection
             isLoading={isLoading}
@@ -108,7 +108,7 @@ const PostScheduler = () => {
           />
         </>
       </div>
-      <div className="lg:w-1/3 mx-2 w-full mb-4 bg-white">
+      <div className="lg:w-1/3 lg:mr-4 w-full mb-4 lg:p-4 p-2 bg-gray-50">
         <div>
           <PostPreviewSection
             isLoading={isLoading}

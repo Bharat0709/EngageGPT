@@ -89,8 +89,8 @@ const LinkedInPostGenerator = () => {
   const handleToneClick = (toneValue) => setSelectedTone(toneValue);
 
   return (
-    <div className="flex flex-col lg:flex-row gap-6 p-6 bg-white min-h-screen">
-      <div className="flex-1 bg-white rounded-lg">
+    <div className="flex flex-col lg:flex-row gap-6 lg:p-6 p-4 bg-gray-50 min-h-screen">
+      <div className="flex-1 rounded-lg">
         <div className="flex justify-between items-center mb-4">
           <h3 className="text-xl font-medium">Create LinkedIn Post</h3>
           <CustomDropdown
@@ -114,7 +114,7 @@ const LinkedInPostGenerator = () => {
               type="text"
               required
               placeholder={currentOption?.placeholder}
-              className="flex-1 text-sm border px-3 rounded-lg p-1 focus:outline-none focus:ring-1 focus:ring-black"
+              className="flex-1 text-sm bg-white border px-3 rounded-lg p-1 focus:outline-none focus:ring-1 focus:ring-black"
               value={topic}
               onChange={(e) => setTopic(e.target.value)}
             />
@@ -132,9 +132,9 @@ const LinkedInPostGenerator = () => {
             <button
               key={tone}
               onClick={() => handleToneClick(tone)}
-              className={`text-sm px-4 py-2 rounded-lg ${
+              className={`lg:text-sm text-xs bg-white px-4 py-2 rounded-lg ${
                 selectedTone === tone
-                  ? 'bg-sky-100'
+                  ? 'bg-sky-200'
                   : 'bg-gray-50 text-gray-700 hover:bg-gray-100'
               }`}
             >
@@ -180,7 +180,7 @@ const LinkedInPostGenerator = () => {
 
       <div className="border-l-2 border-gray-100"></div>
 
-      <div className="w-full lg:w-1/3 bg-white rounded-lg">
+      <div className="w-full lg:w-1/3  rounded-lg">
         <h3 className="text-lg font-medium mb-4">Generated Post</h3>
         <textarea
           value={post}

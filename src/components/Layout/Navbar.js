@@ -18,7 +18,7 @@
     
       const handleMenuItemClick = (sectionId) => {
         scrollToSection(sectionId); 
-        setIsOpen(false); // Close the mobile menu
+        setIsOpen(false); 
       };
     
       return (

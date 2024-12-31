@@ -19,17 +19,16 @@ const PostActions = ({ isPosting, onPost, onSaveDraft, onSchedule }) => {
   };
 
   return (
-    <div className="flex flex-col items-center border border-gray-300 rounded-lg gap-2 p-4">
-      {/* Schedule Post */}
+    <div className="flex w-full flex-col items-center border bg-white border-gray-300 rounded-lg gap-2 p-4">
       <div className="flex flex-col gap-1 w-full">
-        <Space className="w-full justify-center">
+        <Space className="w-full justify-between">
           <DatePicker
-            className="w-full"
+            className="w-full rounded-xl"
             onChange={(date) => setSelectedDate(date)}
             placeholder="Select Date"
           />
           <TimePicker
-            className="w-full"
+            className="w-full rounded-xl"
             onChange={(time) => setSelectedTime(time)}
             placeholder="Select Time"
           />

@@ -68,7 +68,7 @@ const LinkedInPostPreview = ({
 
   return (
     <div
-      className={`p-4 max-h-[65vh] overflow-y-scroll rounded-lg mb-3 scrollbar-hide  py-2 border-gray-300 border ${
+      className={`p-4 max-h-[65vh] overflow-y-scroll rounded-lg mb-3 scrollbar-hide py-2 border-gray-300 border ${
         isDarkMode ? 'bg-[#1d2226] text-white' : 'bg-white text-black'
       }`}
     >
@@ -93,37 +93,38 @@ const LinkedInPostPreview = ({
           </div>
         </div>
       ) : (
-        selectedProfileDetails && (
-          <div className="flex justify-between items-center">
-            <div className="mb-4 mt-2 flex items-center gap-4">
-              <img
-                src={selectedProfileDetails?.profilePicture}
-                alt="Profile"
-                className="w-14 h-14 rounded-full object-cover border"
-              />
-              <div className="flex flex-col  gap-1">
-                <p className="font-bold m-0 p-0">
-                  {selectedProfileDetails?.name}
-                </p>
-                <p className="text-xs m-0 p-0">
-                  Your bio will be present here...
-                </p>
-                <p className="text-[8px] m-0 p-0">Just Now</p>
-              </div>
-            </div>
-            <div className="flex justify-between items-center mb-4">
-              <div className="flex items-center gap-2 px-4 py-2 rounded-lg">
-                <Switch
-                  checked={isDarkMode}
-                  onChange={toggleDarkMode}
-                  checkedChildren="🌙"
-                  unCheckedChildren="☀️"
-                  className="bg-gray-50 dark:bg-gray-500"
-                />
-              </div>
+        <div className="flex justify-between items-center">
+          <div className="mb-4 mt-2 flex items-center gap-4">
+            <img
+              src={
+                selectedProfileDetails?.profilePicture ||
+                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlPViCqVyGRxdQtmHT-5rBlQoa1XJsMwkOdQ3A-hEWfkYMRLG-S-LRYCLcGteHqbSF4Kk&usqp=CA'
+              }
+              alt="Profile"
+              className="w-14 h-14 rounded-full object-cover border"
+            />
+            <div className="flex flex-col  gap-1">
+              <p className="font-bold m-0 p-0">
+                {selectedProfileDetails?.name || 'Your Name'}
+              </p>
+              <p className="text-xs m-0 p-0">
+                Your bio will be present here...
+              </p>
+              <p className="text-[8px] m-0 p-0">Just Now</p>
             </div>
           </div>
-        )
+          <div className="flex justify-between items-center mb-4">
+            <div className="flex items-center gap-2 px-4 py-2 rounded-lg">
+              <Switch
+                checked={isDarkMode}
+                onChange={toggleDarkMode}
+                checkedChildren="🌙"
+                unCheckedChildren="☀️"
+                className="bg-gray-50 dark:bg-gray-500"
+              />
+            </div>
+          </div>
+        </div>
       )}
 
       {isLoading ? (
