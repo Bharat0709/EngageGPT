@@ -4,7 +4,7 @@ import Home from '../components/Dashboard/Home/Home';
 import Sidebar from '../components/Dashboard/Sidebar/Sidebar';
 import Settings from '../components/Dashboard/Settings/Settings';
 import PostScheduler from '../components/Dashboard/QuickPost/PostScheduler';
-import LinkedInPostGenerator from '../components/Dashboard/GeneratePost';
+import LinkedInPostGenerator from '../components/Dashboard/GeneratePost/GeneratePost';
 import ProtectedRoute from '../components/ProtectedRoute';
 function Dashboard() {
   return (

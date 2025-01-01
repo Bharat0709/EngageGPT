@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import CustomDropdown from './Global/CustomDropDown';
-import { generatePost } from '../../network/GenerateContent';
+import { useLocation, useNavigate } from 'react-router-dom';
+import CustomDropdown from '../Global/CustomDropDown';
+import { generatePost } from '../../../network/GenerateContent';
+import ContentCalendarModal from './ContentCalendarModal';
 import { message } from 'antd';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+import PersonaModal from './PersonaModal';
 
 const LinkedInPostGenerator = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const initialTemplate = location?.state?.initialTemplate || null;
   const initialDescription = location?.state?.description || null;
@@ -16,6 +19,69 @@ const LinkedInPostGenerator = () => {
   const [post, setPost] = useState('');
   const [selectedTone, setSelectedTone] = useState('Friendly');
   const [loading, setLoading] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isCalendarModalVisible, setIsCalendarModalVisible] = useState(false);
+  const [postPersona, setPostPersona] = useState(null);
+  const [postSamples, setPostSamples] = useState([]);
+  const [calendarData, setCalendarData] = useState([]);
+
+  const handleProceed = () => {
+    if (!post) {
+      message.error('Please generate a post before proceeding.');
+      return;
+    }
+    navigate('/dashboard/quick-post', { state: { content: post } });
+  };
+
+  const handleSavePersona = (values) => {
+    if (!values.profile || !values.preferences || values.samples.length === 0) {
+      message.error('Please fill out all fields before saving.');
+      return;
+    }
+
+    setPostPersona({
+      name: values.profile.label,
+      position: values.profile.position || 'Unknown',
+      preferences: values.preferences,
+    });
+
+    setPostSamples(values.samples);
+    message.success('Post persona and samples saved!');
+    setIsModalVisible(false);
+    console.log('Persona:', values);
+  };
+
+  const handleSaveCalendar = async (data) => {
+    setCalendarData(data);
+    message.success('Content calendar saved!');
+    setIsCalendarModalVisible(false);
+
+    // Generate AI posts for all topics in the calendar
+    const generatedPosts = [];
+    setLoading(true);
+    for (const item of data) {
+      const { title, dateTime } = item;
+      try {
+        const generatedPost = await generatePost(
+          selectedTone,
+          title,
+          language,
+          template,
+        );
+        generatedPosts.push({
+          title,
+          dateTime,
+          content: generatedPost.generatedPostContent,
+        });
+      } catch (err) {
+        message.error(`Error generating post for: ${title}`);
+      }
+    }
+    setLoading(false);
+
+    // Redirect to the Post Scheduler with generated content
+    navigate('/dashboard/post-scheduler', { state: { posts: generatedPosts } });
+  };
 
   const topicOptions = [
     {
@@ -90,22 +156,29 @@ const LinkedInPostGenerator = () => {
 
   return (
     <div className="flex flex-col lg:flex-row gap-6 lg:p-6 p-4 bg-gray-50 min-h-screen">
-      <div className="flex-1 rounded-lg">
-        <div className="flex justify-between items-center mb-4">
+      <div className="flex gap-2 flex-col rounded-lg">
+        <div className="flex w-full  flex-col lg:flex-row  gap-3 justify-between items-center mb-4">
           <h3 className="text-xl font-medium">Create LinkedIn Post</h3>
-          <CustomDropdown
-            options={[
-              { label: 'English', value: 'English' },
-              { label: 'Spanish', value: 'Spanish' },
-              { label: 'French', value: 'French' },
-            ]}
-            selected={language}
-            onSelect={setLanguage}
-            label="Select Language"
-          />
+          <div className="flex gap-2 lg:w-fit w-full ">
+            <button
+              onClick={() => setIsModalVisible(true)}
+              className="global-button-primary py-2 w-full px-4 text-xs text-white rounded-lg"
+            >
+              Set Writing Persona
+            </button>
+          </div>
         </div>
+        <button
+          onClick={() => setIsCalendarModalVisible(true)}
+          className="global-button-secondary py-2 px-4 text-sm text-gray-900 rounded-lg"
+        >
+          Upload Content Calendar
+        </button>
+        <p className="text-center text-sm text-gray-500">
+          -------- OR --------
+        </p>
 
-        <div className="mb-4">
+        <div className="mb-2">
           <label className="block text-sm text-gray-500 font-medium mb-2">
             {currentOption?.label}
           </label>
@@ -127,25 +200,35 @@ const LinkedInPostGenerator = () => {
           </div>
         </div>
 
-        <div className="flex flex-wrap gap-2 mb-4">
+        <div className="flex flex-wrap gap-2">
           {tones.map((tone) => (
             <button
               key={tone}
               onClick={() => handleToneClick(tone)}
               className={`lg:text-sm text-xs bg-white px-4 py-2 rounded-lg ${
                 selectedTone === tone
-                  ? 'bg-sky-200'
+                  ? 'bg-blue-100'
                   : 'bg-gray-50 text-gray-700 hover:bg-gray-100'
               }`}
             >
               {tone}
             </button>
           ))}
+          <CustomDropdown
+            options={[
+              { label: 'English', value: 'English' },
+              { label: 'Spanish', value: 'Spanish' },
+              { label: 'French', value: 'French' },
+            ]}
+            selected={language}
+            onSelect={setLanguage}
+            label="Select Language"
+          />
         </div>
 
-        <div className="my-4 flex w-full items-center gap-2 justify-between">
+        <div className="my-2 flex w-full items-center gap-2 justify-between">
           <label className="block text-gray-500 text-sm">
-            Any post template (optional)
+            Post Template (Optional)
           </label>
           <CustomDropdown
             options={templates}
@@ -189,7 +272,7 @@ const LinkedInPostGenerator = () => {
           className="w-full min-h-96 scrollbar-hide border rounded-lg p-3 text-gray-700 bg-gray-100 focus:outline-none"
         />
         <button
-          onClick={() => alert('Proceeding...')}
+          onClick={handleProceed}
           disabled={!post}
           className={`w-full mt-4 ${
             post
@@ -200,6 +283,16 @@ const LinkedInPostGenerator = () => {
           Proceed
         </button>
       </div>
+      <PersonaModal
+        isOpen={isModalVisible}
+        onClose={() => setIsModalVisible(false)}
+        onSave={handleSavePersona}
+      />
+      <ContentCalendarModal
+        isOpen={isCalendarModalVisible}
+        onClose={() => setIsCalendarModalVisible(false)}
+        onSave={handleSaveCalendar}
+      />
     </div>
   );
 };

@@ -17,6 +17,7 @@
     "firebase": "^10.11.1",
     "framer-motion": "^11.2.13",
     "js-cookie": "^3.0.5",
+    "papaparse": "^5.4.1",
     "postcss-cli": "^11.0.0",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",

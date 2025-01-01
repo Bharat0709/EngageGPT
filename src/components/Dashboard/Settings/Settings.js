@@ -6,6 +6,7 @@ import {
 import { message, Skeleton } from 'antd';
 import { FiEdit } from 'react-icons/fi';
 import EditOrgModal from './EditOrgModal';
+import BillingDetails from './BillingDetails';
 import People from './People';
 
 const OrganizationProfileSettings = () => {
@@ -48,6 +49,19 @@ const OrganizationProfileSettings = () => {
     }
   };
 
+  const handleBillingUpdate = async (updatedBillingDetails) => {
+    try {
+      // Assume an API function `updateBillingDetails` exists
+      // await updateBillingDetails(updatedBillingDetails);
+      setUserData((prevData) => ({
+        ...prevData,
+        billingDetails: updatedBillingDetails,
+      }));
+    } catch (err) {
+      throw new Error('Failed to update billing details');
+    }
+  };
+
   const handleViewToggle = (viewType) => {
     setView(viewType);
   };
@@ -69,6 +83,14 @@ const OrganizationProfileSettings = () => {
             }`}
           >
             General
+          </button>{' '}
+          <button
+            onClick={() => handleViewToggle('billing')}
+            className={`${
+              view === 'billing' ? 'text-black font-semibold' : 'text-gray-600'
+            }`}
+          >
+            Billing
           </button>
         </>
       </div>
@@ -179,7 +201,14 @@ const OrganizationProfileSettings = () => {
         userData={userData}
         onSave={handleSaveProfile}
       />
-      <People />
+      {view === 'billing' ? (
+        <BillingDetails
+          billingDetails={userData?.billingDetails}
+          onUpdate={handleBillingUpdate}
+        />
+      ) : (
+        <People />
+      )}
     </div>
   );
 };

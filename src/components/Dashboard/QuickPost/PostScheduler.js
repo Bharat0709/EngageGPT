@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { message } from 'antd';
 import { getAllMembers } from '../../../network/Members';
 import { shareLinkedInPost } from '../../../network/LinkedInAuth';
@@ -9,8 +10,9 @@ import PostPreviewSection from './LinkedInPostPreview';
 import PostActions from './PostActions';
 
 const PostScheduler = () => {
+  const location = useLocation();
   const [postDetails, setPostDetails] = useState({
-    content: '',
+    content: location?.state?.content || '',
     visibility: 'PUBLIC',
     media: [],
   });
