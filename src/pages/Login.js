@@ -140,7 +140,7 @@ const Login = () => {
             </button>
 
             <div className="mt-4 flex  w-full justify-between text-center">
-              <p className="text-white mt-2">Forgot your password? </p>
+              <p className="text-white">Forgot your password? </p>
               <button
                 type="button"
                 onClick={handleSendResetPasswordEmail}
