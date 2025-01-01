@@ -30,6 +30,11 @@ const Login = () => {
     setShowPassword(!showPassword);
   };
 
+  const handleGoogleLogin = () => {
+    const authUrl = `${process.env.REACT_APP_OAUTH_URL}`;
+    window.location.href = authUrl;
+  };
+
   const handleSendResetPasswordEmail = async () => {
     try {
       if (!formData.email) {
@@ -139,12 +144,12 @@ const Login = () => {
               Login
             </button>
 
-            <div className="mt-4 flex  w-full justify-between text-center">
-              <p className="text-white">Forgot your password? </p>
+            <div className="flex m-0 p-0 w-full justify-between text-center">
+              <p className="text-white text-xs">Forgot your password? </p>
               <button
                 type="button"
                 onClick={handleSendResetPasswordEmail}
-                className="text-sky-100 underline ml-1"
+                className="text-sky-100 text-xs underline ml-1"
               >
                 Reset Password
               </button>
@@ -156,13 +161,13 @@ const Login = () => {
               <span className="h-px w-16 bg-gray-300"></span>
             </div>
 
-            <a
-              href={process.env.REACT_APP_OAUTH_URL}
-              className="flex items-center justify-center border border-gray-300 bg-white text-sky-900 py-2 px-4 rounded-full"
+            <button
+              onClick={handleGoogleLogin}
+              className="flex items-center  w-full justify-center border border-gray-300 bg-white text-sky-900 py-2 px-4 rounded-full"
             >
               <FcGoogle className="mr-2" size={20} />
               Sign in with Google
-            </a>
+            </button>
 
             <div className="mt-4 text-center">
               <p className="text-sm text-white">

@@ -29,6 +29,11 @@ const Signup = () => {
     });
   };
 
+  const handleGoogleSignUp = () => {
+    const authUrl = `${process.env.REACT_APP_OAUTH_URL}`;
+    window.location.href = authUrl;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
@@ -158,13 +163,13 @@ const Signup = () => {
               <span className="text-sm text-white">or</span>
               <span className="h-px w-16 bg-gray-300"></span>
             </div>
-            <a
-              href={process.env.REACT_APP_OAUTH_URL}
-              className="flex items-center justify-center border border-gray-300 bg-white text-sky-900 py-2 px-4 rounded-full"
+            <button
+              onClick={handleGoogleSignUp}
+              className="flex w-full items-center justify-center border border-gray-300 bg-white text-sky-900 py-2 px-4 rounded-full"
             >
               <FcGoogle className="mr-2" size={20} />
               Sign in with Google
-            </a>
+            </button>
 
             <div className="flex items-center justify-center">
               <p className="text-sm text-center text-white">
