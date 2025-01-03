@@ -27,35 +27,47 @@ const ContentCalendarModal = ({ isOpen, onClose, onSave }) => {
     }
   };
 
+  const validateCSV = (data) => {
+    const requiredHeaders = ['Title', 'Date', 'Time'];
+    const headers = Object.keys(data[0]);
+
+    // Check if all required headers are present
+    const isValidHeader = requiredHeaders.every((header) =>
+      headers.includes(header),
+    );
+    if (!isValidHeader) {
+      return { isValid: false, message: 'Invalid headers in the CSV file.' };
+    }
+
+    // Check for empty values in rows
+    for (const row of data) {
+      for (const header of requiredHeaders) {
+        if (!row[header]?.trim()) {
+          return {
+            isValid: false,
+            message: 'Each row must contain non-empty values for all columns.',
+          };
+        }
+      }
+    }
+
+    return { isValid: true };
+  };
+
   const handleFileUpload = (file) => {
     const reader = new FileReader();
     reader.onload = (e) => {
       const text = e.target.result;
       const parsedData = Papa.parse(text, { header: true }).data;
 
-      const validatedData = parsedData.filter(
-        (row) => row.Title && row.DateTime,
-      );
-
-      if (validatedData.length === 0) {
-        message.error('No valid content found in the file.');
+      // Validate the CSV structure and data
+      const validation = validateCSV(parsedData);
+      if (!validation.isValid) {
+        message.error(validation.message);
         return;
       }
 
-      // Convert DateTime to AM/PM format
-      const formattedData = validatedData.map((row) => {
-        const date = new Date(row.DateTime);
-        const hours = date.getHours();
-        const minutes = date.getMinutes();
-        const period = hours >= 12 ? 'PM' : 'AM';
-        const formattedTime = `${hours % 12}:${
-          minutes < 10 ? '0' : ''
-        }${minutes} ${period}`;
-
-        return { ...row, Time: formattedTime };
-      });
-
-      setCalendarData(formattedData);
+      setCalendarData(parsedData);
       message.success('Content ideas loaded successfully!');
     };
     reader.readAsText(file);
@@ -71,24 +83,11 @@ const ContentCalendarModal = ({ isOpen, onClose, onSave }) => {
     try {
       setLoading(true);
       const fetchedData = [
-        { Title: 'Topic 1', DateTime: '2025-01-02T10:00:00' },
-        { Title: 'Topic 2', DateTime: '2025-01-03T14:00:00' },
+        { Title: 'Topic 1', Date: '2025-01-02', Time: '10:00 AM' },
+        { Title: 'Topic 2', Date: '2025-01-03', Time: '2:00 PM' },
       ]; // Placeholder data
 
-      // Convert DateTime to AM/PM format
-      const formattedData = fetchedData.map((row) => {
-        const date = new Date(row.DateTime);
-        const hours = date.getHours();
-        const minutes = date.getMinutes();
-        const period = hours >= 12 ? 'PM' : 'AM';
-        const formattedTime = `${hours % 12}:${
-          minutes < 10 ? '0' : ''
-        }${minutes} ${period}`;
-
-        return { ...row, Time: formattedTime };
-      });
-
-      setCalendarData(formattedData);
+      setCalendarData(fetchedData);
       message.success('Google Sheet content loaded successfully!');
       setLoading(false);
     } catch (error) {
@@ -181,7 +180,7 @@ const ContentCalendarModal = ({ isOpen, onClose, onSave }) => {
                 >
                   <span className="text-sm">{data.Title}</span>
                   <span className="text-sm">
-                    {data.DateTime} - {data.Time}
+                    {data.Date} - {data.Time}
                   </span>
                 </li>
               ))}

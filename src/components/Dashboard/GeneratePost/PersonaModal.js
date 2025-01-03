@@ -1,36 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { FiX } from 'react-icons/fi';
 import { message } from 'antd';
-import { getAllMembers } from '../../../network/Members';
 import CustomDropdownMenu from '../Global/CustomDropDown';
 
-const PersonaModal = ({ isOpen, onClose, onSave }) => {
+const PersonaModal = ({
+  profiles,
+  setIsAnalyzing,
+  isAnalyzing,
+  isOpen,
+  onClose,
+  onSave,
+}) => {
   const [selectedProfile, setSelectedProfile] = useState(null);
-  const [profiles, setProfiles] = useState([]);
   const [preferences, setPreferences] = useState('');
   const [samples, setSamples] = useState([]);
   const [newSample, setNewSample] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
   const [errors, setErrors] = useState({});
-
-  useEffect(() => {
-    const fetchAndSetProfiles = async () => {
-      setIsLoading(true);
-      try {
-        const data = await getAllMembers();
-        const profileOptions = data.map((profile) => ({
-          value: profile._id,
-          label: profile.name,
-        }));
-        setProfiles(profileOptions);
-        setIsLoading(false);
-      } catch (err) {
-        message.error('Unable to fetch member details.');
-      }
-    };
-
-    fetchAndSetProfiles();
-  }, []);
 
   const handleAddSample = () => {
     if (!newSample.trim()) {
@@ -63,13 +48,13 @@ const PersonaModal = ({ isOpen, onClose, onSave }) => {
       message.error('Please fill all required fields.');
       return;
     }
+    setIsAnalyzing(true);
 
     onSave({
       profile: selectedProfile,
       preferences,
       samples,
     });
-    onClose();
   };
 
   if (!isOpen) return null;
@@ -89,22 +74,22 @@ const PersonaModal = ({ isOpen, onClose, onSave }) => {
         >
           <FiX />
         </button>
-        <h2 className="text-xl text-center mb-4">Set Your Writing Persona</h2>
+        <h2 className="text-xl text-center mb-4">
+          Analyze Your Writing Persona
+        </h2>
 
         <div className="mb-4">
           <label className="block text-sm mb-2 font-medium text-gray-700">
             Select Profile
           </label>
-          {isLoading ? (
-            <div className="animate-pulse mt-2 bg-gray-200 rounded-lg h-8 w-1/2"></div>
-          ) : (
-            <CustomDropdownMenu
-              options={profiles}
-              selected={selectedProfile}
-              onSelect={setSelectedProfile}
-              label="Select a profile"
-            />
-          )}
+
+          <CustomDropdownMenu
+            options={profiles}
+            selected={selectedProfile}
+            onSelect={setSelectedProfile}
+            label="Select a profile"
+          />
+
           {errors.profile && (
             <p className="text-red-500 text-xs mt-1">{errors.profile}</p>
           )}
@@ -187,7 +172,7 @@ const PersonaModal = ({ isOpen, onClose, onSave }) => {
             onClick={handleSave}
             className="global-button-primary"
           >
-            Save Persona
+            {isAnalyzing ? 'Analyzing...' : 'Analyze'}
           </button>
         </div>
       </div>

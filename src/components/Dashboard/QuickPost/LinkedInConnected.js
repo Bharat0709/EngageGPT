@@ -17,10 +17,10 @@ const LinkedInConnection = ({
 
   return (
     <div className="mb-4">
-      <div className="flex lg:flex-row flex-col gap-2 items-center justify-between mb-2">
+      <div className="flex lg:flex-row flex-wrap gap-2 items-center justify-between mb-2">
         <h3 className="text-xl p-0 m-0 font-medium">Share Content</h3>
 
-        <div className="flex items-center text-sm gap-4">
+        <div className="flex items-end text-sm gap-4">
           {isLoading ? (
             <>
               <Skeleton.Input active size="small" style={{ width: '200px' }} />
@@ -29,7 +29,6 @@ const LinkedInConnection = ({
             <>
               {connectedProfiles?.length > 0 ? (
                 <div className="my-2">
-                  Selected Account:{' '}
                   <CustomDropdown
                     options={connectedProfiles.map((profile) => ({
                       label: profile.name,

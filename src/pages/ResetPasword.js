@@ -25,7 +25,7 @@ const ResetPassword = () => {
     }
 
     try {
-      const response = await resetPassword(token, password, confirmPassword);
+      await resetPassword(token, password, confirmPassword);
       message.success('New password set successfully');
       setSuccess('Password Reset Succcessfully');
       navigate('/login');
