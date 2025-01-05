@@ -46,6 +46,7 @@ const People = () => {
         }
       }
       message.success('Invite sent successfully!');
+      message.info('Check spam folder as well ');
       setIsAddPeopleModalOpen(false);
     } catch (err) {
       message.error(err.message);
@@ -71,8 +72,6 @@ const People = () => {
     switch (filter) {
       case 'All':
         return people;
-      case 'Members':
-        return people.filter((p) => p.role === 'member');
       case 'Profiles':
         return people.filter((p) => p.role === 'profile');
       case 'Invites':
@@ -127,19 +126,17 @@ const People = () => {
         ) : (
           <>
             <div className="toggle-buttons bg-gray-50 flex gap-4">
-              {['All', 'Members', 'Profiles', 'Invites', 'Disconnected'].map(
-                (filter) => (
-                  <p
-                    key={filter}
-                    className={`text-sm p-0 m-0 cursor-pointer font-semibold ${
-                      selectedFilter === filter ? 'text-black' : 'text-gray-500'
-                    }`}
-                    onClick={() => setSelectedFilter(filter)}
-                  >
-                    {filter}
-                  </p>
-                ),
-              )}
+              {['All', 'Profiles', 'Invites', 'Disconnected'].map((filter) => (
+                <p
+                  key={filter}
+                  className={`text-sm p-0 m-0 cursor-pointer font-semibold ${
+                    selectedFilter === filter ? 'text-black' : 'text-gray-500'
+                  }`}
+                  onClick={() => setSelectedFilter(filter)}
+                >
+                  {filter}
+                </p>
+              ))}
             </div>
             <div className="connected-info text-sm mr-2 text-black">
               Total Users: {filteredPeople.length}
@@ -188,53 +185,59 @@ const People = () => {
           filteredPeople.map((person) => (
             <div
               key={person?._id}
-              className="person-card w-full bg-white p-4 rounded-xl lg:flex-row flex-col flex justify-between items-center"
+              className="person-card w-full bg-white p-4  gap-4 rounded-xl lg:flex-row flex-col flex justify-between items-center"
             >
-              <div className="flex lg:flex-row flex-col gap-3 items-center">
-                <img
-                  src={person?.profilePicture}
-                  alt={`${person?.name}'s profile`}
-                  className="w-10 h-10 rounded-full border border-gray-300"
-                />
-                <h3 className="text-sm p-0 m-0 font-semibold text-gray-800">
-                  {person?.name}
-                </h3>
-                <p className="text-sm rounded-lg p-0 m-0 text-gray-600">
-                  {person?.email}
-                </p>
-                <p className="text-sm rounded-lg bg-gray-200 p-1 px-3 m-0 text-gray-600">
-                  {person?.role?.charAt(0).toUpperCase() +
-                    person?.role?.slice(1)}
-                </p>
-                <div className="flex rounded-full text-green-600 items-center">
-                  <p
-                    className={`text-sm p-0 m-0 font-medium ${
-                      person.isConnected === 'connected'
-                        ? 'text-green-700'
-                        : 'text-red-600'
-                    }`}
-                  >
-                    •{' '}
-                    {person.isConnected === 'connected'
-                      ? 'Analytics Connected'
-                      : person.isConnected === 'invited'
-                      ? 'Invited'
-                      : 'Disconnected'}
-                  </p>
+              <div className="flex lg:w-fit w-full lg:flex-row flex-col gap-4 items-center">
+                <div className="flex lg:w-fit w-full items-center gap-4 justify-start">
+                  <img
+                    src={person?.profilePicture}
+                    alt={`${person?.name}'s profile`}
+                    className="w-10 h-10 rounded-full border border-gray-300"
+                  />
+                  <div className="flex lg:flex-row flex-col items-start  lg:gap-3 gap-1">
+                    <h3 className="text-sm p-0 m-0 font-semibold text-gray-800">
+                      {person?.name}
+                    </h3>
+                    <p className="text-sm rounded-lg p-0 m-0 text-gray-600">
+                      {person?.email}
+                    </p>
+                  </div>
                 </div>
-                {person.isLinkedinConnected && (
-                  <p
-                    className={`text-sm p-0 m-0 font-medium  ${
-                      person.isLinkedinConnected
-                        ? 'text-green-700'
-                        : 'text-black bg-gray-50 p-2 mx-3 border border-gray-900 px-4'
-                    }`}
-                  >
-                    • LinkedIn Connected
+                <div className="flex items-center lg:flex-row flex-wrap gap-3 lg:w-max  w-full">
+                  <p className="text-sm rounded-lg bg-gray-200 p-1 px-3 m-0 text-gray-600">
+                    {person?.role?.charAt(0).toUpperCase() +
+                      person?.role?.slice(1)}
                   </p>
-                )}
+                  <div className="flex w-max rounded-full text-green-600 items-center">
+                    <p
+                      className={`text-sm p-0 m-0 font-medium ${
+                        person.isConnected === 'connected'
+                          ? 'text-green-700'
+                          : 'text-red-600'
+                      }`}
+                    >
+                      •{' '}
+                      {person.isConnected === 'connected'
+                        ? 'Analytics Connected'
+                        : person.isConnected === 'invited'
+                        ? 'Invited'
+                        : 'Disconnected'}
+                    </p>
+                  </div>
+                  {person.isLinkedinConnected && (
+                    <p
+                      className={`text-sm p-0 m-0 font-medium  ${
+                        person.isLinkedinConnected
+                          ? 'text-green-700'
+                          : 'text-black bg-gray-50 p-2 mx-3 border border-gray-900 px-4'
+                      }`}
+                    >
+                      • LinkedIn Connected
+                    </p>
+                  )}
+                </div>
               </div>
-              <div className="flex gap-4 lg:mt-0 mt-2 items-center">
+              <div className="flex gap-4 lg:w-fit w-full justify-between lg:mt-0 mt-2 items-center">
                 {person?.isLinkedinConnected ? (
                   <button
                     onClick={() => handleDisconnectLinkedIn(person._id)}

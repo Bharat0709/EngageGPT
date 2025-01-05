@@ -44,6 +44,7 @@ const OrganizationProfileSettings = () => {
         content: 'Password reset email sent successfully!',
         key: 'reset',
       });
+      message.info('Please check spam folder as well!');
     } catch (err) {
       message.error('Failed to send password reset email. Please try again.');
     }
@@ -51,8 +52,6 @@ const OrganizationProfileSettings = () => {
 
   const handleBillingUpdate = async (updatedBillingDetails) => {
     try {
-      // Assume an API function `updateBillingDetails` exists
-      // await updateBillingDetails(updatedBillingDetails);
       setUserData((prevData) => ({
         ...prevData,
         billingDetails: updatedBillingDetails,
@@ -71,7 +70,7 @@ const OrganizationProfileSettings = () => {
   };
 
   return (
-    <div className="w-full h-full scrollbar-hide overflow-auto overflow-y-scroll mx-auto p-6 bg-[#f3f4f6] shadow-md">
+    <div className="w-full h-full scrollbar-hide overflow-auto overflow-y-scroll mx-auto lg:p-6 p-4 bg-[#f3f4f6] shadow-md">
       <h2 className="text-2xl text-semibold mb-4">Organization Settings</h2>
 
       <div className="flex bg-gray-50 rounded-xl p-3 text-sm justify-start gap-4 items-center mb-2">
@@ -84,14 +83,6 @@ const OrganizationProfileSettings = () => {
           >
             General
           </button>{' '}
-          <button
-            onClick={() => handleViewToggle('billing')}
-            className={`${
-              view === 'billing' ? 'text-black font-semibold' : 'text-gray-600'
-            }`}
-          >
-            Billing
-          </button>
         </>
       </div>
 

@@ -21,32 +21,26 @@ const LinkedInConnection = ({
         <h3 className="text-xl p-0 m-0 font-medium">Share Content</h3>
 
         <div className="flex items-end text-sm gap-4">
-          {isLoading ? (
-            <>
-              <Skeleton.Input active size="small" style={{ width: '200px' }} />
-            </>
-          ) : (
-            <>
-              {connectedProfiles?.length > 0 ? (
-                <div className="my-2">
-                  <CustomDropdown
-                    options={connectedProfiles.map((profile) => ({
-                      label: profile.name,
-                      value: profile._id,
-                    }))}
-                    selected={selectedProfile}
-                    onSelect={setSelectedProfile}
-                    label="Select Profile"
-                  />
-                </div>
-              ) : (
-                <div></div>
-              )}
-            </>
-          )}
+          <>
+            {connectedProfiles?.length > 0 ? (
+              <div className="my-2">
+                <CustomDropdown
+                  options={connectedProfiles.map((profile) => ({
+                    label: profile.name,
+                    value: profile._id,
+                  }))}
+                  selected={selectedProfile}
+                  onSelect={setSelectedProfile}
+                  label="Select Profile"
+                />
+              </div>
+            ) : (
+              <div></div>
+            )}
+          </>
         </div>
         {isLoading ? (
-          <Skeleton.Button active size="default" style={{ width: '150px' }} />
+          <Skeleton.Button active size="default" style={{ width: '100px' }} />
         ) : (
           <button
             onClick={handleConnectLinkedIn}

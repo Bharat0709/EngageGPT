@@ -1,8 +1,18 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FiX } from 'react-icons/fi';
+import { message } from 'antd';
+import { updateProfile } from '../../../network/Organization';
+
 const EditOrgModal = ({ isOpen, onClose, userData, onSave }) => {
-  const [name, setName] = useState(userData?.name || '');
+  const [name, setName] = useState('');
   const [profilePicture, setProfilePicture] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (userData?.name) {
+      setName(userData.name);
+    }
+  }, [userData]);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -11,9 +21,24 @@ const EditOrgModal = ({ isOpen, onClose, userData, onSave }) => {
     }
   };
 
-  const handleSave = () => {
-    onSave({ name, profilePicture });
-    onClose();
+  const handleSave = async () => {
+    setLoading(true);
+    try {
+      const updatedDetails = await updateProfile(name, profilePicture);
+      onSave({
+        name: updatedDetails.organization.name,
+        profilePicture: updatedDetails.organization.profilePicture,
+      });
+      message.success('Profile updated successfully!');
+      onClose();
+    } catch (error) {
+      console.error('Error updating profile:', error.message);
+      message.error(
+        error.message || 'Failed to update profile. Please try again.',
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (!isOpen) return null;
@@ -40,12 +65,14 @@ const EditOrgModal = ({ isOpen, onClose, userData, onSave }) => {
           <label className="block text-sm font-medium text-gray-700">
             Name
           </label>
-          <input
-            type="text"
-            value={userData.name}
-            onChange={(e) => setName(e.target.value)}
-            className="mt-1 block w-full border border-gray-300 text-sm rounded-xl p-2"
-          />
+          <div className="mb-4">
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)} // Update the state on change
+              className="mt-1 block w-full border border-gray-300 text-sm rounded-xl p-2"
+            />
+          </div>
         </div>
         <div className="mb-6">
           <label className="block text-sm font-medium text-gray-700">
@@ -84,7 +111,7 @@ const EditOrgModal = ({ isOpen, onClose, userData, onSave }) => {
             onClick={handleSave}
             className="global-button-primary"
           >
-            Save
+            {loading ? 'Saving...' : 'Save'}
           </button>
         </div>
       </div>

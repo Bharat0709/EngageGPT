@@ -17,13 +17,31 @@ export const addNewMember = async (newMemberDetails) => {
   }
 };
 
-export const createMemberPersona = async (preferences, postSamples , memberId) => {
+export const createMemberPersona = async (
+  preferences,
+  postSamples,
+  memberId,
+) => {
   try {
     const response = await axiosInstance.post(
       `${MEMBER_API_URL}/createPersona/${memberId}`,
       {
         preferences,
         postSamples,
+      },
+    );
+    return response.data.data;
+  } catch (error) {
+    const errorMsg = getErrorMessage(error);
+    throw new Error(errorMsg);
+  }
+};
+export const fetchSheetDetails = async (gooleSheetUrl) => {
+  try {
+    const response = await axiosInstance.post(
+      `${MEMBER_API_URL}/integrations/googleSheet`,
+      {
+        googleSheetUrl: gooleSheetUrl,
       },
     );
     return response.data.data;

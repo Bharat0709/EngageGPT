@@ -193,11 +193,11 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <ul className="space-y-4 mt-4">
+        <ul className="space-y-2 mt-4">
           {invitedProfiles.map((person) => (
             <div
               key={person?.id}
-              className="person-card w-full border bg-white  lg:p-4 p-3 rounded-xl gap-6 flex lg:flex-row flex-col justify-between items-center"
+              className="person-card w-full bg-white  lg:p-4 p-3 rounded-xl gap-6 flex lg:flex-row flex-col justify-between items-center"
             >
               <div className="flex w-full lg:flex-row flex-col lg:gap-4 gap-2 items-center">
                 <div className="flex w-full flex-row justify-start items-center gap-3">
@@ -206,7 +206,7 @@ const Home = () => {
                     alt={`${person?.name}'s profile`}
                     className="w-10 h-10 rounded-full border border-gray-300"
                   />
-                  <div className="flex  lg:flex-row flex-col lg:gap-3 gap-1">
+                  <div className="flex lg:w-fit w-full lg:flex-row flex-col lg:gap-3 gap-1">
                     <div className="flex justify-between items-center w-full gap-3 ">
                       <h3 className="text-sm p-0 m-0 font-semibold text-gray-800">
                         {person?.name}
@@ -238,15 +238,15 @@ const Home = () => {
                 <button
                   onClick={handleConnectLinkedIn}
                   disabled={person.isLinkedinConnected}
-                  className="border-black text-black flex items-center gap-2  bg-white border p-2 rounded-lg text-xs"
+                  className="border-gray-400 text-black flex items-center gap-2  bg-white border p-2 rounded-lg text-xs"
                 >
                   <FaLinkedin className="text-sky-800" size={20} />
                   {person.isLinkedinConnected ? 'Connected' : 'Connect'}
                 </button>
-                <div className="copy-token text-sm">
+                <div className="copy-token text-gray-500 text-sm">
                   Connection Token
                   <Button
-                    className="text-black hover:text-black"
+                    className="text-gray-800 hover:text-black"
                     icon={<MdContentCopy />}
                     onClick={() => handleCopy(person.connectionToken)}
                     type="link"

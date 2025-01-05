@@ -127,7 +127,7 @@ const LinkedInPostGenerator = () => {
   return (
     <div className="flex w-full flex-col lg:flex-row gap-6 lg:p-6 p-4 bg-gray-50 min-h-screen">
       <div className="flex w-full lg:w-3/4 gap-2 flex-col rounded-lg">
-        <div className="flex w-full flex-col lg:flex-row  gap-3 justify-between items-center mb-4">
+        <div className="flex w-full flex-wrap lg:flex-row  gap-3 justify-between items-center mb-4">
           <h3 className="text-xl font-medium">Create LinkedIn Post</h3>
           <div className="">
             {selectedProfile && (
@@ -171,7 +171,7 @@ const LinkedInPostGenerator = () => {
                 onClick={() => handleToneClick(tone)}
                 className={`lg:text-sm text-xs bg-white px-4 py-2 rounded-lg ${
                   selectedTone === tone
-                    ? 'bg-sky-200'
+                    ? 'bg-slate-200'
                     : 'bg-gray-50 text-gray-700 hover:bg-gray-100'
                 }`}
               >
@@ -199,7 +199,7 @@ const LinkedInPostGenerator = () => {
                 onClick={() => handleTemplateClick(template)}
                 className={`lg:text-sm text-xs bg-white px-4 py-2 rounded-lg ${
                   selectedFormat === template
-                    ? 'bg-sky-200'
+                    ? 'bg-slate-200'
                     : 'bg-gray-50 text-gray-700 hover:bg-gray-100'
                 }`}
               >
@@ -237,7 +237,7 @@ const LinkedInPostGenerator = () => {
         </button>
       </div>
 
-      <div className="border-l-2 border-gray-100"></div>
+      <div className="border-l border-gray-500"></div>
 
       <div className="w-full lg:w-1/3  rounded-lg">
         <h3 className="text-lg font-medium mb-4">Generated Post</h3>

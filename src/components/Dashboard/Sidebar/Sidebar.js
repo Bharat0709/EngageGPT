@@ -1,5 +1,6 @@
 // Start of Selection
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../../../assets/styles/GlobalCSS.css';
 import { Link, useLocation } from 'react-router-dom';
 import LogoutModal from '../Global/LogoutModal';
@@ -26,29 +27,29 @@ const menuItems = [
     to: '/dashboard',
     icon: <FiHome size={20} className="text-white" />,
     label: 'Home',
-    activeClass: 'global-sidebar-button-primary bg-[#004265]',
-    hoverClass: 'hover:bg-[#004265] hover:text-white',
+    activeClass: 'global-sidebar-button-primary bg-white',
+    hoverClass: 'hover:bg-white hover:text-black',
   },
   {
     to: '/dashboard/quick-post',
     icon: <FiZap size={20} />,
     label: 'Quick Post',
-    activeClass: 'global-sidebar-button-primary bg-[#006da7fb]',
-    hoverClass: 'hover:bg-[#004265] hover:text-white',
+    activeClass: 'global-sidebar-button-primary bg-white',
+    hoverClass: 'hover:bg-white hover:text-black',
   },
   {
     to: '/dashboard/create-post',
     icon: <FiFileText size={20} />,
     label: 'Post Generator',
-    activeClass: 'global-sidebar-button-primary bg-[#00 6da7fb]',
-    hoverClass: 'hover:bg-[#004265] hover:text-white',
+    activeClass: 'global-sidebar-button-primary bg-white',
+    hoverClass: 'hover:bg-white hover:text-black',
   },
   {
     to: '/dashboard/collections',
     icon: <FiFolder size={20} />,
     label: 'Collections',
-    activeClass: 'global-sidebar-button-primary bg-[#004265]',
-    hoverClass: 'hover:bg-[#004265] hover:text-white',
+    activeClass: 'global-sidebar-button-primary bg-white',
+    hoverClass: 'hover:bg-white hover:text-black',
   },
 ];
 
@@ -70,15 +71,16 @@ const SidebarLink = ({
     }`}
   >
     {React.cloneElement(icon, {
-      className: 'text-white',
+      className: 'text-black',
     })}
-    <span className={`text-white text-sm ${isOpen ? '' : 'hidden'}`}>
+    <span className={`text-black text-sm ${isOpen ? '' : 'hidden'}`}>
       {label}
     </span>
   </Link>
 );
 
 function Sidebar() {
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
   const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
@@ -96,21 +98,24 @@ function Sidebar() {
     }
   };
 
+  const handleProfileNavigate = () => {
+    navigate('/dashboard/settings');
+  };
+
   return (
     <div className="flex flex-col">
       <div className="flex justify-between h-min bg-white p-4 lg:hidden">
         <button onClick={toggleSidebar} className="text-gray-600">
           <FiMenu size={24} />
         </button>
-
-        <button onClick={toggleSidebar} className="text-gray-600">
+        <button onClick={handleProfileNavigate} className="text-gray-600">
           <FiUser size={24} />
         </button>
       </div>
 
       {/* Sidebar */}
       <div
-        className={`mulish-normal h-[90vh] lg:h-[100vh] lg:rounded-none rounded-xl fixed lg:relative lg:top-0 lg:left-0 top-2 left-0 border-r border-gray-300 bg-[#0c4a6e] text-white transition-all duration-700 ease-in-out z-10 ${
+        className={`mulish-normal h-[90vh] lg:h-[100vh] lg:rounded-none rounded-xl fixed lg:relative lg:top-0 lg:left-0 top-2 left-0 border border-gray-400 bg-gray-100 text-black transition-all duration-700 ease-in-out z-10 ${
           isOpen ? 'translate-x-0 lg:ml-0 ml-2' : '-translate-x-full'
         } lg:translate-x-0`}
         style={{ width: isOpen ? '240px' : '78px' }}
@@ -121,9 +126,6 @@ function Sidebar() {
           } border-b lg:border-b-0`}
         >
           <img src={EngageGPTLogo} className="h-10" alt="EngageGPT Logo" />
-          {/* <span className={`text-md ${isOpen ? '' : 'hidden'}`}>EngageGPT</span> */}
-
-          {/* Left Arrow for collapsing the sidebar on desktop */}
           <button
             onClick={toggleSidebar}
             className="text-gray-200 transform transition-transform duration-500"
@@ -140,7 +142,7 @@ function Sidebar() {
         </div>
 
         {/* Sidebar Links */}
-        <nav className="flex flex-col rounded-xl h-[79vh] lg:h-[86vh] bg-[#0c4a6e] justify-between p-2">
+        <nav className="flex flex-col rounded-xl h-[79vh] lg:h-[86vh] bg-gray-100 justify-between p-2">
           <div className="flex flex-col p-2 space-y-2">
             {menuItems.map((item) => (
               <SidebarLink
@@ -157,11 +159,11 @@ function Sidebar() {
             ))}
           </div>
 
-          <div className="flex flex-col rounded-lg p-2 bg-[#004265] lg:mr-1 space-y-3">
+          <div className="flex flex-col rounded-lg p-2 bg-white lg:mr-1 space-y-3">
             <Tooltip text="Feedback" position="right">
               <button
                 onClick={() => setIsFeedbackModalOpen(true)}
-                className="flex text-white w-full text-sm items-center gap-3 py-2 pr-3 pl-3 rounded-md hover:bg-[#145a7f]"
+                className="flex text-black w-full text-sm items-center gap-3 py-2 pr-3 pl-3 rounded-md hover:bg-gray-100"
               >
                 <FiMessageSquare size={20} />
                 <span className={`${isOpen ? '' : 'hidden'}`}>Feedback</span>
@@ -170,7 +172,7 @@ function Sidebar() {
             <Tooltip text="Need Help?" position="right">
               <button
                 onClick={() => setIsHelpModalOpen(true)}
-                className="flex text-white w-full items-center text-sm gap-3 py-2 pr-3 pl-3 rounded-md hover:bg-[#145a7f]"
+                className="flex text-black w-full items-center text-sm gap-3 py-2 pr-3 pl-3 rounded-md hover:bg-gray-100"
               >
                 <FiHelpCircle size={20} />
                 <span className={`${isOpen ? '' : 'hidden'}`}>Help</span>
@@ -184,13 +186,13 @@ function Sidebar() {
               isActive={isActiveLink('/dashboard/settings')}
               onClick={handleLinkClick}
               isOpen={isOpen}
-              activeClass="global-sidebar-button-primary text-sm bg-[#145a7f]"
-              hoverClass="hover:bg-[#145a7f]"
+              activeClass="global-sidebar-button-primary text-sm bg-gray-100"
+              hoverClass="hover:bg-gray-100 hover:text-black"
             />
             <Tooltip text="Logout" position="right">
               <button
                 onClick={() => setIsLogoutModalOpen(true)}
-                className="flex text-white items-center gap-3 w-full py-2 text-sm pl-3 rounded-md hover:bg-[#145a7f]"
+                className="flex text-black items-center gap-3 w-full py-2 text-sm pl-3 rounded-md hover:bg-gray-100"
               >
                 <FiLogOut size={20} />
                 <span className={`${isOpen ? '' : 'hidden'}`}>Logout</span>

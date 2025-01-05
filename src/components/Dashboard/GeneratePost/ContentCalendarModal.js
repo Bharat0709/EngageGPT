@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { FiX } from 'react-icons/fi';
 import { message } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
+import { fetchSheetDetails } from '../../../network/Members';
 import Papa from 'papaparse';
 
 const ContentCalendarModal = ({ isOpen, onClose, onSave }) => {
@@ -80,18 +81,85 @@ const ContentCalendarModal = ({ isOpen, onClose, onSave }) => {
       return;
     }
 
+    // Ensure the URL is public or publicly accessible
+    if (
+      !googleSheetLink.startsWith('https://docs.google.com/spreadsheets/d/') ||
+      googleSheetLink.endsWith('/edit')
+    ) {
+      message.error(
+        'Google Sheet should be a public link or accessible publicly.',
+      );
+      return;
+    }
+
+    // Regular expression to validate the base Google Sheets link
+    const sheetLinkRegex =
+      /^https:\/\/docs\.google\.com\/spreadsheets\/d\/[a-zA-Z0-9-_]+(\/.*)?$/;
+
+    if (!sheetLinkRegex.test(googleSheetLink)) {
+      message.error('Please enter a valid Google Sheet link.');
+      return;
+    }
+
     try {
       setLoading(true);
-      const fetchedData = [
-        { Title: 'Topic 1', Date: '2025-01-02', Time: '10:00 AM' },
-        { Title: 'Topic 2', Date: '2025-01-03', Time: '2:00 PM' },
-      ]; // Placeholder data
+      const fetchedData = await fetchSheetDetails(googleSheetLink);
 
-      setCalendarData(fetchedData);
+      // Handle response structure
+      const { headers, rows } = fetchedData;
+
+      if (!headers || !rows) {
+        throw new Error('Invalid response format from Google Sheets API.');
+      }
+
+      // Validate headers
+      const requiredHeaders = ['Title', 'Date', 'Time'];
+      const isValidHeader = requiredHeaders.every((header) =>
+        headers.includes(header),
+      );
+
+      if (!isValidHeader) {
+        throw new Error(
+          'Invalid headers in the Google Sheet. Required headers are "Title", "Date", and "Time".',
+        );
+      }
+
+      const validRows = rows.filter((row) => {
+        return row.length === 3;
+      });
+      if (validRows.length !== rows.length) {
+        message.warning(
+          'Some rows have been discarded as they do not contain all required columns.',
+        );
+      }
+
+      if (validRows.length > 30) {
+        const limitedData = validRows.slice(0, 30);
+        setCalendarData(limitedData);
+        message.warning(
+          'You can only upload up to 30 days of calendar. The rest of the data has been discarded.',
+        );
+      } else {
+        setCalendarData(validRows);
+      }
+
+      const formattedData = validRows.map((row) => {
+        const formattedRow = {};
+        headers.forEach((header, index) => {
+          formattedRow[header] = row[index] || '';
+        });
+        return formattedRow;
+      });
+
+      setCalendarData(formattedData);
       message.success('Google Sheet content loaded successfully!');
-      setLoading(false);
     } catch (error) {
-      message.error('Failed to fetch content from Google Sheet.');
+      console.error('Error fetching Google Sheets data:', error.message);
+      message.error(
+        error.message ||
+          'Failed to load Google Sheets content. Please try again.',
+      );
+    } finally {
       setLoading(false);
     }
   };
@@ -128,7 +196,7 @@ const ContentCalendarModal = ({ isOpen, onClose, onSave }) => {
             onClick={downloadCSVTemplate}
             className="text-sm mb-2 self-center w-fit mx-auto bg-white border border-gray-300 text-black px-4 py-2 rounded-lg"
           >
-            Download Sample CSV Template
+            Download Sample Template
           </button>
         </div>
 
@@ -160,6 +228,10 @@ const ContentCalendarModal = ({ isOpen, onClose, onSave }) => {
             onChange={(e) => setGoogleSheetLink(e.target.value)}
             className="mt-1 block w-full border border-gray-300 text-sm rounded-xl p-2"
           />
+          <p className=" text-red-700 text-xs text-center m-2">
+            Please note Google Sheet should be a public link or accessible
+            publicly.
+          </p>
           <button
             type="button"
             onClick={fetchGoogleSheetData}
@@ -170,8 +242,8 @@ const ContentCalendarModal = ({ isOpen, onClose, onSave }) => {
           </button>
         </div>
 
-        <div>
-          {calendarData.length > 0 && (
+        {calendarData.length > 0 && (
+          <div className="h-52 overflow-y-scroll scrollbar-hide ">
             <ul className="mt-2">
               {calendarData.map((data, index) => (
                 <li
@@ -185,8 +257,8 @@ const ContentCalendarModal = ({ isOpen, onClose, onSave }) => {
                 </li>
               ))}
             </ul>
-          )}
-        </div>
+          </div>
+        )}
 
         <div className="flex justify-end gap-4 mt-6">
           <button

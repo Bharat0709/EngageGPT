@@ -74,7 +74,7 @@ const PersonaModal = ({
         >
           <FiX />
         </button>
-        <h2 className="text-xl text-center mb-4">
+        <h2 className="lg:text-xl text-lg text-center mb-4">
           Analyze Your Writing Persona
         </h2>
 
@@ -126,7 +126,7 @@ const PersonaModal = ({
             <button
               type="button"
               onClick={handleAddSample}
-              className="global-button-primary bg-gray-100 text-black"
+              className="global-button-primary lg:text-base text-xs bg-gray-100 text-black"
             >
               Add More
             </button>
