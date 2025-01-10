@@ -9,15 +9,9 @@ const topicOptions = [
     label: 'Paragraph',
     placeholder: 'Enter paragraph here',
   },
-  {
-    value: 'youtube',
-    label: 'YouTube Link',
-    placeholder: 'Paste YouTube link',
-  },
-  { value: 'blog', label: 'Blog Link', placeholder: 'Paste blog link' },
 ];
 
-const templateOptions = ['Use Persona', 'Use Template'];
+const templateOptions = ['Use Template', 'Use Persona'];
 const tones = [
   'Friendly',
   'Humorous',
@@ -28,4 +22,4 @@ const tones = [
   'Curious',
 ];
 
-export  { topicOptions, templateOptions, tones };
+export { topicOptions, templateOptions, tones };

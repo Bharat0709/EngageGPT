@@ -204,9 +204,11 @@ const People = () => {
                   </div>
                 </div>
                 <div className="flex items-center lg:flex-row flex-wrap gap-3 lg:w-max  w-full">
-                  <p className="text-sm rounded-lg bg-gray-200 p-1 px-3 m-0 text-gray-600">
-                    {person?.role?.charAt(0).toUpperCase() +
-                      person?.role?.slice(1)}
+                  <p className="text-sm rounded-lg bg-gray-100 p-1 px-3 m-0 text-gray-600">
+                    {person?.totalCreditsUsed} credits used
+                  </p>{' '}
+                  <p className="text-sm rounded-lg bg-gray-100 p-1 px-3 m-0 text-gray-600">
+                    {person?.daysActive} days active
                   </p>
                   <div className="flex w-max rounded-full text-green-600 items-center">
                     <p
@@ -224,17 +226,7 @@ const People = () => {
                         : 'Disconnected'}
                     </p>
                   </div>
-                  {person.isLinkedinConnected && (
-                    <p
-                      className={`text-sm p-0 m-0 font-medium  ${
-                        person.isLinkedinConnected
-                          ? 'text-green-700'
-                          : 'text-black bg-gray-50 p-2 mx-3 border border-gray-900 px-4'
-                      }`}
-                    >
-                      • LinkedIn Connected
-                    </p>
-                  )}
+            
                 </div>
               </div>
               <div className="flex gap-4 lg:w-fit w-full justify-between lg:mt-0 mt-2 items-center">

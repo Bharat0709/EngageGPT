@@ -43,7 +43,7 @@ const ResetPassword = () => {
           src={EngageGPTLogo}
           alt="EngageGPT Logo"
         />
-        <h2 className="text-2xl font-bold text-center mb-4">Reset Password</h2>
+        <h2 className="text-xl text-center mb-4">Reset Password</h2>
         {error && <p className="text-red-500 mb-4">{error}</p>}
         {success ? (
           <p className="text-green-500">{success}</p>

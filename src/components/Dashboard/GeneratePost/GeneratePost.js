@@ -2,11 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import CustomDropdown from '../Global/CustomDropDown';
 import { generatePost } from '../../../network/GenerateContent';
+import { AiOutlinePlus } from 'react-icons/ai';
 import { message } from 'antd';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
-import { createMemberPersona } from '../../../network/Members';
 import { tones, templateOptions, topicOptions } from './OptionsData';
-import { getAllMembers } from '../../../network/Members';
+import { createMemberPersona } from '../../../network/Members';
+import { fetchOrganizationData } from '../../../network/Organization';
+import { getAllMembers, addNewMember } from '../../../network/Members';
+import AddMembersModal from '../Global/AddPeopleModal';
 import CustomDropdownMenu from '../Global/CustomDropDown';
 import PersonaModal from './PersonaModal';
 
@@ -15,42 +18,53 @@ const LinkedInPostGenerator = () => {
   const location = useLocation();
   const initialTemplate = location?.state?.initialTemplate || null;
   const initialDescription = location?.state?.description || null;
-  const [template, setTemplate] = useState(initialTemplate || ' ');
+  const [orgDetails, setOrgDetails] = useState(null);
   const [topic, setTopic] = useState(initialDescription || null);
   const [language, setLanguage] = useState('English');
   const [topicType, setTopicType] = useState('description');
   const [selectedTone, setSelectedTone] = useState('Friendly');
-  const [selectedFormat, setSelectedFormat] = useState('Use Persona');
+  const [selectedFormat, setSelectedFormat] = useState('Use Template');
   const [loading, setLoading] = useState(false);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [post, setPost] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [postPersona, setPostPersona] = useState(null);
-  const [selectedProfile, setSelectedProfile] = useState(null);
+  const [postPersona, setPostPersona] = useState(initialTemplate || ' ');
+  const [selectedProfileId, setSelectedProfileId] = useState(null);
   const [profiles, setProfiles] = useState([]);
+  const [detailedProfiles, setDetailedProfiles] = useState(null);
+  const [isAddMemberModalOpen, setIsAddMemberModalOpen] = useState(false);
+  const [refreshMembers, setRefreshMembers] = useState(false);
 
   useEffect(() => {
     const fetchAndSetProfiles = async () => {
       try {
         const data = await getAllMembers();
+        const organizationProfile = await fetchOrganizationData();
+        setOrgDetails(organizationProfile);
         const profileOptions = data?.map((profile) => ({
           value: profile._id,
           label: profile.name,
         }));
         if (data.length === 0) {
-          message.error('No profiles found. Please add a profile first.');
+          setSelectedFormat('Use Template');
           return;
         }
-        setPostPersona(data[0]?.writingPersona);
+        if (initialTemplate) {
+          setPostPersona(initialTemplate);
+        } else {
+          setSelectedFormat('Use Persona');
+          setPostPersona(data[0]?.writingPersona);
+        }
+        setDetailedProfiles(data);
         setProfiles(profileOptions);
-        setSelectedProfile(profileOptions[0].value);
+        setSelectedProfileId(profileOptions[0].value);
       } catch (err) {
         message.error('Unable to fetch member details.');
       }
     };
 
     fetchAndSetProfiles();
-  }, []);
+  }, [refreshMembers, initialTemplate]);
 
   const handleProceed = () => {
     if (!post) {
@@ -74,7 +88,8 @@ const LinkedInPostGenerator = () => {
       );
       setPostPersona(persona.writingPersona);
       setIsAnalyzing(false);
-
+      setSelectedFormat('Use Persona');
+      setRefreshMembers(!refreshMembers);
       message.success('Persona analyzed and saved successfully!');
       setIsModalVisible(false);
     } catch (error) {
@@ -88,6 +103,20 @@ const LinkedInPostGenerator = () => {
   const currentOption = topicOptions.find(
     (option) => option.value === topicType,
   );
+
+  const handleAddMembers = async (newPerson) => {
+    try {
+      for (const person of newPerson) {
+        await addNewMember(person);
+      }
+      message.success('Invite sent successfully!');
+      message.info('Please check spam folder as well');
+      setRefreshMembers(!refreshMembers);
+      setIsAddMemberModalOpen(false);
+    } catch (err) {
+      message.error('Something went wrong try again');
+    }
+  };
 
   const handleGeneratePost = async () => {
     try {
@@ -109,10 +138,11 @@ const LinkedInPostGenerator = () => {
         selectedTone,
         topic,
         language,
-        template,
+        postPersona,
       );
       setPost(generatedPost.generatedPostContent);
       setLoading(false);
+      setRefreshMembers(!refreshMembers);
     } catch (err) {
       message.error(err.message);
       setLoading(false);
@@ -121,8 +151,25 @@ const LinkedInPostGenerator = () => {
 
   const handleToneClick = (toneValue) => setSelectedTone(toneValue);
 
-  const handleTemplateClick = (templateValue) =>
+  const handleTemplateClick = (templateValue) => {
+    if (templateValue === 'Use Persona') {
+      const selectedProfile = detailedProfiles?.find(
+        (profile) => profile._id === selectedProfileId,
+      );
+      if (selectedProfile?.writingPersona) {
+        setPostPersona(selectedProfile.writingPersona);
+      } else {
+        setPostPersona('');
+      }
+    } else {
+      if (initialTemplate) {
+        setPostPersona(initialTemplate);
+      } else {
+        setPostPersona('');
+      }
+    }
     setSelectedFormat(templateValue);
+  };
 
   return (
     <div className="flex w-full flex-col lg:flex-row gap-6 lg:p-6 p-4 bg-gray-50 min-h-screen">
@@ -130,13 +177,22 @@ const LinkedInPostGenerator = () => {
         <div className="flex w-full flex-wrap lg:flex-row  gap-3 justify-between items-center mb-4">
           <h3 className="text-xl font-medium">Create LinkedIn Post</h3>
           <div className="">
-            {selectedProfile && (
+            {selectedProfileId ? (
               <CustomDropdownMenu
                 options={profiles}
-                selected={selectedProfile}
-                onSelect={setSelectedProfile}
+                selected={selectedProfileId}
+                onSelect={setSelectedProfileId}
                 label="Select a profile"
               />
+            ) : (
+              <button
+                type="primary"
+                onClick={() => setIsAddMemberModalOpen(true)}
+                className="global-button-primary text-sm flex items-center gap-1 py-2 px-3 rounded-lg"
+              >
+                <AiOutlinePlus size={14} />
+                Add Profile
+              </button>
             )}
           </div>
         </div>
@@ -171,7 +227,7 @@ const LinkedInPostGenerator = () => {
                 onClick={() => handleToneClick(tone)}
                 className={`lg:text-sm text-xs bg-white px-4 py-2 rounded-lg ${
                   selectedTone === tone
-                    ? 'bg-slate-200'
+                    ? 'bg-slate-200 border border-gray-700'
                     : 'bg-gray-50 text-gray-700 hover:bg-gray-100'
                 }`}
               >
@@ -190,7 +246,16 @@ const LinkedInPostGenerator = () => {
             label="Select Language"
           />
         </div>
-        <p className="text-sm text-gray-500 mt-2">Select post format:</p>
+
+        <p className="text-sm text-gray-500 mt-2">
+          Select post format (optional):
+        </p>
+        {!selectedProfileId && (
+          <p className="text-xs  text-gray-400 p-2 text-center bg-gray-100 self-end rounded-lg w-full px-4">
+            Add Profile to analyze your writing persona, you can add custom
+            persona as well
+          </p>
+        )}
         <div className="my-2 flex w-full flex-wrap items-center gap-2 justify-between">
           <div className="flex gap-2">
             {templateOptions.map((template) => (
@@ -199,7 +264,7 @@ const LinkedInPostGenerator = () => {
                 onClick={() => handleTemplateClick(template)}
                 className={`lg:text-sm text-xs bg-white px-4 py-2 rounded-lg ${
                   selectedFormat === template
-                    ? 'bg-slate-200'
+                    ? 'bg-slate-200 border border-gray-700'
                     : 'bg-gray-50 text-gray-700 hover:bg-gray-100'
                 }`}
               >
@@ -208,33 +273,48 @@ const LinkedInPostGenerator = () => {
             ))}
           </div>
           <button
+            disabled={!selectedProfileId}
             onClick={() => setIsModalVisible(true)}
-            className="global-button-primary py-2 px-4 text-sm text-white rounded-lg"
+            className={`global-button-primary  py-2 px-4 text-sm text-white rounded-lg ${
+              !selectedProfileId === true
+                ? 'cursor-not-allowed '
+                : 'cursor-pointer flex'
+            }`}
           >
             Analyze Persona
           </button>
         </div>
 
         <textarea
+          placeholder={
+            selectedFormat === 'Use Persona'
+              ? 'Add your custom writing persona here... '
+              : 'Add post template here...'
+          }
           className="w-full h-52 border rounded-lg p-3 text-gray-700 focus:outline-none focus:ring-1 focus:ring-black mb-2"
           value={postPersona}
-          onChange={(e) => setTemplate(e.target.value)}
+          onChange={(e) => setPostPersona(e.target.value)}
         ></textarea>
 
-        <button
-          onClick={handleGeneratePost}
-          className="global-button-primary text-white py-2 rounded-lg hover:bg-gray-800"
-          disabled={loading}
-        >
-          {loading ? (
-            <div className="flex items-center text-sm justify-center">
-              <AiOutlineLoading3Quarters className="animate-spin w-5 h-5 mr-2" />
-              Generating Post...
-            </div>
-          ) : (
-            'Generate Post'
-          )}
-        </button>
+        <div className="flex lg:flex-row flex-col gap-2 items-center">
+          <button
+            onClick={handleGeneratePost}
+            className="global-button-primary lg:w-11/12  w-full text-white py-2 rounded-lg hover:bg-gray-800"
+            disabled={loading}
+          >
+            {loading ? (
+              <div className="flex items-center text-sm justify-center">
+                <AiOutlineLoading3Quarters className="animate-spin w-5 h-5 mr-2" />
+                Generating Post...
+              </div>
+            ) : (
+              'Generate Post'
+            )}
+          </button>
+          <p className="py-3 lg:w-3/12 w-full bg-white rounded-lg px-4 text-sm text-center">
+            {orgDetails?.credits} Credits Left
+          </p>
+        </div>
       </div>
 
       <div className="border-l border-gray-500"></div>
@@ -266,6 +346,11 @@ const LinkedInPostGenerator = () => {
         isOpen={isModalVisible}
         onClose={() => setIsModalVisible(false)}
         onSave={handleSavePersona}
+      />
+      <AddMembersModal
+        isOpen={isAddMemberModalOpen}
+        onClose={() => setIsAddMemberModalOpen(false)}
+        onSubmit={handleAddMembers}
       />
     </div>
   );

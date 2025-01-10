@@ -80,6 +80,7 @@ const Home = () => {
         await addNewMember(person);
       }
       message.success('Invite sent successfully!');
+      message.info('Please check spam folder as well');
       setRefreshMembers(!refreshMembers);
       setIsAddMemberModalOpen(false);
     } catch (err) {
