@@ -4,6 +4,7 @@ import { message } from 'antd';
 
 const AddMembersModal = ({ isOpen, onClose, onSubmit }) => {
   const [members, setMembers] = useState([{ name: '', email: '' }]);
+  const [isAdding, setIsAdding] = useState(false);
 
   // Add a new member input field
   const handleAddMore = () => {
@@ -22,16 +23,19 @@ const AddMembersModal = ({ isOpen, onClose, onSubmit }) => {
     setMembers(updatedMembers);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    setIsAdding(true);
     e.preventDefault();
     if (
       members.length === 0 ||
       members.every((member) => !member.name && !member.email)
     ) {
+      setIsAdding(false);
       message.error('At least one member must be present.');
     } else {
-      onSubmit(members);
+      await onSubmit(members);
       setMembers([{ name: '', email: '' }]);
+      setIsAdding(false);
     }
   };
 
@@ -135,7 +139,7 @@ const AddMembersModal = ({ isOpen, onClose, onSubmit }) => {
                 Close
               </button>
               <button type="submit" className="global-button-primary">
-                Add Profiles
+                {isAdding ? 'Adding...' : 'Add Profiles'}
               </button>
             </div>
           </form>

@@ -16,7 +16,6 @@ export const login = async (email, password) => {
 };
 
 export const signup = async (email, password, passwordConfirm) => {
-  console.log(email, password, passwordConfirm);
   try {
     const response = await axiosInstance.post(`${BASE_URL}/signup`, {
       email,

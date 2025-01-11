@@ -72,3 +72,48 @@ export const disconnectLinkedIn = async (memberId) => {
     throw new Error(errorMsg);
   }
 };
+
+export const submitSurvey = async (formData) => {
+  try {
+    const response = await axiosInstance.post(`${MEMBER_API_URL}/survey`, {
+      formData,
+    });
+    return response.data.data;
+  } catch (error) {
+    const errorMsg = getErrorMessage(error);
+    throw new Error(errorMsg);
+  }
+};
+export const addContentCalender = async (calenderData, memberId) => {
+  try {
+    const formattedData = calenderData.map((item) => ({
+      title: item.Title,
+      date: new Date(item.Date).toLocaleDateString(),
+      time: item.Time,
+    }));
+    console.log(formattedData);
+    const response = await axiosInstance.post(
+      `${MEMBER_API_URL}/content-calender/${memberId}`,
+      {
+        calenderData: formattedData,
+      },
+    );
+    return response.data.data;
+  } catch (error) {
+    const errorMsg = getErrorMessage(error);
+    throw new Error(errorMsg);
+  }
+};
+
+export const getContentCalender = async (memberId) => {
+  try {
+    console.log(memberId);
+    const response = await axiosInstance.get(
+      `${MEMBER_API_URL}/content-calender/${memberId}`,
+    );
+    return response.data.data;
+  } catch (error) {
+    const errorMsg = getErrorMessage(error);
+    throw new Error(errorMsg);
+  }
+};

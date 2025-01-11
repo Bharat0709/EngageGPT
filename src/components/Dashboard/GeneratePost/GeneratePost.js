@@ -12,32 +12,39 @@ import { getAllMembers, addNewMember } from '../../../network/Members';
 import AddMembersModal from '../Global/AddPeopleModal';
 import CustomDropdownMenu from '../Global/CustomDropDown';
 import PersonaModal from './PersonaModal';
+import SkeletonLoading from './SkeletonLoading';
 
 const LinkedInPostGenerator = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsloading] = useState(false);
+
   const initialTemplate = location?.state?.initialTemplate || null;
-  const initialDescription = location?.state?.description || null;
-  const [orgDetails, setOrgDetails] = useState(null);
-  const [topic, setTopic] = useState(initialDescription || null);
+
+  const [topic, setTopic] = useState(null);
   const [language, setLanguage] = useState('English');
   const [topicType, setTopicType] = useState('description');
   const [selectedTone, setSelectedTone] = useState('Friendly');
-  const [selectedFormat, setSelectedFormat] = useState('Use Template');
-  const [loading, setLoading] = useState(false);
+  const [selectedFormat, setSelectedFormat] = useState('');
+
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [post, setPost] = useState('');
-  const [isModalVisible, setIsModalVisible] = useState(false);
   const [postPersona, setPostPersona] = useState(initialTemplate || ' ');
+
   const [selectedProfileId, setSelectedProfileId] = useState(null);
+  const [orgDetails, setOrgDetails] = useState(null);
   const [profiles, setProfiles] = useState([]);
   const [detailedProfiles, setDetailedProfiles] = useState(null);
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const [isAddMemberModalOpen, setIsAddMemberModalOpen] = useState(false);
   const [refreshMembers, setRefreshMembers] = useState(false);
 
   useEffect(() => {
     const fetchAndSetProfiles = async () => {
       try {
+        setIsloading(true);
         const data = await getAllMembers();
         const organizationProfile = await fetchOrganizationData();
         setOrgDetails(organizationProfile);
@@ -49,15 +56,15 @@ const LinkedInPostGenerator = () => {
           setSelectedFormat('Use Template');
           return;
         }
+
         if (initialTemplate) {
           setPostPersona(initialTemplate);
-        } else {
-          setSelectedFormat('Use Persona');
-          setPostPersona(data[0]?.writingPersona);
+          setSelectedFormat('Use Template');
         }
         setDetailedProfiles(data);
         setProfiles(profileOptions);
         setSelectedProfileId(profileOptions[0].value);
+        setIsloading(false);
       } catch (err) {
         message.error('Unable to fetch member details.');
       }
@@ -65,6 +72,20 @@ const LinkedInPostGenerator = () => {
 
     fetchAndSetProfiles();
   }, [refreshMembers, initialTemplate]);
+
+  useEffect(() => {
+    const setProfilePersona = async () => {
+      const selectedProfile = detailedProfiles?.find(
+        (profile) => profile._id === selectedProfileId,
+      );
+      if (selectedProfile?.writingPersona && selectedFormat === 'Use Persona') {
+        setSelectedFormat('Use Persona');
+        setPostPersona(selectedProfile.writingPersona);
+      }
+    };
+
+    setProfilePersona();
+  }, [selectedProfileId]);
 
   const handleProceed = () => {
     if (!post) {
@@ -139,10 +160,15 @@ const LinkedInPostGenerator = () => {
         topic,
         language,
         postPersona,
+        selectedFormat,
       );
+      setTopic();
       setPost(generatedPost.generatedPostContent);
-      setLoading(false);
       setRefreshMembers(!refreshMembers);
+      if (location?.state?.initialTemplate) {
+        location.state.initialTemplate = null;
+      }
+      setLoading(false);
     } catch (err) {
       message.error(err.message);
       setLoading(false);
@@ -152,24 +178,28 @@ const LinkedInPostGenerator = () => {
   const handleToneClick = (toneValue) => setSelectedTone(toneValue);
 
   const handleTemplateClick = (templateValue) => {
-    if (templateValue === 'Use Persona') {
-      const selectedProfile = detailedProfiles?.find(
-        (profile) => profile._id === selectedProfileId,
-      );
-      if (selectedProfile?.writingPersona) {
-        setPostPersona(selectedProfile.writingPersona);
-      } else {
-        setPostPersona('');
-      }
-    } else {
-      if (initialTemplate) {
-        setPostPersona(initialTemplate);
-      } else {
-        setPostPersona('');
-      }
+    console.log(templateValue);
+    const selectedProfile = detailedProfiles?.find(
+      (profile) => profile._id === selectedProfileId,
+    );
+
+    if (initialTemplate && templateValue === 'Use Template') {
+      setPostPersona(initialTemplate);
+      setSelectedFormat('Use Template');
+      return;
+    }
+    if (selectedProfile?.writingPersona && templateValue === 'Use Persona') {
+      setSelectedFormat('Use Persona');
+      setPostPersona(selectedProfile.writingPersona);
+      return;
     }
     setSelectedFormat(templateValue);
+    setPostPersona('');
   };
+
+  if (isLoading) {
+    return <SkeletonLoading />;
+  }
 
   return (
     <div className="flex w-full flex-col lg:flex-row gap-6 lg:p-6 p-4 bg-gray-50 min-h-screen">

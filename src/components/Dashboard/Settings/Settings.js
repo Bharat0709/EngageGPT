@@ -20,7 +20,6 @@ const OrganizationProfileSettings = () => {
       setLoading(true);
       try {
         const data = await fetchOrganizationData();
-        console.log(data);
         setUserData(data);
         setTimeout(() => {
           setLoading(false);
@@ -70,7 +69,7 @@ const OrganizationProfileSettings = () => {
   };
 
   return (
-    <div className="w-full h-full scrollbar-hide overflow-auto overflow-y-scroll mx-auto lg:p-6 p-4 bg-[#f3f4f6] shadow-md">
+    <div className="w-full h-full  scrollbar-hide overflow-auto overflow-y-scroll mx-auto lg:p-6 p-4 bg-[#f3f4f6] shadow-md">
       <h2 className="text-2xl text-semibold mb-4">Organization Settings</h2>
 
       <div className="flex bg-gray-50 rounded-xl p-3 text-sm justify-start gap-4 items-center mb-2">

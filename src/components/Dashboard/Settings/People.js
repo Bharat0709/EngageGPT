@@ -146,7 +146,7 @@ const People = () => {
       </div>
 
       {/* People List */}
-      <div className="people-list flex flex-col gap-2">
+      <div className="people-list  flex flex-col gap-2">
         {isLoading ? (
           Array.from({ length: 5 }).map((_, index) => (
             <div
@@ -226,7 +226,6 @@ const People = () => {
                         : 'Disconnected'}
                     </p>
                   </div>
-            
                 </div>
               </div>
               <div className="flex gap-4 lg:w-fit w-full justify-between lg:mt-0 mt-2 items-center">

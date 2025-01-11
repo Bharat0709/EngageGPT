@@ -11,37 +11,6 @@ const PostFilters = ({ posts, handleSortChange }) => {
     'Comments',
   ];
 
-  //   // Helper function to extract months, years, days, weeks from the 'postedAround' field
-  //   const extractTimeUnits = (time) => {
-  //     const match = time.match(
-  //       /(\d+)\s*(year|month|week|day|hour|minute)s?\s*ago/,
-  //     );
-  //     if (!match) return { amount: 0, unit: '' };
-
-  //     return {
-  //       amount: parseInt(match[1]),
-  //       unit: match[2],
-  //     };
-  //   };
-
-  //   let oldestAmount = Infinity;
-  //   let oldestUnit = '';
-
-  //   posts.forEach((post) => {
-  //     const { amount, unit } = extractTimeUnits(post.postedAround);
-  //     if (
-  //       amount < oldestAmount ||
-  //       (amount === oldestAmount && unit < oldestUnit)
-  //     ) {
-  //       oldestAmount = amount;
-  //       oldestUnit = unit;
-  //     }
-  //   });
-  //   return `${oldestAmount} ${oldestUnit}`;
-  // }
-
-  // const oldestPost = getOldestPostTime(posts);
-
   return (
     <div className="rounded-lg flex-col gap-2 py-3">
       <div className="toggle-buttons flex justify-between bg-white border border-gray-300 p-3 rounded-lg  gap-4">

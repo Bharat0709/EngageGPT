@@ -84,7 +84,7 @@ const Home = () => {
       setRefreshMembers(!refreshMembers);
       setIsAddMemberModalOpen(false);
     } catch (err) {
-      message.error('Something went wrong try again');
+      message.error(err.message);
     }
   };
 

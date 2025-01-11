@@ -13,6 +13,7 @@ const Login = () => {
   useAuthCheck();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     email: '',
@@ -61,13 +62,17 @@ const Login = () => {
       return;
     }
     try {
+      setIsLoading(true);
       const loginResponse = await login(formData.email, formData.password);
       if (loginResponse.token) {
         navigate(`/dashboard?token=${loginResponse.token}`);
       }
+
       message.success('Login successful!');
     } catch (error) {
       message.error(error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -141,7 +146,7 @@ const Login = () => {
               type="submit"
               className=" w-full flex items-center justify-center rounded-full bg-white text-sky-900 py-2 px-10"
             >
-              Login
+              {isLoading ? 'Logging In...' : 'Login'}
             </button>
 
             <div className="flex m-0 p-0 w-full justify-between text-center">

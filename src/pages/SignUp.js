@@ -12,6 +12,7 @@ const Signup = () => {
   useAuthCheck();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -48,6 +49,7 @@ const Signup = () => {
       return;
     }
     try {
+      setIsLoading(true);
       const signupResponse = await signup(
         formData.email,
         formData.password,
@@ -58,6 +60,8 @@ const Signup = () => {
       message.success('Signup successful!');
     } catch (error) {
       message.error(error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -155,7 +159,7 @@ const Signup = () => {
               type="submit"
               className="w-full flex items-center justify-center rounded-full bg-white text-sky-900 py-2 px-10"
             >
-              Sign Up
+              {isLoading ? 'Signing Up...' : 'Sign Up'}
             </button>
 
             <div className="flex items-center justify-center space-x-2">

@@ -71,7 +71,6 @@ const BillingDetails = () => {
 
   const handleCancelSubscription = () => {
     message.warning('Subscription cancellation is in progress.');
-    console.log('Cancel subscription clicked.');
   };
 
   const columns = [
