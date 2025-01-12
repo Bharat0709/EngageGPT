@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { MdContentCopy } from 'react-icons/md';
+import { FiCopy } from 'react-icons/fi';
 import { Skeleton, message, Button } from 'antd';
 import { FiUsers } from 'react-icons/fi';
 import { formatDate } from '../../../utils/formatDate';
@@ -248,7 +248,7 @@ const Home = () => {
                   Connection Token
                   <Button
                     className="text-gray-800 hover:text-black"
-                    icon={<MdContentCopy />}
+                    icon={<FiCopy />}
                     onClick={() => handleCopy(person.connectionToken)}
                     type="link"
                   ></Button>
@@ -319,7 +319,7 @@ const Home = () => {
                       </div>
                       <Button
                         className="text-gray-500 hover:text-gray-700"
-                        icon={<MdContentCopy />}
+                        icon={<FiCopy size={10} />}
                         onClick={() => handleCopy(profile.connectionToken)}
                         type="link"
                       />

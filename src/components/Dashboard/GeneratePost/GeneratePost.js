@@ -5,6 +5,7 @@ import { generatePost } from '../../../network/GenerateContent';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { message } from 'antd';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+import { FiCopy } from 'react-icons/fi';
 import { tones, templateOptions, topicOptions } from './OptionsData';
 import { createMemberPersona } from '../../../network/Members';
 import { fetchOrganizationData } from '../../../network/Organization';
@@ -21,7 +22,7 @@ const LinkedInPostGenerator = () => {
   const [isLoading, setIsloading] = useState(false);
 
   const initialTemplate = location?.state?.initialTemplate || null;
-
+  const postContents = location?.state?.selectedPostTopic || null;
   const [topic, setTopic] = useState(null);
   const [language, setLanguage] = useState('English');
   const [topicType, setTopicType] = useState('description');
@@ -54,18 +55,22 @@ const LinkedInPostGenerator = () => {
         }));
         if (data.length === 0) {
           setSelectedFormat('Use Template');
+          setIsloading(false);
           return;
         }
 
         if (initialTemplate) {
           setPostPersona(initialTemplate);
           setSelectedFormat('Use Template');
+        } else if (postContents) {
+          setTopic(postContents.topic);
         }
         setDetailedProfiles(data);
         setProfiles(profileOptions);
         setSelectedProfileId(profileOptions[0].value);
         setIsloading(false);
       } catch (err) {
+        setIsloading(false);
         message.error('Unable to fetch member details.');
       }
     };
@@ -92,7 +97,9 @@ const LinkedInPostGenerator = () => {
       message.error('Please generate a post before proceeding.');
       return;
     }
-    navigate('/dashboard/quick-post', { state: { content: post } });
+    navigate('/dashboard/quick-post', {
+      state: { content: post, postContents: postContents },
+    });
   };
 
   const handleSavePersona = async (values) => {
@@ -114,7 +121,6 @@ const LinkedInPostGenerator = () => {
       message.success('Persona analyzed and saved successfully!');
       setIsModalVisible(false);
     } catch (error) {
-      console.error('Error saving persona:', error);
       message.error(
         'An error occurred while creating your persona. Please try again.',
       );
@@ -178,7 +184,6 @@ const LinkedInPostGenerator = () => {
   const handleToneClick = (toneValue) => setSelectedTone(toneValue);
 
   const handleTemplateClick = (templateValue) => {
-    console.log(templateValue);
     const selectedProfile = detailedProfiles?.find(
       (profile) => profile._id === selectedProfileId,
     );
@@ -195,6 +200,11 @@ const LinkedInPostGenerator = () => {
     }
     setSelectedFormat(templateValue);
     setPostPersona('');
+  };
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(post);
+    message.success('Copied to clipboard');
   };
 
   if (isLoading) {
@@ -350,7 +360,20 @@ const LinkedInPostGenerator = () => {
       <div className="border-l border-gray-500"></div>
 
       <div className="w-full lg:w-1/3  rounded-lg">
-        <h3 className="text-lg font-medium mb-4">Generated Post</h3>
+        <div className="flex items-center mb-4 justify-between">
+          <h3 className="text-lg font-medium ">Generated Post</h3>
+
+          {post && (
+            <button
+              onClick={handleCopy}
+              className="text-gray-600 hover:text-gray-800"
+              title="Copy to clipboard"
+            >
+              <FiCopy size={20} />
+            </button>
+          )}
+        </div>
+
         <textarea
           value={post}
           readOnly

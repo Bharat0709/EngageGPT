@@ -1,7 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const PostContentEditor = ({ postDetails, setPostDetails }) => {
+const PostContentEditor = ({
+  selectedPostTopic,
+  postDetails,
+  setPostDetails,
+}) => {
   const navigate = useNavigate();
 
   const handlePostChange = (e) => {
@@ -9,6 +13,12 @@ const PostContentEditor = ({ postDetails, setPostDetails }) => {
       ...prevDetails,
       content: e.target.value,
     }));
+  };
+
+  const handleWriteWithAI = () => {
+    navigate('/dashboard/create-post', {
+      state: { selectedPostTopic },
+    });
   };
 
   const TwinStarsIcon = () => (
@@ -31,9 +41,21 @@ const PostContentEditor = ({ postDetails, setPostDetails }) => {
   return (
     <div className="p-4 border bg-white border-gray-300 rounded-lg">
       <div className="flex lg:flex-row flex-wrap gap-4 items-center justify-between mb-4">
-        <h4 className="text-lg font-semibold  text-gray-700 ">Post Content</h4>
+        <div className="flex items-center justify-between w-full">
+          <h4 className="text-lg font-semibold  text-gray-700 ">
+            Post Content
+          </h4>
+        </div>
+        {selectedPostTopic && (
+          <p className="text-sm text-gray-500">
+            Post Topic:{' '}
+            <span className="font-semibold text-black">
+              {selectedPostTopic?.topic}
+            </span>
+          </p>
+        )}
         <button
-          onClick={() => navigate('/dashboard/create-post')}
+          onClick={handleWriteWithAI}
           className="flex items-center text-sm justify-center hover:border bg-gray-100 text-gray-700 px-3 py-1 rounded-lg"
         >
           <TwinStarsIcon />

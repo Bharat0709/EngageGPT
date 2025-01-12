@@ -62,17 +62,14 @@ const SkeletonLoading = () => {
           style={{ width: '100%', height: '208px', marginBottom: '16px' }}
         />
 
-        {/* Generate Button */}
         <div className="flex lg:flex-row flex-col gap-2 items-center">
           <Skeleton.Input active style={{ width: '50vw', height: '30px' }} />
           <Skeleton.Input active style={{ width: '25%', height: '30px' }} />
         </div>
       </div>
 
-      {/* Divider */}
       <div className="border-l border-gray-200"></div>
 
-      {/* Right Section */}
       <div className="w-full flex gap-4 flex-col lg:w-1/3 rounded-lg">
         <Skeleton.Input
           active

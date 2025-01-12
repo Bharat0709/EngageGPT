@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MdContentCopy } from 'react-icons/md';
+import { FiCopy } from 'react-icons/fi';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { FiUserPlus } from 'react-icons/fi';
 import { BiUnlink } from 'react-icons/bi';
@@ -250,7 +250,7 @@ const People = () => {
                   Connection Token
                   <Button
                     className="text-black hover:text-black"
-                    icon={<MdContentCopy />}
+                    icon={<FiCopy />}
                     onClick={() => handleCopy(person.connectionToken)}
                     type="link"
                   ></Button>

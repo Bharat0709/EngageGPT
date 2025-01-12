@@ -1,5 +1,6 @@
 import axiosInstance from './axiosConfig';
 import { getErrorMessage } from '../utils/errorHandler';
+import dayjs from 'dayjs';
 
 const MEMBER_API_URL = '/members';
 
@@ -84,20 +85,25 @@ export const submitSurvey = async (formData) => {
     throw new Error(errorMsg);
   }
 };
+
 export const addContentCalender = async (calenderData, memberId) => {
   try {
-    const formattedData = calenderData.map((item) => ({
-      title: item.Title,
-      date: new Date(item.Date).toLocaleDateString(),
-      time: item.Time,
-    }));
-    console.log(formattedData);
+    const formattedData = calenderData.map((item) => {
+      const parsedDate = dayjs(item.Date, 'DD-MM-YYYY');
+      return {
+        title: item.Title,
+        date: parsedDate.isValid() ? parsedDate.toLocaleString() : null,
+        time: item.Time,
+      };
+    });
+
     const response = await axiosInstance.post(
       `${MEMBER_API_URL}/content-calender/${memberId}`,
       {
         calenderData: formattedData,
       },
     );
+
     return response.data.data;
   } catch (error) {
     const errorMsg = getErrorMessage(error);
@@ -107,7 +113,6 @@ export const addContentCalender = async (calenderData, memberId) => {
 
 export const getContentCalender = async (memberId) => {
   try {
-    console.log(memberId);
     const response = await axiosInstance.get(
       `${MEMBER_API_URL}/content-calender/${memberId}`,
     );

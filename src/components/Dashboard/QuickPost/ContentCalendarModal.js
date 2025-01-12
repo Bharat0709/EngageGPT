@@ -4,31 +4,42 @@ import { message } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { fetchSheetDetails } from '../../../network/Members';
 import Papa from 'papaparse';
+import dayjs from 'dayjs';
 
-const ContentCalendarModal = ({ isOpen, onClose, onSave }) => {
+const ContentCalendarModal = ({
+  selectedProfileName,
+  isOpen,
+  onClose,
+  onSave,
+}) => {
   const [calendarData, setCalendarData] = useState([]);
   const [googleSheetLink, setGoogleSheetLink] = useState('');
   const [loading, setLoading] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
 
   const downloadCSVTemplate = () => {
     const csvContent = `"Title","Date","Time"\n"Topic 1","2025-01-02","10:00 AM"\n"Topic 2","2025-01-03","2:00 PM"\n"Topic 3","2025-01-04","9:30 AM"\n"Topic 4","2025-01-05","4:00 PM"\n"Topic 5","2025-01-06","12:00 PM"`;
 
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
 
-    if (navigator.msSaveBlob) {
-      navigator.msSaveBlob(blob, 'Sample_Content_Calendar.csv');
-    } else {
-      const url = URL.createObjectURL(blob);
+    try {
       const a = document.createElement('a');
       a.href = url;
       a.download = 'Sample_Content_Calendar.csv';
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
+    } finally {
+      URL.revokeObjectURL(url); // Clean up URL object
     }
   };
 
   const validateCSV = (data) => {
+    if (!Array.isArray(data) || data.length === 0) {
+      return { isValid: false, message: 'No data found in the CSV file.' };
+    }
+
     const requiredHeaders = ['Title', 'Date', 'Time'];
     const headers = Object.keys(data[0]);
 
@@ -40,15 +51,24 @@ const ContentCalendarModal = ({ isOpen, onClose, onSave }) => {
       return { isValid: false, message: 'Invalid headers in the CSV file.' };
     }
 
-    // Check for empty values in rows
+    const today = dayjs().startOf('day');
+
+    // Check for empty values and date validation in rows
     for (const row of data) {
-      for (const header of requiredHeaders) {
-        if (!row[header]?.trim()) {
-          return {
-            isValid: false,
-            message: 'Each row must contain non-empty values for all columns.',
-          };
-        }
+      const rowDate = dayjs(row.Date, 'DD-MM-YYYY');
+      if (!rowDate.isValid()) {
+        return {
+          isValid: false,
+          message: `Invalid date format for row: ${row.Title}`,
+        };
+      }
+
+      // Check if date is not before today
+      if (rowDate.isBefore(today)) {
+        return {
+          isValid: false,
+          message: `Date must be today or future date for row: ${row.Title}`,
+        };
       }
     }
 
@@ -56,47 +76,49 @@ const ContentCalendarModal = ({ isOpen, onClose, onSave }) => {
   };
 
   const handleFileUpload = (file) => {
+    if (!file) return;
+
     const reader = new FileReader();
     reader.onload = (e) => {
-      const text = e.target.result;
-      const parsedData = Papa.parse(text, { header: true }).data;
+      try {
+        const text = e.target.result;
+        const parsedData = Papa.parse(text, {
+          header: true,
+          skipEmptyLines: true,
+        }).data;
 
-      // Validate the CSV structure and data
-      const validation = validateCSV(parsedData);
-      if (!validation.isValid) {
-        message.error(validation.message);
-        return;
+        // Validate the CSV structure and data
+        const validation = validateCSV(parsedData);
+        if (!validation.isValid) {
+          message.error(validation.message);
+          return;
+        }
+
+        // Limit to 30 entries
+        const limitedData = parsedData.slice(0, 30);
+        setCalendarData(limitedData);
+
+        if (parsedData.length > 30) {
+          message.warning('Only the first 30 entries have been loaded.');
+        } else {
+          message.success('Content ideas loaded successfully!');
+        }
+      } catch (error) {
+        message.error(
+          'Failed to parse CSV file. Please check the file format.',
+        );
       }
-
-      setCalendarData(parsedData);
-      message.success('Content ideas loaded successfully!');
     };
+
+    reader.onerror = () => {
+      message.error('Error reading file. Please try again.');
+    };
+
     reader.readAsText(file);
-    return false;
   };
 
   const fetchGoogleSheetData = async () => {
-    if (!googleSheetLink) {
-      message.error('Please enter a valid Google Sheet link.');
-      return;
-    }
-
-    // Ensure the URL is public or publicly accessible
-    if (
-      !googleSheetLink.startsWith('https://docs.google.com/spreadsheets/d/') ||
-      googleSheetLink.endsWith('/edit')
-    ) {
-      message.error(
-        'Google Sheet should be a public link or accessible publicly.',
-      );
-      return;
-    }
-
-    // Regular expression to validate the base Google Sheets link
-    const sheetLinkRegex =
-      /^https:\/\/docs\.google\.com\/spreadsheets\/d\/[a-zA-Z0-9-_]+(\/.*)?$/;
-
-    if (!sheetLinkRegex.test(googleSheetLink)) {
+    if (!googleSheetLink?.trim()) {
       message.error('Please enter a valid Google Sheet link.');
       return;
     }
@@ -105,71 +127,54 @@ const ContentCalendarModal = ({ isOpen, onClose, onSave }) => {
       setLoading(true);
       const fetchedData = await fetchSheetDetails(googleSheetLink);
 
-      // Handle response structure
-      const { headers, rows } = fetchedData;
-
-      if (!headers || !rows) {
+      if (!fetchedData?.headers || !Array.isArray(fetchedData.rows)) {
         throw new Error('Invalid response format from Google Sheets API.');
       }
 
-      // Validate headers
-      const requiredHeaders = ['Title', 'Date', 'Time'];
-      const isValidHeader = requiredHeaders.every((header) =>
-        headers.includes(header),
-      );
+      const { headers, rows } = fetchedData;
 
-      if (!isValidHeader) {
-        throw new Error(
-          'Invalid headers in the Google Sheet. Required headers are "Title", "Date", and "Time".',
-        );
-      }
-
-      const validRows = rows.filter((row) => {
-        return row.length === 3;
-      });
-      if (validRows.length !== rows.length) {
-        message.warning(
-          'Some rows have been discarded as they do not contain all required columns.',
-        );
-      }
-
-      if (validRows.length > 30) {
-        const limitedData = validRows.slice(0, 30);
-        setCalendarData(limitedData);
-        message.warning(
-          'You can only upload up to 30 days of calendar. The rest of the data has been discarded.',
-        );
-      } else {
-        setCalendarData(validRows);
-      }
-
-      const formattedData = validRows.map((row) => {
+      // Transform rows to match CSV format
+      const formattedData = rows.map((row) => {
         const formattedRow = {};
         headers.forEach((header, index) => {
-          formattedRow[header] = row[index] || '';
+          formattedRow[header] = row[index]?.toString().trim() || '';
         });
         return formattedRow;
       });
 
-      setCalendarData(formattedData);
-      message.success('Google Sheet content loaded successfully!');
+      // Validate the formatted data
+      const validation = validateCSV(formattedData);
+      if (!validation.isValid) {
+        throw new Error(validation.message);
+      }
+
+      // Limit to 30 entries
+      const limitedData = formattedData.slice(0, 30);
+      setCalendarData(limitedData);
+
+      if (formattedData.length > 30) {
+        message.warning('Only the first 30 entries have been loaded.');
+      } else {
+        message.success('Google Sheet content loaded successfully!');
+      }
     } catch (error) {
-      console.error('Error fetching Google Sheets data:', error.message);
-      message.error(
-        error.message ||
-          'Failed to load Google Sheets content. Please try again.',
-      );
+      console.error('Error fetching Google Sheets data:', error);
+      message.error(error.message || 'Failed to load Google Sheets content.');
     } finally {
       setLoading(false);
     }
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (calendarData.length === 0) {
       message.error('No content ideas to save.');
       return;
     }
-    onSave(calendarData);
+    setIsSaving(true);
+    await onSave(calendarData);
+    setCalendarData([]);
+    onClose();
+    setIsSaving(false);
   };
 
   if (!isOpen) return null;
@@ -180,7 +185,7 @@ const ContentCalendarModal = ({ isOpen, onClose, onSave }) => {
       onClick={onClose}
     >
       <div
-        className="bg-white flex flex-col p-6 rounded-xl lg:w-1/2 w-11/12 relative"
+        className="bg-white flex flex-col p-6 rounded-xl lg:w-3/4= w-11/12 relative"
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -189,7 +194,9 @@ const ContentCalendarModal = ({ isOpen, onClose, onSave }) => {
         >
           <FiX />
         </button>
-        <h2 className="text-xl text-center mb-4">Upload Content Calendar</h2>
+        <h2 className="text-xl text-center mb-4">
+          Upload Content Calendar <span> for {selectedProfileName}</span>
+        </h2>
 
         <div className=" flex mb-4 w-full mx-auto">
           <button
@@ -273,7 +280,7 @@ const ContentCalendarModal = ({ isOpen, onClose, onSave }) => {
             onClick={handleSave}
             className="global-button-primary rounded-xl"
           >
-            Save Calendar
+            {isSaving ? 'Saving...' : 'Save'}
           </button>
         </div>
       </div>
