@@ -1,6 +1,5 @@
 import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
 import Login from './pages/Login';
 import Signup from './pages/SignUp';
 import LandingPage from './pages/LandingPage';
@@ -14,17 +13,6 @@ import UpdateInfoScreen from './pages/UpdatesInfo';
 function App() {
   return (
     <Router>
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
       <div className="App">
         <Routes>
           <Route path="/" element={<LandingPage />} />

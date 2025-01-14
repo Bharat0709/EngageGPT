@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { DatePicker, TimePicker, Space } from 'antd';
-import { LoadingOutlined } from '@ant-design/icons';
-import dayjs from 'dayjs';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const PostActions = ({
   selectedPostTopic,
@@ -15,20 +14,23 @@ const PostActions = ({
 
   useEffect(() => {
     if (selectedPostTopic) {
-      const formattedDate = dayjs(selectedPostTopic.date);
+      const [day, month, year] = selectedPostTopic.date.split('-').map(Number); // Split DD-MM-YYYY
+      const formattedDate = new Date(year, month - 1, day); // Create Date object
+
+      console.log(formattedDate); // For debugging purposes
       const [timeString, period] = selectedPostTopic.time.split(' ');
       const [hour, minute] = timeString.split(':').map(Number);
 
-      const formattedTime = dayjs()
-        .hour(
-          period === 'PM' && hour !== 12
-            ? hour + 12
-            : hour === 12
-            ? hour
-            : hour,
-        )
-        .minute(minute)
-        .second(0);
+      // Adjust the hour based on the period (AM/PM)
+      const adjustedHour =
+        period === 'PM' && hour !== 12
+          ? hour + 12
+          : period === 'AM' && hour === 12
+          ? 0
+          : hour;
+
+      const formattedTime = new Date();
+      formattedTime.setHours(adjustedHour, minute, 0, 0);
 
       setSelectedDate(formattedDate);
       setSelectedTime(formattedTime);
@@ -44,9 +46,11 @@ const PostActions = ({
       return;
     }
 
-    const scheduleDateTime = selectedDate
-      .hour(selectedTime.hour())
-      .minute(selectedTime.minute());
+    const scheduleDateTime = new Date(selectedDate);
+    scheduleDateTime.setHours(
+      selectedTime.getHours(),
+      selectedTime.getMinutes(),
+    );
 
     onSchedule(scheduleDateTime);
   };
@@ -54,22 +58,34 @@ const PostActions = ({
   return (
     <div className="flex w-full flex-col items-center border bg-white border-gray-300 rounded-lg gap-2 p-4">
       <div className="flex flex-col gap-1 w-full">
-        <Space className="w-full justify-between">
-          <DatePicker
-            className="w-full rounded-xl"
-            onChange={(date) => setSelectedDate(date)}
-            value={selectedDate}
-            placeholder="Select Date"
-          />
-          <TimePicker
-            className="w-full rounded-xl"
-            onChange={(time) => setSelectedTime(time)}
-            value={selectedTime}
-            placeholder="Select Time"
-          />
-        </Space>
+        <div className="w-full flex  gap-2 justify-between">
+          <div className="w-full">
+            <label className="text-xs">Select Date</label>
+            <DatePicker
+              className="w-full text-sm rounded-xl border p-2"
+              selected={selectedDate}
+              onChange={(date) => setSelectedDate(date)}
+              dateFormat="dd-MM-yyyy"
+              placeholderText="Select Date"
+            />
+          </div>
+          <div className="w-full">
+            <label className="text-xs">Select Time</label>
+            <DatePicker
+              className="w-full rounded-xl text-sm border p-2"
+              selected={selectedTime}
+              onChange={(time) => setSelectedTime(time)}
+              showTimeSelect
+              showTimeSelectOnly
+              timeIntervals={15}
+              timeCaption="Time"
+              dateFormat="h:mm aa"
+              placeholderText="Select Time"
+            />
+          </div>
+        </div>
         <button
-          type="primary"
+          type="button"
           className="w-full shadow-none global-button-secondary text-sm mt-2"
           onClick={handleSchedule}
         >
@@ -85,8 +101,8 @@ const PostActions = ({
       </button>
 
       <button
-        type="primary"
-        icon={isPosting ? <LoadingOutlined /> : null}
+        type="button"
+        disabled={isPosting}
         onClick={onPost}
         className="w-full global-button-primary text-sm"
       >

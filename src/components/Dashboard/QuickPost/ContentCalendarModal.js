@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { FiX } from 'react-icons/fi';
 import { message } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
 import { fetchSheetDetails } from '../../../network/Members';
-import Papa from 'papaparse';
 import dayjs from 'dayjs';
 
 const ContentCalendarModal = ({
@@ -17,24 +15,6 @@ const ContentCalendarModal = ({
   const [loading, setLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
 
-  const downloadCSVTemplate = () => {
-    const csvContent = `"Title","Date","Time"\n"Topic 1","2025-01-02","10:00 AM"\n"Topic 2","2025-01-03","2:00 PM"\n"Topic 3","2025-01-04","9:30 AM"\n"Topic 4","2025-01-05","4:00 PM"\n"Topic 5","2025-01-06","12:00 PM"`;
-
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
-
-    try {
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'Sample_Content_Calendar.csv';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-    } finally {
-      URL.revokeObjectURL(url); // Clean up URL object
-    }
-  };
-
   const validateCSV = (data) => {
     if (!Array.isArray(data) || data.length === 0) {
       return { isValid: false, message: 'No data found in the CSV file.' };
@@ -42,8 +22,6 @@ const ContentCalendarModal = ({
 
     const requiredHeaders = ['Title', 'Date', 'Time'];
     const headers = Object.keys(data[0]);
-
-    // Check if all required headers are present
     const isValidHeader = requiredHeaders.every((header) =>
       headers.includes(header),
     );
@@ -52,14 +30,26 @@ const ContentCalendarModal = ({
     }
 
     const today = dayjs().startOf('day');
+    const timeRegex = /^(0?[1-9]|1[0-2]):[0-5][0-9]\s?(am|pm|AM|PM)$/;
+    const dateRegex = /^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-2])-\d{4}$/;
 
     // Check for empty values and date validation in rows
     for (const row of data) {
-      const rowDate = dayjs(row.Date, 'DD-MM-YYYY');
-      if (!rowDate.isValid()) {
+      // Check for empty fields
+      for (const header of requiredHeaders) {
+        if (!row[header] || row[header].trim() === '') {
+          return {
+            isValid: false,
+            message: `Empty field detected in row: ${row.Title}, column: ${header}`,
+          };
+        }
+      }
+
+      const rowDate = dayjs(row.Date, 'DD-MM-YYYY', true);
+      if (dateRegex.test(row.Date)) {
         return {
           isValid: false,
-          message: `Invalid date format for row: ${row.Title}`,
+          message: `Invalid date format or impossible date for row: ${row.Title}`,
         };
       }
 
@@ -70,51 +60,17 @@ const ContentCalendarModal = ({
           message: `Date must be today or future date for row: ${row.Title}`,
         };
       }
+
+      // Check for valid time format
+      if (!timeRegex.test(row.Time)) {
+        return {
+          isValid: false,
+          message: `Invalid time format for row: ${row.Title}. Expected format: HH:MM am/pm or HH:MM AM/PM`,
+        };
+      }
     }
 
     return { isValid: true };
-  };
-
-  const handleFileUpload = (file) => {
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      try {
-        const text = e.target.result;
-        const parsedData = Papa.parse(text, {
-          header: true,
-          skipEmptyLines: true,
-        }).data;
-
-        // Validate the CSV structure and data
-        const validation = validateCSV(parsedData);
-        if (!validation.isValid) {
-          message.error(validation.message);
-          return;
-        }
-
-        // Limit to 30 entries
-        const limitedData = parsedData.slice(0, 30);
-        setCalendarData(limitedData);
-
-        if (parsedData.length > 30) {
-          message.warning('Only the first 30 entries have been loaded.');
-        } else {
-          message.success('Content ideas loaded successfully!');
-        }
-      } catch (error) {
-        message.error(
-          'Failed to parse CSV file. Please check the file format.',
-        );
-      }
-    };
-
-    reader.onerror = () => {
-      message.error('Error reading file. Please try again.');
-    };
-
-    reader.readAsText(file);
   };
 
   const fetchGoogleSheetData = async () => {
@@ -133,7 +89,6 @@ const ContentCalendarModal = ({
 
       const { headers, rows } = fetchedData;
 
-      // Transform rows to match CSV format
       const formattedData = rows.map((row) => {
         const formattedRow = {};
         headers.forEach((header, index) => {
@@ -173,7 +128,6 @@ const ContentCalendarModal = ({
     setIsSaving(true);
     await onSave(calendarData);
     setCalendarData([]);
-    onClose();
     setIsSaving(false);
   };
 
@@ -199,35 +153,17 @@ const ContentCalendarModal = ({
         </h2>
 
         <div className=" flex mb-4 w-full mx-auto">
-          <button
-            onClick={downloadCSVTemplate}
+          <a
+            href="https://docs.google.com/spreadsheets/d/154AYzvUd6pbiu1_XndZsEb9n3zq_Es1QPBCrzSaClfg/edit?gid=0#gid=0"
+            target="_blank"
+            rel="noopener noreferrer"
             className="text-sm mb-2 self-center w-fit mx-auto bg-white border border-gray-300 text-black px-4 py-2 rounded-lg"
           >
-            Download Sample Template
-          </button>
+            View Sample Template
+          </a>
         </div>
 
         <div className="mb-4">
-          <label
-            htmlFor="upload"
-            className="flex items-center mt-2 justify-center text-sm bg-gray-100 hover:bg-gray-200 rounded-lg p-2 cursor-pointer"
-          >
-            <UploadOutlined className="mr-2" />
-            Upload CSV
-            <input
-              type="file"
-              id="upload"
-              accept=".csv"
-              className="hidden"
-              onChange={(e) => handleFileUpload(e.target.files[0])}
-            />
-          </label>
-        </div>
-
-        <div className="mb-4">
-          <p className="text-center mb-4 text-sm text-gray-500">
-            -------- OR --------
-          </p>
           <input
             type="text"
             placeholder="Paste Google Sheet link here"
@@ -255,7 +191,7 @@ const ContentCalendarModal = ({
               {calendarData.map((data, index) => (
                 <li
                   key={index}
-                  className="flex items-center justify-between bg-gray-100 rounded-lg p-2 mb-2"
+                  className="flex lg:items-center lg:flex-row flex-col items-start gap-2 justify-between bg-gray-100 rounded-lg p-2 mb-2"
                 >
                   <span className="text-sm">{data.Title}</span>
                   <span className="text-sm">

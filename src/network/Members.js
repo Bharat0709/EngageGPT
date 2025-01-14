@@ -1,6 +1,5 @@
 import axiosInstance from './axiosConfig';
 import { getErrorMessage } from '../utils/errorHandler';
-import dayjs from 'dayjs';
 
 const MEMBER_API_URL = '/members';
 
@@ -86,21 +85,21 @@ export const submitSurvey = async (formData) => {
   }
 };
 
-export const addContentCalender = async (calenderData, memberId) => {
+export const addContentCalendar = async (calendarData, memberId) => {
   try {
-    const formattedData = calenderData.map((item) => {
-      const parsedDate = dayjs(item.Date, 'DD-MM-YYYY');
+    console.table(calendarData);
+    const formattedData = calendarData.map((item) => {
       return {
         title: item.Title,
-        date: parsedDate.isValid() ? parsedDate.toLocaleString() : null,
+        date: item.Date,
         time: item.Time,
       };
     });
 
     const response = await axiosInstance.post(
-      `${MEMBER_API_URL}/content-calender/${memberId}`,
+      `${MEMBER_API_URL}/content-calendar/${memberId}`,
       {
-        calenderData: formattedData,
+        calendarData: formattedData,
       },
     );
 
@@ -111,12 +110,45 @@ export const addContentCalender = async (calenderData, memberId) => {
   }
 };
 
-export const getContentCalender = async (memberId) => {
+export const getContentCalendar = async (memberId) => {
   try {
     const response = await axiosInstance.get(
-      `${MEMBER_API_URL}/content-calender/${memberId}`,
+      `${MEMBER_API_URL}/content-calendar/${memberId}`,
     );
     return response.data.data;
+  } catch (error) {
+    const errorMsg = getErrorMessage(error);
+    throw new Error(errorMsg);
+  }
+};
+
+export const updateContentCalendar = async (
+  contentId,
+  memberId,
+  updatedData,
+) => {
+  try {
+    const response = await axiosInstance.put(
+      `${MEMBER_API_URL}/content-calendar/${memberId}/${contentId}`,
+      updatedData,
+    );
+    return response.data.data;
+  } catch (error) {
+    const errorMsg = getErrorMessage(error);
+    throw new Error(errorMsg);
+  }
+};
+
+export const deleteContentCalendar = async (contentDetails) => {
+  try {
+    const memberId = contentDetails.memberId.toString();
+    const contentId = contentDetails._id;
+    console.log(memberId, contentId);
+
+    const response = await axiosInstance.delete(
+      `${MEMBER_API_URL}/content-calendar/${memberId}/${contentId}`,
+    );
+    return response.data;
   } catch (error) {
     const errorMsg = getErrorMessage(error);
     throw new Error(errorMsg);

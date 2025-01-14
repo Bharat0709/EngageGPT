@@ -18,11 +18,11 @@ import SkeletonLoading from './SkeletonLoading';
 const LinkedInPostGenerator = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const initialTemplate = location?.state?.initialTemplate || null;
+  const postContents = location?.state?.selectedPostTopic || null;
   const [loading, setLoading] = useState(false);
   const [isLoading, setIsloading] = useState(false);
 
-  const initialTemplate = location?.state?.initialTemplate || null;
-  const postContents = location?.state?.selectedPostTopic || null;
   const [topic, setTopic] = useState(null);
   const [language, setLanguage] = useState('English');
   const [topicType, setTopicType] = useState('description');
@@ -34,13 +34,14 @@ const LinkedInPostGenerator = () => {
   const [postPersona, setPostPersona] = useState(initialTemplate || ' ');
 
   const [selectedProfileId, setSelectedProfileId] = useState(null);
-  const [orgDetails, setOrgDetails] = useState(null);
+
   const [profiles, setProfiles] = useState([]);
   const [detailedProfiles, setDetailedProfiles] = useState(null);
 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isAddMemberModalOpen, setIsAddMemberModalOpen] = useState(false);
   const [refreshMembers, setRefreshMembers] = useState(false);
+  const [creditsLeft, setCreditsLeft] = useState(null);
 
   useEffect(() => {
     const fetchAndSetProfiles = async () => {
@@ -48,7 +49,7 @@ const LinkedInPostGenerator = () => {
         setIsloading(true);
         const data = await getAllMembers();
         const organizationProfile = await fetchOrganizationData();
-        setOrgDetails(organizationProfile);
+        setCreditsLeft(organizationProfile.credits);
         const profileOptions = data?.map((profile) => ({
           value: profile._id,
           label: profile.name,
@@ -76,7 +77,7 @@ const LinkedInPostGenerator = () => {
     };
 
     fetchAndSetProfiles();
-  }, [refreshMembers, initialTemplate]);
+  }, [refreshMembers, initialTemplate, postContents]);
 
   useEffect(() => {
     const setProfilePersona = async () => {
@@ -90,6 +91,7 @@ const LinkedInPostGenerator = () => {
     };
 
     setProfilePersona();
+    // eslint-disable-next-line
   }, [selectedProfileId]);
 
   const handleProceed = () => {
@@ -169,11 +171,8 @@ const LinkedInPostGenerator = () => {
         selectedFormat,
       );
       setTopic();
+      setCreditsLeft(creditsLeft - 10);
       setPost(generatedPost.generatedPostContent);
-      setRefreshMembers(!refreshMembers);
-      if (location?.state?.initialTemplate) {
-        location.state.initialTemplate = null;
-      }
       setLoading(false);
     } catch (err) {
       message.error(err.message);
@@ -352,7 +351,7 @@ const LinkedInPostGenerator = () => {
             )}
           </button>
           <p className="py-3 lg:w-3/12 w-full bg-white rounded-lg px-4 text-sm text-center">
-            {orgDetails?.credits} Credits Left
+            {creditsLeft} Credits Left
           </p>
         </div>
       </div>

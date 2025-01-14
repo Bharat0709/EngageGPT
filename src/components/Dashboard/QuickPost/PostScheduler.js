@@ -8,16 +8,17 @@ import LinkedInConnection from './LinkedInConnected';
 import MediaUploader from './MediaUploader';
 import PostPreviewSection from './LinkedInPostPreview';
 import PostActions from './PostActions';
-import { getContentCalender } from '../../../network/Members';
+import { getContentCalendar } from '../../../network/Members';
 
 const PostScheduler = () => {
   const location = useLocation();
+  const content = location?.state?.content;
+  const postContents = location?.state?.postContents;
   const [postDetails, setPostDetails] = useState({
-    content: location?.state?.content || '',
+    content: content || '',
     visibility: 'PUBLIC',
     media: [],
   });
-  const postContents = location?.state?.postContents;
   const [isPosting, setIsPosting] = useState(false);
   const [linkedInConnected, setLinkedInConnected] = useState(false);
   const [connectedProfiles, setConnectedProfiles] = useState(null);
@@ -72,7 +73,7 @@ const PostScheduler = () => {
           );
 
           setSelectedProfileName(ProfileName.name);
-          const response = await getContentCalender(selectedProfile);
+          const response = await getContentCalendar(selectedProfile);
           if (response && response.contentCalendar.length > 0) {
             setCalendarData(response.contentCalendar);
           } else {
@@ -86,6 +87,7 @@ const PostScheduler = () => {
 
       fetchCalendarData();
     }
+    // eslint-disable-next-line
   }, [selectedProfile]);
 
   useEffect(() => {
@@ -94,14 +96,23 @@ const PostScheduler = () => {
       today.setHours(0, 0, 0, 0);
 
       const sortedData = calendarData
-        .map((entry) => ({
-          ...entry,
-          dateObject: new Date(entry.date),
-        }))
+        .map((entry) => {
+          // Parse the date string (DD-MM-YYYY) into a Date object
+          const [day, month, year] = entry.date.split('-').map(Number);
+          const dateObject = new Date(year, month - 1, day);
+
+          return {
+            ...entry,
+            dateObject,
+          };
+        })
         .sort((a, b) => a.dateObject - b.dateObject);
 
+      const plannedEntries = sortedData.filter(
+        (entry) => entry.status === 'Planned',
+      );
       const closestEntry =
-        sortedData.find((entry) => entry.dateObject >= today) || null;
+        plannedEntries.find((entry) => entry.dateObject >= today) || null;
 
       if (!postContents && location?.state?.content) {
         setSelectedPostTopic(null);
@@ -115,7 +126,7 @@ const PostScheduler = () => {
     };
 
     setPostDetails({
-      content: location?.state?.content || '',
+      content: content || '',
       visibility: 'PUBLIC',
       media: [],
     });
@@ -124,6 +135,7 @@ const PostScheduler = () => {
     } else {
       setSelectedPostTopic(null);
     }
+    // eslint-disable-next-line
   }, [calendarData]);
 
   const handleShare = async () => {
