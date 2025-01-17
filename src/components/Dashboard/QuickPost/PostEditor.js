@@ -67,7 +67,7 @@ const PostContentEditor = ({
         value={postDetails.content}
         onChange={handlePostChange}
         placeholder="Write your post here"
-        className="w-full lg:h-80 h-64 border rounded-lg p-3 text-gray-700"
+        className="w-full lg:h-80 h-64 scrollbar-hide border rounded-lg p-3 text-gray-700"
         maxLength={3000}
       />
       <div className="text-right text-sm text-gray-500 mt-1">

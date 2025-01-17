@@ -159,13 +159,11 @@ const PostScheduler = () => {
   };
 
   const handleSaveDraft = () => {
-    message.success('Post saved as draft!');
+    message.info('Feature available soon!');
   };
 
-  const handleSchedulePost = (scheduleDateTime) => {
-    message.success(
-      `Post scheduled for ${scheduleDateTime.format('YYYY-MM-DD HH:mm')}`,
-    );
+  const handleSchedulePost = () => {
+    message.info('Feature available soon!');
   };
 
   return (

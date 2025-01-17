@@ -8,7 +8,6 @@ import { FiLogOut } from 'react-icons/fi';
 import {
   FiMenu,
   FiSettings,
-  FiFolder,
   FiHelpCircle,
   FiUser,
   FiZap,
@@ -41,13 +40,6 @@ const menuItems = [
     to: '/dashboard/create-post',
     icon: <FiFileText size={20} />,
     label: 'Post Generator',
-    activeClass: 'global-sidebar-button-primary bg-white',
-    hoverClass: 'hover:bg-white hover:text-black',
-  },
-  {
-    to: '/dashboard/collections',
-    icon: <FiFolder size={20} />,
-    label: 'Collections',
     activeClass: 'global-sidebar-button-primary bg-white',
     hoverClass: 'hover:bg-white hover:text-black',
   },

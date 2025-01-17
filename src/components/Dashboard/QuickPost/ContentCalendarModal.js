@@ -46,7 +46,7 @@ const ContentCalendarModal = ({
       }
 
       const rowDate = dayjs(row.Date, 'DD-MM-YYYY', true);
-      if (dateRegex.test(row.Date)) {
+      if (!dateRegex.test(row.Date)) {
         return {
           isValid: false,
           message: `Invalid date format or impossible date for row: ${row.Title}`,
@@ -113,7 +113,6 @@ const ContentCalendarModal = ({
         message.success('Google Sheet content loaded successfully!');
       }
     } catch (error) {
-      console.error('Error fetching Google Sheets data:', error);
       message.error(error.message || 'Failed to load Google Sheets content.');
     } finally {
       setLoading(false);

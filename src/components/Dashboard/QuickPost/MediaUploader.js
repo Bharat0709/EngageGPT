@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import MediaPreview from './MediaPreview';
-import { FaImage, FaFilePdf } from 'react-icons/fa';
+import { FaImage } from 'react-icons/fa';
 
 const MediaUploader = ({ postDetails, setPostDetails }) => {
   const [isImageUpload, setIsImageUpload] = useState(true);
@@ -9,8 +9,10 @@ const MediaUploader = ({ postDetails, setPostDetails }) => {
     const files = Array.from(event.target.files);
 
     const filteredMedia = files.map((file) => ({
-      name: file.name,
       type: file.type,
+      size: file.size,
+      name: file.name,
+      file,
       url: URL.createObjectURL(file),
     }));
 
@@ -30,16 +32,16 @@ const MediaUploader = ({ postDetails, setPostDetails }) => {
     }));
   };
 
-  const handlePdfUpload = () => {
-    setIsImageUpload(false);
-    // Clear images if switching to PDF upload
-    setPostDetails((prevDetails) => ({
-      ...prevDetails,
-      media: prevDetails.media.filter(
-        (file) => file.type === 'application/pdf',
-      ),
-    }));
-  };
+  // const handlePdfUpload = () => {
+  //   setIsImageUpload(false);
+  //   // Clear images if switching to PDF upload
+  //   setPostDetails((prevDetails) => ({
+  //     ...prevDetails,
+  //     media: prevDetails.media.filter(
+  //       (file) => file.type === 'application/pdf',
+  //     ),
+  //   }));
+  // };
 
   return (
     <div className="p-4 border mt-3 bg-white border-gray-300 rounded-lg">
@@ -59,7 +61,7 @@ const MediaUploader = ({ postDetails, setPostDetails }) => {
           >
             <FaImage size={20} />
           </button>
-          <button
+          {/* <button
             className={`py-4 px-4 rounded-md flex items-center justify-center ${
               !isImageUpload
                 ? 'bg-gray-100'
@@ -69,7 +71,7 @@ const MediaUploader = ({ postDetails, setPostDetails }) => {
             disabled={!isImageUpload}
           >
             <FaFilePdf size={20} />
-          </button>
+          </button> */}
         </div>
       </div>
 

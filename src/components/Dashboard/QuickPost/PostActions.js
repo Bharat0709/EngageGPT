@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
+import { LockOutlined } from '@ant-design/icons';
 import 'react-datepicker/dist/react-datepicker.css';
 
 const PostActions = ({
@@ -16,8 +17,6 @@ const PostActions = ({
     if (selectedPostTopic) {
       const [day, month, year] = selectedPostTopic.date.split('-').map(Number); // Split DD-MM-YYYY
       const formattedDate = new Date(year, month - 1, day); // Create Date object
-
-      console.log(formattedDate); // For debugging purposes
       const [timeString, period] = selectedPostTopic.time.split(' ');
       const [hour, minute] = timeString.split(':').map(Number);
 
@@ -84,20 +83,21 @@ const PostActions = ({
             />
           </div>
         </div>
+
         <button
           type="button"
-          className="w-full shadow-none global-button-secondary text-sm mt-2"
+          className="w-full flex items-center justify-center gap-2 shadow-none global-button-secondary text-sm mt-2"
           onClick={handleSchedule}
         >
-          Schedule Post
+          Schedule Post <LockOutlined className="inline-block mr-2" />
         </button>
       </div>
 
       <button
-        className="w-full global-button-secondary text-sm"
+        className="w-full flex items-center justify-center gap-2 global-button-secondary text-sm"
         onClick={onSaveDraft}
       >
-        Save as Draft
+        Save as Draft <LockOutlined className="inline-block mr-2" />
       </button>
 
       <button

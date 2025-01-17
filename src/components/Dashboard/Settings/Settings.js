@@ -20,6 +20,7 @@ const OrganizationProfileSettings = () => {
       setLoading(true);
       try {
         const data = await fetchOrganizationData();
+
         setUserData(data);
         setTimeout(() => {
           setLoading(false);

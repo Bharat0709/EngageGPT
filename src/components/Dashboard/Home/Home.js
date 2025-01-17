@@ -272,7 +272,7 @@ const Home = () => {
         <h1 className="text-xl font-semibold">Home</h1>
         <p className="text-xs p-2  font-semibold rounded-lg px-4">
           {selectedProfile?.lastSyncedAt
-            ? `Last Synced at ${formatDate(selectedProfile.lastSyncedAt)}`
+            ? `Last Synced at ${formatDate(selectedProfile.lastSyncedAt)} IST`
             : 'Profile analytics not synced yet!'}
         </p>
         <div className="flex items-center space-x-2">
