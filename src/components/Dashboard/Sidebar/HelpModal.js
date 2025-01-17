@@ -4,6 +4,7 @@ import { sendHelpMail } from '../../../network/Organization';
 
 const HelpModal = ({ isVisible, onClose }) => {
   const [helpQuery, setHelpQuery] = useState('');
+  const [loading, setLoading] = useState(false); // Loading state added
 
   const handleSubmit = async () => {
     if (!helpQuery) {
@@ -11,6 +12,7 @@ const HelpModal = ({ isVisible, onClose }) => {
       return;
     }
 
+    setLoading(true); // Set loading to true before submission
     try {
       await sendHelpMail(helpQuery);
       message.success(`Help Query Submitted`);
@@ -18,6 +20,8 @@ const HelpModal = ({ isVisible, onClose }) => {
       onClose();
     } catch (error) {
       message.error('An error occurred while submitting your help request.');
+    } finally {
+      setLoading(false); // Reset loading state after submission
     }
   };
 
@@ -46,16 +50,22 @@ const HelpModal = ({ isVisible, onClose }) => {
           <button
             type="button"
             onClick={onClose}
-            className="global-button-secondary"
+            className={`global-button-secondary ${
+              loading ? 'opacity-50 cursor-not-allowed' : ''
+            }`}
+            disabled={loading} // Disable close button during loading
           >
             Close
           </button>
           <button
             type="button"
             onClick={handleSubmit}
-            className="global-button-primary"
+            className={`global-button-primary ${
+              loading ? 'opacity-50 cursor-not-allowed' : ''
+            }`}
+            disabled={loading} // Disable submit button during loading
           >
-            Submit
+            {loading ? 'Submitting...' : 'Submit'}
           </button>
         </div>
       </div>

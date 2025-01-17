@@ -11,9 +11,17 @@ const ResetPassword = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+    setSuccess('');
+
+    if (!password || password.length < 8) {
+      setError('Password must be at least 8 characters long');
+      return;
+    }
 
     if (password !== confirmPassword) {
       setError('Passwords do not match');
@@ -22,21 +30,27 @@ const ResetPassword = () => {
 
     if (!token) {
       navigate('/');
+      return;
     }
 
+    setLoading(true);
     try {
       await resetPassword(token, password, confirmPassword);
       message.success('New password set successfully');
-      setSuccess('Password Reset Succcessfully');
-      navigate('/login');
+      setSuccess('Password reset successfully. Redirecting to login...');
+      setTimeout(() => {
+        navigate('/login');
+      }, 3000);
     } catch (err) {
-      message.error(err.message);
-      setError(err.message || 'Something went wrong');
+      message.error(err.message || 'Something went wrong');
+      setError(err.message || 'Something went wrong. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen  w-full flex items-center justify-center bg-gray-100">
+    <div className="min-h-screen w-full flex items-center justify-center bg-gray-100">
       <div className="bg-white flex items-center flex-col p-3 rounded-xl w-full max-w-md">
         <img
           className="h-16 my-2 items-center flex justify-center"
@@ -46,7 +60,7 @@ const ResetPassword = () => {
         <h2 className="text-xl text-center mb-4">Reset Password</h2>
         {error && <p className="text-red-500 mb-4">{error}</p>}
         {success ? (
-          <p className="text-green-500">{success}</p>
+          <p className="text-green-500 mb-4">{success}</p>
         ) : (
           <form className="w-full" onSubmit={handleSubmit}>
             <div className="mb-4 w-full">
@@ -80,9 +94,12 @@ const ResetPassword = () => {
             </div>
             <button
               type="submit"
-              className="w-full global-button-primary text-white py-2 px-4 rounded-lg"
+              disabled={loading}
+              className={`w-full global-button-primary text-white py-2 px-4 rounded-lg ${
+                loading ? 'opacity-50 cursor-not-allowed' : ''
+              }`}
             >
-              Reset Password
+              {loading ? 'Processing...' : 'Reset Password'}
             </button>
           </form>
         )}

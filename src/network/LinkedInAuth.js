@@ -3,7 +3,6 @@ import { getErrorMessage } from '../utils/errorHandler';
 
 export const shareLinkedInPost = async (postDetails, memberId) => {
   try {
-
     const formData = new FormData();
 
     // Function to remove the file extension from a file name

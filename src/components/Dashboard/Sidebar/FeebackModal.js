@@ -6,6 +6,7 @@ import { sendFeeback } from '../../../network/Organization';
 const FeedbackModal = ({ isVisible, onClose }) => {
   const [rating, setRating] = useState(0);
   const [feedback, setFeedback] = useState('');
+  const [loading, setLoading] = useState(false); // Added loading state
 
   const handleRatingHover = (hoverIndex) => {
     setRating(hoverIndex);
@@ -22,6 +23,7 @@ const FeedbackModal = ({ isVisible, onClose }) => {
       return;
     }
 
+    setLoading(true); // Set loading to true
     try {
       await sendFeeback(feedback, rating);
       message.success(`Thank you for your feedback`);
@@ -29,7 +31,9 @@ const FeedbackModal = ({ isVisible, onClose }) => {
       setFeedback('');
       onClose();
     } catch (error) {
-      message.error('An error occurred while submitting your help request.');
+      message.error('An error occurred while submitting your feedback.');
+    } finally {
+      setLoading(false); // Reset loading state
     }
   };
 
@@ -47,6 +51,7 @@ const FeedbackModal = ({ isVisible, onClose }) => {
         <button
           className="text-gray-500 text-xl self-end hover:text-gray-800"
           onClick={onClose}
+          disabled={loading} // Disable close button during loading
         >
           <FiX />
         </button>
@@ -60,6 +65,7 @@ const FeedbackModal = ({ isVisible, onClose }) => {
               className={`text-4xl ${
                 star <= rating ? 'text-yellow-500' : 'text-gray-300'
               }`}
+              disabled={loading} // Disable star rating during loading
             >
               ★
             </button>
@@ -71,21 +77,28 @@ const FeedbackModal = ({ isVisible, onClose }) => {
           placeholder="Let us know what you think..."
           value={feedback}
           onChange={(e) => setFeedback(e.target.value)}
+          disabled={loading} // Disable textarea during loading
         ></textarea>
         <div className="flex justify-end gap-4">
           <button
             type="button"
             onClick={onClose}
-            className="global-button-secondary"
+            className={`global-button-secondary ${
+              loading ? 'opacity-50 cursor-not-allowed' : ''
+            }`}
+            disabled={loading} // Disable close button during loading
           >
             Close
           </button>
           <button
             type="button"
             onClick={handleFeedbackSubmit}
-            className="global-button-primary"
+            className={`global-button-primary ${
+              loading ? 'opacity-50 cursor-not-allowed' : ''
+            }`}
+            disabled={loading} // Disable submit button during loading
           >
-            Submit
+            {loading ? 'Submitting...' : 'Submit'}
           </button>
         </div>
       </div>

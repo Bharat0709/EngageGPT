@@ -138,7 +138,13 @@ const AddMembersModal = ({ isOpen, onClose, onSubmit }) => {
               >
                 Close
               </button>
-              <button type="submit" className="global-button-primary">
+              <button
+                disabled={isAdding}
+                type="submit"
+                className={`global-button-primary ${
+                  isAdding ? 'opacity-50 cursor-not-allowed' : ''
+                }`}
+              >
                 {isAdding ? 'Adding...' : 'Add Profiles'}
               </button>
             </div>

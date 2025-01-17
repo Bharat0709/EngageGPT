@@ -104,7 +104,9 @@ const PostActions = ({
         type="button"
         disabled={isPosting}
         onClick={onPost}
-        className="w-full global-button-primary text-sm"
+        className={`w-full global-button-primary text-sm ${
+          isPosting ? 'cursor-not-allowed opacity-50' : ''
+        }`}
       >
         {isPosting ? 'Posting...' : 'Post on LinkedIn'}
       </button>

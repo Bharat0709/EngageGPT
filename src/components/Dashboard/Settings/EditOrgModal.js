@@ -109,7 +109,10 @@ const EditOrgModal = ({ isOpen, onClose, userData, onSave }) => {
           <button
             type="submit"
             onClick={handleSave}
-            className="global-button-primary"
+            disabled={loading}
+            className={`global-button-primary ${
+              loading ? 'cursor-not-allowed opacity-50' : ''
+            }`}
           >
             {loading ? 'Saving...' : 'Save'}
           </button>

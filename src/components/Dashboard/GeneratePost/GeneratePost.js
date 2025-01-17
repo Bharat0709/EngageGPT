@@ -338,7 +338,9 @@ const LinkedInPostGenerator = () => {
         <div className="flex lg:flex-row flex-col gap-2 items-center">
           <button
             onClick={handleGeneratePost}
-            className="global-button-primary lg:w-11/12  w-full text-white py-2 rounded-lg hover:bg-gray-800"
+            className={`global-button-primary lg:w-11/12 w-full text-white py-2 rounded-lg hover:bg-gray-800 ${
+              loading ? 'cursor-not-allowed opacity-50' : ''
+            }`}
             disabled={loading}
           >
             {loading ? (

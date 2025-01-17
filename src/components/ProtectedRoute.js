@@ -9,7 +9,7 @@ const ProtectedRoute = ({ children }) => {
   const token = useSelector((state) => state.auth.token);
 
   if (!token || !encodedToken) {
-    message.error('Session expired. Please log in.');
+    message.info('Please log in to get started');
     return <Navigate to="/login" replace />;
   }
   return children;

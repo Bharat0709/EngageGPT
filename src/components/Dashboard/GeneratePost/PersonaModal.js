@@ -170,7 +170,10 @@ const PersonaModal = ({
           <button
             type="submit"
             onClick={handleSave}
-            className="global-button-primary"
+            className={`global-button-primary ${
+              isAnalyzing ? 'cursor-not-allowed opacity-50' : ''
+            }`}
+            disabled={isAnalyzing}
           >
             {isAnalyzing ? 'Analyzing...' : 'Analyze'}
           </button>

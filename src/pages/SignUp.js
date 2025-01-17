@@ -30,7 +30,8 @@ const Signup = () => {
     });
   };
 
-  const handleGoogleSignUp = () => {
+  const handleGoogleSignUp = async (e) => {
+    e.preventDefault();
     const authUrl = `${process.env.REACT_APP_OAUTH_URL}`;
     window.location.href = authUrl;
   };

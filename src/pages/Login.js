@@ -31,7 +31,8 @@ const Login = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleGoogleLogin = () => {
+  const handleGoogleLogin = async (e) => {
+    e.preventDefault();
     const authUrl = `${process.env.REACT_APP_OAUTH_URL}`;
     window.location.href = authUrl;
   };
@@ -39,9 +40,13 @@ const Login = () => {
   const handleSendResetPasswordEmail = async () => {
     try {
       if (!formData.email) {
-        message.error('Please enter your email');
+        message.info('Please enter your email');
         return;
       }
+      message.loading({
+        content: 'Sending password reset email...',
+        key: 'reset',
+      });
 
       await forgotPassword(formData.email);
       message.success({

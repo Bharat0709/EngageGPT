@@ -3,13 +3,12 @@ import { Skeleton } from 'antd';
 
 const SkeletonLoading = () => {
   return (
-    <div className="flex w-full flex-col lg:flex-row gap-6 lg:p-6 p-4 bg-gray-50 min-h-screen">
+    <div className="flex w-full flex-col lg:flex-row gap-6 lg:p-4 p-4 bg-gray-50 min-h-screen">
       {/* Left Section */}
       <div className="flex w-full lg:w-3/4 gap-4 flex-col rounded-lg">
         {/* Header */}
         <div className="flex w-full flex-wrap lg:flex-row gap-3 justify-between items-center mb-4">
           <Skeleton.Input active style={{ width: '128px', height: '24px' }} />
-          <Skeleton.Input active style={{ width: '160px', height: '30px' }} />
         </div>
 
         {/* Input Fields */}
@@ -27,7 +26,7 @@ const SkeletonLoading = () => {
         {/* Tones and Language Selection */}
         <div className="flex justify-between gap-2 mb-4">
           <div className="flex gap-2 flex-wrap w-3/4">
-            {Array(4)
+            {Array(1)
               .fill(null)
               .map((_, index) => (
                 <Skeleton.Button
