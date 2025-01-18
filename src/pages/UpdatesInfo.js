@@ -3,30 +3,21 @@ import EngageGPTLogo from '../assets/images/EngageGPTLogo.png';
 
 const updates = [
   {
-    version: '1.2.0',
-    date: 'January 6, 2025',
+    version: '2.0.0',
+    date: 'January, 2025',
     highlights: [
-      'Improved AI suggestions for LinkedIn posts.',
-      'Enhanced UI for a more seamless experience.',
-      'Fixed minor bugs reported in version 1.1.0.',
+      'Launched a full-fledged dashboard to view your LinkedIn analytics.',
+      'Integrated with LinkedIn to post content directly from EngageGPT.',
+      'Introduced a post calendar feature to enhance your productivity and consistency on LinkedIn.',
+      'Added an AI Post Generator to quickly generate posts using AI.',
+      'New authentication method using Connection Token instead of OTP.',
     ],
   },
   {
-    version: '1.1.0',
-    date: 'December 20, 2024',
+    version: ': Intial Release',
+    date: '15th May, 2024',
     highlights: [
-      'Introduced the scheduling feature for posts.',
-      'Optimized performance for large LinkedIn profiles.',
-      'Improved handling of API rate limits.',
-    ],
-  },
-  {
-    version: '1.0.0',
-    date: 'November 1, 2024',
-    highlights: [
-      'Initial release of EngageGPT extension.',
-      'Core features for generating LinkedIn content.',
-      'Integration with LinkedIn APIs.',
+      'Initial release of EngageGPT Chrome Extension and gone through multiple iterations based on users feedback',
     ],
   },
 ];

@@ -219,14 +219,6 @@ const Home = () => {
               >
                 Add Extension
               </a>{' '}
-              <a
-                className="text-sky-700 lg:p-0 p-2 rounded-lg  lg:px-0 px-3 lg:bg-sky-100 bg-white"
-                href="https://chromewebstore.google.com/detail/engagegpt-ai-for-linkedin/ldhdipkofibjleihomflebfklhadikio?hl=en-GB&authuser=1"
-                target="_blank"
-                rel="noreferrer"
-              >
-                How to connect?
-              </a>
             </div>
           </div>
         </div>

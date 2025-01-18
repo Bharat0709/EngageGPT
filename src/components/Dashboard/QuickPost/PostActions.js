@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
+import { message } from 'antd';
 import { LockOutlined } from '@ant-design/icons';
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -41,7 +42,7 @@ const PostActions = ({
 
   const handleSchedule = () => {
     if (!selectedDate || !selectedTime) {
-      alert('Please select both date and time to schedule the post.');
+      message.info('Please select both date and time to schedule the post.');
       return;
     }
 
