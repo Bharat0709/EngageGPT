@@ -89,7 +89,7 @@ const Home = () => {
   };
 
   const handleConnectLinkedIn = () => {
-    const authUrl = `http://localhost:8000/api/v1/members/auth/linkedin`;
+    const authUrl = process.env.REACT_APP_LINKEDIN_AUTH_URL;
     window.location.href = authUrl;
   };
 
@@ -266,8 +266,8 @@ const Home = () => {
               <div className="flex w-full lg:justify-end justify-between items-center gap-3">
                 <button
                   onClick={handleConnectLinkedIn}
-                  disabled={true}
-                  className="border-gray-400 text-black flex cursor-not-allowed items-center gap-2  bg-white border p-2 rounded-lg text-xs"
+                  disabled={person.isLinkedinConnected}
+                  className="border-gray-400 text-black flex  items-center gap-2  bg-white border p-2 rounded-lg text-xs"
                 >
                   <FaLinkedin className="text-sky-800" size={20} />
                   {person.isLinkedinConnected ? 'Connected' : 'Connect'}
