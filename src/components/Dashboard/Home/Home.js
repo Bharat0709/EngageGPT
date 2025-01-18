@@ -266,8 +266,8 @@ const Home = () => {
               <div className="flex w-full lg:justify-end justify-between items-center gap-3">
                 <button
                   onClick={handleConnectLinkedIn}
-                  disabled={person.isLinkedinConnected}
-                  className="border-gray-400 text-black flex items-center gap-2  bg-white border p-2 rounded-lg text-xs"
+                  disabled={true}
+                  className="border-gray-400 text-black flex cursor-not-allowed items-center gap-2  bg-white border p-2 rounded-lg text-xs"
                 >
                   <FaLinkedin className="text-sky-800" size={20} />
                   {person.isLinkedinConnected ? 'Connected' : 'Connect'}

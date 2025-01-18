@@ -239,8 +239,8 @@ const People = () => {
                 ) : (
                   <button
                     onClick={handleConnectLinkedIn}
-                    disabled={person.isLinkedinConnected}
-                    className={`rounded-lg text-black bg-gray-50 p-2 border border-gray-900 px-3 flex items-center gap-2 text-xs`}
+                    disabled={true}
+                    className={`rounded-lg text-black cursor-not-allowed bg-gray-50 p-2 border border-gray-900 px-3 flex items-center gap-2 text-xs`}
                   >
                     Connect
                     <FaLinkedin className="text-sky-800" size={20} />
