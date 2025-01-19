@@ -116,8 +116,8 @@ const LinkedInConnection = ({
             )}
             <button
               onClick={handleConnectLinkedIn}
-              disabled={true}
-              className={`py-2 flex items-center text-xs cursor-not-allowed gap-2 px-3 rounded-lg transition-all duration-300 ${
+              disabled={linkedInConnected}
+              className={`py-2 flex items-center text-xs gap-2 px-3 rounded-lg transition-all duration-300 ${
                 linkedInConnected
                   ? 'global-button-primary bg-green-500 text-white border-green-600 hover:bg-green-600'
                   : selectedProfile
