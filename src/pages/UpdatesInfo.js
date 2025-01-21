@@ -36,13 +36,22 @@ const UpdateInfoScreen = () => {
             />
           </a>
           <h1 className="text-2xl font-bold text-gray-800">
-            EngageGPT Updates
+            AI for LinkedIn - EngageGPT Updates
           </h1>
         </div>
         <p className="text-gray-600 mt-4">
           Discover the latest updates and improvements in EngageGPT. Stay
           informed about the new features and fixes introduced in every version.
         </p>
+        <a
+          rel="noreferrer noopener"
+          target="_blank"
+          href="https://www.linkedin.com/feed/"
+        >
+          <button type="submit" className={`mt-4 global-button-primary`}>
+            Try New Updates
+          </button>
+        </a>
       </div>
 
       {/* Updates Section */}

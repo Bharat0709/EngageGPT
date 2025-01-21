@@ -204,15 +204,18 @@ const Home = () => {
             Add Profile
           </button>
         </div>
-        <div className="flex flex-col gap-2 mb-2">
-          <p className="p-2 text-xs lg:text-left text-center bg-sky-100 rounded-lg">
+        <div className="flex flex-col gap-2  mb-2">
+          <p className="p-2 text-lg lg:text-left text-center lg:px-3 px-4 bg-sky-100 rounded-lg">
             Connect to LinkedIn to share content
           </p>
-          <div className="p-2 text-xs flex lg:flex-row flex-col justify-between items-center gap-3 bg-sky-100 rounded-lg">
-            <p>Connect via connection token to view Profile Analytics</p>
+          <div className="p-2 text-xs flex lg:flex-row lg:px-3 px-4 flex-col justify-between items-center gap-3 bg-sky-100 rounded-lg">
+            <p className="text-lg">
+              Connect via connection token using our Chrome Extension to view
+              Profile Analytics
+            </p>
             <div className="flex  lg:w-fit w-full justify-between items-center gap-4">
               <a
-                className="text-sky-700 lg:p-0 p-2 lg:px-0 px-3 rounded-lg lg:bg-sky-100 bg-white"
+                className="px-3 lg:px-3 rounded-lg text-md global-button-primary text-white p-2"
                 href="https://chromewebstore.google.com/detail/engagegpt-ai-for-linkedin/ldhdipkofibjleihomflebfklhadikio?hl=en-GB&authuser=1"
                 target="_blank"
                 rel="noreferrer"
@@ -264,15 +267,7 @@ const Home = () => {
                 </div>
               </div>
               <div className="flex w-full lg:justify-end justify-between items-center gap-3">
-                <button
-                  onClick={handleConnectLinkedIn}
-                  disabled={person.isLinkedinConnected}
-                  className="border-gray-400 text-black flex  items-center gap-2  bg-white border p-2 rounded-lg text-xs"
-                >
-                  <FaLinkedin className="text-sky-800" size={20} />
-                  {person.isLinkedinConnected ? 'Connected' : 'Connect'}
-                </button>
-                <div className="copy-token text-gray-500 text-sm">
+                <div className="copy-token text-gray-800 text-md">
                   Connection Token
                   <Button
                     className="text-gray-800 hover:text-black"
@@ -281,6 +276,14 @@ const Home = () => {
                     type="link"
                   ></Button>
                 </div>
+                <button
+                  onClick={handleConnectLinkedIn}
+                  disabled={person.isLinkedinConnected}
+                  className="border-gray-400 text-black flex  items-center gap-2  bg-white border p-2 rounded-lg text-xs"
+                >
+                  <FaLinkedin className="text-sky-800" size={20} />
+                  {person.isLinkedinConnected ? 'Connected' : 'Connect'}
+                </button>
               </div>
             </div>
           ))}
