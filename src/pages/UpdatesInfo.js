@@ -3,6 +3,16 @@ import EngageGPTLogo from '../assets/images/EngageGPTLogo.png';
 
 const updates = [
   {
+    version: '2.0.1',
+    date: '24th Feb, 2025',
+    highlights: [
+      'UI enhancements and bug fixes',
+      'Added direct link to the analytics dashboard',
+      'Dashboard error resolved',
+      'ChatGPT Comments option is temporarily removed'
+    ],
+  },
+  {
     version: '2.0.0',
     date: 'January, 2025',
     highlights: [
