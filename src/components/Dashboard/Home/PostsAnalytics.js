@@ -3,7 +3,7 @@ import { getMemberPosts } from '../../../network/Posts';
 import PostDrawer from './PostsDrawer';
 import PostFilters from './PostsFilter';
 import PostsDiv from './PostsDiv';
-import NoData from '../../../assets/images/NoData.png';
+import NoPostsFound from '../../../assets/images/PostNotFound.png';
 import { message } from 'antd';
 
 const PostDetails = ({ setStats, memberId }) => {
@@ -94,7 +94,7 @@ const PostDetails = ({ setStats, memberId }) => {
   });
 
   return (
-    <div className="flex flex-col lg:p-6 p-3">
+    <div className="flex flex-col lg:p-4 p-3">
       {posts.length > 0 ? (
         <div>
           <p className="p-3 w-full rounded-lg border bg-white border-gray-300 text-sm">
@@ -121,7 +121,7 @@ const PostDetails = ({ setStats, memberId }) => {
       ) : (
         <div className="w-full flex flex-col gap-4 mt-10 items-center justify-center text-center">
           <p> No Posts Found</p>
-          <img className="h-44 w-44" src={NoData} alt="NoData" />{' '}
+          <img className="h-50 w-60" src={NoPostsFound} alt="NoData" />{' '}
         </div>
       )}
     </div>

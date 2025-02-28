@@ -113,14 +113,14 @@ const PersonaModal = ({
 
         <div className="mb-6">
           <label className="block text-sm font-medium text-gray-700">
-            Sample Posts
+            Sample LinkedIn Post Content
           </label>
           <div className="flex items-start gap-2">
             <textarea
               type="text"
               value={newSample}
               onChange={(e) => setNewSample(e.target.value)}
-              placeholder="Add a sample post"
+              placeholder="Add your post content here"
               className="mt-1 h-32 flex-grow border border-gray-300 text-sm rounded-xl p-2"
             />
             <button
@@ -128,9 +128,16 @@ const PersonaModal = ({
               onClick={handleAddSample}
               className="global-button-primary lg:text-base text-xs bg-gray-100 text-black"
             >
-              Add More
+              {samples.length > 0 ? 'Add More' : 'Add'}
             </button>
           </div>
+          {samples.length === 0 ? (
+            <p className="text-gray-600 mt-2">
+              Click on "Add" to add the post before analyzing.
+            </p>
+          ) : (
+            <></>
+          )}
           {samples.length > 0 && (
             <ul className="mt-2">
               {samples.map((sample, index) => (

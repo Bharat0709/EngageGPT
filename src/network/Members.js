@@ -5,10 +5,13 @@ const MEMBER_API_URL = '/members';
 
 export const addNewMember = async (newMemberDetails) => {
   const { name, email } = newMemberDetails;
+  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  localStorage.setItem('userTimeZone',timeZone);
   try {
     const response = await axiosInstance.post(`${MEMBER_API_URL}/create`, {
       name,
       email,
+      timeZone,
     });
     return response.data.data;
   } catch (error) {
@@ -36,6 +39,7 @@ export const createMemberPersona = async (
     throw new Error(errorMsg);
   }
 };
+
 export const fetchSheetDetails = async (gooleSheetUrl) => {
   try {
     const response = await axiosInstance.post(
@@ -87,7 +91,6 @@ export const submitSurvey = async (formData) => {
 
 export const addContentCalendar = async (calendarData, memberId) => {
   try {
-    console.table(calendarData);
     const formattedData = calendarData.map((item) => {
       return {
         title: item.Title,
@@ -143,7 +146,6 @@ export const deleteContentCalendar = async (contentDetails) => {
   try {
     const memberId = contentDetails.memberId.toString();
     const contentId = contentDetails._id;
-    console.log(memberId, contentId);
 
     const response = await axiosInstance.delete(
       `${MEMBER_API_URL}/content-calendar/${memberId}/${contentId}`,

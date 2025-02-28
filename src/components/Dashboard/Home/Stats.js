@@ -78,7 +78,7 @@ const Stats = ({ isLoading, selectedProfile, stats }) => {
   ];
 
   return (
-    <div className="lg:px-6 lg:py-4 p-3">
+    <div className="lg:px-4 lg:py-4 p-3">
       <div className="flex flex-wrap lg:justify-start justify-center gap-4">
         {statistics.map((stat, index) => (
           <div

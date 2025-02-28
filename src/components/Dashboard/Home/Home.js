@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { FiCopy } from 'react-icons/fi';
 import { Skeleton, message, Button } from 'antd';
-import { FiUsers } from 'react-icons/fi';
+import { FiUsers, FiCopy, FiEye } from 'react-icons/fi';
 import { formatDate } from '../../../utils/formatDate';
 import { AiOutlinePlus, AiOutlineDown, AiOutlineUp } from 'react-icons/ai';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -171,7 +170,7 @@ const Home = () => {
 
   if (!selectedProfile && invitedProfiles.length === 0) {
     return (
-      <div className="bg-gray-50 min-h-screen flex justify-start pt-10 gap-8 flex-col items-center">
+      <div className="bg-gray-50 w-full rounded-xl min-h-screen flex rouned-xl justify-start pt-10 gap-8 flex-col items-center">
         <img className="h-32 w-32" src={AddProfile} alt="AddProfile" />
         <button
           type="primary"
@@ -192,7 +191,7 @@ const Home = () => {
 
   if (!selectedProfile && invitedProfiles.length > 0) {
     return (
-      <div className="dashboard-container bg-gray-50 min-h-screen lg:p-6 p-4">
+      <div className="dashboard-container scrollbar-hide rounded-xl bg-gray-50 min-h-screen lg:p-6 p-4">
         <div className="flex items-center mb-6 justify-between">
           <h2 className="text-xl">Invited Profiles</h2>
           <button
@@ -205,17 +204,14 @@ const Home = () => {
           </button>
         </div>
         <div className="flex flex-col gap-2  mb-2">
-          <p className="p-2 text-lg lg:text-left text-center lg:px-3 px-4 bg-sky-100 rounded-lg">
-            Connect to LinkedIn to share content
-          </p>
-          <div className="p-2 text-xs flex lg:flex-row lg:px-3 px-4 flex-col justify-between items-center gap-3 bg-sky-100 rounded-lg">
-            <p className="text-lg">
-              Connect via connection token using our Chrome Extension to view
-              Profile Analytics
+          <div className="p-2 text-md flex lg:flex-row lg:px-2 px-2 flex-col justify-between items-center gap-3 bg-white border border-gray-300 rounded-lg">
+            <p className="lg:text-md text-sm lg:pl-2 text-center font-semibold">
+              Add our Chrome Extension to view Profile Analytics
             </p>
+
             <div className="flex  lg:w-fit w-full justify-between items-center gap-4">
               <a
-                className="px-3 lg:px-3 rounded-lg text-md global-button-primary text-white p-2"
+                className="px-4 lg:w-fit w-full text-center lg:px-3 rounded-lg text-sm  global-button-primary text-white p-2"
                 href="https://chromewebstore.google.com/detail/engagegpt-ai-for-linkedin/ldhdipkofibjleihomflebfklhadikio?hl=en-GB&authuser=1"
                 target="_blank"
                 rel="noreferrer"
@@ -266,22 +262,38 @@ const Home = () => {
                   </div>
                 </div>
               </div>
-              <div className="flex w-full lg:justify-end justify-between items-center gap-3">
-                <div className="copy-token text-gray-800 text-md">
+              <div className="flex flex-col lg:flex-row w-full lg:justify-end justify-between items-center gap-3">
+                <div className="copy-token items-center font-semibold flex t py-1 bg-sky-50 rounded-lg pl-3 pr-2 text-gray-800 text-sm">
                   Connection Token
+                  <button
+                    onClick={() => message.info(person?.connectionToken)}
+                    className="ml-2 text-gray-800 hover:text-black"
+                  >
+                    <FiEye size={16} />
+                  </button>
+                  {/* Copy Button */}
                   <Button
-                    className="text-gray-800 hover:text-black"
-                    icon={<FiCopy />}
+                    className="ml-2 text-gray-800 text-xs rounded-lg hover:text-black"
+                    icon={<FiCopy size={16} />}
                     onClick={() => handleCopy(person.connectionToken)}
                     type="link"
-                  ></Button>
+                  />
                 </div>
+
                 <button
                   onClick={handleConnectLinkedIn}
                   disabled={person.isLinkedinConnected}
-                  className="border-gray-400 text-black flex  items-center gap-2  bg-white border p-2 rounded-lg text-xs"
+                  className={`text-sm m-0 border-gray-400 font-semibold  px-3 text-black flex  items-center gap-2 p-2 rounded-lg ${
+                    person.isLinkedinConnected
+                      ? 'bg-green-400 text-white font-semibold cursor-not-allowed'
+                      : 'bg-gray-100'
+                  }`}
                 >
-                  <FaLinkedin className="text-sky-800" size={20} />
+                  {person.isLinkedinConnected ? (
+                    <FaLinkedin className="text-white" size={20} />
+                  ) : (
+                    <FaLinkedin className="text-sky-800" size={20} />
+                  )}
                   {person.isLinkedinConnected ? 'Connected' : 'Connect'}
                 </button>
               </div>
@@ -298,12 +310,12 @@ const Home = () => {
   }
 
   return (
-    <div className="bg-gray-50 h-full overflow-y-scroll">
-      <div className="flex lg:flex-row lg:px-6 lg:py-5 p-3 flex-col gap-3 justify-between items-center ">
-        <h1 className="text-xl font-semibold">Home</h1>
-        <p className="text-xs p-2  font-semibold rounded-lg px-4">
+    <div className="bg-gray-50 rounded-xl scrollbar-hide h-screen  overflow-y-scroll">
+      <div className="flex lg:flex-row lg:px-4 lg:py-4 p-3 flex-col gap-3 justify-between items-center ">
+        <h1 className="text-xl text-black font-semibold">Home</h1>
+        <p className="text-sm p-2  font-semibold rounded-lg px-4">
           {selectedProfile?.lastSyncedAt
-            ? `Last Synced at ${formatDate(selectedProfile.lastSyncedAt)} IST`
+            ? `Last Synced at ${formatDate(selectedProfile.lastSyncedAt)}`
             : 'Profile analytics not synced yet!'}
         </p>
         <div className="flex items-center space-x-2">

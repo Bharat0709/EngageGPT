@@ -1,7 +1,7 @@
 import React from 'react';
 import { AiOutlineBarChart, AiOutlineArrowRight } from 'react-icons/ai';
 import linkedInIcon from '../../../assets/images/linkedInIcon.png';
-import { Skeleton, Popover, Button } from 'antd';
+import { Skeleton, Button } from 'antd';
 
 const PostsDiv = ({ handlePostClick, posts, isLoading }) => {
   return (
@@ -75,23 +75,13 @@ const PostsDiv = ({ handlePostClick, posts, isLoading }) => {
                         : post.numImpressions}
                     </span>
                   </div>
-
-                  <Popover
-                    placement="right"
-                    content={
-                      <div className="text-center">
-                        <Button
-                          type="link"
-                          onClick={() => handlePostClick(post._id)}
-                        >
-                          View Details
-                        </Button>
-                      </div>
-                    }
-                    trigger="hover"
-                  >
-                    <AiOutlineArrowRight className="text-gray-500 hover:text-blue-500 transition duration-200 ease-in-out" />
-                  </Popover>
+                  <div className="text-center">
+                    <Button
+                      type="link"
+                      onClick={() => handlePostClick(post._id)}
+                    ></Button>
+                  </div>
+                  <AiOutlineArrowRight className="text-gray-500 hover:text-blue-500 transition duration-200 ease-in-out" />
                 </div>
               </div>
             </div>

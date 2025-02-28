@@ -185,16 +185,16 @@ const People = () => {
           filteredPeople.map((person) => (
             <div
               key={person?._id}
-              className="person-card w-full bg-white p-4  gap-4 rounded-xl lg:flex-row flex-col flex justify-between items-center"
+              className="person-card w-full bg-white p-4 gap-4 rounded-xl lg:flex-row flex-col flex justify-between items-center"
             >
               <div className="flex lg:w-fit w-full lg:flex-row flex-col gap-4 items-center">
                 <div className="flex lg:w-fit w-full items-center gap-4 justify-start">
                   <img
                     src={person?.profilePicture}
                     alt={`${person?.name}'s profile`}
-                    className="w-10 h-10 rounded-full border border-gray-300"
+                    className="w-12 h-12 rounded-full border border-gray-300"
                   />
-                  <div className="flex lg:flex-row flex-col items-start  lg:gap-3 gap-1">
+                  <div className="flex flex-col items-start  lg:gap-1 gap-1">
                     <h3 className="text-sm p-0 m-0 font-semibold text-gray-800">
                       {person?.name}
                     </h3>
@@ -204,11 +204,14 @@ const People = () => {
                   </div>
                 </div>
                 <div className="flex items-center lg:flex-row flex-wrap gap-3 lg:w-max  w-full">
-                  <p className="text-sm rounded-lg bg-gray-100 p-1 px-3 m-0 text-gray-600">
+                  <p className="text-xs font-semibold rounded-lg bg-gray-100 p-1 px-3 m-0 text-gray-600">
                     {person?.totalCreditsUsed} credits used
                   </p>{' '}
-                  <p className="text-sm rounded-lg bg-gray-100 p-1 px-3 m-0 text-gray-600">
+                  <p className="text-xs font-semibold rounded-lg bg-gray-100 p-1 px-3 m-0 text-gray-600">
                     {person?.daysActive} days active
+                  </p>
+                  <p className="text-xs font-semibold rounded-lg bg-gray-100 p-1 px-3 m-0 text-gray-600">
+                    {person?.timeZone || 'Asia/Kolkata'}
                   </p>
                   <div className="flex w-max rounded-full text-green-600 items-center">
                     <p

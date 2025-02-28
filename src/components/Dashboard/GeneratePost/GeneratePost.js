@@ -211,7 +211,7 @@ const LinkedInPostGenerator = () => {
   }
 
   return (
-    <div className="flex w-full flex-col lg:flex-row gap-6 lg:p-6 p-4 bg-gray-50 min-h-screen">
+    <div className="flex w-full rounded-xl flex-col lg:flex-row gap-6 lg:p-6 p-4 bg-gray-50 min-h-screen">
       <div className="flex w-full lg:w-3/4 gap-2 flex-col rounded-lg">
         <div className="flex w-full flex-wrap lg:flex-row  gap-3 justify-between items-center mb-4">
           <h3 className="text-xl font-medium">Create LinkedIn Post</h3>
@@ -379,8 +379,12 @@ const LinkedInPostGenerator = () => {
           value={post}
           readOnly
           placeholder="Your LinkedIn post will be written by AI..."
-          className="w-full min-h-96 scrollbar-hide border rounded-lg p-3 text-gray-700 bg-gray-100 focus:outline-none"
+          className="w-full  cursor-not-allowed min-h-96 scrollbar-hide border rounded-lg p-3 text-gray-700 bg-gray-100 focus:outline-none"
         />
+        <p className=" p-2 bg-gray-100 text-xs rounded-lg text-center">
+          {' '}
+          Click on the button below to edit generated post
+        </p>
         <button
           onClick={handleProceed}
           disabled={!post}
@@ -390,7 +394,7 @@ const LinkedInPostGenerator = () => {
               : 'bg-gray-300 text-gray-700 cursor-not-allowed'
           } py-2 rounded-lg`}
         >
-          Proceed
+          Proceed to Post
         </button>
       </div>
       <PersonaModal

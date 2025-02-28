@@ -6,11 +6,12 @@ import Settings from '../components/Dashboard/Settings/Settings';
 import PostScheduler from '../components/Dashboard/QuickPost/PostScheduler';
 import LinkedInPostGenerator from '../components/Dashboard/GeneratePost/GeneratePost';
 import ProtectedRoute from '../components/ProtectedRoute';
+import PostDetails from '../components/Dashboard/PostHistory/PostQueue';
 function Dashboard() {
   return (
-    <div className="flex lg:flex-row flex-col h-screen">
+    <div className="flex lg:flex-row scrollbar-hide lg:pt-2 lg:px-2 p-0 rounded-xl flex-col h-screen">
       <Sidebar />
-      <div className="flex-1 h-screen overflow-auto bg-sky-900">
+      <div className="flex-1 scrollbar-hide overflow-auto">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route
@@ -35,6 +36,14 @@ function Dashboard() {
             element={
               <ProtectedRoute>
                 <LinkedInPostGenerator />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/post-history"
+            element={
+              <ProtectedRoute>
+                <PostDetails />
               </ProtectedRoute>
             }
           />

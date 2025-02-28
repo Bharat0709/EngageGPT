@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Skeleton, message } from 'antd';
 import CustomDropdown from '../Global/CustomDropDown';
 import { CalendarOutlined } from '@ant-design/icons';
@@ -24,6 +24,16 @@ const LinkedInConnection = ({
   const [isSavedCalendarModalVisible, setIsSavedCalendarModalVisible] =
     useState(false);
   const [isSavingNewEntries, setIsSavingNewEntries] = useState(false);
+  const [selectedProfileDetails, setSelectedProfileDetails] = useState(null);
+
+  useEffect(() => {
+    if (selectedProfile) {
+      const profileDetails = connectedProfiles.find(
+        (profile) => profile._id === selectedProfile,
+      );
+      setSelectedProfileDetails(profileDetails);
+    }
+  }, [selectedProfile, connectedProfiles]);
 
   const handleConnectLinkedIn = () => {
     const authUrl = process.env.REACT_APP_LINKEDIN_AUTH_URL;
@@ -40,7 +50,6 @@ const LinkedInConnection = ({
       setCalendarData(savedCalendarData.contentCalendar);
       setIsCalendarModalVisible(false);
     } catch (error) {
-      console.log(error);
       setIsCalendarModalVisible(true);
       message.error('Error saving calendar');
     }
@@ -56,7 +65,6 @@ const LinkedInConnection = ({
       message.success('Calendar saved successfully');
       setCalendarData(calendarData, ...savedCalendarData.contentCalendar);
     } catch (error) {
-      console.log(error);
       message.error('Error saving calendar');
     }
     setIsSavingNewEntries(false);
@@ -72,8 +80,8 @@ const LinkedInConnection = ({
   };
 
   return (
-    <div className="mb-4">
-      <div className="flex lg:flex-row flex-wrap gap-2 items-center justify-between mb-2">
+    <div className="mb-4 mt-2">
+      <div className="flex lg:flex-row flex-wrap gap-2 items-center justify-between">
         <h3 className="text-xl p-0 m-0 font-medium">Share Content</h3>
         {isLoading ? (
           <Skeleton.Button active size="default" style={{ width: '100px' }} />
@@ -149,6 +157,7 @@ const LinkedInConnection = ({
       />
 
       <ContentCalendarModal
+        selectedProfileDetails={selectedProfileDetails}
         selectedProfileName={selectedProfileName}
         isOpen={isCalendarModalVisible}
         onClose={() => setIsCalendarModalVisible(false)}

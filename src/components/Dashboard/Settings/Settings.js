@@ -20,7 +20,6 @@ const OrganizationProfileSettings = () => {
       setLoading(true);
       try {
         const data = await fetchOrganizationData();
-
         setUserData(data);
         setTimeout(() => {
           setLoading(false);
@@ -70,7 +69,7 @@ const OrganizationProfileSettings = () => {
   };
 
   return (
-    <div className="w-full h-full  scrollbar-hide overflow-auto overflow-y-scroll mx-auto lg:p-6 p-4 bg-[#f3f4f6] shadow-md">
+    <div className="w-full h-full rounded-xl  scrollbar-hide overflow-auto overflow-y-scroll mx-auto lg:p-6 p-4 bg-[#f3f4f6] shadow-md">
       <h2 className="text-2xl text-semibold mb-4">Organization Settings</h2>
 
       <div className="flex bg-gray-50 rounded-xl p-3 text-sm justify-start gap-4 items-center mb-2">
@@ -103,7 +102,7 @@ const OrganizationProfileSettings = () => {
               />
             ) : (
               <img
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlPViCqVyGRxdQtmHT-5rBlQoa1XJsMwkOdQ3A-hEWfkYMRLG-S-LRYCLcGteHqbSF4Kk&usqp=CAU"
+                src="https://firebasestorage.googleapis.com/v0/b/coldemail-2d11a.appspot.com/o/Avatar.png?alt=media&token=b07b4ca9-074c-465e-985b-7c6e562f2e7b"
                 alt="Profile"
                 className="mt-1 w-16 h-16 rounded-full object-cover border"
               />
@@ -136,6 +135,7 @@ const OrganizationProfileSettings = () => {
               )}
             </div>
           </div>
+
           <button
             disabled={userData?.oauthProvider === 'google'}
             onClick={() => setIsModalOpen(true)}
@@ -157,32 +157,54 @@ const OrganizationProfileSettings = () => {
           </button>
         </div>
 
-        <div className="flex mb-2 justify-between items-center">
-          <p className="text-sm px-2 text-left text-gray-500">
+        <div className="flex w-full mb-2 justify-between items-center">
+          <p className="w-full text-sm px-2 text-left text-gray-500">
             {loading ? (
-              <Skeleton.Input
-                style={{ height: 12 }}
-                active
-                size="small"
-                className="w-40"
-              />
+              <div className="flex gap-4">
+                <Skeleton.Input
+                  style={{ height: 12 }}
+                  active
+                  size="small"
+                  className="w-40"
+                />
+                <Skeleton.Input
+                  style={{ height: 12 }}
+                  active
+                  size="small"
+                  className="w-40"
+                />
+              </div>
             ) : (
-              <>
-                Logged in via:{' '}
-                <b>
-                  {userData.oauthProvider === 'google' ? 'Google' : 'Password'}
-                </b>
-              </>
+              <div className="flex lg:flex-row flex-col justify-between w-full lg:items-center items-start lg:gap-2 gap-4">
+                <div className="flex lg:flex-row flex-col gap-2 lg:gap-4">
+                  <p>
+                    Logged in via:{' '}
+                    <span className="font-bold">
+                      {userData.oauthProvider === 'google'
+                        ? 'Google'
+                        : 'Password'}
+                    </span>
+                  </p>
+                  <p>
+                    Current Plan:{' '}
+                    <span className="font-bold">
+                      {userData?.subscription.plan === 'basic'
+                        ? 'FREE'
+                        : userData?.subscription.plan.toUpperCase()}
+                    </span>
+                  </p>
+                </div>
+                {!loading && userData.oauthProvider !== 'google' && (
+                  <button
+                    onClick={handleSendResetPasswordEmail}
+                    className="text-gray-800 text-left self-end text-sm p-0 m-0"
+                  >
+                    Reset Password
+                  </button>
+                )}
+              </div>
             )}
           </p>
-          {!loading && userData.oauthProvider !== 'google' && (
-            <button
-              onClick={handleSendResetPasswordEmail}
-              className="text-gray-800 px-2 text-right text-sm p-0 m-0"
-            >
-              Reset Password
-            </button>
-          )}
         </div>
       </div>
 

@@ -2,7 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { message } from 'antd';
 import { getAllMembers } from '../../../network/Members';
-import { shareLinkedInPost } from '../../../network/LinkedInAuth';
+import {
+  saveDraftLinkedInPost,
+  scheduleLinkedInPost,
+  shareLinkedInPost,
+} from '../../../network/LinkedInAuth';
 import PostContentEditor from './PostEditor';
 import LinkedInConnection from './LinkedInConnected';
 import MediaUploader from './MediaUploader';
@@ -18,8 +22,8 @@ const PostScheduler = () => {
     content: content || '',
     visibility: 'PUBLIC',
     media: [],
+    timeZone: '',
   });
-  const [isPosting, setIsPosting] = useState(false);
   const [linkedInConnected, setLinkedInConnected] = useState(false);
   const [connectedProfiles, setConnectedProfiles] = useState(null);
   const [selectedProfile, setSelectedProfile] = useState(null);
@@ -27,6 +31,9 @@ const PostScheduler = () => {
   const [calendarData, setCalendarData] = useState([]);
   const [selectedPostTopic, setSelectedPostTopic] = useState(null);
   const [selectedProfileName, setSelectedProfileName] = useState('');
+  const [isPosting, setIsPosting] = useState(false);
+  const [isSavingDraft, setIsSavingDraft] = useState(false);
+  const [isScheduling, setIsScheduling] = useState(false);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -149,25 +156,97 @@ const PostScheduler = () => {
     }
     try {
       setIsPosting(true);
+      message.loading('Sharing post...');
       await shareLinkedInPost(postDetails, selectedProfile);
       message.success('Post shared successfully!');
       setIsPosting(false);
+      setPostDetails({
+        content: '',
+        visibility: 'PUBLIC',
+        media: [],
+        timeZone: '',
+      });
+      setSelectedPostTopic(null);
+      location.state = null;
     } catch (error) {
       setIsPosting(false);
       message.error('Failed to share post. Please try again.');
     }
   };
 
-  const handleSaveDraft = () => {
-    message.info('Feature available soon!');
+  const handleSaveDraft = async (date, time, timeZone) => {
+    if (!selectedProfile) {
+      message.error('Please select a profile to share the post.');
+      return;
+    }
+    if (!postDetails.content) {
+      message.error('Please enter some content to save.');
+      return;
+    }
+    try {
+      message.loading('Saving draft...');
+      setIsSavingDraft(true);
+      await saveDraftLinkedInPost(
+        date,
+        time,
+        postDetails,
+        timeZone,
+        selectedProfile,
+      );
+      message.success('Post Saved as Draft!');
+      setPostDetails({
+        content: '',
+        visibility: 'PUBLIC',
+        media: [],
+        timeZone: '',
+      });
+      setIsSavingDraft(false);
+      setSelectedPostTopic(null);
+      location.state = null;
+    } catch (error) {
+      setIsSavingDraft(false);
+      message.error('Failed to save post as draft. Please try again.');
+    }
   };
 
-  const handleSchedulePost = () => {
-    message.info('Feature available soon!');
+  const handleSchedulePost = async (date, time, timeZone) => {
+    if (!selectedProfile) {
+      message.error('Please select a profile to share the post.');
+      return;
+    }
+    if (!postDetails.content) {
+      message.error('Please enter some content to share.');
+      return;
+    }
+    try {
+      message.loading('Scheduling post...');
+      setIsScheduling(true);
+      await scheduleLinkedInPost(
+        date,
+        time,
+        postDetails,
+        timeZone,
+        selectedProfile,
+      );
+      message.success('Post scheduled successfully!');
+      setIsScheduling(false);
+      setPostDetails({
+        content: '',
+        visibility: 'PUBLIC',
+        media: [],
+        timeZone: '',
+      });
+      setIsSavingDraft(false);
+      setSelectedPostTopic(null);
+      location.state = null;
+    } catch (error) {
+      setIsScheduling(false);
+      message.error('Failed to schedule post. Please try again.');
+    }
   };
 
   return (
-    <div className="flex flex-col bg-gray-50 lg:flex-row justify-between gap-3 lg:p-6 p-4 scrollbar-hide h-screen overflow-y-scroll">
+    <div className="flex rounded-xl flex-col bg-gray-50 lg:flex-row justify-between gap-3 lg:p-4 lg:pt-3 p-4 scrollbar-hide h-screen overflow-y-scroll">
       <div className="flex-1 bg-gray-50 rounded-lg ">
         <>
           <LinkedInConnection
@@ -204,8 +283,12 @@ const PostScheduler = () => {
           />
         </div>
         <PostActions
-          selectedPostTopic={selectedPostTopic}
+          isSavingDraft={isSavingDraft}
+          isScheduling={isScheduling}
           isPosting={isPosting}
+          connectedProfiles={connectedProfiles}
+          selectedProfile={selectedProfile}
+          selectedPostTopic={selectedPostTopic}
           onPost={handleShare}
           onSaveDraft={handleSaveDraft}
           onSchedule={handleSchedulePost}

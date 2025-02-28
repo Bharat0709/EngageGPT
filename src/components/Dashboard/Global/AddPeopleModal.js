@@ -59,7 +59,7 @@ const AddMembersModal = ({ isOpen, onClose, onSubmit }) => {
           <div className="flex flex-col gap-4 justify-center items-center pb-2 mb-4">
             <h2 className="text-xl text-center font-semibold">Add Profiles</h2>
             <p className="text-center">
-              Email must be associated with linkedIn Account
+              Email must be associated with LinkedIn Account
             </p>
           </div>
 

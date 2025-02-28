@@ -5,6 +5,7 @@ import { fetchSheetDetails } from '../../../network/Members';
 import dayjs from 'dayjs';
 
 const ContentCalendarModal = ({
+  selectedProfileDetails,
   selectedProfileName,
   isOpen,
   onClose,
@@ -148,7 +149,7 @@ const ContentCalendarModal = ({
           <FiX />
         </button>
         <h2 className="text-xl text-center mb-4">
-          Upload Content Calendar <span> for {selectedProfileName}</span>
+          Upload Content Calendar <span> for {selectedProfileName} </span>
         </h2>
 
         <div className=" flex mb-4 w-full mx-auto">
@@ -156,7 +157,7 @@ const ContentCalendarModal = ({
             href="https://docs.google.com/spreadsheets/d/154AYzvUd6pbiu1_XndZsEb9n3zq_Es1QPBCrzSaClfg/edit?gid=0#gid=0"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-sm mb-2 self-center w-fit mx-auto bg-white border border-gray-300 text-black px-4 py-2 rounded-lg"
+            className="text-sm mb-2 self-center w-fit mx-auto global-button-primary border border-gray-300 px-4 py-2 rounded-lg"
           >
             View Sample Template
           </a>
