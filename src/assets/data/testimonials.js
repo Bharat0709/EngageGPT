@@ -1,49 +1,29 @@
-const testimonials = [
+export const testimonials = [
   {
-    review:
-      "With Capsule, we're able to tell stories with video at scale for",
-    name: 'Kate Bedingfield',
-    designation: 'CMO at HubSpot',
+    review: 'Amazing , Welcome to the Future !!',
+    name: 'Rahul Attery',
+    designation: 'Senior Manager, Digidarts',
+    color: 'bg-violet-500',
   },
   {
     review:
-      'Love how you can take raw footage and turn it into a professional video with AI.',
-    name: 'Kipp Bodnar',
-    designation: 'CMO at HubSpot',
-  },
-  {
-    review: 'It makes video editing much, much easier.',
-    name: 'Kieran Flanagan',
-    designation: 'CMO at Zapier',
+      'It is an amazing tool, i personally was benefitted with good engagement from mt linkedin fam. Highly recommend this AI',
+    name: 'Samridhi Bhagat',
+    designation: 'Founder The Social Minder',
+    color: 'bg-teal-500',
   },
   {
     review:
-      'Having spent years editing video, Capsule is absolutely mindblowing. 🤯',
-    name: 'Cameron Baughn',
-    designation: 'Founder at DesignFriend',
+      'Great Extension, Helps a lot to me in reaching out people on linkedin, Framing connection messages, etc',
+    name: 'Madhur Gera',
+    designation: 'SDE ',
+    color: 'bg-indigo-500',
   },
   {
     review:
-      "Capsule's AI-powered editing tools have revolutionized the way we create video content.",
-    name: 'Sarah Johnson',
-    designation: 'Creative Director at XYZ Studios',
-  },
-  {
-    review:
-      'I never thought video editing could be this easy. Capsule is a game-changer!',
-    name: 'John Smith',
-    designation: 'Marketing Manager at ABC Corp',
-  },
-  {
-    review:
-      "Capsule has saved us countless hours of editing time. It's incredibly efficient!",
-    name: 'Emily Davis',
-    designation: 'Content Creator at XYZ Company',
-  },
-  {
-    review:
-      'As a freelance videographer, Capsule has become my go-to tool for quick and professional edits.',
-    name: 'Michael Chen',
-    designation: 'Freelance Videographer',
+      'One of the best extensions one can ask for. Must for a linkedin user.Highly recommend this.',
+    name: 'Karshit Chawla',
+    designation: 'Analyst Trainee @PoleStar Solutions',
+    color: 'bg-rose-500',
   },
 ];

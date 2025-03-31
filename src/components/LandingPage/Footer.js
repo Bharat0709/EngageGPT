@@ -11,73 +11,75 @@ function Footer() {
   };
 
   return (
-    <div className="relative bg-sky-900">
-      <footer className="bg-sky-900 text-white py-8">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col lg:flex-row gap-4 justify-around items-start">
-            <div className="flex flex-col">
-              <div
-                className="flex items-center justify-start cursor-pointer"
-                onClick={() => scrollToSection('home')}
-              >
-                <img src={Logo} alt="Logo" className="h-12 mr-3" />
-                <span className="font-medium text-2xl">EngageGPT</span>
-              </div>
-            </div>
-            {footerSections.map((section, index) => (
-              <div key={index}>
-                <h3 className="text-lg font-semibold mb-2">{section.title}</h3>
-                <ul>
-                  {section.links.map((link, idx) => (
-                    <li key={idx} className="mb-2">
-                      {link.icon ? (
-                        <a
-                          href={link.href}
-                          target={link.target || '_self'}
-                          rel={link.rel || undefined}
-                          className="flex items-center"
-                        >
-                          <link.icon className="h-5 w-5 mr-2" />
-                          {link.label}
-                        </a>
-                      ) : link.section ? (
-                        <p
-                          onClick={() => scrollToSection(link.section)}
-                          className="cursor-pointer"
-                        >
-                          {link.label}
-                        </p>
-                      ) : (
-                        <a
-                          href={link.href}
-                          target={link.target || '_self'}
-                          rel={link.rel || undefined}
-                        >
-                          {link.label}
-                        </a>
-                      )}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-            <Socials />
+    <footer className="bg-[#004182] text-white m-4 rounded-lg py-10">
+      <div className="container mx-auto px-4 lg:px-16 flex flex-col lg:flex-row justify-between items-start">
+        {/* Logo Section */}
+        <div className="mb-6 lg:mb-0 flex flex-col items-start">
+          <div
+            className="flex items-center cursor-pointer mb-4"
+            onClick={() => scrollToSection('home')}
+          >
+            <img src={Logo} alt="EngageGPT Logo" className="h-14 mr-3" />
+            <span className="text-2xl">EngageGPT</span>
           </div>
+          <p className="text-sm text-gray-300 max-w-xs">
+            Empowering LinkedIn networking with AI-driven engagement.
+          </p>
         </div>
-      </footer>
-      <div className=" z-40 flex w-full bg-sky-900 items-center justify-center">
-        <h2 className="text-center z-10 mb-10 w-full text-5xl lg:text-8xl bg-sky-900 text-sky-800">
-          {'AI for LinkedIn'.split('').map((child, idx) => (
-            <span className="hoverText h-56 w-full" key={idx}>
-              {child}
-            </span>
+
+        {/* Footer Links */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full lg:w-auto">
+          {footerSections.map((section, index) => (
+            <div key={index}>
+              <h3 className="text-lg font-semibold mb-3">{section.title}</h3>
+              <ul className="space-y-2">
+                {section.links.map((link, idx) => (
+                  <li key={idx}>
+                    {link.icon ? (
+                      <a
+                        href={link.href}
+                        target={link.target || '_self'}
+                        rel={link.rel || undefined}
+                        className="flex items-center text-gray-300 hover:text-white transition"
+                      >
+                        <link.icon className="h-5 w-5 mr-2" />
+                        {link.label}
+                      </a>
+                    ) : link.section ? (
+                      <p
+                        onClick={() => scrollToSection(link.section)}
+                        className="cursor-pointer text-gray-300 hover:text-white transition"
+                      >
+                        {link.label}
+                      </p>
+                    ) : (
+                      <a
+                        href={link.href}
+                        target={link.target || '_self'}
+                        rel={link.rel || undefined}
+                        className="text-gray-300 hover:text-white transition"
+                      >
+                        {link.label}
+                      </a>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
           ))}
-        </h2>
+        </div>
+
+        {/* Socials Section */}
+        <div className="mt-6 lg:mt-0">
+          <Socials />
+        </div>
       </div>
-      <p className="text-white text-2xl text-center mb-4">
-        Made with ❤️ in India
-      </p>
-    </div>
+
+      {/* Bottom Footer */}
+      <div className="border-t border-gray-500 mt-8 pt-6 text-center text-gray-300 text-2xl">
+        <p>Made with ❤️ in India</p>
+      </div>
+    </footer>
   );
 }
 

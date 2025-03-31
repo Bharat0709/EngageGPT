@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Skeleton, message, Button } from 'antd';
-import { FiUsers, FiCopy, FiEye } from 'react-icons/fi';
+import { message, Button } from 'antd';
+import { FiUsers, FiCopy } from 'react-icons/fi';
 import { formatDate } from '../../../utils/formatDate';
 import { AiOutlinePlus, AiOutlineDown, AiOutlineUp } from 'react-icons/ai';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -10,10 +10,10 @@ import { setAuthTokenAction } from '../../../redux/auth/authActions';
 import Cookies from 'js-cookie';
 import { getAllMembers, addNewMember } from '../../../network/Members';
 import AddMembersModal from '../Global/AddPeopleModal';
-import AddProfile from '../../../assets/images/AddProfile.png';
 import PostDetails from './PostsAnalytics';
 import Stats from './Stats';
-import { FaLinkedin } from 'react-icons/fa';
+import OnboardingGuide from './OnboardingGuide';
+import { renderSkeleton } from './SkeletonLoading';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -27,6 +27,7 @@ const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [refreshMembers, setRefreshMembers] = useState(false);
   const [stats, setStats] = useState([]);
+  const [onboardingComplete, setOnboardingComplete] = useState(false);
 
   useEffect(() => {
     const token = new URLSearchParams(location.search).get('token');
@@ -65,6 +66,13 @@ const Home = () => {
         setIsLoading(false);
         setInvitedProfiles(invited);
         setSelectedProfile(connected || null);
+
+        // Check if onboarding is complete
+        const hasProfiles = data.length > 0;
+        const hasConnected = connected !== undefined;
+        const isProfileSynced = connected?.lastSyncedAt;
+
+        setOnboardingComplete(hasProfiles && hasConnected && isProfileSynced);
       } catch (err) {
         console.error('Error getting profile details!');
       }
@@ -87,11 +95,6 @@ const Home = () => {
     }
   };
 
-  const handleConnectLinkedIn = () => {
-    const authUrl = process.env.REACT_APP_LINKEDIN_AUTH_URL;
-    window.location.href = authUrl;
-  };
-
   const handleCopy = (token) => {
     navigator.clipboard.writeText(token);
     message.success('Connection token copied!');
@@ -101,219 +104,31 @@ const Home = () => {
     setSelectedProfile(profile);
   };
 
-  const renderSkeleton = () => (
-    <div className="dashboard-container bg-white min-h-screen p-3">
-      <div className="flex items-center justify-between pr-3">
-        <Skeleton.Input style={{ width: 100, height: 24 }} active />
-        <Skeleton.Button style={{ height: 24, width: 100 }} active />
-      </div>
-      <div className="mt-4">
-        <div className="flex w-full flex-wrap gap-4">
-          {[...Array(8)].map((_, index) => (
-            <div
-              key={index}
-              className="bg-gray-50 lg:w-fit w-full  rounded-lg p-3 flex flex-col justify-between"
-            >
-              <div className="flex gap-2 items-center">
-                <Skeleton.Avatar active size="small" shape="circle" />
-                <Skeleton.Input
-                  className="w-1/2 mt-1"
-                  style={{ height: 10, width: 10 }}
-                  active
-                />
-              </div>
-              <Skeleton.Input
-                className="w-1/2 mt-2 my-0 "
-                style={{ height: 10, width: 10 }}
-                active
-              />
-            </div>
-          ))}
-        </div>
-        <div className="flex flex-wrap gap-4 mt-4 ">
-          {Array.from({ length: 4 }).map((_, index) => (
-            <div
-              key={index}
-              className="person-card w-full bg-gray-50 p-4 rounded-xl flex justify-between items-center"
-            >
-              <Skeleton.Avatar active size="large" />
-              <div className="flex-grow items-center mt-1 gap-4">
-                <Skeleton.Input
-                  active
-                  style={{
-                    width: 120,
-                    height: 10,
-                    marginLeft: 12,
-                    marginTop: 3,
-                  }}
-                />
-                <Skeleton.Input
-                  active
-                  style={{
-                    width: 100,
-                    height: 10,
-                    marginLeft: 12,
-                    marginTop: 3,
-                  }}
-                />
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-
   if (isLoading) {
-    return renderSkeleton();
+    return renderSkeleton;
   }
 
-  if (!selectedProfile && invitedProfiles.length === 0) {
+  // Show onboarding when needed
+  if (!onboardingComplete) {
     return (
       <div className="bg-gray-50 w-full rounded-xl min-h-screen flex rouned-xl justify-start pt-10 gap-8 flex-col items-center">
-        <img className="h-32 w-32" src={AddProfile} alt="AddProfile" />
-        <button
-          type="primary"
-          onClick={() => setIsAddMemberModalOpen(true)}
-          className="global-button-primary text-md flex items-center gap-1 py-2 px-3 rounded-lg"
-        >
-          <AiOutlinePlus size={14} />
-          Add Profile
-        </button>
-        <AddMembersModal
-          isOpen={isAddMemberModalOpen}
-          onClose={() => setIsAddMemberModalOpen(false)}
-          onSubmit={handleAddMembers}
-        />
-      </div>
-    );
-  }
-
-  if (!selectedProfile && invitedProfiles.length > 0) {
-    return (
-      <div className="dashboard-container scrollbar-hide rounded-xl bg-gray-50 min-h-screen lg:p-6 p-4">
-        <div className="flex items-center mb-6 justify-between">
-          <h2 className="text-xl">Invited Profiles</h2>
-          <button
-            type="primary"
-            onClick={() => setIsAddMemberModalOpen(true)}
-            className="global-button-primary text-xs flex items-center gap-1 py-2 px-3 rounded-lg"
-          >
-            <AiOutlinePlus size={14} />
-            Add Profile
-          </button>
-        </div>
-        <div className="flex flex-col gap-2  mb-2">
-          <div className="p-2 text-md flex lg:flex-row lg:px-2 px-2 flex-col justify-between items-center gap-3 bg-white border border-gray-300 rounded-lg">
-            <p className="lg:text-md text-sm lg:pl-2 text-center font-semibold">
-              Add our Chrome Extension to view Profile Analytics
-            </p>
-
-            <div className="flex  lg:w-fit w-full justify-between items-center gap-4">
-              <a
-                className="px-4 lg:w-fit w-full text-center lg:px-3 rounded-lg text-sm  global-button-primary text-white p-2"
-                href="https://chromewebstore.google.com/detail/engagegpt-ai-for-linkedin/ldhdipkofibjleihomflebfklhadikio?hl=en-GB&authuser=1"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Add Extension
-              </a>{' '}
-            </div>
-          </div>
-        </div>
-        <ul className="space-y-2 mt-4">
-          {invitedProfiles.map((person) => (
-            <div
-              key={person?.id}
-              className="person-card w-full bg-white  lg:p-4 p-3 rounded-xl gap-6 flex lg:flex-row flex-col justify-between items-center"
-            >
-              <div className="flex w-full lg:flex-row flex-col lg:gap-4 gap-2 items-center">
-                <div className="flex w-full flex-row justify-start items-center gap-3">
-                  <img
-                    src={person?.profilePicture}
-                    alt={`${person?.name}'s profile`}
-                    className="w-10 h-10 rounded-full border border-gray-300"
-                  />
-                  <div className="flex lg:w-fit w-full lg:flex-row flex-col lg:gap-3 gap-1">
-                    <div className="flex justify-between items-center w-full gap-3 ">
-                      <h3 className="text-sm p-0 m-0 font-semibold text-gray-800">
-                        {person?.name}
-                      </h3>
-                      <div className="flex text-left rounded-full text-green-600 items-center">
-                        <p
-                          className={`text-sm p-0 m-0 font-medium ${
-                            person.isConnected === true
-                              ? 'text-green-500'
-                              : 'text-red-500'
-                          }`}
-                        >
-                          •{' '}
-                          {person.isConnected === 'connected'
-                            ? 'Connected'
-                            : person.isConnected === 'invited'
-                            ? 'Invited'
-                            : 'Disconnected'}
-                        </p>
-                      </div>
-                    </div>
-                    <p className="text-sm rounded-lg p-0 m-0 text-gray-600">
-                      {person?.email}
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="flex flex-col lg:flex-row w-full lg:justify-end justify-between items-center gap-3">
-                <div className="copy-token items-center font-semibold flex t py-1 bg-sky-50 rounded-lg pl-3 pr-2 text-gray-800 text-sm">
-                  Connection Token
-                  <button
-                    onClick={() => message.info(person?.connectionToken)}
-                    className="ml-2 text-gray-800 hover:text-black"
-                  >
-                    <FiEye size={16} />
-                  </button>
-                  {/* Copy Button */}
-                  <Button
-                    className="ml-2 text-gray-800 text-xs rounded-lg hover:text-black"
-                    icon={<FiCopy size={16} />}
-                    onClick={() => handleCopy(person.connectionToken)}
-                    type="link"
-                  />
-                </div>
-
-                <button
-                  onClick={handleConnectLinkedIn}
-                  disabled={person.isLinkedinConnected}
-                  className={`text-sm m-0 border-gray-400 font-semibold  px-3 text-black flex  items-center gap-2 p-2 rounded-lg ${
-                    person.isLinkedinConnected
-                      ? 'bg-green-400 text-white font-semibold cursor-not-allowed'
-                      : 'bg-gray-100'
-                  }`}
-                >
-                  {person.isLinkedinConnected ? (
-                    <FaLinkedin className="text-white" size={20} />
-                  ) : (
-                    <FaLinkedin className="text-sky-800" size={20} />
-                  )}
-                  {person.isLinkedinConnected ? 'Connected' : 'Connect'}
-                </button>
-              </div>
-            </div>
-          ))}
-        </ul>
-        <AddMembersModal
-          isOpen={isAddMemberModalOpen}
-          onClose={() => setIsAddMemberModalOpen(false)}
-          onSubmit={handleAddMembers}
+        <OnboardingGuide
+          onAddProfile={() => setIsAddMemberModalOpen(true)}
+          isModalOpen={isAddMemberModalOpen}
+          onCloseModal={() => setIsAddMemberModalOpen(false)}
+          onSubmitModal={handleAddMembers}
+          invitedProfiles={invitedProfiles}
+          selectedProfile={selectedProfile}
         />
       </div>
     );
   }
 
   return (
-    <div className="bg-gray-50 rounded-xl scrollbar-hide h-screen  overflow-y-scroll">
+    <div className="bg-gray-50 rounded-xl scrollbar-hide h-screen overflow-y-scroll">
       <div className="flex lg:flex-row lg:px-4 lg:py-4 p-3 flex-col gap-3 justify-between items-center ">
         <h1 className="text-xl text-black font-semibold">Home</h1>
-        <p className="text-sm p-2  font-semibold rounded-lg px-4">
+        <p className="text-sm p-2 font-semibold rounded-lg px-4">
           {selectedProfile?.lastSyncedAt
             ? `Last Synced at ${formatDate(selectedProfile.lastSyncedAt)}`
             : 'Profile analytics not synced yet!'}

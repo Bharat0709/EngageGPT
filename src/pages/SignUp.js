@@ -78,9 +78,23 @@ const Signup = () => {
             />
             EngageGPT
           </div>
-          <h2 className="text-2xl font-semibold text-white lg:text-left text-center mb-6">
+          <h2 className="text-2xl font-semibold text-white  text-center mb-6">
             Create Your Account
           </h2>
+
+          <button
+            onClick={handleGoogleSignUp}
+            className="flex w-full items-center justify-center border border-gray-300 bg-white text-sky-900 py-2 px-4 rounded-full"
+          >
+            <FcGoogle className="mr-2" size={20} />
+            Sign in with Google
+          </button>
+
+          <div className="flex my-4 items-center justify-center space-x-2">
+            <span className="h-px w-16 bg-gray-300"></span>
+            <span className="text-sm text-white">or</span>
+            <span className="h-px w-16 bg-gray-300"></span>
+          </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
@@ -161,19 +175,6 @@ const Signup = () => {
               className="w-full flex items-center justify-center rounded-full bg-white text-sky-900 py-2 px-10"
             >
               {isLoading ? 'Signing Up...' : 'Sign Up'}
-            </button>
-
-            <div className="flex items-center justify-center space-x-2">
-              <span className="h-px w-16 bg-gray-300"></span>
-              <span className="text-sm text-white">or</span>
-              <span className="h-px w-16 bg-gray-300"></span>
-            </div>
-            <button
-              onClick={handleGoogleSignUp}
-              className="flex w-full items-center justify-center border border-gray-300 bg-white text-sky-900 py-2 px-4 rounded-full"
-            >
-              <FcGoogle className="mr-2" size={20} />
-              Sign in with Google
             </button>
 
             <div className="flex items-center justify-center">

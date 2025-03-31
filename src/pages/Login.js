@@ -32,7 +32,6 @@ const Login = () => {
   };
 
   const handleGoogleLogin = async (e) => {
-    
     e.preventDefault();
     const authUrl = `${process.env.REACT_APP_OAUTH_URL}`;
     window.location.href = authUrl;
@@ -96,9 +95,21 @@ const Login = () => {
               EngageGPT
             </div>
           </Link>
-          <h2 className="text-2xl lg:text-left text-center font-semibold text-white mb-6">
+          <h2 className="text-2xl lg:text-center text-center font-semibold text-white mb-6">
             Login to Your Account
           </h2>
+          <button
+            onClick={handleGoogleLogin}
+            className="flex items-center  w-full justify-center border border-gray-300 bg-white text-sky-900 py-2 px-4 rounded-full"
+          >
+            <FcGoogle className="mr-2" size={20} />
+            Login in with Google
+          </button>
+          <div className="flex my-4 items-center justify-center space-x-2">
+            <span className="h-px w-16 bg-gray-300"></span>
+            <span className="text-sm text-white">or</span>
+            <span className="h-px w-16 bg-gray-300"></span>
+          </div>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label
@@ -165,20 +176,6 @@ const Login = () => {
                 Reset Password
               </button>
             </div>
-
-            <div className="flex items-center justify-center space-x-2">
-              <span className="h-px w-16 bg-gray-300"></span>
-              <span className="text-sm text-white">or</span>
-              <span className="h-px w-16 bg-gray-300"></span>
-            </div>
-
-            <button
-              onClick={handleGoogleLogin}
-              className="flex items-center  w-full justify-center border border-gray-300 bg-white text-sky-900 py-2 px-4 rounded-full"
-            >
-              <FcGoogle className="mr-2" size={20} />
-              Sign in with Google
-            </button>
 
             <div className="mt-4 text-center">
               <p className="text-sm text-white">

@@ -1,14 +1,78 @@
+import {
+  FaComments,
+  FaBullhorn,
+  FaCalendarAlt,
+  FaChartBar,
+  FaCheckCircle,
+  FaLayerGroup,
+} from 'react-icons/fa';
+
 export const features = [
   {
-    heading: 'Tracks Active Days on LinkedIn',
-    description: 'Gain insights into your LinkedIn activity. Monitor your presence and engagement over time.',
+    icon: <FaCalendarAlt className="text-black text-2xl" />,
+    gradient: 'bg-gradient-to-r from-blue-200 to-cyan-200',
+    title: 'Automated Posting',
+    description:
+      'Schedule and automate your LinkedIn posts for maximum visibility and consistency.',
+    learnMoreText: 'Watch Video',
+    link: 'https://www.youtube.com/watch?v=jpj5SYu28b0',
+    tag: 'New',
+    tagColor: 'bg-gradient-to-r from-blue-300 to-cyan-500',
   },
   {
-    heading: 'Create Posts Collections',
-    description: 'Curate and categorize your posts according to themes, campaigns, or target audiences.',
+    icon: <FaChartBar className="text-black text-2xl" />,
+    gradient: 'bg-gradient-to-r from-yellow-200 to-green-200',
+    title: 'Analytics Dashboard',
+    description:
+      'Analyze the performance of your LinkedIn posts with our analytics dashboard.',
+    learnMoreText: 'Watch Video',
+    link: 'https://www.youtube.com/watch?v=jpj5SYu28b0',
+    tag: 'New',
+    tagColor: 'bg-gradient-to-r from-yellow-300 to-green-300',
   },
   {
-    heading: 'Custom Connection Note',
-    description: 'Make a lasting impression by personalizing your connection requests on LinkedIn.',
+    icon: <FaComments className="text-black text-2xl" />,
+    gradient: 'bg-gradient-to-r from-blue-200 to-cyan-200',
+    title: 'AI-Powered Comments',
+    description:
+      'Generate personalized, engaging comments for LinkedIn posts instantly using AI.',
+    learnMoreText: 'Watch Video',
+    link: 'https://www.youtube.com/watch?v=8K7xou2gUk4',
+    tag: 'Most Used',
+    tagColor: 'bg-gradient-to-r from-blue-300 to-cyan-400',
+  },
+  {
+    icon: <FaBullhorn className="text-black text-2xl" />,
+    gradient: 'bg-gradient-to-r from-yellow-200 to-green-200',
+    title: 'Viral Post Generator',
+    description:
+      'Create AI-powered viral posts to increase your LinkedIn reach and engagement.',
+    learnMoreText: 'Watch Video',
+    link: 'https://www.youtube.com/watch?v=rw-QI7jKVh0',
+    tag: 'Hot',
+    tagColor: 'bg-gradient-to-r from-yellow-300 to-green-300',
+  },
+
+  {
+    icon: <FaCheckCircle className="text-black text-2xl" />,
+    gradient: 'bg-gradient-to-r from-blue-200 to-cyan-300',
+    title: 'Track Days Active',
+    description:
+      'Track your active days on LinkedIn and optimize your engagement strategy.',
+    learnMoreText: 'Watch Video',
+    link: 'https://www.youtube.com/watch?v=Vja1vuFa1U4',
+    tag: 'Most Used',
+    tagColor: 'bg-gradient-to-r from-blue-400 to-cyan-400',
+  },
+  {
+    icon: <FaLayerGroup className="text-black text-2xl" />,
+    gradient: 'bg-gradient-to-r from-yellow-200 to-green-200',
+    title: 'Carousel Generator',
+    description:
+      'Easily create engaging LinkedIn carousels with AI-driven content suggestions.',
+    learnMoreText: 'Coming Soon',
+    link: 'https://www.youtube.com/playlist?list=PLYHoCaYE8EoD6YBlcDrPoHSYTIvAjW3vI',
+    tag: 'Coming Soon',
+    tagColor: 'bg-gradient-to-r from-yellow-300 to-green-300',
   },
 ];
