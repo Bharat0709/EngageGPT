@@ -1,15 +1,17 @@
 import {
   FaComments,
   FaBullhorn,
-  FaCalendarAlt,
   FaChartBar,
   FaCheckCircle,
   FaLayerGroup,
+  FaBookmark,
+  FaEyeSlash,
+  FaCalendarPlus,
 } from 'react-icons/fa';
 
 export const features = [
   {
-    icon: <FaCalendarAlt className="text-black text-2xl" />,
+    icon: <FaBullhorn className="w-6 h-6 text-blue-500" />,
     gradient: 'bg-gradient-to-r from-blue-200 to-cyan-200',
     title: 'Automated Posting',
     description:
@@ -20,7 +22,7 @@ export const features = [
     tagColor: 'bg-gradient-to-r from-blue-300 to-cyan-500',
   },
   {
-    icon: <FaChartBar className="text-black text-2xl" />,
+    icon: <FaChartBar className="w-6 h-6 text-green-500" />,
     gradient: 'bg-gradient-to-r from-yellow-200 to-green-200',
     title: 'Analytics Dashboard',
     description:
@@ -31,7 +33,7 @@ export const features = [
     tagColor: 'bg-gradient-to-r from-yellow-300 to-green-300',
   },
   {
-    icon: <FaComments className="text-black text-2xl" />,
+    icon: <FaComments className="w-6 h-6 text-blue-500" />,
     gradient: 'bg-gradient-to-r from-blue-200 to-cyan-200',
     title: 'AI-Powered Comments',
     description:
@@ -42,7 +44,7 @@ export const features = [
     tagColor: 'bg-gradient-to-r from-blue-300 to-cyan-400',
   },
   {
-    icon: <FaBullhorn className="text-black text-2xl" />,
+    icon: <FaCheckCircle className="w-6 h-6 text-green-500" />,
     gradient: 'bg-gradient-to-r from-yellow-200 to-green-200',
     title: 'Viral Post Generator',
     description:
@@ -52,9 +54,8 @@ export const features = [
     tag: 'Hot',
     tagColor: 'bg-gradient-to-r from-yellow-300 to-green-300',
   },
-
   {
-    icon: <FaCheckCircle className="text-black text-2xl" />,
+    icon: <FaCheckCircle className="w-6 h-6 text-blue-500" />,
     gradient: 'bg-gradient-to-r from-blue-200 to-cyan-300',
     title: 'Track Days Active',
     description:
@@ -65,7 +66,7 @@ export const features = [
     tagColor: 'bg-gradient-to-r from-blue-400 to-cyan-400',
   },
   {
-    icon: <FaLayerGroup className="text-black text-2xl" />,
+    icon: <FaLayerGroup className="w-6 h-6 text-green-500" />,
     gradient: 'bg-gradient-to-r from-yellow-200 to-green-200',
     title: 'Carousel Generator',
     description:
@@ -74,5 +75,38 @@ export const features = [
     link: 'https://www.youtube.com/playlist?list=PLYHoCaYE8EoD6YBlcDrPoHSYTIvAjW3vI',
     tag: 'Coming Soon',
     tagColor: 'bg-gradient-to-r from-yellow-300 to-green-300',
+  },
+  {
+    icon: <FaBookmark className="w-6 h-6 text-blue-500" />,
+    gradient: 'bg-gradient-to-r from-blue-200 to-cyan-200',
+    title: 'Post Saving',
+    description:
+      'Save posts automatically based on custom keywords for easy reference and inspiration.',
+    learnMoreText: 'Learn More',
+    link: '/dashboard/saved-posts',
+    tag: 'New',
+    tagColor: 'bg-gradient-to-r from-blue-300 to-cyan-400',
+  },
+  {
+    icon: <FaEyeSlash className="w-6 h-6 text-green-500" />,
+    gradient: 'bg-gradient-to-r from-yellow-200 to-green-200',
+    title: 'Hide Post',
+    description:
+      'Filter your feed by hiding posts containing specific keywords you want to avoid.',
+    learnMoreText: 'Learn More',
+    link: '/dashboard/saved-posts',
+    tag: 'Popular',
+    tagColor: 'bg-gradient-to-r from-yellow-300 to-green-300',
+  },
+  {
+    icon: <FaCalendarPlus className="w-6 h-6 text-blue-500" />,
+    gradient: 'bg-gradient-to-r from-blue-200 to-cyan-300',
+    title: 'Content Calendar',
+    description:
+      'Manage your posts efficiently with an intuitive content calendar',
+    learnMoreText: 'Learn More',
+    link: '/dashboard/content-calendar',
+    tag: 'Hot',
+    tagColor: 'bg-gradient-to-r from-blue-400 to-cyan-400',
   },
 ];

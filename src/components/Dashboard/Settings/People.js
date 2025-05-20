@@ -1,23 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { FiCopy } from 'react-icons/fi';
+import { FiCopy, FiSettings } from 'react-icons/fi';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { FiUserPlus } from 'react-icons/fi';
 import { BiUnlink } from 'react-icons/bi';
-import { Button, message, Skeleton } from 'antd';
+import { Button, message, Skeleton, Tooltip } from 'antd';
 import AddPeopleModal from '../Global/AddPeopleModal';
 import DisconnectConfirmationModal from './DisconnectModal';
 import { getAllMembers, addNewMember } from '../../../network/Members';
 import { FaLinkedin } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 import 'antd/dist/reset.css';
 
 const People = () => {
+  const navigate = useNavigate();
   const [people, setPeople] = useState([]);
   const [isAddPeopleModalOpen, setIsAddPeopleModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [disconnectModalVisible, setDisconnectModalVisible] = useState(false);
   const [selectedPersonId, setSelectedPersonId] = useState(null);
   const [selectedFilter, setSelectedFilter] = useState('All');
-  const [refreshPeoplePage, setRefeshPeoplePage] = useState(false);
+  const [refreshPeoplePage, setRefreshPeoplePage] = useState(false);
 
   useEffect(() => {
     const fetchMembers = async () => {
@@ -66,6 +68,10 @@ const People = () => {
   const handleCopy = (token) => {
     navigator.clipboard.writeText(token);
     message.success('Connection token copied!');
+  };
+
+  const handleNavigateToSettings = (memberId) => {
+    navigate(`/dashboard/member-settings/${memberId}`);
   };
 
   const filterPeople = (filter) => {
@@ -146,7 +152,7 @@ const People = () => {
       </div>
 
       {/* People List */}
-      <div className="people-list  flex flex-col gap-2">
+      <div className="people-list flex flex-col gap-2">
         {isLoading ? (
           Array.from({ length: 5 }).map((_, index) => (
             <div
@@ -185,7 +191,7 @@ const People = () => {
           filteredPeople.map((person) => (
             <div
               key={person?._id}
-              className="person-card w-full bg-white p-4 gap-4 rounded-xl lg:flex-row flex-col flex justify-between items-center"
+              className="person-card w-full bg-white p-4 gap-4 rounded-xl lg:flex-row flex-col flex-wrap flex justify-between items-center"
             >
               <div className="flex lg:w-fit w-full lg:flex-row flex-col gap-4 items-center">
                 <div className="flex lg:w-fit w-full items-center gap-4 justify-start">
@@ -194,7 +200,7 @@ const People = () => {
                     alt={`${person?.name}'s profile`}
                     className="w-12 h-12 rounded-full border border-gray-300"
                   />
-                  <div className="flex flex-col items-start  lg:gap-1 gap-1">
+                  <div className="flex flex-col items-start lg:gap-1 gap-1">
                     <h3 className="text-sm p-0 m-0 font-semibold text-gray-800">
                       {person?.name}
                     </h3>
@@ -203,7 +209,7 @@ const People = () => {
                     </p>
                   </div>
                 </div>
-                <div className="flex items-center lg:flex-row flex-wrap gap-3 lg:w-max  w-full">
+                <div className="flex items-center lg:flex-row flex-wrap gap-3 lg:w-max w-full">
                   <p className="text-xs font-semibold rounded-lg bg-gray-100 p-1 px-3 m-0 text-gray-600">
                     {person?.totalCreditsUsed} credits used
                   </p>{' '}
@@ -231,11 +237,11 @@ const People = () => {
                   </div>
                 </div>
               </div>
-              <div className="flex gap-4 lg:w-fit w-full justify-between lg:mt-0 mt-2 items-center">
+              <div className="flex flex-wrap gap-4 lg:w-fit w-full justify-between lg:mt-0 mt-2 items-center">
                 {person?.isLinkedinConnected ? (
                   <button
                     onClick={() => handleDisconnectLinkedIn(person._id)}
-                    className={`rounded-lg text-black  p-2 bg-gray-50 flex items-center gap-2 text-xs `}
+                    className={`rounded-lg text-black p-2 bg-gray-50 flex items-center gap-2 text-xs`}
                   >
                     <BiUnlink size={15} />
                   </button>
@@ -258,6 +264,16 @@ const People = () => {
                     type="link"
                   ></Button>
                 </div>
+
+                {/* Settings button - NEW */}
+                <Tooltip title="Member Settings">
+                  <Button
+                    className="text-black hover:text-black bg-gray-50 flex items-center justify-center"
+                    icon={<FiSettings size={16} />}
+                    onClick={() => handleNavigateToSettings(person._id)}
+                    style={{ width: 38, height: 38, borderRadius: '8px' }}
+                  />
+                </Tooltip>
               </div>
             </div>
           ))
@@ -272,7 +288,7 @@ const People = () => {
         isVisible={disconnectModalVisible}
         onClose={() => setDisconnectModalVisible(false)}
         memberId={selectedPersonId}
-        refreshPage={setRefeshPeoplePage}
+        refreshPage={setRefreshPeoplePage}
       />
     </div>
   );

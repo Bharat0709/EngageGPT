@@ -1,34 +1,38 @@
-// Start of Selection
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../../assets/styles/GlobalCSS.css';
 import { Link, useLocation } from 'react-router-dom';
 import LogoutModal from '../Global/LogoutModal';
-import { FiLogOut } from 'react-icons/fi';
 import {
+  FiLogOut,
   FiMenu,
   FiSettings,
   FiHelpCircle,
   FiUser,
-  FiZap,
-  FiFileText,
   FiMessageSquare,
-  FiHome,
   FiChevronLeft,
+  FiGrid,
+  FiCalendar,
+  FiSave,
+  FiMail,
+  FiZap,
+  FiEdit,
   FiClock,
 } from 'react-icons/fi';
 import EngageGPTLogo from '../../../assets/images/EngageGPTLogoIocn.png';
 import FeedbackModal from './FeebackModal';
 import HelpModal from './HelpModal';
 
+// Updated menu items with hollow (outline) icons
 const menuItems = [
   {
     to: '/dashboard',
-    icon: <FiHome size={18} className="text-white" />,
-    label: 'Home',
+    icon: <FiGrid size={18} className="text-white" />,
+    label: 'Dashboard',
     activeClass:
       'global-sidebar-button-primary border border-gray-400 bg-white',
     hoverClass: 'hover:bg-white hover:text-black',
+    tag: null,
   },
   {
     to: '/dashboard/quick-post',
@@ -37,25 +41,56 @@ const menuItems = [
     activeClass:
       'global-sidebar-button-primary border border-gray-400 bg-white',
     hoverClass: 'hover:bg-white hover:text-black',
+    tag: { text: 'MOST USED', color: 'bg-red-500' },
   },
   {
     to: '/dashboard/create-post',
-    icon: <FiFileText size={18} />,
-    label: 'Post Generator',
+    icon: <FiEdit size={18} />,
+    label: 'AI Content Creator',
     activeClass:
       'global-sidebar-button-primary border border-gray-400 bg-white',
     hoverClass: 'hover:bg-white hover:text-black',
+    tag: { text: 'HOT', color: 'bg-yellow-500' },
   },
   {
     to: '/dashboard/post-history',
     icon: <FiClock size={18} />,
-    label: 'Post Queue',
+    label: 'Post History',
     activeClass:
       'global-sidebar-button-primary border border-gray-400 bg-white',
     hoverClass: 'hover:bg-white hover:text-black',
+    tag: null,
+  },
+  {
+    to: '/dashboard/content-calendar',
+    icon: <FiCalendar size={18} />,
+    label: 'Content Calendar',
+    activeClass:
+      'global-sidebar-button-primary border border-gray-400 bg-white',
+    hoverClass: 'hover:bg-white hover:text-black',
+    tag: { text: 'NEW', color: 'bg-blue-500' },
+  },
+  {
+    to: '/dashboard/saved-posts',
+    icon: <FiSave size={18} />,
+    label: 'Saved Posts',
+    activeClass:
+      'global-sidebar-button-primary border border-gray-400 bg-white',
+    hoverClass: 'hover:bg-white hover:text-black',
+    tag: { text: 'NEW', color: 'bg-blue-500' },
+  },
+  {
+    to: '/dashboard/email-template',
+    icon: <FiMail size={18} />,
+    label: 'Email Template',
+    activeClass:
+      'global-sidebar-button-primary border border-gray-400 bg-white',
+    hoverClass: 'hover:bg-white hover:text-black',
+    tag: { text: 'SOON', color: 'bg-pink-500' },
   },
 ];
 
+// Enhanced SidebarLink with tag support
 const SidebarLink = ({
   to,
   icon,
@@ -65,11 +100,12 @@ const SidebarLink = ({
   isOpen,
   activeClass,
   hoverClass,
+  tag,
 }) => (
   <Link
     to={to}
     onClick={onClick}
-    className={`flex pl-3 pr-3 items-center max-h-[38px] w-full gap-3 rounded-md transition-all duration-500 ease-in-out 
+    className={`flex pl-3 pr-3 items-center bg-white max-h-[38px] w-full gap-3 rounded-md transition-all duration-500 ease-in-out relative
     ${isOpen ? 'py-2' : 'py-2'} 
     ${isActive ? activeClass : hoverClass}
   `}
@@ -84,12 +120,28 @@ const SidebarLink = ({
     >
       {label}
     </span>
+
+    {/* Tag element - only shows when sidebar is open */}
+    {tag && isOpen && (
+      <span
+        className={`absolute right-2 px-1.5 py-0.5 rounded-full text-[9px] font-bold text-white ${tag.color}`}
+      >
+        {tag.text}
+      </span>
+    )}
+
+    {/* Small dot indicator when sidebar is closed and item has a tag */}
+    {tag && !isOpen && (
+      <span
+        className={`absolute top-0 right-0 w-2 h-2 rounded-full ${tag.color}`}
+      ></span>
+    )}
   </Link>
 );
 
 function Sidebar() {
   const navigate = useNavigate();
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
   const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
@@ -127,8 +179,8 @@ function Sidebar() {
           isOpen ? 'translate-x-0 lg:ml-0 ml-2' : '-translate-x-full'
         } lg:translate-x-0`}
         style={{ width: isOpen ? '240px' : '78px' }}
-        onMouseEnter={() => setIsOpen(true)}
-        onMouseLeave={() => setIsOpen(false)}
+        // onMouseEnter={() => setIsOpen(true)}
+        // onMouseLeave={() => setIsOpen(false)}
       >
         <div
           className={`flex items-center scrollbar-hide justify-between pt-2 pb-4 ${
@@ -147,8 +199,8 @@ function Sidebar() {
           >
             <FiChevronLeft
               size={24}
-              className={`transform p-1  transition-transform duration-500  ${
-                isMobile ? 'flex' : 'hidden'
+              className={`transform p-1 transition-transform duration-500 ${
+                isMobile ? 'flex' : 'flex'
               } ${
                 isOpen
                   ? 'rotate-0 bg-white text-black rounded-full'
@@ -172,6 +224,7 @@ function Sidebar() {
                 isOpen={isOpen}
                 activeClass={item.activeClass}
                 hoverClass={item.hoverClass}
+                tag={item.tag}
               />
             ))}
           </div>
@@ -214,6 +267,7 @@ function Sidebar() {
               isOpen={isOpen}
               activeClass="global-sidebar-button-primary text-sm bg-gray-100"
               hoverClass="hover:bg-gray-100 hover:text-black"
+              tag={null}
             />
             <button
               onClick={() => setIsLogoutModalOpen(true)}

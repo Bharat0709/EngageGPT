@@ -1,5 +1,3 @@
-import React from 'react';
-
 const ConfirmationModal = ({ show, title, message, onCancel, onConfirm }) => {
   if (!show) {
     return null; 

@@ -165,7 +165,7 @@ const PostQueue = () => {
       <div className="flex lg:flex-row flex-col gap-3 justify-between items-center ">
         <div className="flex items-center space-x-4">
           <h1 className="text-xl flex items-center text-black font-semibold">
-            Post Queue{' '}
+            Post History{' '}
           </h1>
         </div>
         <div className="flex flex-wrap justify-center items-center gap-4">

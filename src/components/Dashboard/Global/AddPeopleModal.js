@@ -1,12 +1,26 @@
-import React, { useState } from 'react';
-import { FiX, FiTrash2 } from 'react-icons/fi';
-import { message } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { FiX, FiTrash2, FiUser, FiMail, FiUserPlus } from 'react-icons/fi';
 
 const AddMembersModal = ({ isOpen, onClose, onSubmit }) => {
   const [members, setMembers] = useState([{ name: '', email: '' }]);
   const [isAdding, setIsAdding] = useState(false);
+  const [errors, setErrors] = useState([]);
 
-  // Add a new member input field
+  // Reset form when modal opens
+  useEffect(() => {
+    if (isOpen) {
+      setMembers([{ name: '', email: '' }]);
+      setErrors([]);
+    }
+  }, [isOpen]);
+
+  // Validate email format
+  const validateEmail = (email) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  };
+
+  // Add a new member input field with animation
   const handleAddMore = () => {
     setMembers([...members, { name: '', email: '' }]);
   };
@@ -14,6 +28,7 @@ const AddMembersModal = ({ isOpen, onClose, onSubmit }) => {
   const handleClose = () => {
     onClose();
     setMembers([{ name: '', email: '' }]);
+    setErrors([]);
   };
 
   // Update member input values
@@ -21,137 +36,264 @@ const AddMembersModal = ({ isOpen, onClose, onSubmit }) => {
     const updatedMembers = [...members];
     updatedMembers[index][field] = value;
     setMembers(updatedMembers);
+
+    // Clear error for this field if it exists
+    if (errors.find((e) => e.index === index && e.field === field)) {
+      setErrors(
+        errors.filter((e) => !(e.index === index && e.field === field)),
+      );
+    }
+  };
+
+  // Form validation
+  const validateForm = () => {
+    const newErrors = [];
+
+    members.forEach((member, index) => {
+      if (!member.name.trim()) {
+        newErrors.push({ index, field: 'name', message: 'Name is required' });
+      }
+
+      if (!member.email.trim()) {
+        newErrors.push({ index, field: 'email', message: 'Email is required' });
+      } else if (!validateEmail(member.email)) {
+        newErrors.push({
+          index,
+          field: 'email',
+          message: 'Invalid email format',
+        });
+      }
+    });
+
+    setErrors(newErrors);
+    return newErrors.length === 0;
   };
 
   const handleSubmit = async (e) => {
-    setIsAdding(true);
     e.preventDefault();
-    if (
-      members.length === 0 ||
-      members.every((member) => !member.name && !member.email)
-    ) {
-      setIsAdding(false);
-      message.error('At least one member must be present.');
-    } else {
-      await onSubmit(members);
-      setMembers([{ name: '', email: '' }]);
+
+    if (!validateForm()) {
+      return;
+    }
+
+    if (members.every((member) => !member.name && !member.email)) {
+      setErrors([
+        {
+          index: 0,
+          field: 'name',
+          message: 'At least one member must be added',
+        },
+      ]);
+      return;
+    }
+
+    setIsAdding(true);
+
+    try {
+      await onSubmit(members.filter((member) => member.name || member.email));
+      handleClose();
+    } catch (error) {
+      console.error('Error adding members:', error);
+    } finally {
       setIsAdding(false);
     }
   };
 
   // Handle deleting a member
   const handleDelete = (index) => {
+    // Don't allow deleting the last member
+    if (members.length === 1) {
+      setMembers([{ name: '', email: '' }]);
+      return;
+    }
+
     const updatedMembers = members.filter((_, i) => i !== index);
     setMembers(updatedMembers);
+
+    // Remove any errors for this index
+    setErrors(errors.filter((e) => e.index !== index));
   };
 
+  // Check if field has error
+  const getError = (index, field) => {
+    return errors.find((e) => e.index === index && e.field === field)?.message;
+  };
+
+  if (!isOpen) return null;
+
   return (
-    isOpen && (
-      <div className="fixed inset-0 w-full z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
-        <div className="bg-white flex flex-col lg:w-1/2 w-11/12 p-6 rounded-xl shadow-lg">
-          {/* Header */}
-          <button
-            className="text-gray-500 text-xl self-end hover:text-gray-800"
-            onClick={onClose}
-          >
-            <FiX />
-          </button>
-          <div className="flex flex-col gap-4 justify-center items-center pb-2 mb-4">
-            <h2 className="text-xl text-center font-semibold">Add Profiles</h2>
-            <p className="text-center">
-              Email must be associated with LinkedIn Account
-            </p>
+    <div className="fixed inset-0 w-full z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm transition-opacity">
+      <div className="bg-white flex flex-col lg:h-3/4 h-fit overflow-y-scroll mx-auto scrollbar-hide  lg:w-2/5 w-11/12 p-0 rounded-2xl shadow-xl transform transition-all duration-300 ease-in-out">
+        {/* Header */}
+        <div className="bg-indigo-50 rounded-t-2xl p-6">
+          <div className="flex justify-between items-center">
+            <h2 className="text-2xl font-bold text-indigo-800">
+              Add LinkedIn Profile
+            </h2>
+            <button
+              className="text-gray-500 hover:text-gray-800 hover:bg-indigo-100 p-2 rounded-full transition-colors"
+              onClick={handleClose}
+            >
+              <FiX size={20} />
+            </button>
           </div>
+          <p className="text-gray-600 mt-2">
+            Add LinkedIn Profile, Email must be associated with a LinkedIn
+            account.
+          </p>
+        </div>
 
-          {/* Form */}
-          <form onSubmit={handleSubmit}>
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="p-6">
+          <div className="space-y-5">
             {members.map((member, index) => (
-              <div key={index} className="flex gap-4 mb-4 items-center">
-                <div className="w-1/2">
-                  <label
-                    htmlFor={`name-${index}`}
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Name
-                  </label>
-                  <input
-                    type="text"
-                    id={`name-${index}`}
-                    value={member.name}
-                    onChange={(e) =>
-                      handleChange(index, 'name', e.target.value)
-                    }
-                    required
-                    placeholder="Enter name"
-                    className="mt-1 p-2 block w-full border rounded-xl shadow-sm focus:ring focus:ring-indigo-300"
-                  />
-                </div>
-
-                <div className="w-1/2">
-                  <label
-                    htmlFor={`email-${index}`}
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    id={`email-${index}`}
-                    value={member.email}
-                    onChange={(e) =>
-                      handleChange(index, 'email', e.target.value)
-                    }
-                    required
-                    placeholder="Enter email"
-                    className="mt-1 p-2 block w-full border rounded-xl shadow-sm focus:ring focus:ring-indigo-300"
-                  />
-                </div>
-
-                <div className="flex self-end mb-3 items-center">
+              <div
+                key={index}
+                className="bg-white p-4 rounded-xl border-2 border-gray-100 hover:border-indigo-100 transition-all duration-200"
+              >
+                <div className="flex justify-between items-center mb-2">
+                  <h3 className="font-medium text-gray-700">
+                    Member {index + 1}
+                  </h3>
                   <button
                     type="button"
                     onClick={() => handleDelete(index)}
-                    className="text-red-500  hover:text-red-800"
-                    title="Delete Member"
+                    className="text-gray-400 hover:text-red-500 hover:bg-red-50 p-2 rounded-full transition-colors"
+                    title="Remove Member"
                   >
-                    <FiTrash2 />
+                    <FiTrash2 size={16} />
                   </button>
+                </div>
+
+                <div className="space-y-4">
+                  <div>
+                    <label
+                      htmlFor={`name-${index}`}
+                      className="block text-sm font-medium text-gray-700 mb-1"
+                    >
+                      Full Name
+                    </label>
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <FiUser className="text-gray-400" />
+                      </div>
+                      <input
+                        type="text"
+                        id={`name-${index}`}
+                        value={member.name}
+                        onChange={(e) =>
+                          handleChange(index, 'name', e.target.value)
+                        }
+                        placeholder="John Doe"
+                        className={`pl-10 pr-3 py-2 block w-full border ${
+                          getError(index, 'name')
+                            ? 'border-red-300 focus:ring-red-500 focus:border-red-500'
+                            : 'border-gray-300 focus:ring-indigo-500 focus:border-indigo-500'
+                        } rounded-lg shadow-sm focus:outline-none focus:ring-2`}
+                      />
+                    </div>
+                    {getError(index, 'name') && (
+                      <p className="mt-1 text-sm text-red-600">
+                        {getError(index, 'name')}
+                      </p>
+                    )}
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor={`email-${index}`}
+                      className="block text-sm font-medium text-gray-700 mb-1"
+                    >
+                      Email Address
+                    </label>
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <FiMail className="text-gray-400" />
+                      </div>
+                      <input
+                        type="email"
+                        id={`email-${index}`}
+                        value={member.email}
+                        onChange={(e) =>
+                          handleChange(index, 'email', e.target.value)
+                        }
+                        placeholder="john@example.com"
+                        className={`pl-10 pr-3 py-2 block w-full border ${
+                          getError(index, 'email')
+                            ? 'border-red-300 focus:ring-red-500 focus:border-red-500'
+                            : 'border-gray-300 focus:ring-indigo-500 focus:border-indigo-500'
+                        } rounded-lg shadow-sm focus:outline-none focus:ring-2`}
+                      />
+                    </div>
+                    {getError(index, 'email') && (
+                      <p className="mt-1 text-sm text-red-600">
+                        {getError(index, 'email')}
+                      </p>
+                    )}
+                  </div>
                 </div>
               </div>
             ))}
+          </div>
 
-            {/* Add More Button */}
+          {/* Add More Button */}
+          <button
+            type="button"
+            onClick={handleAddMore}
+            className="mt-4 flex items-center justify-center gap-2 text-indigo-600 font-medium py-2 px-4 border-2 border-dashed border-indigo-200 rounded-xl hover:bg-indigo-50 hover:border-indigo-300 transition-colors w-full"
+          >
+            <FiUserPlus size={18} />
+            <span>Add Another Member</span>
+          </button>
+
+          {/* Footer Buttons */}
+          <div className="flex justify-end gap-3 mt-2 border-t pt-6">
             <button
               type="button"
-              onClick={handleAddMore}
-              className="text-gray-600 p-2 px-3 bg-gray-50 rounded-xl hover:bg-gray-100 text-sm mb-4"
+              onClick={handleClose}
+              className="px-5 py-2 border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition-colors"
             >
-              + Add more
+              Cancel
             </button>
-
-            {/* Footer Buttons */}
-            <div className="flex justify-end gap-4">
-              <button
-                type="button"
-                onClick={handleClose}
-                className="global-button-secondary"
-              >
-                Close
-              </button>
-              <button
-                disabled={isAdding}
-                type="submit"
-                className={`global-button-primary ${
-                  isAdding ? 'opacity-50 cursor-not-allowed' : ''
-                }`}
-              >
-                {isAdding ? 'Adding...' : 'Add Profiles'}
-              </button>
-            </div>
-          </form>
-        </div>
+            <button
+              disabled={isAdding}
+              type="submit"
+              className={`px-5 py-2 bg-sky-900 text-white font-medium rounded-lg shadow-sm hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-colors flex items-center gap-2 ${
+                isAdding ? 'opacity-70 cursor-not-allowed' : ''
+              }`}
+            >
+              {isAdding ? (
+                <>
+                  <svg
+                    className="animate-spin h-4 w-4 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                  </svg>
+                  <span>Adding...</span>
+                </>
+              ) : (
+                'Add Profile'
+              )}
+            </button>
+          </div>
+        </form>
       </div>
-    )
+    </div>
   );
 };
 

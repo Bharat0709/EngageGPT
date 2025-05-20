@@ -6,7 +6,7 @@ import { sendFeeback } from '../../../network/Organization';
 const FeedbackModal = ({ isVisible, onClose }) => {
   const [rating, setRating] = useState(0);
   const [feedback, setFeedback] = useState('');
-  const [loading, setLoading] = useState(false); // Added loading state
+  const [loading, setLoading] = useState(false);
 
   const handleRatingHover = (hoverIndex) => {
     setRating(hoverIndex);
@@ -65,7 +65,7 @@ const FeedbackModal = ({ isVisible, onClose }) => {
               className={`text-4xl ${
                 star <= rating ? 'text-yellow-500' : 'text-gray-300'
               }`}
-              disabled={loading} // Disable star rating during loading
+              disabled={loading} 
             >
               ★
             </button>
@@ -86,7 +86,7 @@ const FeedbackModal = ({ isVisible, onClose }) => {
             className={`global-button-secondary ${
               loading ? 'opacity-50 cursor-not-allowed' : ''
             }`}
-            disabled={loading} // Disable close button during loading
+            disabled={loading} 
           >
             Close
           </button>
@@ -96,7 +96,7 @@ const FeedbackModal = ({ isVisible, onClose }) => {
             className={`global-button-primary ${
               loading ? 'opacity-50 cursor-not-allowed' : ''
             }`}
-            disabled={loading} // Disable submit button during loading
+            disabled={loading} 
           >
             {loading ? 'Submitting...' : 'Submit'}
           </button>

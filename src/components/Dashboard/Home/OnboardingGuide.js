@@ -1,4 +1,3 @@
-import React from 'react';
 import AddMembersModal from '../Global/AddPeopleModal';
 import { OnboardingSteps } from '../../../assets/data/onBoardingSteps';
 import { AiFillLinkedin } from 'react-icons/ai';
@@ -23,10 +22,6 @@ const OnboardingGuide = ({
     message.success('Connection token copied!');
   };
 
-  // Check completion status for each step
-  console.log('Invited Profiles:', invitedProfiles);
-  console.log('Selected Profile:', selectedProfile);
-  console.log('Onboarding Steps:', OnboardingSteps);
   const isProfileAdded = invitedProfiles.length > 0 || selectedProfile !== null;
   const isExtensionInstalled =
     invitedProfiles?.some((profile) => profile.isConnected === 'connected') ||
@@ -35,7 +30,6 @@ const OnboardingGuide = ({
     selectedProfile?.isLinkedinConnected ||
     invitedProfiles.some((profile) => profile.isLinkedinConnected);
   const isProfileSynced = selectedProfile?.lastSyncedAt;
-  console.log(isProfileAdded, isExtensionInstalled, isLinkedInConnected);
 
   // Calculate which steps are completed
   const stepsCompletion = {
@@ -95,15 +89,18 @@ const OnboardingGuide = ({
 
             <div className="space-y-6">
               {OnboardingSteps.map((step, index) => (
-                <div key={index} className="flex gap-4">
+                <div
+                  key={index}
+                  className="flex lg:flex-row flex-col items-start justify-start gap-4"
+                >
                   <div
                     className={`${
                       stepsCompletion[step.title]
                         ? 'bg-green-100'
                         : stepsUnlocked[step.title]
                         ? 'bg-linkedin/10'
-                        : 'bg-gray-200'
-                    } rounded-full h-10 w-10 flex items-center justify-center flex-shrink-0`}
+                        : 'bg-gray-200' 
+                    } rounded-full bg-green-100 h-10 w-10 flex items-center justify-center flex-shrink-0`}
                   >
                     <step.icon
                       className={
@@ -142,7 +139,7 @@ const OnboardingGuide = ({
                   {step.action === 'Add Profile' ? (
                     <button
                       onClick={onAddProfile}
-                      className={`btn-primary whitespace-nowrap self-center px-6 py-2 text-md lg:text-sm h-fit rounded-none font-medium ${
+                      className={`btn-primary whitespace-nowrap self-center lg:w-fit w-full px-6 py-2 text-md lg:text-sm h-fit rounded-none font-medium ${
                         stepsCompletion[step.title]
                           ? 'bg-green-600'
                           : 'bg-[#004182]'

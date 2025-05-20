@@ -1,4 +1,3 @@
-import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Home from '../components/Dashboard/Home/Home';
 import Sidebar from '../components/Dashboard/Sidebar/Sidebar';
@@ -7,6 +6,11 @@ import PostScheduler from '../components/Dashboard/QuickPost/PostScheduler';
 import LinkedInPostGenerator from '../components/Dashboard/GeneratePost/GeneratePost';
 import ProtectedRoute from '../components/ProtectedRoute';
 import PostDetails from '../components/Dashboard/PostHistory/PostQueue';
+import HiringPostsPage from '../components/Dashboard/HiringPosts/HiringPostsPage';
+import MemberSettings from '../components/Dashboard/Settings/MemberSettings';
+import ContentCalendarPage from '../components/Dashboard/ContentCalender/ContentCalender';
+import EmailTemplatesComingSoon from '../components/Dashboard/EmailTemplates/EmailTemplateSoon';
+
 function Dashboard() {
   return (
     <div className="flex lg:flex-row scrollbar-hide lg:pt-2 lg:px-2 p-0 rounded-xl flex-col h-screen">
@@ -44,6 +48,38 @@ function Dashboard() {
             element={
               <ProtectedRoute>
                 <PostDetails />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/saved-posts"
+            element={
+              <ProtectedRoute>
+                <HiringPostsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/content-calendar"
+            element={
+              <ProtectedRoute>
+                <ContentCalendarPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/member-settings/:memberId"
+            element={
+              <ProtectedRoute>
+                <MemberSettings />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/email-template"
+            element={
+              <ProtectedRoute>
+                <EmailTemplatesComingSoon />
               </ProtectedRoute>
             }
           />

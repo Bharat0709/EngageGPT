@@ -1,29 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { Skeleton, message } from 'antd';
+import { useState, useEffect } from 'react';
+import { Skeleton } from 'antd';
 import CustomDropdown from '../Global/CustomDropDown';
-import { CalendarOutlined } from '@ant-design/icons';
 import { FaLinkedin } from 'react-icons/fa';
-import ContentCalendarModal from './ContentCalendarModal';
-import SavedCalendarModal from './SavedcalendarModal/SavedCalendarModal';
-import { addContentCalendar } from '../../../network/Members';
 
 const LinkedInConnection = ({
-  selectedPostTopic,
-  setSelectedPostTopic,
   isLoading,
   linkedInConnected,
   connectedProfiles,
   selectedProfile,
-  selectedProfileName,
   setSelectedProfile,
-  calendarData,
-  setCalendarData,
-  setPostDetails,
 }) => {
-  const [isCalendarModalVisible, setIsCalendarModalVisible] = useState(false);
-  const [isSavedCalendarModalVisible, setIsSavedCalendarModalVisible] =
-    useState(false);
-  const [isSavingNewEntries, setIsSavingNewEntries] = useState(false);
   const [selectedProfileDetails, setSelectedProfileDetails] = useState(null);
 
   useEffect(() => {
@@ -33,50 +19,11 @@ const LinkedInConnection = ({
       );
       setSelectedProfileDetails(profileDetails);
     }
-  }, [selectedProfile, connectedProfiles]);
+  }, [selectedProfileDetails, selectedProfile, connectedProfiles]);
 
   const handleConnectLinkedIn = () => {
     const authUrl = process.env.REACT_APP_LINKEDIN_AUTH_URL;
     window.location.href = authUrl;
-  };
-
-  const handleSaveContentCalendar = async (data) => {
-    try {
-      if (!selectedProfile) {
-        message.error('Please select a profile to save the calendar');
-      }
-      const savedCalendarData = await addContentCalendar(data, selectedProfile);
-      message.success('Calendar saved successfully');
-      setCalendarData(savedCalendarData.contentCalendar);
-      setIsCalendarModalVisible(false);
-    } catch (error) {
-      setIsCalendarModalVisible(true);
-      message.error('Error saving calendar');
-    }
-  };
-
-  const handleNewCalendarEntries = async (data) => {
-    setIsSavingNewEntries(true);
-    try {
-      if (!selectedProfile) {
-        message.error('Please select a profile to save the calendar');
-      }
-      const savedCalendarData = await addContentCalendar(data, selectedProfile);
-      message.success('Calendar saved successfully');
-      setCalendarData(calendarData, ...savedCalendarData.contentCalendar);
-    } catch (error) {
-      message.error('Error saving calendar');
-    }
-    setIsSavingNewEntries(false);
-  };
-
-  const handleSelectTopic = (topic) => {
-    setSelectedPostTopic(topic);
-    setPostDetails({
-      content: '',
-      visibility: 'PUBLIC',
-      media: [],
-    });
   };
 
   return (
@@ -104,24 +51,6 @@ const LinkedInConnection = ({
                 <div></div>
               )}
             </div>
-            {selectedProfile && calendarData.length === 0 && (
-              <button
-                onClick={() => setIsCalendarModalVisible(true)}
-                className="global-button-secondary py-2 px-3 text-xs hover:border border-gray-600 bg-white border-1 text-gray-900 rounded-lg flex items-center gap-2"
-              >
-                <CalendarOutlined className="text-md" />
-                Add Content Calendar
-              </button>
-            )}
-            {selectedProfile && calendarData.length > 0 && (
-              <button
-                onClick={() => setIsSavedCalendarModalVisible(true)}
-                className="global-button-secondary py-2 px-3 text-xs hover:border border-gray-600 bg-white border-1 text-gray-900 rounded-lg flex items-center gap-2"
-              >
-                <CalendarOutlined className="text-md" />
-                View Content Calendar
-              </button>
-            )}
             <button
               onClick={handleConnectLinkedIn}
               disabled={linkedInConnected}
@@ -143,26 +72,6 @@ const LinkedInConnection = ({
           </div>
         )}
       </div>
-      <SavedCalendarModal
-        isOpen={isSavedCalendarModalVisible}
-        onClose={() => setIsSavedCalendarModalVisible(false)}
-        onSave={() => setIsSavedCalendarModalVisible(false)}
-        setCalendarData={setCalendarData}
-        calendarData={calendarData}
-        selectedPostTopic={selectedPostTopic}
-        selectedProfileName={selectedProfileName}
-        onSelectTopic={handleSelectTopic}
-        handleAddNewCalendarEntries={handleNewCalendarEntries}
-        isSavingNewEntries={isSavingNewEntries}
-      />
-
-      <ContentCalendarModal
-        selectedProfileDetails={selectedProfileDetails}
-        selectedProfileName={selectedProfileName}
-        isOpen={isCalendarModalVisible}
-        onClose={() => setIsCalendarModalVisible(false)}
-        onSave={handleSaveContentCalendar}
-      />
     </div>
   );
 };

@@ -42,7 +42,6 @@ const SavedCalendarModal = ({
       }
     } catch (error) {
       message.error(error.message);
-      console.error('Error deleting item:', error);
     } finally {
       setShowDeleteConfirmation(false);
     }
