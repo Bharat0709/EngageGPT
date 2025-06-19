@@ -1,8 +1,9 @@
 import AddMembersModal from '../Global/AddPeopleModal';
 import { OnboardingSteps } from '../../../assets/data/onBoardingSteps';
+import EngagegptBanner from '../../../assets/images/HomeBanner.png';
 import { AiFillLinkedin } from 'react-icons/ai';
-import { FiEye, FiCopy } from 'react-icons/fi';
 import { message } from 'antd';
+import { FiCopy, FiEye, FiZap, FiTarget, FiTrendingUp } from 'react-icons/fi';
 
 const OnboardingGuide = ({
   onAddProfile,
@@ -48,18 +49,54 @@ const OnboardingGuide = ({
   };
 
   return (
-    <div className="container mx-auto p-4 max-w-4xl animate-fade-in">
-      <div className="text-center mb-8 mt-8">
-        <h1 className="text-3xl font-bold text-gray-800 mb-3">
-          Welcome to EngageGPT
-        </h1>
-        <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-          Your AI-powered LinkedIn engagement platform. Let's get you set up for
-          success!
-        </p>
+    <div className="container mx-auto p-4 max-w-7xl animate-fade-in">
+      <div className="text-center mb-2 border border-gray-600">
+        <img
+          src={EngagegptBanner}
+          alt="Banner-EngageGPT"
+          className="mx-auto  max-h-1/2"
+        />
+      </div>
+      <div className="bg-white lg:hidden flex flex-col mb-2 shadow-sm border border-gray-600 p-6">
+        <h3 className="text-lg font-semibold text-slate-800 mb-4">
+          Why EngageGPT?
+        </h3>
+        <div className="space-y-4">
+          <div className="flex items-start gap-3">
+            <FiTarget className="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0" />
+            <div>
+              <p className="font-medium text-slate-800 text-sm">
+                Targeted Engagement
+              </p>
+              <p className="text-slate-600 text-xs">
+                AI identifies the best opportunities
+              </p>
+            </div>
+          </div>
+          <div className="flex items-start gap-3">
+            <FiTrendingUp className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+            <div>
+              <p className="font-medium text-slate-800 text-sm">
+                Boost Visibility
+              </p>
+              <p className="text-slate-600 text-xs">
+                Increase your profile views by 3x
+              </p>
+            </div>
+          </div>
+          <div className="flex items-start gap-3">
+            <FiZap className="w-5 h-5 text-yellow-500 mt-0.5 flex-shrink-0" />
+            <div>
+              <p className="font-medium text-slate-800 text-sm">Save Time</p>
+              <p className="text-slate-600 text-xs">
+                Automate routine engagement tasks
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm border border-gray-600 p-8 mb-4">
+      <div className="bg-white border border-gray-600 p-6 mb-2">
         <div className="flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="flex-1">
             <div className="flex justify-between items-start">
@@ -76,11 +113,11 @@ const OnboardingGuide = ({
               <a
                 target="_blank"
                 rel="noopener noreferrer"
-                href="youtube.com"
-                className="hidden justify-center items-center"
+                href="https://www.youtube.com/watch?v=jpj5SYu28b0&t=1s"
+                className="lg:flex hidden justify-center items-center"
               >
                 <div className="bg-white flex items-center justify-center">
-                  <div className="px-6 py-2 border border-black text-sm font-medium bg-white text-black w-fit transition-all shadow-[5px_5px_0px_black] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]">
+                  <div className="px-6 py-2 border border-black text-sm font-medium bg-white text-black w-fit transition-all">
                     View Tutorial
                   </div>
                 </div>
@@ -99,7 +136,7 @@ const OnboardingGuide = ({
                         ? 'bg-green-100'
                         : stepsUnlocked[step.title]
                         ? 'bg-linkedin/10'
-                        : 'bg-gray-200' 
+                        : 'bg-gray-200'
                     } rounded-full bg-green-100 h-10 w-10 flex items-center justify-center flex-shrink-0`}
                   >
                     <step.icon
@@ -199,7 +236,7 @@ const OnboardingGuide = ({
       </div>
 
       {isProfileAdded && !isLinkedInConnected && isExtensionInstalled && (
-        <div className="bg-white border border-gray-600 rounded-xl p-6">
+        <div className="bg-white border border-gray-600 p-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div>
               <h3 className="font-semibold text-gray-800 text-lg">
@@ -221,21 +258,21 @@ const OnboardingGuide = ({
       )}
 
       {invitedProfiles.length > 0 && (
-        <div className="bg-white border border-gray-600 rounded-xl p-6 mt-6">
+        <div className="bg-white border border-gray-600  p-6 mt-2">
           <h3 className="font-semibold text-gray-800 text-lg mb-4">
-            Invited Profiles
+            Generated Connection Token(s) & Invited Profiles
           </h3>
           <div className="space-y-4">
             {invitedProfiles.map((profile) => (
               <div
                 key={profile.id}
-                className="flex flex-col md:flex-row justify-between items-center p-4 border border-gray-300 rounded-lg"
+                className="flex flex-col md:flex-row justify-between items-center p-4 border border-gray-300"
               >
                 <div className="flex items-center gap-3 mb-3 md:mb-0">
                   <img
                     src={profile.profilePicture}
                     alt={`${profile.name}'s profile`}
-                    className="w-10 h-10 rounded-full border border-gray-300"
+                    className="w-12 h-12 rounded-full border border-gray-300"
                   />
                   <div>
                     <h4 className="font-medium text-gray-800">
@@ -257,7 +294,7 @@ const OnboardingGuide = ({
                   </div>
                 </div>
                 <div className="flex flex-col md:flex-row gap-3">
-                  <div className="copy-token items-center font-semibold flex py-1 bg-sky-50 rounded-lg pl-3 pr-2 text-gray-800 text-sm">
+                  <div className="copy-token items-center font-semibold flex py-1 bg-blue-50  pl-3 pr-2 text-gray-800 text-sm">
                     Connection Token
                     <button
                       onClick={() => message.info(profile.connectionToken)}
@@ -275,7 +312,7 @@ const OnboardingGuide = ({
                   <button
                     onClick={handleConnectLinkedIn}
                     disabled={profile.isLinkedinConnected}
-                    className={`text-sm border-gray-400 font-semibold px-3 text-black flex items-center gap-2 p-2 rounded-lg ${
+                    className={`text-sm border-gray-400 font-semibold px-3 text-black flex items-center gap-2 p-2 ${
                       profile.isLinkedinConnected
                         ? 'bg-green-400 text-white font-semibold cursor-not-allowed'
                         : 'bg-gray-100'

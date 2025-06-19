@@ -12,11 +12,11 @@ const PostFilters = ({ posts, handleSortChange }) => {
   ];
 
   return (
-    <div className="rounded-lg flex-col gap-2 py-3">
-      <div className="toggle-buttons flex justify-between bg-white border border-gray-300 p-3 rounded-lg  gap-4">
+    <div className="flex-col  gap-2 py-3">
+      <div className="toggle-buttons  rounded-xl flex justify-between bg-white p-3  gap-4">
         <p className="text-sm">{posts.length} Posts Collected</p>
 
-        <div className="items-center lg:flex hidden  gap-4">
+        <div className="items-center lg:flex hidden gap-2">
           <FiFilter className="text-gray-400" />
           {filters.map((filter) => (
             <p

@@ -6,40 +6,6 @@ import dashboard from '../../assets/images/dashboard.png';
 import { useNavigate } from 'react-router-dom';
 import { FaCheck } from 'react-icons/fa';
 
-// const LogoRow = ({ delay = 0 }: { delay?: number }) => (
-//   <motion.div
-//     className="flex items-center justify-around rotate-45  w-full py-4 overflow-hidden"
-//     initial={{ x: delay ? '0%' : '-100%' }}
-//     animate={{ x: delay ? '-100%' : '0%' }}
-//     transition={{
-//       repeat: Infinity,
-//       repeatType: 'mirror',
-//       duration: 25,
-//       ease: 'linear',
-//       delay: delay * 0.1,
-//     }}
-//   >
-//     {[
-//       'Adobe',
-//       'Airtable',
-//       'Amazon',
-//       'Box',
-//       'ByteDance',
-//       'Chase',
-//       'Cloudebees',
-//       'Nike',
-//       'BMW',
-//       'Burton',
-//       'Buildkite',
-//       'Couchbase',
-//     ].map((name) => (
-//       <div key={name} className="mx-8 text-gray-400 font-semibold text-lg px-4">
-//         {name}
-//       </div>
-//     ))}
-//   </motion.div>
-// );
-
 const HeroSection = () => {
   const [isVisible, setIsVisible] = useState(false);
 
@@ -221,14 +187,7 @@ const HeroSection = () => {
           </div>
         </button>
       </div>
-      {/* Logo Ribbon
-      <div className="w-full border-t border-b border-gray-900 py-8 bg-gray-50">
-        <div className="max-w-7xl  mx-auto overflow-hidden">
-          <LogoRow />
-          <LogoRow delay={1} />
-        </div>
-      </div> */}
-    </section>
+  </section>
   );
 };
 

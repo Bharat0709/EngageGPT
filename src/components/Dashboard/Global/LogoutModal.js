@@ -1,12 +1,12 @@
 import React from 'react';
 import LogoutButton from '../../Logout';
 
-const LogoutConfirmationModal = ({ isVisible, onClose, onConfirm  }) => {
+const LogoutConfirmationModal = ({ isVisible, onClose, onConfirm }) => {
   if (!isVisible) return null;
 
   return (
     <div
-      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+      className="fixed inset-0 overflow-hidden  bg-black bg-opacity-50 flex items-center justify-center p-4 backdrop-blur-sm transition-opacity z-50"
       onClick={onClose}
     >
       <div
@@ -20,14 +20,14 @@ const LogoutConfirmationModal = ({ isVisible, onClose, onConfirm  }) => {
           <button
             type="button"
             onClick={onClose}
-            className="global-button-secondary text-sm"
+            className="global-button-secondary rounded-full text-sm"
           >
             Cancel
           </button>
           <button
             type="button"
             onClick={onConfirm}
-            className="global-button-primary bg-red-600"
+            className="global-button-primary rounded-full bg-red-600"
           >
             <LogoutButton />
           </button>

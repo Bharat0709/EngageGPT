@@ -23,7 +23,7 @@ const DisconnectConfirmationModal = ({
 
   return (
     <div
-      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+      className="fixed inset-0 w-full z-50 flex bg-black bg-opacity-50 backdrop-blur-sm transition-opacity items-center justify-center"
       onClick={onClose}
     >
       <div
@@ -31,20 +31,20 @@ const DisconnectConfirmationModal = ({
         onClick={(e) => e.stopPropagation()}
       >
         <h2 className="text-md mt-2 text-center mb-6">
-          Are you sure you want to disconnect your linkedIn Account?
+          Are you sure you want to disconnect your LinkedIn Account?
         </h2>
         <div className="flex justify-end gap-4">
           <button
             type="button"
             onClick={onClose}
-            className="global-button-secondary text-sm"
+            className="global-button-secondary rounded-full text-sm"
           >
             Cancel
           </button>
           <button
             type="button"
             onClick={handleDisconnectLinkedIn}
-            className="global-button-primary bg-red-600"
+            className="global-button-primary rounded-full bg-red-600"
           >
             Disconnect
           </button>

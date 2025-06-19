@@ -29,7 +29,7 @@ const HelpModal = ({ isVisible, onClose }) => {
 
   return (
     <div
-      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+      className="fixed inset-0 overflow-hidden bg-black bg-opacity-50 flex items-center justify-center p-4 backdrop-blur-sm transition-opacity z-50"
       onClick={onClose}
     >
       <div
@@ -46,11 +46,11 @@ const HelpModal = ({ isVisible, onClose }) => {
           value={helpQuery}
           onChange={(e) => setHelpQuery(e.target.value)}
         ></textarea>
-        <div className="flex justify-end gap-4">
+        <div className="flex justify-end gap-2">
           <button
             type="button"
             onClick={onClose}
-            className={`global-button-secondary ${
+            className={`global-button-secondary rounded-full ${
               loading ? 'opacity-50 cursor-not-allowed' : ''
             }`}
             disabled={loading} // Disable close button during loading
@@ -60,7 +60,7 @@ const HelpModal = ({ isVisible, onClose }) => {
           <button
             type="button"
             onClick={handleSubmit}
-            className={`global-button-primary ${
+            className={`global-button-primary rounded-full ${
               loading ? 'opacity-50 cursor-not-allowed' : ''
             }`}
             disabled={loading} // Disable submit button during loading

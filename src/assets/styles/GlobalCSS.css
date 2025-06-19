@@ -9,6 +9,9 @@
   background-color: #f9f9f9; /* Background color */
   color: #333; /* Text color */
 }
+.ant-switch .ant-switch-checked {
+  background-color: #000000 !important;
+}
 
 .scrollbar-hide::-webkit-scrollbar {
   display: none;

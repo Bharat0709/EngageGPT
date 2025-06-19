@@ -52,7 +52,7 @@ const Testimonials = () => {
       <div className="max-w-[74rem] mx-auto px-4 lg:px-0">
         <div className="text-center mb-6">
           <motion.h2
-            className="lg:text-3xl rounded-xl lg:mt-1 mt-6 text-xl font-bold text-center mb-8 border-4 border-black shadow-[5px_5px_0px_black] py-2 px-6 max-w-md mx-auto bg-white relative inline-block"
+            className="lg:text-3xl lg:mt-1 mt-6 text-xl font-bold text-center mb-8 border-4 border-black shadow-[5px_5px_0px_black] py-2 px-6 max-w-md mx-auto bg-white relative inline-block"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}

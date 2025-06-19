@@ -41,7 +41,7 @@ const FeedbackModal = ({ isVisible, onClose }) => {
 
   return (
     <div
-      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+      className="fixed inset-0 overflow-hidden  bg-black bg-opacity-50 flex items-center p-4 backdrop-blur-sm transition-opacity justify-center z-50"
       onClick={onClose}
     >
       <div
@@ -65,7 +65,7 @@ const FeedbackModal = ({ isVisible, onClose }) => {
               className={`text-4xl ${
                 star <= rating ? 'text-yellow-500' : 'text-gray-300'
               }`}
-              disabled={loading} 
+              disabled={loading}
             >
               ★
             </button>
@@ -79,24 +79,24 @@ const FeedbackModal = ({ isVisible, onClose }) => {
           onChange={(e) => setFeedback(e.target.value)}
           disabled={loading} // Disable textarea during loading
         ></textarea>
-        <div className="flex justify-end gap-4">
+        <div className="flex justify-end gap-2">
           <button
             type="button"
             onClick={onClose}
-            className={`global-button-secondary ${
+            className={`global-button-secondary rounded-full ${
               loading ? 'opacity-50 cursor-not-allowed' : ''
             }`}
-            disabled={loading} 
+            disabled={loading}
           >
             Close
           </button>
           <button
             type="button"
             onClick={handleFeedbackSubmit}
-            className={`global-button-primary ${
+            className={`global-button-primary rounded-full ${
               loading ? 'opacity-50 cursor-not-allowed' : ''
             }`}
-            disabled={loading} 
+            disabled={loading}
           >
             {loading ? 'Submitting...' : 'Submit'}
           </button>

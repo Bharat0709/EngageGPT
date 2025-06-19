@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { FiX, FiTrash2, FiUser, FiMail, FiUserPlus } from 'react-icons/fi';
+import { message } from 'antd';
+import { useState, useEffect } from 'react';
+import { FaLinkedin } from 'react-icons/fa';
+import { FiX, FiUser, FiMail } from 'react-icons/fi';
 
 const AddMembersModal = ({ isOpen, onClose, onSubmit }) => {
   const [members, setMembers] = useState([{ name: '', email: '' }]);
@@ -18,11 +20,6 @@ const AddMembersModal = ({ isOpen, onClose, onSubmit }) => {
   const validateEmail = (email) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(email);
-  };
-
-  // Add a new member input field with animation
-  const handleAddMore = () => {
-    setMembers([...members, { name: '', email: '' }]);
   };
 
   const handleClose = () => {
@@ -93,25 +90,10 @@ const AddMembersModal = ({ isOpen, onClose, onSubmit }) => {
       await onSubmit(members.filter((member) => member.name || member.email));
       handleClose();
     } catch (error) {
-      console.error('Error adding members:', error);
+      message.error('Error adding members:', error);
     } finally {
       setIsAdding(false);
     }
-  };
-
-  // Handle deleting a member
-  const handleDelete = (index) => {
-    // Don't allow deleting the last member
-    if (members.length === 1) {
-      setMembers([{ name: '', email: '' }]);
-      return;
-    }
-
-    const updatedMembers = members.filter((_, i) => i !== index);
-    setMembers(updatedMembers);
-
-    // Remove any errors for this index
-    setErrors(errors.filter((e) => e.index !== index));
   };
 
   // Check if field has error
@@ -123,13 +105,16 @@ const AddMembersModal = ({ isOpen, onClose, onSubmit }) => {
 
   return (
     <div className="fixed inset-0 w-full z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm transition-opacity">
-      <div className="bg-white flex flex-col lg:h-3/4 h-fit overflow-y-scroll mx-auto scrollbar-hide  lg:w-2/5 w-11/12 p-0 rounded-2xl shadow-xl transform transition-all duration-300 ease-in-out">
+      <div className="bg-white flex flex-col lg:max-h-2xl h-fit overflow-y-scroll scrollbar-hide  lg:w-2/5 w-11/12 p-0 rounded-3xl shadow-xl transform transition-all duration-300 ease-in-out">
         {/* Header */}
         <div className="bg-indigo-50 rounded-t-2xl p-6">
           <div className="flex justify-between items-center">
-            <h2 className="text-2xl font-bold text-indigo-800">
-              Add LinkedIn Profile
-            </h2>
+            <div className="flex items-center gap-3">
+              <FaLinkedin className="text-indigo-800" size={20} />
+              <h2 className="text-md lg:text-2xl font-bold text-indigo-800">
+                Add LinkedIn Members
+              </h2>
+            </div>
             <button
               className="text-gray-500 hover:text-gray-800 hover:bg-indigo-100 p-2 rounded-full transition-colors"
               onClick={handleClose}
@@ -137,39 +122,23 @@ const AddMembersModal = ({ isOpen, onClose, onSubmit }) => {
               <FiX size={20} />
             </button>
           </div>
-          <p className="text-gray-600 mt-2">
-            Add LinkedIn Profile, Email must be associated with a LinkedIn
-            account.
-          </p>
+          <p className="text-gray-600 mt-2"></p>
+          <strong>Email must be associated with a LinkedIn account.</strong>
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="p-6">
-          <div className="space-y-5">
+        <form onSubmit={handleSubmit} className="p-4">
+          <div className="space-y-5 overflow-y-scroll mx-auto scrollbar-hide">
             {members.map((member, index) => (
               <div
                 key={index}
-                className="bg-white p-4 rounded-xl border-2 border-gray-100 hover:border-indigo-100 transition-all duration-200"
+                className="bg-slate-50 p-4 rounded-xl hover:border-indigo-100 transition-all duration-200"
               >
-                <div className="flex justify-between items-center mb-2">
-                  <h3 className="font-medium text-gray-700">
-                    Member {index + 1}
-                  </h3>
-                  <button
-                    type="button"
-                    onClick={() => handleDelete(index)}
-                    className="text-gray-400 hover:text-red-500 hover:bg-red-50 p-2 rounded-full transition-colors"
-                    title="Remove Member"
-                  >
-                    <FiTrash2 size={16} />
-                  </button>
-                </div>
-
                 <div className="space-y-4">
                   <div>
                     <label
                       htmlFor={`name-${index}`}
-                      className="block text-sm font-medium text-gray-700 mb-1"
+                      className="block text-xs font-medium text-gray-500 mb-1"
                     >
                       Full Name
                     </label>
@@ -185,11 +154,7 @@ const AddMembersModal = ({ isOpen, onClose, onSubmit }) => {
                           handleChange(index, 'name', e.target.value)
                         }
                         placeholder="John Doe"
-                        className={`pl-10 pr-3 py-2 block w-full border ${
-                          getError(index, 'name')
-                            ? 'border-red-300 focus:ring-red-500 focus:border-red-500'
-                            : 'border-gray-300 focus:ring-indigo-500 focus:border-indigo-500'
-                        } rounded-lg shadow-sm focus:outline-none focus:ring-2`}
+                        className={`pl-10 pr-3 py-2 block w-full border  rounded-full`}
                       />
                     </div>
                     {getError(index, 'name') && (
@@ -202,7 +167,7 @@ const AddMembersModal = ({ isOpen, onClose, onSubmit }) => {
                   <div>
                     <label
                       htmlFor={`email-${index}`}
-                      className="block text-sm font-medium text-gray-700 mb-1"
+                      className="block text-xs font-medium text-gray-500 mb-1"
                     >
                       Email Address
                     </label>
@@ -218,11 +183,7 @@ const AddMembersModal = ({ isOpen, onClose, onSubmit }) => {
                           handleChange(index, 'email', e.target.value)
                         }
                         placeholder="john@example.com"
-                        className={`pl-10 pr-3 py-2 block w-full border ${
-                          getError(index, 'email')
-                            ? 'border-red-300 focus:ring-red-500 focus:border-red-500'
-                            : 'border-gray-300 focus:ring-indigo-500 focus:border-indigo-500'
-                        } rounded-lg shadow-sm focus:outline-none focus:ring-2`}
+                        className={`pl-10 pr-3 py-2 block w-full border rounded-full`}
                       />
                     </div>
                     {getError(index, 'email') && (
@@ -236,29 +197,19 @@ const AddMembersModal = ({ isOpen, onClose, onSubmit }) => {
             ))}
           </div>
 
-          {/* Add More Button */}
-          <button
-            type="button"
-            onClick={handleAddMore}
-            className="mt-4 flex items-center justify-center gap-2 text-indigo-600 font-medium py-2 px-4 border-2 border-dashed border-indigo-200 rounded-xl hover:bg-indigo-50 hover:border-indigo-300 transition-colors w-full"
-          >
-            <FiUserPlus size={18} />
-            <span>Add Another Member</span>
-          </button>
-
           {/* Footer Buttons */}
-          <div className="flex justify-end gap-3 mt-2 border-t pt-6">
+          <div className="flex justify-end gap-3 mt-2 pt-4">
             <button
               type="button"
               onClick={handleClose}
-              className="px-5 py-2 border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition-colors"
+              className="px-5 py-2 border border-gray-300 text-gray-700 font-medium rounded-full hover:bg-gray-50 transition-colors"
             >
               Cancel
             </button>
             <button
               disabled={isAdding}
               type="submit"
-              className={`px-5 py-2 bg-sky-900 text-white font-medium rounded-lg shadow-sm hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-colors flex items-center gap-2 ${
+              className={`px-5 py-2 bg-sky-900 text-white font-medium rounded-full shadow-sm hover:bg-indigo-800 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-colors flex items-center gap-2 ${
                 isAdding ? 'opacity-70 cursor-not-allowed' : ''
               }`}
             >

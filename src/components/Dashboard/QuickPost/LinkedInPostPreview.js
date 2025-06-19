@@ -68,7 +68,7 @@ const LinkedInPostPreview = ({
 
   return (
     <div
-      className={`p-4 max-h-[65vh] overflow-y-scroll rounded-lg mb-3 scrollbar-hide py-2 border-gray-300 border ${
+      className={`p-4 max-h-[65vh] rounded-xl overflow-y-scroll mb-3 scrollbar-hide py-2 ${
         isDarkMode ? 'bg-[#1d2226] text-white' : 'bg-white text-black'
       }`}
     >

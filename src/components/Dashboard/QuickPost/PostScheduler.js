@@ -246,53 +246,55 @@ const PostScheduler = () => {
   };
 
   return (
-    <div className="flex rounded-xl flex-col bg-gray-50 lg:flex-row justify-between gap-3 lg:p-4 lg:pt-3 p-4 scrollbar-hide h-screen overflow-y-scroll">
-      <div className="flex-1 bg-gray-50 rounded-lg ">
-        <>
-          <LinkedInConnection
-            selectedPostTopic={selectedPostTopic}
-            setSelectedPostTopic={setSelectedPostTopic}
-            isLoading={isLoading}
-            linkedInConnected={linkedInConnected}
+    <div className="flex flex-col h-screen bg-[#ededed]">
+      <div className="flex rounded-xl mt-2 flex-col lg:flex-row justify-between gap-3 lg:p-3 lg:pt-0 p-2 scrollbar-hide h-screen overflow-y-scroll">
+        <div className="flex-1 mb-2 rounded-lg ">
+          <>
+            <PostContentEditor
+              selectedPostTopic={selectedPostTopic}
+              postDetails={postDetails}
+              setPostDetails={setPostDetails}
+            />
+            <MediaUploader
+              postDetails={postDetails}
+              setPostDetails={setPostDetails}
+            />
+          </>
+        </div>
+        <div className="lg:w-1/3 w-full mb-4">
+          <div>
+            <LinkedInConnection
+              selectedPostTopic={selectedPostTopic}
+              setSelectedPostTopic={setSelectedPostTopic}
+              isLoading={isLoading}
+              linkedInConnected={linkedInConnected}
+              connectedProfiles={connectedProfiles}
+              selectedProfile={selectedProfile}
+              selectedProfileName={selectedProfileName}
+              setSelectedProfile={setSelectedProfile}
+              calendarData={calendarData}
+              setCalendarData={setCalendarData}
+              setPostDetails={setPostDetails}
+            />
+            <PostPreviewSection
+              isLoading={isLoading}
+              connectedProfiles={connectedProfiles}
+              selectedProfile={selectedProfile}
+              postDetails={postDetails}
+            />
+          </div>
+          <PostActions
+            isSavingDraft={isSavingDraft}
+            isScheduling={isScheduling}
+            isPosting={isPosting}
             connectedProfiles={connectedProfiles}
             selectedProfile={selectedProfile}
-            selectedProfileName={selectedProfileName}
-            setSelectedProfile={setSelectedProfile}
-            calendarData={calendarData}
-            setCalendarData={setCalendarData}
-            setPostDetails={setPostDetails}
-          />
-          <PostContentEditor
             selectedPostTopic={selectedPostTopic}
-            postDetails={postDetails}
-            setPostDetails={setPostDetails}
-          />
-          <MediaUploader
-            postDetails={postDetails}
-            setPostDetails={setPostDetails}
-          />
-        </>
-      </div>
-      <div className="lg:w-1/3 w-full mb-4 bg-gray-50">
-        <div>
-          <PostPreviewSection
-            isLoading={isLoading}
-            connectedProfiles={connectedProfiles}
-            selectedProfile={selectedProfile}
-            postDetails={postDetails}
+            onPost={handleShare}
+            onSaveDraft={handleSaveDraft}
+            onSchedule={handleSchedulePost}
           />
         </div>
-        <PostActions
-          isSavingDraft={isSavingDraft}
-          isScheduling={isScheduling}
-          isPosting={isPosting}
-          connectedProfiles={connectedProfiles}
-          selectedProfile={selectedProfile}
-          selectedPostTopic={selectedPostTopic}
-          onPost={handleShare}
-          onSaveDraft={handleSaveDraft}
-          onSchedule={handleSchedulePost}
-        />
       </div>
     </div>
   );

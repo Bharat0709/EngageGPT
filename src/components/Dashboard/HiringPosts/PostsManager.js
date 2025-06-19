@@ -5,8 +5,8 @@ import {
   FiEdit,
   FiTrash,
   FiArrowRight,
-  FiFilter,
   FiMail,
+  FiFilter,
   FiBriefcase,
 } from 'react-icons/fi';
 import {
@@ -15,13 +15,12 @@ import {
   deleteHiringPost,
   updateHiringPostNotes,
   updateJobRole,
-  contactHiringPost,
 } from '../../../network/HiringPosts';
 import NoPostsFound from '../../../assets/images/PostNotFound.png';
 import PostConfirmationModal from '../QuickPost/PostConfirmationModal';
 import EditHiringPostModal from './EditPostModal';
 import renderHiringPostsSkeleton from './SkeletonLoading';
-import ContactModal from './ContactModal';
+// import EmailComposer from './EmailComposer';
 
 const HiringPostsDashboard = ({ memberId }) => {
   const navigate = useNavigate();
@@ -37,11 +36,12 @@ const HiringPostsDashboard = ({ memberId }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
-  const [showContactModal, setShowContactModal] = useState(false);
   const [selectedPost, setSelectedPost] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [isContacting, setIsContacting] = useState(false);
+  // const [isContacting, setIsContacting] = useState(false);
+  // const [showEmailComposer, setShowEmailComposer] = useState(false);
+  // const [selectedEmail, setSelectedEmail] = useState('');
   const [totalStats, setTotalStats] = useState({
     new: 0,
     contacted: 0,
@@ -68,6 +68,7 @@ const HiringPostsDashboard = ({ memberId }) => {
 
       // Get hiring posts with optional member filter
       const data = await getHiringPosts(params);
+      console.log('Fetching hiring posts with params:', data);
 
       // Group posts by status
       const newPosts = data.data.filter((post) => post.status === 'new') || [];
@@ -214,45 +215,11 @@ const HiringPostsDashboard = ({ memberId }) => {
     }
   };
 
-  const onSendContact = async (postId, emailContent) => {
-    setIsContacting(true);
-    try {
-      await contactHiringPost(postId, emailContent);
-
-      // Update the post status in state
-      setHiringPosts((prev) => {
-        // Find the post in the 'new' category
-        const newList = prev.new.filter((p) => p._id !== postId);
-
-        // Find the post to update
-        const postToUpdate = prev.new.find((p) => p._id === postId);
-        if (postToUpdate) {
-          postToUpdate.status = 'contacted';
-          return {
-            ...prev,
-            new: newList,
-            contacted: [...prev.contacted, postToUpdate],
-          };
-        }
-        return prev;
-      });
-
-      // Update total counts
-      setTotalStats((prev) => ({
-        ...prev,
-        new: Math.max(0, prev.new - 1),
-        contacted: prev.contacted + 1,
-      }));
-
-      setIsContacting(false);
-      setRefresh(!refresh);
-      message.success('Email sent successfully!');
-      setShowContactModal(false);
-    } catch (error) {
-      setIsContacting(false);
-      message.error('Failed to send email. Please try again.');
-    }
-  };
+  // const onContact = (post, email = '') => {
+  //   setSelectedPost(post);
+  //   setSelectedEmail(email);
+  //   setShowEmailComposer(true);
+  // };
 
   const formatDate = (dateString) => {
     if (!dateString) return 'Unknown date';
@@ -387,6 +354,13 @@ const HiringPostsDashboard = ({ memberId }) => {
               </div>
             </div>
             <div className="flex items-center gap-2">
+              {/* <button
+                className="text-blue-600 p-2 rounded-full border border-gray-400 hover:text-blue-800 flex items-center gap-1"
+                onClick={() => onContact(post)}
+                title="Contact"
+              >
+                <FiMail />
+              </button> */}
               <button
                 className="text-black p-2 rounded-full border border-gray-400 hover:text-black flex items-center gap-1"
                 onClick={() => onEdit(post)}
@@ -556,14 +530,11 @@ const HiringPostsDashboard = ({ memberId }) => {
         isEditing={isEditing}
       />
 
-      {/* Contact Modal */}
-      <ContactModal
-        isOpen={showContactModal}
-        onClose={() => setShowContactModal(false)}
-        post={selectedPost}
-        onSend={onSendContact}
-        isContacting={isContacting}
-      />
+      {/* <EmailComposer
+        isOpen={isContacting || showEmailComposer}
+        onClose={() => setIsContacting(false)}
+        initialEmail={selectedEmail}
+      /> */}
     </div>
   );
 };

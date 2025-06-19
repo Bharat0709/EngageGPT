@@ -14,7 +14,6 @@ import {
   FiGrid,
   FiCalendar,
   FiSave,
-  FiMail,
   FiZap,
   FiEdit,
   FiClock,
@@ -79,15 +78,15 @@ const menuItems = [
     hoverClass: 'hover:bg-white hover:text-black',
     tag: { text: 'NEW', color: 'bg-blue-500' },
   },
-  {
-    to: '/dashboard/email-template',
-    icon: <FiMail size={18} />,
-    label: 'Email Template',
-    activeClass:
-      'global-sidebar-button-primary border border-gray-400 bg-white',
-    hoverClass: 'hover:bg-white hover:text-black',
-    tag: { text: 'SOON', color: 'bg-pink-500' },
-  },
+  // {
+  //   to: '/dashboard/email-template',
+  //   icon: <FiMail size={18} />,
+  //   label: 'Email Template',
+  //   activeClass:
+  //     'global-sidebar-button-primary border border-gray-400 bg-white',
+  //   hoverClass: 'hover:bg-white hover:text-black',
+  //   tag: { text: 'SOON', color: 'bg-pink-500' },
+  // },
 ];
 
 // Enhanced SidebarLink with tag support

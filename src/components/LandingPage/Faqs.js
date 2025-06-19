@@ -20,7 +20,7 @@ function FAQ() {
     >
       <div className="container mx-auto px-4">
         <div className="text-center mb-10">
-          <h2 className="lg:text-3xl rounded-xl lg:mt-1 mt-6 text-xl font-bold text-center mb-8 border-4 border-black shadow-[5px_5px_0px_black] py-2 px-6 max-w-md mx-auto bg-white">
+          <h2 className="lg:text-3xl lg:mt-1 mt-6 text-xl font-bold text-center mb-8 border-4 border-black shadow-[5px_5px_0px_black] py-2 px-6 max-w-md mx-auto bg-white">
             FAQs
           </h2>
         </div>
@@ -28,7 +28,7 @@ function FAQ() {
           {faqs.map((faq, index) => (
             <div
               key={index}
-              className={`border border-gray-200 rounded-xl bg-white transition-all hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px] shadow-[5px_5px_0px_black] mb-4`}
+              className={`border border-gray-200  bg-white transition-all hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px] shadow-[5px_5px_0px_black] mb-4`}
             >
               <button
                 className="flex items-center justify-between py-4 px-6 w-full text-left focus:outline-none"

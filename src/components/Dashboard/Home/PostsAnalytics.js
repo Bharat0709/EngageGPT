@@ -94,10 +94,10 @@ const PostDetails = ({ setStats, memberId }) => {
   });
 
   return (
-    <div className="flex flex-col lg:p-4 p-3">
+    <div className="flex flex-col lg:p-0 p-0">
       {posts.length > 0 ? (
         <div>
-          <p className="p-3 w-full rounded-lg border bg-white border-gray-300 text-sm">
+          <p className="p-2 w-full border rounded-xl bg-gray-50 text-sm">
             {' '}
             Top Posts{' '}
           </p>

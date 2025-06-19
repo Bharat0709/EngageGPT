@@ -7,7 +7,7 @@ import LinkedInPostGenerator from '../components/Dashboard/GeneratePost/Generate
 import ProtectedRoute from '../components/ProtectedRoute';
 import PostDetails from '../components/Dashboard/PostHistory/PostQueue';
 import HiringPostsPage from '../components/Dashboard/HiringPosts/HiringPostsPage';
-import MemberSettings from '../components/Dashboard/Settings/MemberSettings';
+import MemberSettings from '../components/Dashboard/Settings/MemberSettings/MemberSettings';
 import ContentCalendarPage from '../components/Dashboard/ContentCalender/ContentCalender';
 import EmailTemplatesComingSoon from '../components/Dashboard/EmailTemplates/EmailTemplateSoon';
 
@@ -15,7 +15,7 @@ function Dashboard() {
   return (
     <div className="flex lg:flex-row scrollbar-hide lg:pt-2 lg:px-2 p-0 rounded-xl flex-col h-screen">
       <Sidebar />
-      <div className="flex-1 scrollbar-hide overflow-auto">
+      <div className="flex-1 scrollbar-hide rounded-2xl h-[98vh] overflow-auto">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route

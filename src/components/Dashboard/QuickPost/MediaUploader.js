@@ -32,19 +32,8 @@ const MediaUploader = ({ postDetails, setPostDetails }) => {
     }));
   };
 
-  // const handlePdfUpload = () => {
-  //   setIsImageUpload(false);
-  //   // Clear images if switching to PDF upload
-  //   setPostDetails((prevDetails) => ({
-  //     ...prevDetails,
-  //     media: prevDetails.media.filter(
-  //       (file) => file.type === 'application/pdf',
-  //     ),
-  //   }));
-  // };
-
   return (
-    <div className="p-4 border mt-3 bg-white border-gray-300 rounded-lg">
+    <div className="p-3 mt-3 mb-2 rounded-xl bg-white">
       <div className="flex items-center justify-between">
         <h4 className="text-lg font-semibold text-gray-700 mb-4">
           Upload Media

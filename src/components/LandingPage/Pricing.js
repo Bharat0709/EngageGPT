@@ -113,7 +113,7 @@ const Pricing = () => {
     >
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="lg:text-3xl rounded-xl lg:mt-1 mt-6 text-xl font-bold text-center mb-8 border-4 border-black shadow-[5px_5px_0px_black] py-2 px-6 max-w-md mx-auto bg-white">
+          <h2 className="lg:text-3xl lg:mt-1 mt-6 text-xl font-bold text-center mb-8 border-4 border-black shadow-[5px_5px_0px_black] py-2 px-6 max-w-md mx-auto bg-white">
             Pricing
           </h2>
         </div>

@@ -171,7 +171,7 @@ const PostActions = ({
   };
 
   return (
-    <div className="flex w-full flex-col items-center border bg-white border-gray-300 rounded-lg gap-2 p-4">
+    <div className="flex w-full flex-col rounded-xl items-center bg-white gap-2 p-4">
       <div className="flex flex-col gap-1 w-full">
         <div className="w-full flex gap-2 justify-between">
           <div className="w-full">
@@ -228,20 +228,20 @@ const PostActions = ({
 
       <div className="flex w-full flex-col items-center gap-3 py-2">
         <button
-          className="w-full global-button-secondary text-sm"
+          className="w-full global-button-secondary rounded-full text-sm"
           onClick={() => showModal('draft')}
         >
           {isSavingDraft ? 'Saving Draft...' : 'Save as Draft'}
         </button>
         <button
-          className="w-full global-button-secondary text-sm"
+          className="w-full global-button-secondary rounded-full text-sm"
           onClick={() => showModal('schedule')}
           disabled={isScheduling}
         >
           {isScheduling ? 'Scheduling...' : 'Schedule Post'}
         </button>
         <button
-          className="w-full global-button-primary text-sm"
+          className="w-full global-button-primary rounded-full text-sm"
           onClick={() => showModal('post')}
           disabled={isPosting}
         >

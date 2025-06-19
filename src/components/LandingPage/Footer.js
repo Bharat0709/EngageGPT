@@ -11,7 +11,7 @@ function Footer() {
   };
 
   return (
-    <footer className="bg-[#004182] text-white m-4 rounded-lg py-10">
+    <footer className="bg-[#004182] text-white m-4 py-10">
       <div className="container mx-auto px-4 lg:px-16 flex flex-col lg:flex-row justify-between items-start">
         {/* Logo Section */}
         <div className="mb-6 lg:mb-0 flex flex-col items-start">
@@ -42,7 +42,6 @@ function Footer() {
                         rel={link.rel || undefined}
                         className="flex items-center text-gray-300 hover:text-white transition"
                       >
-                        <link.icon className="h-5 w-5 mr-2" />
                         {link.label}
                       </a>
                     ) : link.section ? (

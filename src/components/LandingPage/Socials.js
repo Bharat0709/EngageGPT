@@ -15,7 +15,7 @@ export const Socials = () => {
 const SocialLinks = () => {
   return (
     <div className="divide-y ">
-      <div className="grid rounded-lg w-fit gap-3 grid-cols-4">
+      <div className="grid w-fit gap-3 grid-cols-4">
         <LinkBox
           Icon={SiLinkedin}
           href="https://www.linkedin.com/company/engagegpt"
@@ -108,7 +108,7 @@ const LinkBox = ({ Icon, href }) => {
       onMouseLeave={(e) => {
         handleMouseLeave(e);
       }}
-      className="relative grid h-10 p-2 gap-3 bg-white text-sky-950 rounded-lg sm:h-10 md:h-10"
+      className="relative grid h-10 p-2 gap-3 bg-white text-sky-950 sm:h-10 md:h-10"
     >
       <Icon className="text-xl sm:text-2xl lg:text-2xl" />
 
@@ -117,7 +117,7 @@ const LinkBox = ({ Icon, href }) => {
         style={{
           clipPath: BOTTOM_RIGHT_CLIP,
         }}
-        className="absolute inset-0 rounded-lg grid place-content-center bg-sky-950 text-white"
+        className="absolute inset-0 grid place-content-center bg-sky-950 text-white"
       >
         <Icon className="text-xl sm:text-2xl md:text-2xl" />
       </div>

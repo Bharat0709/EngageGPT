@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { FiCopy, FiSettings } from 'react-icons/fi';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { FiUserPlus } from 'react-icons/fi';
 import { BiUnlink } from 'react-icons/bi';
-import { Button, message, Skeleton, Tooltip } from 'antd';
+import { Button, message, Skeleton } from 'antd';
 import AddPeopleModal from '../Global/AddPeopleModal';
 import DisconnectConfirmationModal from './DisconnectModal';
 import { getAllMembers, addNewMember } from '../../../network/Members';
@@ -100,7 +100,7 @@ const People = () => {
           <button
             type="primary"
             onClick={() => setIsAddPeopleModalOpen(true)}
-            className="global-button-primary text-sm flex items-center gap-1 py-2 px-3 rounded-lg"
+            className="global-button-primary text-sm flex items-center gap-1 py-2 px-3 rounded-xl"
           >
             <AiOutlinePlus size={14} />
             Add Profile
@@ -191,7 +191,7 @@ const People = () => {
           filteredPeople.map((person) => (
             <div
               key={person?._id}
-              className="person-card w-full bg-white p-4 gap-4 rounded-xl lg:flex-row flex-col flex-wrap flex justify-between items-center"
+              className="person-card w-full bg-[#f6f6f6] p-4 gap-4 rounded-xl lg:flex-row flex-col flex-wrap flex justify-between items-center"
             >
               <div className="flex lg:w-fit w-full lg:flex-row flex-col gap-4 items-center">
                 <div className="flex lg:w-fit w-full items-center gap-4 justify-start">
@@ -210,13 +210,13 @@ const People = () => {
                   </div>
                 </div>
                 <div className="flex items-center lg:flex-row flex-wrap gap-3 lg:w-max w-full">
-                  <p className="text-xs font-semibold rounded-lg bg-gray-100 p-1 px-3 m-0 text-gray-600">
+                  <p className="text-xs font-semibold rounded-lg bg-gray-200 p-1 px-3 m-0 text-gray-600">
                     {person?.totalCreditsUsed} credits used
                   </p>{' '}
-                  <p className="text-xs font-semibold rounded-lg bg-gray-100 p-1 px-3 m-0 text-gray-600">
+                  <p className="text-xs font-semibold rounded-lg bg-gray-200 p-1 px-3 m-0 text-gray-600">
                     {person?.daysActive} days active
                   </p>
-                  <p className="text-xs font-semibold rounded-lg bg-gray-100 p-1 px-3 m-0 text-gray-600">
+                  <p className="text-xs font-semibold rounded-lg bg-gray-200 p-1 px-3 m-0 text-gray-600">
                     {person?.timeZone || 'Asia/Kolkata'}
                   </p>
                   <div className="flex w-max rounded-full text-green-600 items-center">
@@ -237,26 +237,9 @@ const People = () => {
                   </div>
                 </div>
               </div>
-              <div className="flex flex-wrap gap-4 lg:w-fit w-full justify-between lg:mt-0 mt-2 items-center">
-                {person?.isLinkedinConnected ? (
-                  <button
-                    onClick={() => handleDisconnectLinkedIn(person._id)}
-                    className={`rounded-lg text-black p-2 bg-gray-50 flex items-center gap-2 text-xs`}
-                  >
-                    <BiUnlink size={15} />
-                  </button>
-                ) : (
-                  <button
-                    onClick={handleConnectLinkedIn}
-                    disabled={false}
-                    className={`rounded-lg text-black bg-gray-50 p-2 border border-gray-900 px-3 flex items-center gap-2 text-xs`}
-                  >
-                    Connect
-                    <FaLinkedin className="text-sky-800" size={20} />
-                  </button>
-                )}
-                <div className="copy-token text-sm">
-                  Connection Token
+              <div className="flex flex-wrap gap-2 lg:w-fit w-full justify-between lg:mt-0 mt-2 items-center">
+                <div className="copy-token text-xs bg-white pl-2 rounded-lg flex items-center">
+                  Extension Connection Token
                   <Button
                     className="text-black hover:text-black"
                     icon={<FiCopy />}
@@ -264,16 +247,31 @@ const People = () => {
                     type="link"
                   ></Button>
                 </div>
+                {person?.isLinkedinConnected ? (
+                  <button
+                    onClick={() => handleDisconnectLinkedIn(person._id)}
+                    className={`rounded-lg text-black p-2 bg-white flex items-center gap-2 text-xs`}
+                  >
+                    <BiUnlink size={16} />
+                  </button>
+                ) : (
+                  <button
+                    onClick={handleConnectLinkedIn}
+                    disabled={false}
+                    className={`rounded-lg text-black bg-white p-2 px-2 flex items-center gap-2 text-xs`}
+                  >
+                    Connect
+                    <FaLinkedin className="text-sky-800" size={16} />
+                  </button>
+                )}
 
-                {/* Settings button - NEW */}
-                <Tooltip title="Member Settings">
-                  <Button
-                    className="text-black hover:text-black bg-gray-50 flex items-center justify-center"
-                    icon={<FiSettings size={16} />}
-                    onClick={() => handleNavigateToSettings(person._id)}
-                    style={{ width: 38, height: 38, borderRadius: '8px' }}
-                  />
-                </Tooltip>
+                <button
+                  onClick={() => handleNavigateToSettings(person._id)}
+                  className="rounded-lg text-black bg-white p-2 px-2 flex items-center gap-2 text-xs"
+                >
+                  {' '}
+                  <FiSettings size={16} />
+                </button>
               </div>
             </div>
           ))

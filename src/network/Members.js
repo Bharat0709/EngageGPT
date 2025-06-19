@@ -209,3 +209,38 @@ export const getFeedFilterSettings = async (memberId) => {
     throw new Error(errorMsg);
   }
 };
+
+export const updateMemberSummary = async (memberId, summaryData) => {
+  try {
+    console.log('Updating member summary:', memberId, summaryData);
+    const response = await axiosInstance.put(
+      `${MEMBER_API_URL}/summary/${memberId}`,
+      {
+        summary: summaryData,
+      },
+    );
+
+    return await response.data.data;
+  } catch (error) {
+    const errorMsg = getErrorMessage(error);
+    throw new Error(errorMsg);
+  }
+};
+
+export const updateLeadGenerationGoals = async (
+  memberId,
+  leadGenerationGoals,
+) => {
+  try {
+    const response = await axiosInstance.put(
+      `${MEMBER_API_URL}/lead-generation-settings/${memberId}`,
+      {
+        ...leadGenerationGoals,
+      },
+    );
+
+    return await response.data.data;
+  } catch (error) {
+    throw error;
+  }
+};
