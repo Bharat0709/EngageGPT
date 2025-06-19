@@ -68,7 +68,6 @@ const HiringPostsDashboard = ({ memberId }) => {
 
       // Get hiring posts with optional member filter
       const data = await getHiringPosts(params);
-      console.log('Fetching hiring posts with params:', data);
 
       // Group posts by status
       const newPosts = data.data.filter((post) => post.status === 'new') || [];

@@ -23,7 +23,7 @@ import {
 
 const LinkedInPostGenerator = () => {
   const navigate = useNavigate();
-  
+
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState('');
   const [loading, setLoading] = useState(false);
@@ -58,7 +58,6 @@ const LinkedInPostGenerator = () => {
     const initializeData = async () => {
       try {
         const organizationData = await fetchOrganizationData();
-        console.log('Organization Data:', organizationData);
         setSelectedProfile(organizationData);
         setCreditsLeft(organizationData?.credits || 0);
         setIsInitialized(true);
@@ -77,7 +76,6 @@ const LinkedInPostGenerator = () => {
           },
         ]);
       } catch (error) {
-        console.error('Error fetching organization data:', error);
         message.error('Failed to load organization data');
         setIsInitialized(true);
       }
@@ -153,7 +151,6 @@ const LinkedInPostGenerator = () => {
         throw new Error('No content generated');
       }
     } catch (error) {
-      console.error('Error generating post:', error);
       message.error(
         error.message || 'Failed to generate post. Please try again.',
       );
@@ -196,7 +193,6 @@ const LinkedInPostGenerator = () => {
       await navigator.clipboard.writeText(generatedPost);
       message.success('Post copied to clipboard!');
     } catch (error) {
-      console.error('Copy failed:', error);
       message.error('Failed to copy post');
     }
   };

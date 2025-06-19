@@ -50,7 +50,6 @@ const HiringPostsPage = () => {
 
         setIsLoading(false);
       } catch (err) {
-        console.error('Error getting member details!', err);
         message.error('Unable to fetch member details');
         setIsLoading(false);
       }

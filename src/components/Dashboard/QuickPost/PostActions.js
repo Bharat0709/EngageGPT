@@ -43,9 +43,9 @@ const PostActions = ({
 
   useEffect(() => {
     if (selectedPostTopic) {
-      const [day, month, year] = selectedPostTopic.date.split('-').map(Number);
+      const [day, month, year] = selectedPostTopic?.date.split('-').map(Number);
       const formattedDate = new Date(year, month - 1, day);
-      const [timeString, period] = selectedPostTopic.time.split(' ');
+      const [timeString, period] = selectedPostTopic?.time.split(' ');
       const [hour, minute] = timeString.split(':').map(Number);
       const adjustedHour =
         period === 'PM' && hour !== 12

@@ -149,7 +149,6 @@ const EmailComposer = ({ isOpen, onClose, initialEmail = "" }) => {
     try {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 2000));
-      console.log('Sending email:', emailData);
       alert('Email sent successfully!');
       onClose();
     } catch (error) {
@@ -170,8 +169,6 @@ const EmailComposer = ({ isOpen, onClose, initialEmail = "" }) => {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 2000));
       const scheduledDateTime = new Date(`${scheduleDate}T${scheduleTime}`);
-      console.log('Scheduling email for:', scheduledDateTime, 'in timezone:', userTimezone);
-      console.log('Email data:', emailData);
       alert(`Email scheduled for ${scheduledDateTime.toLocaleString()} (${userTimezone})`);
       onClose();
     } catch (error) {
