@@ -8,15 +8,15 @@ import timeZones from 'timezones-list';
 import PostConfirmationModal from './PostConfirmationModal';
 
 const PostActions = ({
-  connectedProfiles,
+  connectedProfiles = [],
   selectedProfile,
   selectedPostTopic,
-  onPost,
-  onSaveDraft,
-  onSchedule,
-  isScheduling,
-  isSavingDraft,
-  isPosting,
+  onPost = () => {},
+  onSaveDraft = () => {},
+  onSchedule = () => {},
+  isScheduling = false,
+  isSavingDraft = false,
+  isPosting = false,
 }) => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
@@ -33,32 +33,52 @@ const PostActions = ({
   });
 
   useEffect(() => {
-    if (connectedProfiles && selectedProfile) {
+    if (connectedProfiles?.length > 0 && selectedProfile) {
       const profileDetails = connectedProfiles.find(
-        (profile) => profile._id === selectedProfile,
+        (profile) => profile?._id === selectedProfile,
       );
       setSelectedTimeZone(profileDetails?.timeZone || 'Asia/Kolkata');
     }
   }, [connectedProfiles, selectedProfile]);
 
   useEffect(() => {
-    if (selectedPostTopic) {
-      const [day, month, year] = selectedPostTopic?.date.split('-').map(Number);
-      const formattedDate = new Date(year, month - 1, day);
-      const [timeString, period] = selectedPostTopic?.time.split(' ');
-      const [hour, minute] = timeString.split(':').map(Number);
-      const adjustedHour =
-        period === 'PM' && hour !== 12
-          ? hour + 12
-          : period === 'AM' && hour === 12
-          ? 0
-          : hour;
+    if (
+      selectedPostTopic &&
+      typeof selectedPostTopic.date === 'string' &&
+      typeof selectedPostTopic.time === 'string'
+    ) {
+      try {
+        const dateParts = selectedPostTopic.date.split('-');
+        if (dateParts.length === 3) {
+          const [day, month, year] = dateParts.map(Number);
+          const formattedDate = new Date(year, month - 1, day);
 
-      const formattedTime = new Date();
-      formattedTime.setHours(adjustedHour, minute, 0, 0);
+          const timeParts = selectedPostTopic.time.split(' ');
+          if (timeParts.length === 2) {
+            const [timeString, period] = timeParts;
+            const timeComponents = timeString.split(':');
+            if (timeComponents.length === 2) {
+              const [hour, minute] = timeComponents.map(Number);
+              const adjustedHour =
+                period === 'PM' && hour !== 12
+                  ? hour + 12
+                  : period === 'AM' && hour === 12
+                  ? 0
+                  : hour;
 
-      setSelectedDate(formattedDate);
-      setSelectedTime(formattedTime);
+              const formattedTime = new Date();
+              formattedTime.setHours(adjustedHour, minute, 0, 0);
+
+              setSelectedDate(formattedDate);
+              setSelectedTime(formattedTime);
+            }
+          }
+        }
+      } catch (error) {
+        console.error('Error parsing selectedPostTopic:', error);
+        setSelectedDate(null);
+        setSelectedTime(null);
+      }
     } else {
       setSelectedDate(null);
       setSelectedTime(null);

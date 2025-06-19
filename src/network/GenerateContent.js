@@ -10,7 +10,6 @@ export const generatePost = async (
   template,
   selectedFormat,
 ) => {
-  console.log(tone, topic, language, template, selectedFormat);
   try {
     if (selectedFormat === 'Use Persona') {
       const response = await axiosInstance.post(
