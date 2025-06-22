@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { message } from 'antd';
 import { sendHelpMail } from '../../../network/Organization';
 import { IoLogoWhatsapp } from 'react-icons/io';
-const WHATSAPP_NUMBER = process.env.CONTACT_NUMBER;
+const WHATSAPP_NUMBER = `${process.env.CONTACT_NUMBER}`;
 
 const handleWhatsAppContact = () => {
   const message = encodeURIComponent('Hi, I need help with your service.');
