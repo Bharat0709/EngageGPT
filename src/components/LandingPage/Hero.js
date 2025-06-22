@@ -108,7 +108,7 @@ const HeroSection = () => {
         </button>
       </div>
       {/* Main Hero Content */}
-      <div className="text-center max-w-6xl mx-auto mt-8 lg:mt-20 px-4 mb-12 lg:mb-0">
+      <div className="text-center max-w-6xl mx-auto mt-8 lg:mt-20 px-4 mb-6 lg:mb-0">
         <div className="grid place-content-center">
           <h1 className="max-w-3xl text-black text-center text-[2.3rem] lg:text-6xl leading-[1.3] lg:leading-[1.5]">
             Your{' '}
@@ -142,22 +142,34 @@ const HeroSection = () => {
         </p>
         <div className="flex flex-col w-full gap-3 items-center justify-center">
           <button onClick={handleGetStarted}>
-            <div className="bg-white  flex items-center justify-center">
+            <div className="bg-white gap-4 flex flex-col items-center justify-center">
               <div className="px-6 py-2 text-lg font-medium bg-[#004182] text-white w-fit transition-all shadow-[5px_5px_0px_black] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]">
                 Get Started
               </div>
             </div>
           </button>
-          <div className="animate-fade-in mt-4 inline-flex items-center px-4 py-2 rounded-full transition-colors">
+          <div className="animate-fade-in mt-4 mb-4 inline-flex items-center px-4 py-2 rounded-full transition-colors">
             <span className="text-gray-700 flex gap-2 items-center text-sm font-medium">
               <FaCheck className="text-green-500 mr-1" />
               No Credit Card Required
             </span>
           </div>
+          <a
+            href="https://calendly.com/engagegpt/30min"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mx-auto flex justify-center items-center"
+          >
+            <div className="bg-white lg:flex items-center justify-center">
+              <div className="px-6 py-2 text-md font-medium border border-gray-300 bg-white text-black w-fit transition-all hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]">
+                Book a Demo
+              </div>
+            </div>
+          </a>
         </div>
       </div>
       {/* Browser Mockup */}
-      <div className="w-full max-w-6xl mx-auto rounded-lg shodow-lg px-2 lg:mt-20">
+      <div className="w-full max-w-6xl mx-auto rounded-lg shodow-lg px-2 lg:mt-10">
         {/* Browser Content - Placeholder */}
         <div className="bg-white  rounded-lg  w-full flex flex-col items-center justify-center p-4">
           <div className="bg-gray-800 rounded-t-xl w-full px-4 py-3 flex items-center">
@@ -187,7 +199,7 @@ const HeroSection = () => {
           </div>
         </button>
       </div>
-  </section>
+    </section>
   );
 };
 

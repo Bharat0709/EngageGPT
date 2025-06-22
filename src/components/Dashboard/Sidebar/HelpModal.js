@@ -1,6 +1,17 @@
 import React, { useState } from 'react';
 import { message } from 'antd';
 import { sendHelpMail } from '../../../network/Organization';
+import { IoLogoWhatsapp } from 'react-icons/io';
+const WHATSAPP_NUMBER = process.env.CONTACT_NUMBER;
+
+const handleWhatsAppContact = () => {
+  const message = encodeURIComponent('Hi, I need help with your service.');
+  const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER.replace(
+    /[^0-9]/g,
+    '',
+  )}?text=${message}`;
+  window.open(whatsappUrl, '_blank');
+};
 
 const HelpModal = ({ isVisible, onClose }) => {
   const [helpQuery, setHelpQuery] = useState('');
@@ -68,6 +79,23 @@ const HelpModal = ({ isVisible, onClose }) => {
             {loading ? 'Submitting...' : 'Submit'}
           </button>
         </div>
+        <div className="flex items-center my-2">
+          <div className="flex-1 border-t border-gray-300"></div>
+          <span className="px-3 text-gray-500 text-sm">or</span>
+          <div className="flex-1 border-t border-gray-300"></div>
+        </div>
+
+        {/* WhatsApp contact button */}
+        <button
+          className="w-full px-4 py-2 bg-green-500 text-white rounded-full hover:bg-green-600 transition-colors flex items-center justify-center gap-2"
+          onClick={handleWhatsAppContact}
+        >
+          <IoLogoWhatsapp size={20} />
+          Contact Founder
+        </button>
+        <p className="text-xs text-center text-gray-500 mt-2">
+          You can also reach us on WhatsApp for immediate assistance.
+        </p>
       </div>
     </div>
   );

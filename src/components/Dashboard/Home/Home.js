@@ -308,7 +308,7 @@ const Home = () => {
   if (!onboardingComplete) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
-        <div className="w-full min-h-screen flex justify-start gap-8 flex-col items-center py-8">
+        <div className="w-full min-h-screen flex justify-start gap-8 flex-col items-center pb-4">
           <OnboardingGuide
             onAddProfile={() => setIsAddMemberModalOpen(true)}
             isModalOpen={isAddMemberModalOpen}

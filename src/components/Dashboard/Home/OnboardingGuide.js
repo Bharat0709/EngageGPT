@@ -49,7 +49,7 @@ const OnboardingGuide = ({
   };
 
   return (
-    <div className="container mx-auto p-4 max-w-7xl animate-fade-in">
+    <div className="container mx-auto px-4 lg:py-4 py-2 max-w-7xl animate-fade-in">
       <div className="text-center mb-2 border border-gray-600">
         <img
           src={EngagegptBanner}
@@ -111,14 +111,14 @@ const OnboardingGuide = ({
                 <p>Note: Refresh once each step is complete</p>
               </div>
               <a
+                href="https://calendly.com/engagegpt/30min"
                 target="_blank"
                 rel="noopener noreferrer"
-                href="https://www.youtube.com/watch?v=jpj5SYu28b0&t=1s"
-                className="lg:flex hidden justify-center items-center"
+                className="mx-auto flex justify-center items-center"
               >
-                <div className="bg-white flex items-center justify-center">
-                  <div className="px-6 py-2 border border-black text-sm font-medium bg-white text-black w-fit transition-all">
-                    View Tutorial
+                <div className="bg-white lg:flex items-center justify-center">
+                  <div className="px-6 py-2 text-sm font-medium bg-white text-black w-fit transition-all border border-gray-300 shadow-[3px_3px_0px_black] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]">
+                    Book a Demo
                   </div>
                 </div>
               </a>

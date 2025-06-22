@@ -28,7 +28,7 @@ function Footer() {
         </div>
 
         {/* Footer Links */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full lg:w-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 w-full lg:w-auto">
           {footerSections.map((section, index) => (
             <div key={index}>
               <h3 className="text-lg font-semibold mb-3">{section.title}</h3>
@@ -75,8 +75,8 @@ function Footer() {
       </div>
 
       {/* Bottom Footer */}
-      <div className="border-t border-gray-500 mt-8 pt-6 text-center text-gray-300 text-2xl">
-        <p>Made with ❤️ in India</p>
+      <div className="border-t text-white  border-gray-500 mt-8 pt-6 text-center text-2xl">
+        <p className="text-white">Made with ❤️ in India</p>
       </div>
     </footer>
   );

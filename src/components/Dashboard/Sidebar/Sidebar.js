@@ -29,7 +29,7 @@ const menuItems = [
     icon: <FiGrid size={18} className="text-white" />,
     label: 'Dashboard',
     activeClass:
-      'global-sidebar-button-primary border border-gray-400 bg-white',
+      'global-sidebar-button-primary border border-gray-700 bg-white',
     hoverClass: 'hover:bg-white hover:text-black',
     tag: null,
   },
@@ -38,7 +38,7 @@ const menuItems = [
     icon: <FiZap size={18} />,
     label: 'Quick Post',
     activeClass:
-      'global-sidebar-button-primary border border-gray-400 bg-white',
+      'global-sidebar-button-primary border border-gray-700 bg-white',
     hoverClass: 'hover:bg-white hover:text-black',
     tag: { text: 'MOST USED', color: 'bg-red-500' },
   },
@@ -47,7 +47,7 @@ const menuItems = [
     icon: <FiEdit size={18} />,
     label: 'AI Content Creator',
     activeClass:
-      'global-sidebar-button-primary border border-gray-400 bg-white',
+      'global-sidebar-button-primary border border-gray-700 bg-white',
     hoverClass: 'hover:bg-white hover:text-black',
     tag: { text: 'HOT', color: 'bg-yellow-500' },
   },
@@ -56,7 +56,7 @@ const menuItems = [
     icon: <FiClock size={18} />,
     label: 'Post History',
     activeClass:
-      'global-sidebar-button-primary border border-gray-400 bg-white',
+      'global-sidebar-button-primary border border-gray-700 bg-white',
     hoverClass: 'hover:bg-white hover:text-black',
     tag: null,
   },
@@ -65,7 +65,7 @@ const menuItems = [
     icon: <FiCalendar size={18} />,
     label: 'Content Calendar',
     activeClass:
-      'global-sidebar-button-primary border border-gray-400 bg-white',
+      'global-sidebar-button-primary border border-gray-700 bg-white',
     hoverClass: 'hover:bg-white hover:text-black',
     tag: { text: 'NEW', color: 'bg-blue-500' },
   },
@@ -74,7 +74,7 @@ const menuItems = [
     icon: <FiSave size={18} />,
     label: 'Saved Posts',
     activeClass:
-      'global-sidebar-button-primary border border-gray-400 bg-white',
+      'global-sidebar-button-primary border border-gray-700 bg-white',
     hoverClass: 'hover:bg-white hover:text-black',
     tag: { text: 'NEW', color: 'bg-blue-500' },
   },
@@ -104,7 +104,7 @@ const SidebarLink = ({
   <Link
     to={to}
     onClick={onClick}
-    className={`flex pl-3 pr-3 items-center bg-white max-h-[38px] w-full gap-3 rounded-md transition-all duration-500 ease-in-out relative
+    className={`flex pl-3 pr-3 items-center bg-gray-50 max-h-[38px] w-full gap-3 rounded-md transition-all duration-500 ease-in-out relative
     ${isOpen ? 'py-2' : 'py-2'} 
     ${isActive ? activeClass : hoverClass}
   `}

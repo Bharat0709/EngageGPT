@@ -11,17 +11,6 @@ import {
 
 export const features = [
   {
-    icon: <FaBullhorn className="w-6 h-6 text-blue-500" />,
-    gradient: 'bg-gradient-to-r from-blue-200 to-cyan-200',
-    title: 'Automated Posting',
-    description:
-      'Schedule and automate your LinkedIn posts for maximum visibility and consistency.',
-    learnMoreText: 'Watch Video',
-    link: 'https://www.youtube.com/watch?v=jpj5SYu28b0',
-    tag: 'New',
-    tagColor: 'bg-gradient-to-r from-blue-300 to-cyan-500',
-  },
-  {
     icon: <FaChartBar className="w-6 h-6 text-green-500" />,
     gradient: 'bg-gradient-to-r from-yellow-200 to-green-200',
     title: 'Analytics Dashboard',
@@ -43,6 +32,7 @@ export const features = [
     tag: 'Most Used',
     tagColor: 'bg-gradient-to-r from-blue-300 to-cyan-400',
   },
+
   {
     icon: <FaCheckCircle className="w-6 h-6 text-green-500" />,
     gradient: 'bg-gradient-to-r from-yellow-200 to-green-200',
@@ -77,36 +67,48 @@ export const features = [
     tagColor: 'bg-gradient-to-r from-yellow-300 to-green-300',
   },
   {
-    icon: <FaBookmark className="w-6 h-6 text-blue-500" />,
+    icon: <FaBullhorn className="w-6 h-6 text-blue-500" />,
     gradient: 'bg-gradient-to-r from-blue-200 to-cyan-200',
+    title: 'Automated Posting',
+    description:
+      'Schedule and automate your LinkedIn posts for maximum visibility and consistency.',
+    learnMoreText: 'Watch Video',
+    link: 'https://www.youtube.com/watch?v=jpj5SYu28b0',
+    tag: 'New',
+    tagColor: 'bg-gradient-to-r from-blue-300 to-cyan-500',
+  },
+
+  {
+    icon: <FaBookmark className="w-6 h-6 text-blue-500" />,
+    gradient: 'bg-gradient-to-r from-yellow-200 to-green-200',
     title: 'Post Saving',
     description:
       'Save posts automatically based on custom keywords for easy reference and inspiration.',
     learnMoreText: 'Learn More',
     link: '/dashboard/saved-posts',
     tag: 'New',
-    tagColor: 'bg-gradient-to-r from-blue-300 to-cyan-400',
+    tagColor: 'bg-gradient-to-r from-yellow-300 to-green-300',
   },
   {
     icon: <FaEyeSlash className="w-6 h-6 text-green-500" />,
-    gradient: 'bg-gradient-to-r from-yellow-200 to-green-200',
+    gradient: 'bg-gradient-to-r from-blue-200 to-cyan-300',
     title: 'Hide Post',
     description:
       'Filter your feed by hiding posts containing specific keywords you want to avoid.',
     learnMoreText: 'Learn More',
     link: '/dashboard/saved-posts',
     tag: 'Popular',
-    tagColor: 'bg-gradient-to-r from-yellow-300 to-green-300',
+    tagColor: 'bg-gradient-to-r from-blue-300 to-cyan-500',
   },
   {
     icon: <FaCalendarPlus className="w-6 h-6 text-blue-500" />,
-    gradient: 'bg-gradient-to-r from-blue-200 to-cyan-300',
+    gradient: 'bg-gradient-to-r from-yellow-200 to-green-200',
     title: 'Content Calendar',
     description:
       'Manage your posts efficiently with an intuitive content calendar',
     learnMoreText: 'Learn More',
     link: '/dashboard/content-calendar',
     tag: 'Hot',
-    tagColor: 'bg-gradient-to-r from-blue-400 to-cyan-400',
+    tagColor: 'bg-gradient-to-r from-yellow-300 to-green-300',
   },
 ];
