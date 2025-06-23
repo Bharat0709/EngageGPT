@@ -2,14 +2,15 @@ import React, { useState } from 'react';
 import { message } from 'antd';
 import { sendHelpMail } from '../../../network/Organization';
 import { IoLogoWhatsapp } from 'react-icons/io';
-const WHATSAPP_NUMBER = `${process.env.CONTACT_NUMBER}`;
 
 const handleWhatsAppContact = () => {
+  const WHATSAPP_NUMBER = `${process.env.REACT_APP_CONTACT_NUMBER}`;
   const message = encodeURIComponent('Hi, I need help with your service.');
-  const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER.replace(
-    /[^0-9]/g,
-    '',
-  )}?text=${message}`;
+  const phoneNumber = WHATSAPP_NUMBER.replace(/[^0-9]/g, '');
+  const isMobile = /iPhone|Android/i.test(navigator.userAgent);
+  const whatsappUrl = isMobile
+    ? `whatsapp://send?phone=${phoneNumber}&text=${message}`
+    : `https://web.whatsapp.com/send?phone=${phoneNumber}&text=${message}`;
   window.open(whatsappUrl, '_blank');
 };
 
