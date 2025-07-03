@@ -119,11 +119,11 @@ const EditPostModal = ({ isOpen, onClose, post, onSave, isEditing }) => {
 
   return (
     <div
-      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+      className="fixed inset-0 w-full z-50 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm transition-opacity"
       onClick={onClose}
     >
       <div
-        className="bg-white flex flex-col p-6 rounded-xl h-3/4 overflow-y-scroll lg:w-1/2 w-11/12 relative"
+        className="bg-white flex flex-col p-6 rounded-3xl h-3/4 overflow-y-scroll scrollbar-hide lg:w-1/2 w-11/12 relative"
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -132,7 +132,7 @@ const EditPostModal = ({ isOpen, onClose, post, onSave, isEditing }) => {
         >
           <FiX />
         </button>
-        <h2 className="text-xl text-center font-semibold mb-4">Edit Post</h2>
+        <h2 className="text-2xl text-center font-semibold mb-4">Edit Post</h2>
         <div className="grid grid-cols-2 gap-4 mb-4">
           <div>
             <label className="text-sm font-medium">Date</label>
@@ -216,7 +216,7 @@ const EditPostModal = ({ isOpen, onClose, post, onSave, isEditing }) => {
             <button
               type="button"
               onClick={onClose}
-              className="global-button-secondary"
+              className="global-button-secondary roundeed-full border-none"
             >
               Cancel
             </button>
@@ -224,7 +224,7 @@ const EditPostModal = ({ isOpen, onClose, post, onSave, isEditing }) => {
               type="submit"
               onClick={handleSave}
               disabled={loading}
-              className={`global-button-primary ${
+              className={`global-button-primary rounded-full ${
                 loading ? 'cursor-not-allowed opacity-50' : ''
               }`}
             >

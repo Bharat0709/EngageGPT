@@ -233,15 +233,15 @@ const PostContentEditor = ({
       {/* Header Section */}
       <div className="flex items-center lg:flex-row flex-col justify-center gap-4 lg:justify-between mb-6">
         <div className="flex items-center gap-3">
-          <div className="p-2 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl">
+          <div className="p-2 bg-[#0c4a6e] rounded-lg text-white text-lg sm:text-xl">
             <EditIcon />
           </div>
           <div>
-            <h4 className="text-xl font-semibold text-slate-800">
-              LinkedIn Post Content
-            </h4>
-            <p className="text-sm text-slate-500 mt-0.5">
-              Optimized for LinkedIn's native formatting
+            <h2 className="text-lg sm:text-2xl font-bold text-gray-800">
+              Quick Post Editor
+            </h2>
+            <p className="text-sm text-gray-600 hidden sm:block">
+              Post your thoughts, ideas, and updates quickly and easily!
             </p>
           </div>
         </div>
@@ -271,7 +271,7 @@ const PostContentEditor = ({
       )}
 
       {/* LinkedIn Formatting Toolbar */}
-      <div className="mb-4 p-4 bg-slate-50 rounded-xl border border-slate-200">
+      <div className="mb-4 p-4 bg-white rounded-xl border border-slate-200">
         <div className="flex items-center justify-between mb-3">
           <span className="text-sm font-medium text-slate-700">
             LinkedIn Formatting Tools

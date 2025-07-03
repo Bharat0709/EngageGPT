@@ -1,71 +1,38 @@
-import { Skeleton } from 'antd';
+const SkeletonCards = () => {
+  const placeholders = Array.from({ length: 5 });
 
-const renderSkeleton = () => (
-  <div className="dashboard-container bg-gray-100 rounded-xl mt-4">
-    <div className="mt-4">
-      <div className="person-card w-full bg-gray-50 p-4 rounded-xl flex justify-between items-center">
-        <div className="flex-grow items-center mt-1 gap-4">
-          <Skeleton.Input
-            active
-            style={{
-              width: 80,
-              height: 10,
-              marginLeft: 12,
-              marginTop: 3,
-            }}
-          />{' '}
-          <Skeleton.Input
-            active
-            style={{
-              width: 80,
-              height: 10,
-              marginLeft: 12,
-              marginTop: 3,
-            }}
-          />
-          <Skeleton.Input
-            active
-            style={{
-              width: 80,
-              height: 10,
-              marginLeft: 12,
-              marginTop: 3,
-            }}
-          />
-        </div>
-      </div>
-      <div className="flex bg-gray-100 flex-wrap gap-4 mt-4 ">
-        {Array.from({ length: 3 }).map((_, index) => (
-          <div
-            key={index}
-            className="person-card w-full bg-white p-4 rounded-xl flex justify-between items-start"
-          >
-            <Skeleton.Avatar active size="large" />
-            <div className="flex-grow items-center mt-1 h-36 gap-4">
-              <Skeleton.Input
-                active
-                style={{
-                  width: 120,
-                  height: 10,
-                  marginLeft: 12,
-                  marginTop: 3,
-                }}
-              />
-              <Skeleton.Input
-                active
-                style={{
-                  width: 100,
-                  height: 10,
-                  marginLeft: 12,
-                  marginTop: 3,
-                }}
-              />
+  return (
+    <>
+      {placeholders.map((_, index) => (
+        <div
+          key={index}
+          className="p-4 bg-white rounded-2xl border lg:mt-2 border-gray-200 animate-pulse mb-4"
+        >
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-gray-200 rounded-full"></div>
+              <div className="space-y-2">
+                <div className="w-24 h-4 bg-gray-200 rounded"></div>
+                <div className="w-16 h-3 bg-gray-200 rounded"></div>
+              </div>
+            </div>
+            <div className="flex gap-2">
+              <div className="w-8 h-8 bg-gray-200 rounded-full"></div>
+              <div className="w-8 h-8 bg-gray-200 rounded-full"></div>
             </div>
           </div>
-        ))}
-      </div>
-    </div>
-  </div>
-);
+          <div className="space-y-2 mb-4">
+            <div className="w-full h-4 bg-gray-200 rounded"></div>
+            <div className="w-3/4 h-4 bg-gray-200 rounded"></div>
+          </div>
+          <div className="flex justify-between items-center">
+            <div className="w-20 h-6 bg-gray-200 rounded"></div>
+            <div className="w-16 h-6 bg-gray-200 rounded"></div>
+          </div>
+        </div>
+      ))}
+    </>
+  );
+};
 
-export default renderSkeleton;
+export default SkeletonCards;

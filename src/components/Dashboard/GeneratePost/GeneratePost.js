@@ -20,6 +20,7 @@ import {
   FaBars,
   FaTimes,
 } from 'react-icons/fa';
+import GeneratePostSkeletonLoading from './SkeletonLoading';
 
 const LinkedInPostGenerator = () => {
   const navigate = useNavigate();
@@ -230,17 +231,10 @@ const LinkedInPostGenerator = () => {
 
   // Show loading state while initializing
   if (!isInitialized) {
-    return (
-      <div className="min-h-screen bg-[#ededed] p-4 flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-[#0c4a6e] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading your workspace...</p>
-        </div>
-      </div>
-    );
+    return <GeneratePostSkeletonLoading />;
   }
   return (
-    <div className="bg-[#ededed] h-screen p-2 sm:p-4">
+    <div className="bg-[#ededed] h-screen lg:p-2 p-2 sm:p-4">
       <div className="mx-auto h-[calc(100vh-1rem)] sm:h-[calc(100vh-2rem)] bg-white rounded-xl sm:rounded-2xl overflow-hidden flex flex-col">
         {/* Header */}
         <div className="p-4 sm:p-6 border-b border-gray-200 flex-shrink-0">
@@ -250,9 +244,9 @@ const LinkedInPostGenerator = () => {
                 <FaLinkedin />
               </div>
               <div>
-                <h1 className="text-lg sm:text-2xl font-bold text-gray-800">
+                <h2 className="text-lg sm:text-2xl font-bold text-gray-800">
                   LinkedIn Post Generator
-                </h1>
+                </h2>
                 <p className="text-sm text-gray-600 hidden sm:block">
                   Create engaging content with AI
                 </p>
@@ -320,7 +314,7 @@ const LinkedInPostGenerator = () => {
             {/* Messages */}
             <div
               ref={chatContainerRef}
-              className="flex-1 overflow-y-scroll scrollbar-hide p-4 sm:p-6 space-y-4"
+              className="flex-1 overflow-y-scroll min-h-4xl scrollbar-hide p-4 sm:p-6 space-y-4"
               style={{ scrollBehavior: 'smooth' }}
             >
               {messages.map((message) => (
@@ -422,7 +416,7 @@ const LinkedInPostGenerator = () => {
                     <button
                       key={index}
                       onClick={() => handleSampleClick(sample)}
-                      className="text-left p-3 bg-white rounded-lg border border-gray-200 hover:border-[#0c4a6e] hover:bg-blue-50 transition-all duration-200 text-sm group"
+                      className="text-left p-3 bg-white rounded-lg  hover:bg-blue-50 transition-all duration-200 text-sm group"
                     >
                       <span className="group-hover:text-[#0c4a6e]">
                         {sample}
@@ -453,6 +447,11 @@ const LinkedInPostGenerator = () => {
                   <FaArrowRight />
                 </button>
               </div>
+              <p className="text-xs lg:hidden flex text-gray-500 mt-2">
+                {' '}
+                Click on the hamburger icon on top right corner to view the
+                generated post!
+              </p>
               {creditsLeft <= 10 && creditsLeft > 0 && (
                 <p className="text-xs text-orange-600 mt-2 flex items-center space-x-1">
                   <FaExclamationTriangle />

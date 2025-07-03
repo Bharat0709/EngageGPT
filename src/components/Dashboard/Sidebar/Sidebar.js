@@ -12,7 +12,6 @@ import {
   FiMessageSquare,
   FiChevronLeft,
   FiGrid,
-  FiCalendar,
   FiSave,
   FiZap,
   FiEdit,
@@ -60,15 +59,15 @@ const menuItems = [
     hoverClass: 'hover:bg-white hover:text-black',
     tag: null,
   },
-  {
-    to: '/dashboard/content-calendar',
-    icon: <FiCalendar size={18} />,
-    label: 'Content Calendar',
-    activeClass:
-      'global-sidebar-button-primary border border-gray-700 bg-white',
-    hoverClass: 'hover:bg-white hover:text-black',
-    tag: { text: 'NEW', color: 'bg-blue-500' },
-  },
+  // {
+  //   to: '/dashboard/content-calendar',
+  //   icon: <FiCalendar size={18} />,
+  //   label: 'Content Calendar',
+  //   activeClass:
+  //     'global-sidebar-button-primary border border-gray-700 bg-white',
+  //   hoverClass: 'hover:bg-white hover:text-black',
+  //   tag: { text: 'NEW', color: 'bg-blue-500' },
+  // },
   {
     to: '/dashboard/saved-posts',
     icon: <FiSave size={18} />,

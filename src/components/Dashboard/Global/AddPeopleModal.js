@@ -104,7 +104,7 @@ const AddMembersModal = ({ isOpen, onClose, onSubmit }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 w-full z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm transition-opacity">
+    <div className="fixed inset-0 w-full z-50 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm transition-opacity">
       <div className="bg-white flex flex-col lg:max-h-2xl h-fit overflow-y-scroll scrollbar-hide  lg:w-2/5 w-11/12 p-0 rounded-3xl shadow-xl transform transition-all duration-300 ease-in-out">
         {/* Header */}
         <div className="bg-indigo-50 rounded-t-2xl p-6">
@@ -202,7 +202,7 @@ const AddMembersModal = ({ isOpen, onClose, onSubmit }) => {
             <button
               type="button"
               onClick={handleClose}
-              className="px-5 py-2 border border-gray-300 text-gray-700 font-medium rounded-full hover:bg-gray-50 transition-colors"
+              className="px-5 py-2 border-none text-gray-700 font-medium rounded-full hover:bg-gray-50 transition-colors"
             >
               Cancel
             </button>

@@ -45,11 +45,11 @@ const EditOrgModal = ({ isOpen, onClose, userData, onSave }) => {
 
   return (
     <div
-      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+      className="fixed inset-0 w-full z-50 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm transition-opacity"
       onClick={onClose}
     >
       <div
-        className="bg-white flex flex-col p-6 rounded-xl lg:w-1/2 w-11/12 relative"
+        className="bg-white flex flex-col p-6 rounded-3xl lg:w-1/2 w-11/12 relative"
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -59,7 +59,9 @@ const EditOrgModal = ({ isOpen, onClose, userData, onSave }) => {
           <FiX />
         </button>
         <div className="flex mb-4 justify-between items-center">
-          <h2 className="text-xl text-center w-full font-bold">Edit Profile</h2>
+          <h2 className="lg:text-2xl text-xl text-center w-full font-bold">
+            Edit Profile
+          </h2>
         </div>
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700">
@@ -98,11 +100,11 @@ const EditOrgModal = ({ isOpen, onClose, userData, onSave }) => {
             />
           </div>
         </div>
-        <div className="flex justify-end gap-4">
+        <div className="flex justify-end gap-2">
           <button
             type="button"
             onClick={onClose}
-            className="global-button-secondary"
+            className="global-button-secondary border-none rounded-full px-6"
           >
             Close
           </button>
@@ -110,7 +112,7 @@ const EditOrgModal = ({ isOpen, onClose, userData, onSave }) => {
             type="submit"
             onClick={handleSave}
             disabled={loading}
-            className={`global-button-primary ${
+            className={`global-button-primary  rounded-full px-6 ${
               loading ? 'cursor-not-allowed opacity-50' : ''
             }`}
           >

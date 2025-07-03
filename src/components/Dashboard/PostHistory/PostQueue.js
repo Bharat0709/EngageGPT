@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Skeleton, message } from 'antd';
-import { FiUsers } from 'react-icons/fi';
-import { AiOutlinePlus, AiOutlineDown, AiOutlineUp } from 'react-icons/ai';
+import { AiOutlinePlus } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 import { getAllMembers, addNewMember } from '../../../network/Members';
 import AddMembersModal from '../Global/AddPeopleModal';
-import { FaLinkedin } from 'react-icons/fa';
+import { FaClock, FaLinkedin } from 'react-icons/fa';
 import PostHistoryDashboard from './PostManager';
+import ProfilesDropDown from '../Global/ProfilesDropDown';
 
 const PostQueue = () => {
   const navigate = useNavigate();
@@ -62,7 +62,12 @@ const PostQueue = () => {
   };
 
   const handleProfileChange = (profile) => {
-    setSelectedProfile(profile);
+    console.log(profile);
+    linkedInConnectedProfiles.forEach((p) => {
+      if (p._id === profile) {
+        setSelectedProfile(p);
+      }
+    });
   };
 
   if (isLoading) {
@@ -87,24 +92,34 @@ const PostQueue = () => {
 
   if (!selectedProfile && invitedProfiles.length > 0) {
     return (
-      <div className="dashboard-container rounded-xl h- lg:p-6 p-2 bg-gray-100">
+      <div className="dashboard-container rounded-xl h-full lg:p-6 p-2 bg-[#ededed]">
         <div className="flex items-center mb-6 justify-between">
-          <h1 className="text-xl flex items-center text-black font-semibold">
-            Post Queue{' '}
-          </h1>
+          <div className="flex items-center space-x-3">
+            <div className="p-2 bg-[#0c4a6e] rounded-lg text-white text-lg sm:text-xl">
+              <FaClock />
+            </div>
+            <div>
+              <h2 className="text-lg sm:text-2xl font-bold text-gray-800">
+                Post History
+              </h2>
+              <p className="text-sm text-gray-600 hidden sm:block">
+                Manage your post history and track your LinkedIn activity
+              </p>
+            </div>
+          </div>
           <button
             type="primary"
             onClick={() => setIsAddMemberModalOpen(true)}
-            className="global-button-primary text-xs flex items-center gap-1 py-2 px-3 rounded-lg"
+            className="global-button-primary text-sm  px-4 rounded-full flex items-center gap-1 py-2 "
           >
             <AiOutlinePlus size={14} />
             Add Profile
           </button>
         </div>
-        <p className="text-center text-sm p-3 bg-white rounded-lg mt-4">
+        <p className="text-center text-sm p-3 bg-gray-50 rounded-lg mt-4">
           Connect to LinkedIn to start Posting
         </p>
-        <ul className="space-y-2 mt-4">
+        <ul className="space-y-2 mt-2">
           {invitedProfiles.map((person) => (
             <div
               key={person?.id}
@@ -150,7 +165,6 @@ const PostQueue = () => {
             </div>
           ))}
         </ul>
-        <PostHistoryDashboard selectedProfile={selectedProfile} />
         <AddMembersModal
           isOpen={isAddMemberModalOpen}
           onClose={() => setIsAddMemberModalOpen(false)}
@@ -161,104 +175,29 @@ const PostQueue = () => {
   }
 
   return (
-    <div className="bg-gray-100 min-h-screen rounded-xl lg:p-6 p-4">
-      <div className="flex lg:flex-row flex-col gap-3 justify-between items-center ">
-        <div className="flex items-center space-x-4">
-          <h1 className="text-xl flex items-center text-black font-semibold">
-            Post History{' '}
-          </h1>
+    <div className="bg-[#ededed] min-h-screen rounded-xl lg:p-2  p-4">
+      <div className="flex lg:flex-row flex-col gap-3 p-2 px-4 bg-white rounded-2xl justify-between items-center ">
+        <div className="flex items-center space-x-3">
+          <div className="p-2 bg-[#0c4a6e] rounded-lg text-white text-lg sm:text-xl">
+            <FaClock />
+          </div>
+          <div>
+            <h2 className="text-lg sm:text-2xl font-bold text-gray-800">
+              Post History
+            </h2>
+            <p className="text-sm text-gray-600 hidden sm:block">
+              Manage your post history and track your LinkedIn activity
+            </p>
+          </div>
         </div>
         <div className="flex flex-wrap justify-center items-center gap-4">
-          <div className="relative flex py-1 px-1 pl-3 bg-white hover:bg-gray-50 rounded-lg justify-center items-center gap-2 group">
-            <FiUsers size={16} />
-            <p className="text-sm">Connected Profiles:</p>
-            <span className="text-sm text-black">
-              {linkedInConnectedProfiles.length}
-            </span>
-            <div className="flex flex-col">
-              <AiOutlineUp className="h-2" />
-              <AiOutlineDown className="h-2" />
-            </div>
-            <div className="relative">
-              <div className="absolute -left-52 top-2 mt-2 w-64 bg-white border rounded-lg hidden group-hover:block z-10">
-                <ul className="divide-y divide-gray-200">
-                  {linkedInConnectedProfiles.map((profile) => (
-                    <li
-                      key={profile.id}
-                      onClick={(e) => handleProfileChange(profile)}
-                      className="flex items-center cursor-pointer justify-between p-2 hover:bg-gray-100"
-                    >
-                      <div className="flex items-center gap-3">
-                        <img
-                          src={profile.profilePicture}
-                          alt={profile.name}
-                          className="h-8 w-8 rounded-full"
-                        />
-                        <div className="flex flex-col gap-1">
-                          <h4 className="text-xs p-0 m-0 font-medium text-gray-800">
-                            {profile.name}
-                          </h4>
-                        </div>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div className="relative flex py-1 px-1 pl-3 bg-white hover:bg-gray-50 rounded-lg justify-center items-center gap-2 group">
-            <FiUsers size={16} />
-            <p className="text-sm"> Pending Connections:</p>
-            <span className=" text-sm text-black">
-              {invitedProfiles.length}
-            </span>
-            <div className="flex flex-col">
-              <AiOutlineUp className="h-2" />
-              <AiOutlineDown className="h-2" />
-            </div>
-            <div className="relative">
-              <div className="absolute -left-64 top-2 mt-2 w-64 bg-white border rounded-lg hidden group-hover:block z-10">
-                <ul className="divide-y divide-gray-200">
-                  {invitedProfiles.map((profile) => (
-                    <li
-                      key={profile.id}
-                      onClick={(e) => handleProfileChange(profile)}
-                      className="flex items-center justify-between p-2 hover:bg-gray-100"
-                    >
-                      <div className="flex items-center gap-3">
-                        <img
-                          src={profile.profilePicture}
-                          alt={profile.name}
-                          className="h-8 w-8 rounded-full"
-                        />
-                        <div className="flex flex-col gap-1">
-                          <h4 className="text-xs p-0 m-0 font-medium text-gray-800">
-                            {profile.name}
-                          </h4>
-                        </div>
-                      </div>
-                      <button
-                        onClick={handleConnectLinkedIn}
-                        className={`text-xs m-0 rounded-lg px-2 text-black flex items-center gap-2 p-1 bg-gray-50 bg-white-400 font-semibold'
-                           `}
-                      >
-                        <FaLinkedin className="text-sky-800" size={20} />
-                        Connect
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
-          <button
-            type="primary"
-            onClick={() => setIsAddMemberModalOpen(true)}
-            className="global-button-primary text-xs flex items-center gap-1 py-2 px-3 rounded-lg"
-          >
-            <AiOutlinePlus size={14} />
-            Add Profile
-          </button>
+          <ProfilesDropDown
+            profiles={linkedInConnectedProfiles}
+            selectedProfile={selectedProfile}
+            onProfileChange={handleProfileChange}
+            title="Connected Profiles"
+            type="connected"
+          />
         </div>
       </div>
       <PostHistoryDashboard selectedProfile={selectedProfile} />

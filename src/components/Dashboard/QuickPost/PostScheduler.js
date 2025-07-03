@@ -24,13 +24,12 @@ const PostScheduler = () => {
     media: [],
     timeZone: '',
   });
-  const [linkedInConnected, setLinkedInConnected] = useState(false);
   const [connectedProfiles, setConnectedProfiles] = useState(null);
+  const [invitedProfiles, setInvitedProfiles] = useState([]);
   const [selectedProfile, setSelectedProfile] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [calendarData, setCalendarData] = useState([]);
   const [selectedPostTopic, setSelectedPostTopic] = useState(null);
-  const [selectedProfileName, setSelectedProfileName] = useState('');
   const [isPosting, setIsPosting] = useState(false);
   const [isSavingDraft, setIsSavingDraft] = useState(false);
   const [isScheduling, setIsScheduling] = useState(false);
@@ -40,10 +39,8 @@ const PostScheduler = () => {
     const isConnected = params.get('isConnected');
     const error = params.get('error');
     if (isConnected === 'true') {
-      setLinkedInConnected(true);
       message.success('LinkedIn connected successfully!');
     } else if (isConnected === 'false') {
-      setLinkedInConnected(false);
       if (error) {
         message.error(error);
       } else {
@@ -58,11 +55,11 @@ const PostScheduler = () => {
       try {
         const data = await getAllMembers();
         const connected = data.filter((member) => member.isLinkedinConnected);
+        const invited = data.filter((member) => !member.isLinkedinConnected);
+        setInvitedProfiles(invited);
         setConnectedProfiles(connected);
         setSelectedProfile(connected?.[0]?._id || null);
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 1000);
+        setIsLoading(false);
       } catch (err) {
         message.error('Failed to load user data. Please try again later.');
       }
@@ -75,11 +72,6 @@ const PostScheduler = () => {
     if (selectedProfile) {
       const fetchCalendarData = async () => {
         try {
-          const ProfileName = connectedProfiles.find(
-            (profile) => profile._id === selectedProfile,
-          );
-
-          setSelectedProfileName(ProfileName.name);
           const response = await getContentCalendar(selectedProfile);
           if (response && response.contentCalendar.length > 0) {
             setCalendarData(response.contentCalendar);
@@ -247,7 +239,7 @@ const PostScheduler = () => {
 
   return (
     <div className="flex flex-col h-screen bg-[#ededed]">
-      <div className="flex rounded-xl mt-2 flex-col lg:flex-row justify-between gap-3 lg:p-3 lg:pt-0 p-2 scrollbar-hide h-screen overflow-y-scroll">
+      <div className="flex rounded-xl mt-2 flex-col lg:flex-row justify-between gap-3 lg:p-2 lg:pt-0 p-2 scrollbar-hide h-screen overflow-y-scroll">
         <div className="flex-1 mb-2 rounded-lg ">
           <>
             <PostContentEditor
@@ -264,17 +256,11 @@ const PostScheduler = () => {
         <div className="lg:w-1/3 w-full mb-4">
           <div>
             <LinkedInConnection
-              selectedPostTopic={selectedPostTopic}
-              setSelectedPostTopic={setSelectedPostTopic}
+              invitedProfiles={invitedProfiles}
               isLoading={isLoading}
-              linkedInConnected={linkedInConnected}
               connectedProfiles={connectedProfiles}
               selectedProfile={selectedProfile}
-              selectedProfileName={selectedProfileName}
               setSelectedProfile={setSelectedProfile}
-              calendarData={calendarData}
-              setCalendarData={setCalendarData}
-              setPostDetails={setPostDetails}
             />
             <PostPreviewSection
               isLoading={isLoading}

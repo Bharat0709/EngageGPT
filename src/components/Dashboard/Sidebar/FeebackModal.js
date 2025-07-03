@@ -2,8 +2,23 @@ import React, { useState } from 'react';
 import { FiX } from 'react-icons/fi';
 import { message } from 'antd';
 import { sendFeeback } from '../../../network/Organization';
+import { IoLogoWhatsapp } from 'react-icons/io';
+import EngageGPTLogo from '../../../assets/images/EngageGPTLogo.png';
 
 const FeedbackModal = ({ isVisible, onClose }) => {
+  const handleWhatsAppContact = () => {
+    const WHATSAPP_NUMBER = `${process.env.REACT_APP_CONTACT_NUMBER}`;
+    const message = encodeURIComponent(
+      'Hi, I would like to share my feedback.\nRating: ⭐⭐⭐⭐⭐(5/5)\nMessage: Insert your message here.',
+    );
+    const phoneNumber = WHATSAPP_NUMBER.replace(/[^0-9]/g, '');
+    const isMobile = /iPhone|Android/i.test(navigator.userAgent);
+    const whatsappUrl = isMobile
+      ? `whatsapp://send?phone=${phoneNumber}&text=${message}`
+      : `https://web.whatsapp.com/send?phone=${phoneNumber}&text=${message}`;
+    window.open(whatsappUrl, '_blank');
+  };
+
   const [rating, setRating] = useState(0);
   const [feedback, setFeedback] = useState('');
   const [loading, setLoading] = useState(false);
@@ -41,11 +56,11 @@ const FeedbackModal = ({ isVisible, onClose }) => {
 
   return (
     <div
-      className="fixed inset-0 overflow-hidden  bg-black bg-opacity-50 flex items-center p-4 backdrop-blur-sm transition-opacity justify-center z-50"
+      className="fixed inset-0 overflow-hidden  bg-black bg-opacity-60 flex flex-col items-center p-4 backdrop-blur-sm transition-opacity justify-center z-50"
       onClick={onClose}
     >
       <div
-        className="bg-white flex flex-col p-6 rounded-xl lg:w-1/2 w-11/12 relative"
+        className="bg-white flex flex-col p-6 rounded-3xl lg:w-1/2 w-11/12 relative"
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -55,7 +70,12 @@ const FeedbackModal = ({ isVisible, onClose }) => {
         >
           <FiX />
         </button>
-        <h2 className="text-xl text-center mb-2">We value your feedback</h2>
+        <img
+          src={EngageGPTLogo}
+          alt="EngageGPT Logo"
+          className="w-30 h-12 mx-auto mb-4"
+        />
+        <h1 className="text-xl text-center mb-2">We value your feedback</h1>
         <div className="flex justify-center space-x-2 mb-4">
           {[1, 2, 3, 4, 5].map((star) => (
             <button
@@ -73,7 +93,7 @@ const FeedbackModal = ({ isVisible, onClose }) => {
         </div>
         <textarea
           rows="4"
-          className="w-full border border-gray-300 rounded-xl p-2 mb-4"
+          className="w-full border border-gray-800 rounded-xl p-2 mb-4"
           placeholder="Let us know what you think..."
           value={feedback}
           onChange={(e) => setFeedback(e.target.value)}
@@ -83,7 +103,7 @@ const FeedbackModal = ({ isVisible, onClose }) => {
           <button
             type="button"
             onClick={onClose}
-            className={`global-button-secondary rounded-full ${
+            className={`global-button-secondary rounded-full border-none ${
               loading ? 'opacity-50 cursor-not-allowed' : ''
             }`}
             disabled={loading}
@@ -93,7 +113,7 @@ const FeedbackModal = ({ isVisible, onClose }) => {
           <button
             type="button"
             onClick={handleFeedbackSubmit}
-            className={`global-button-primary rounded-full ${
+            className={`global-button-primary rounded-full px-6 ${
               loading ? 'opacity-50 cursor-not-allowed' : ''
             }`}
             disabled={loading}
@@ -101,6 +121,13 @@ const FeedbackModal = ({ isVisible, onClose }) => {
             {loading ? 'Submitting...' : 'Submit'}
           </button>
         </div>
+        <button
+          className="w-full px-4 py-2 bg-green-500 mt-4 text-white rounded-full hover:bg-green-600 transition-colors flex items-center justify-center gap-2"
+          onClick={handleWhatsAppContact}
+        >
+          <IoLogoWhatsapp size={20} />
+          Contact Founder
+        </button>
       </div>
     </div>
   );

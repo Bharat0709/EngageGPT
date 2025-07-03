@@ -100,7 +100,7 @@ const People = () => {
           <button
             type="primary"
             onClick={() => setIsAddPeopleModalOpen(true)}
-            className="global-button-primary text-sm flex items-center gap-1 py-2 px-3 rounded-xl"
+            className="global-button-primary rounded-full text-sm flex items-center gap-1 py-2 px-4"
           >
             <AiOutlinePlus size={14} />
             Add Profile
@@ -271,6 +271,7 @@ const People = () => {
                 >
                   {' '}
                   <FiSettings size={16} />
+                  Member Settings
                 </button>
               </div>
             </div>

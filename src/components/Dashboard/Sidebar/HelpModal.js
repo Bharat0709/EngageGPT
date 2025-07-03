@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { message } from 'antd';
 import { sendHelpMail } from '../../../network/Organization';
 import { IoLogoWhatsapp } from 'react-icons/io';
+import EngageGPTLogo from '../../../assets/images/EngageGPTLogo.png';
 
 const handleWhatsAppContact = () => {
   const WHATSAPP_NUMBER = `${process.env.REACT_APP_CONTACT_NUMBER}`;
@@ -16,7 +17,7 @@ const handleWhatsAppContact = () => {
 
 const HelpModal = ({ isVisible, onClose }) => {
   const [helpQuery, setHelpQuery] = useState('');
-  const [loading, setLoading] = useState(false); // Loading state added
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
     if (!helpQuery) {
@@ -24,7 +25,7 @@ const HelpModal = ({ isVisible, onClose }) => {
       return;
     }
 
-    setLoading(true); // Set loading to true before submission
+    setLoading(true);
     try {
       await sendHelpMail(helpQuery);
       message.success(`Help Query Submitted`);
@@ -33,7 +34,7 @@ const HelpModal = ({ isVisible, onClose }) => {
     } catch (error) {
       message.error('An error occurred while submitting your help request.');
     } finally {
-      setLoading(false); // Reset loading state after submission
+      setLoading(false);
     }
   };
 
@@ -41,20 +42,25 @@ const HelpModal = ({ isVisible, onClose }) => {
 
   return (
     <div
-      className="fixed inset-0 overflow-hidden bg-black bg-opacity-50 flex items-center justify-center p-4 backdrop-blur-sm transition-opacity z-50"
+      className="fixed inset-0 overflow-hidden bg-black bg-opacity-60 flex items-center justify-center p-4 backdrop-blur-sm transition-opacity z-50"
       onClick={onClose}
     >
       <div
-        className="bg-white flex flex-col p-6 rounded-xl lg:w-1/2 w-11/12 relative"
+        className="bg-white flex flex-col p-6 rounded-3xl lg:w-1/2 w-11/12 relative"
         onClick={(e) => e.stopPropagation()}
       >
-        <h2 className="text-xl text-center mt-2 mb-4">
+        <img
+          src={EngageGPTLogo}
+          alt="EngageGPT Logo"
+          className="w-30 h-12 mx-auto mb-4"
+        />
+        <h1 className="text-xl text-center mt-2 mb-4">
           How can we assist you?
-        </h2>
+        </h1>
         <textarea
           rows="4"
-          className="w-full border border-gray-300 rounded-xl p-2 mb-4"
-          placeholder="Describe your issue..."
+          className="w-full border border-gray-800 rounded-xl p-2 mb-4"
+          placeholder="Describe your issue here..."
           value={helpQuery}
           onChange={(e) => setHelpQuery(e.target.value)}
         ></textarea>
@@ -62,7 +68,7 @@ const HelpModal = ({ isVisible, onClose }) => {
           <button
             type="button"
             onClick={onClose}
-            className={`global-button-secondary rounded-full ${
+            className={`global-button-secondary border-none rounded-full ${
               loading ? 'opacity-50 cursor-not-allowed' : ''
             }`}
             disabled={loading} // Disable close button during loading
@@ -72,7 +78,7 @@ const HelpModal = ({ isVisible, onClose }) => {
           <button
             type="button"
             onClick={handleSubmit}
-            className={`global-button-primary rounded-full ${
+            className={`global-button-primary px-6 rounded-full ${
               loading ? 'opacity-50 cursor-not-allowed' : ''
             }`}
             disabled={loading} // Disable submit button during loading

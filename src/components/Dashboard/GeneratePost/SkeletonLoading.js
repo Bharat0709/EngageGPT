@@ -1,87 +1,259 @@
 import React from 'react';
-import { Skeleton } from 'antd';
+import { Skeleton, Card, Divider } from 'antd';
 
-const SkeletonLoading = () => {
+const GeneratePostSkeletonLoading = () => {
   return (
-    <div className="flex w-full flex-col lg:flex-row gap-6 lg:p-4 p-4 bg-gray-50 min-h-screen">
-      {/* Left Section */}
-      <div className="flex w-full lg:w-3/4 gap-4 flex-col rounded-lg">
-        {/* Header */}
-        <div className="flex w-full flex-wrap lg:flex-row gap-3 justify-between items-center mb-4">
-          <Skeleton.Input active style={{ width: '128px', height: '24px' }} />
-        </div>
-
-        {/* Input Fields */}
-        <div className="mb-2">
-          <Skeleton.Input
-            active
-            style={{ width: '96px', height: '16px', marginBottom: '8px' }}
-          />
-          <div className="flex gap-2">
-            <Skeleton.Input active style={{ width: '50vw', height: '30px' }} />
-            <Skeleton.Input active style={{ width: '25%', height: '30px' }} />
-          </div>
-        </div>
-
-        {/* Tones and Language Selection */}
-        <div className="flex justify-between gap-2 mb-4">
-          <div className="flex gap-2 flex-wrap w-3/4">
-            {Array(1)
-              .fill(null)
-              .map((_, index) => (
-                <Skeleton.Button
-                  key={index}
+    <div className="bg-[#ededed] h-screen p-2 sm:p-4">
+      <div className="mx-auto h-[calc(100vh-1rem)] sm:h-[calc(100vh-2rem)] bg-white rounded-xl sm:rounded-2xl overflow-hidden flex flex-col">
+        {/* Header Skeleton */}
+        <div className="p-4 sm:p-6 border-b border-gray-200 flex-shrink-0">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <Skeleton.Avatar size={48} />
+              <div>
+                <Skeleton.Input
+                  style={{ width: 200, height: 24, marginBottom: 8 }}
                   active
-                  style={{ width: '80px', height: '30px' }}
                 />
-              ))}
-          </div>
-          <Skeleton.Input active style={{ width: '25%', height: '30px' }} />
-        </div>
-
-        {/* Post Format Options */}
-        <div className="my-2 flex w-full flex-wrap items-center gap-2 justify-between">
-          <div className="flex gap-2 w-3/4">
-            {Array(2)
-              .fill(null)
-              .map((_, index) => (
-                <Skeleton.Button
-                  key={index}
+                <Skeleton.Input
+                  style={{ width: 150, height: 16 }}
                   active
-                  style={{ width: '96px', height: '30px' }}
+                  className="hidden sm:block"
                 />
-              ))}
+              </div>
+            </div>
+            <div className="flex items-center space-x-2 sm:space-x-4">
+              <div className="hidden sm:flex items-center space-x-2">
+                <Skeleton.Avatar size={32} />
+                <Skeleton.Input style={{ width: 80, height: 16 }} active />
+              </div>
+              <Skeleton.Button style={{ width: 80, height: 36 }} active />
+              <Skeleton.Button
+                style={{ width: 40, height: 36 }}
+                active
+                className="lg:hidden"
+              />
+            </div>
           </div>
-          <Skeleton.Input active style={{ width: '25%', height: '30px' }} />
         </div>
 
-        {/* Text Area */}
-        <Skeleton.Input
-          active
-          style={{ width: '100%', height: '208px', marginBottom: '16px' }}
-        />
+        <div className="flex flex-1 overflow-hidden">
+          {/* Chat Section Skeleton */}
+          <div className="flex-1 flex flex-col">
+            {/* Tone Selection Skeleton */}
+            <div className="p-3 sm:p-4 border-b bg-gray-50 flex-shrink-0">
+              <div className="flex items-center space-x-2 mb-3">
+                <Skeleton.Avatar size={20} />
+                <Skeleton.Input style={{ width: 100, height: 16 }} active />
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {[1, 2, 3, 4, 5, 6].map((item) => (
+                  <Skeleton.Button
+                    key={item}
+                    style={{ width: 80, height: 32, borderRadius: 16 }}
+                    active
+                  />
+                ))}
+              </div>
+            </div>
 
-        <div className="flex lg:flex-row flex-col gap-2 items-center">
-          <Skeleton.Input active style={{ width: '50vw', height: '30px' }} />
-          <Skeleton.Input active style={{ width: '25%', height: '30px' }} />
+            {/* Messages Skeleton */}
+            <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4">
+              {/* User Message Skeleton */}
+              <div className="flex justify-end">
+                <div className="flex items-start space-x-3 max-w-[85%] flex-row-reverse space-x-reverse">
+                  <Skeleton.Avatar size={32} />
+                  <div className="bg-[#0c4a6e] rounded-2xl rounded-br-md p-3 sm:p-4 min-w-[200px]">
+                    <Skeleton.Input
+                      style={{ width: '100%', height: 16 }}
+                      active
+                    />
+                    <Skeleton.Input
+                      style={{ width: '80%', height: 16, marginTop: 8 }}
+                      active
+                    />
+                    <Skeleton.Input
+                      style={{ width: 60, height: 12, marginTop: 8 }}
+                      active
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* AI Response Skeleton */}
+              <div className="flex justify-start">
+                <div className="flex items-start space-x-3 max-w-[85%]">
+                  <Skeleton.Avatar size={32} />
+                  <div className="bg-white rounded-2xl rounded-bl-md p-3 sm:p-4 border border-gray-100 min-w-[300px]">
+                    <Skeleton
+                      paragraph={{
+                        rows: 4,
+                        width: ['100%', '90%', '95%', '80%'],
+                      }}
+                      active
+                    />
+                    <Skeleton.Input
+                      style={{ width: 60, height: 12, marginTop: 8 }}
+                      active
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Loading Animation Skeleton */}
+              <div className="flex justify-start">
+                <div className="flex items-start space-x-3 max-w-[85%]">
+                  <Skeleton.Avatar size={32} />
+                  <div className="bg-white rounded-2xl rounded-bl-md p-4 border border-gray-100">
+                    <div className="flex items-center space-x-3">
+                      <div className="flex space-x-1">
+                        <div className="w-2 h-2 bg-[#0c4a6e] rounded-full animate-bounce"></div>
+                        <div
+                          className="w-2 h-2 bg-[#0c4a6e] rounded-full animate-bounce"
+                          style={{ animationDelay: '0.1s' }}
+                        ></div>
+                        <div
+                          className="w-2 h-2 bg-[#0c4a6e] rounded-full animate-bounce"
+                          style={{ animationDelay: '0.2s' }}
+                        ></div>
+                      </div>
+                      <Skeleton.Input
+                        style={{ width: 150, height: 16 }}
+                        active
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Sample Messages Skeleton */}
+            <div className="p-4 border-t bg-gray-50 flex-shrink-0">
+              <div className="flex items-center space-x-2 mb-3">
+                <Skeleton.Avatar size={16} />
+                <Skeleton.Input style={{ width: 150, height: 16 }} active />
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {[1, 2, 3, 4].map((item) => (
+                  <Card
+                    key={item}
+                    className="hover:bg-blue-50 transition-all duration-200"
+                  >
+                    <Skeleton
+                      paragraph={{ rows: 2, width: ['100%', '80%'] }}
+                      active
+                    />
+                  </Card>
+                ))}
+              </div>
+            </div>
+
+            {/* Input Skeleton */}
+            <div className="p-4 border-t bg-white flex-shrink-0">
+              <div className="flex space-x-3">
+                <Skeleton.Input
+                  style={{
+                    flex: 1,
+                    height: 48,
+                    borderRadius: 12,
+                  }}
+                  active
+                />
+                <Skeleton.Button
+                  style={{
+                    width: 50,
+                    height: 48,
+                    borderRadius: 12,
+                  }}
+                  active
+                />
+              </div>
+              <Skeleton.Input
+                style={{ width: 250, height: 12, marginTop: 8 }}
+                active
+                className="lg:hidden"
+              />
+            </div>
+          </div>
+
+          {/* Preview Section Skeleton */}
+          <div className="w-full lg:w-96 border-l overflow-y-auto bg-gray-50 flex flex-col hidden lg:flex">
+            <div className="p-4 border-b bg-white flex-shrink-0">
+              <div className="flex items-center justify-between">
+                <Skeleton.Input style={{ width: 120, height: 20 }} active />
+                <div className="flex space-x-2">
+                  <Skeleton.Button style={{ width: 32, height: 32 }} active />
+                  <Skeleton.Button style={{ width: 32, height: 32 }} active />
+                </div>
+              </div>
+            </div>
+
+            <div className="flex-1 p-4 overflow-y-auto">
+              <Card className="bg-white rounded-xl border">
+                {/* Profile Header */}
+                <div className="flex items-center space-x-3 mb-4">
+                  <Skeleton.Avatar size={48} />
+                  <div>
+                    <Skeleton.Input
+                      style={{ width: 120, height: 16, marginBottom: 4 }}
+                      active
+                    />
+                    <div className="flex items-center space-x-1">
+                      <Skeleton.Input
+                        style={{ width: 60, height: 12 }}
+                        active
+                      />
+                      <span className="text-gray-300">•</span>
+                      <Skeleton.Avatar size={12} />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Post Content */}
+                <div className="mb-6">
+                  <Skeleton
+                    paragraph={{
+                      rows: 6,
+                      width: ['100%', '95%', '90%', '100%', '85%', '70%'],
+                    }}
+                    active
+                  />
+                </div>
+
+                <Divider className="my-4" />
+
+                {/* Action Buttons */}
+                <div className="flex items-center justify-between">
+                  {[1].map((item) => (
+                    <div key={item} className="flex items-center space-x-1">
+                      <Skeleton.Avatar size={16} />
+                      <Skeleton.Input
+                        style={{ width: 50, height: 12 }}
+                        active
+                        className="hidden sm:inline"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </Card>
+            </div>
+
+            {/* Action Button */}
+            <div className="p-4 border-t bg-white flex-shrink-0">
+              <Skeleton.Button
+                style={{
+                  width: '100%',
+                  height: 48,
+                  borderRadius: 12,
+                }}
+                active
+              />
+            </div>
+          </div>
         </div>
-      </div>
-
-      <div className="border-l border-gray-200"></div>
-
-      <div className="w-full flex gap-4 flex-col lg:w-1/3 rounded-lg">
-        <Skeleton.Input
-          active
-          style={{ width: '128px', height: '24px', marginBottom: '16px' }}
-        />
-        <Skeleton.Input
-          active
-          style={{ width: '100%', height: '384px', marginBottom: '16px' }}
-        />
-        <Skeleton.Input active style={{ width: '100%', height: '30px' }} />
       </div>
     </div>
   );
 };
 
-export default SkeletonLoading;
+export default GeneratePostSkeletonLoading;

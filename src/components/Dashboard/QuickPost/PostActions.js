@@ -86,6 +86,12 @@ const PostActions = ({
   }, [selectedPostTopic]);
 
   const handleSchedule = () => {
+    // Check if profile is selected
+    if (!selectedProfile) {
+      message.info('No Profile Selected');
+      return;
+    }
+
     if (!selectedDate || !selectedTime) {
       message.info('Please select both date and time to schedule the post.');
       return;
@@ -118,6 +124,12 @@ const PostActions = ({
   };
 
   const handleSaveDraft = () => {
+    // Check if profile is selected
+    if (!selectedProfile) {
+      message.info('No Profile Selected');
+      return;
+    }
+
     if (!selectedDate || !selectedTime) {
       message.info('Please select both date and time to save as draft.');
       return;
