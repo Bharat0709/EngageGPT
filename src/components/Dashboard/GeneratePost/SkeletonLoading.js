@@ -1,4 +1,3 @@
-import React from 'react';
 import { Skeleton, Card, Divider } from 'antd';
 
 const GeneratePostSkeletonLoading = () => {
@@ -177,7 +176,7 @@ const GeneratePostSkeletonLoading = () => {
           </div>
 
           {/* Preview Section Skeleton */}
-          <div className="w-full lg:w-96 border-l overflow-y-auto bg-gray-50 flex flex-col hidden lg:flex">
+          <div className="w-full lg:w-96 border-l overflow-y-auto bg-gray-50 flex-col hidden lg:flex">
             <div className="p-4 border-b bg-white flex-shrink-0">
               <div className="flex items-center justify-between">
                 <Skeleton.Input style={{ width: 120, height: 20 }} active />
