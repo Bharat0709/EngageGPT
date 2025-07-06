@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import EngageGPTLogo from '../assets/images/EngageGPTLogo.png';
-import Crying from '../assets/images/Crying.png';
-import { submitSurvey } from '../network/Members';
+import { useState, useEffect } from 'react';
+import { fetchOrganizationData } from '@services/Organization';
+import { submitSurvey } from '@services/Members';
 import { message } from 'antd';
+import Crying from '@assets/images/Crying.png';
+import EngageGPTLogo from '@assets/images/EngageGPTLogo.png';
 
 const FeedbackSurvey = () => {
   const [formData, setFormData] = useState({
@@ -14,7 +15,24 @@ const FeedbackSurvey = () => {
     email: '',
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [userData, setUserData] = useState(null);
 
+  useEffect(() => {
+    const fetchAndSetUserData = async () => {
+      setIsLoading(true);
+      try {
+        const data = await fetchOrganizationData();
+        setUserData(data);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 1000);
+      } catch (err) {
+        message.error('Organization details not found');
+      }
+    };
+
+    fetchAndSetUserData();
+  }, []);
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
@@ -203,8 +221,9 @@ const FeedbackSurvey = () => {
             <input
               type="email"
               id="email"
+              disabled={!userData}
               name="email"
-              value={formData.email}
+              value={userData?.email}
               onChange={handleInputChange}
               placeholder="Your email address (optional)"
               className="mt-2 block p-2 w-full rounded-md border-gray-400 border shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"

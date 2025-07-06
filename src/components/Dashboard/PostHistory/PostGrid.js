@@ -1,6 +1,6 @@
 import PostCard from './PostCard';
 import EmptyState from './EmptyState';
-import SkeletonCards from './SkeletonLoading';
+import SkeletonCards from '../SkeletonLoaders/SkeletonLoadingPostHistory';
 
 const PostsGrid = ({
   selectedProfile,

@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
 import { message } from 'antd';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import { FcGoogle } from 'react-icons/fc';
-import EngageGPTLogo from '../assets/images/EngageGPTLogoIocn.png';
-import signupIllustration from '../assets/images/engagegptLogin.png';
-import { signup } from '../network/Auth';
-import { useNavigate } from 'react-router-dom';
-import useAuthCheck from '../hooks/useAuth';
+import { Icons } from '@utils/constantData/icons';
+import { goTo } from '@utils/navigator';
+import EngageGPTLogo from '@assets/images/EngageGPTLogoIocn.png';
+import signupIllustration from '@assets/images/engagegptLogin.png';
+import { signup } from '@services/Auth';
+import useAuthCheck from '@hooks/useAuth';
 
 const Signup = () => {
   useAuthCheck();
-  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -38,7 +36,6 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
 
     if (!formData.email || !formData.password) {
       message.error('Please fill out all required fields.');
@@ -56,8 +53,7 @@ const Signup = () => {
         formData.password,
         formData.confirmPassword,
       );
-      console.log(signupResponse);
-      navigate(`/dashboard?token=${signupResponse.token}`);
+      goTo(`/dashboard?token=${signupResponse.token}`);
       message.success('Signup successful!');
     } catch (error) {
       message.error(error.message);
@@ -86,7 +82,7 @@ const Signup = () => {
             onClick={handleGoogleSignUp}
             className="flex w-full items-center justify-center border border-gray-300 bg-white text-sky-900 py-2 px-4 rounded-full"
           >
-            <FcGoogle className="mr-2" size={20} />
+            <Icons.Google className="mr-2" size={20} />
             Sign in with Google
           </button>
 
@@ -138,7 +134,7 @@ const Signup = () => {
                   onClick={togglePasswordVisibility}
                   className="absolute top-4 right-3 cursor-pointer text-gray-300"
                 >
-                  {showPassword ? <FaEye /> : <FaEyeSlash />}
+                  {showPassword ? <Icons.Eye /> : <Icons.EyeSlash />}
                 </div>
               </div>
             </div>
@@ -165,7 +161,7 @@ const Signup = () => {
                   onClick={togglePasswordVisibility}
                   className="absolute top-4 right-3 cursor-pointer text-gray-300"
                 >
-                  {showPassword ? <FaEye /> : <FaEyeSlash />}
+                  {showPassword ? <Icons.Eye /> : <Icons.EyeSlash />}
                 </div>
               </div>
             </div>
@@ -203,7 +199,7 @@ const Signup = () => {
                 <button
                   type="button"
                   className="text-sky-100 hover:underline ml-1"
-                  onClick={() => navigate('/login')}
+                  onClick={() => goTo('/login')}
                 >
                   Login
                 </button>

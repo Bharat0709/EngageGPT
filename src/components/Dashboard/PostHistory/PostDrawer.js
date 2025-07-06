@@ -21,7 +21,6 @@ import { message } from 'antd';
 const CustomDrawer = ({ isOpen, onClose, children, title }) => {
   return (
     <>
-      {/* Backdrop */}
       <div
         className={`fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm transition-opacity duration-300 z-40 ${
           isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
@@ -31,14 +30,16 @@ const CustomDrawer = ({ isOpen, onClose, children, title }) => {
 
       {/* Drawer */}
       <div
-        className={`fixed top-0 right-0 h-full bg-white shadow-2xl transform transition-transform duration-300 ease-in-out z-40 ${
+        className={`fixed top-0 right-0 h-full bg-white shadow-2xl transform transition-transform duration-300 ease-in-out z-[1000] ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         } w-full max-w-md md:max-w-lg lg:max-w-xl`}
       >
         <div className="h-full flex flex-col">
           {/* Header */}
-          <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-white sticky top-0 z-10">
-            <h2 className="text-lg font-semibold text-gray-900">{title}</h2>
+          <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-white sticky top-0 z-50">
+            <h2 className="text-lg m-0 p-0 font-semibold text-gray-900">
+              {title}
+            </h2>
             <button
               onClick={onClose}
               className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-full transition-colors"
@@ -202,7 +203,7 @@ const PostDrawer = ({
             </button>
           </div>
           <div className="bg-gray-50 rounded-xl p-4 border border-gray-100">
-            <p className="whitespace-pre-wrap text-gray-800 leading-relaxed">
+            <p className="whitespace-pre-wrap m-0 text-gray-800 leading-relaxed">
               {post.content}
             </p>
           </div>
@@ -230,10 +231,10 @@ const PostDrawer = ({
                           {getMediaIcon(media.type)}
                         </div>
                         <div>
-                          <p className="font-medium text-gray-900 text-sm">
+                          <p className="font-medium m-0 text-gray-900 text-sm">
                             {media.name || `Media ${index + 1}`}
                           </p>
-                          <p className="text-xs text-gray-500 capitalize">
+                          <p className="text-xs m-0 text-gray-500 capitalize">
                             {media.type || 'Image'}
                           </p>
                         </div>
@@ -265,7 +266,7 @@ const PostDrawer = ({
                   Scheduled Time
                 </span>
               </div>
-              <p className="text-blue-800 font-medium">
+              <p className="text-blue-800 m-0 font-medium">
                 {formatDateTime(post.postDate, post.postTime, post.timeZone)}
               </p>
             </div>
@@ -278,7 +279,7 @@ const PostDrawer = ({
                     Time Zone
                   </span>
                 </div>
-                <p className="text-gray-700 font-medium">{post.timeZone}</p>
+                <p className="text-gray-700 m-0 font-medium">{post.timeZone}</p>
               </div>
             )}
 
@@ -290,7 +291,7 @@ const PostDrawer = ({
                     Created
                   </span>
                 </div>
-                <p className="text-gray-700 font-medium">
+                <p className="text-gray-700 m-0 font-medium">
                   {new Date(post.createdAt).toLocaleDateString('en-US', {
                     month: 'short',
                     day: 'numeric',
@@ -313,7 +314,9 @@ const PostDrawer = ({
             <div className="bg-red-50 rounded-xl p-4 border border-red-200">
               <div className="flex items-start space-x-3">
                 <FiAlertCircle className="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0" />
-                <p className="text-red-800 leading-relaxed">{post.error}</p>
+                <p className="text-red-800 p-0 m-0 leading-relaxed">
+                  {post.error}
+                </p>
               </div>
             </div>
           </div>

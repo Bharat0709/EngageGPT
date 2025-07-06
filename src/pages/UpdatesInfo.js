@@ -1,5 +1,5 @@
 import React from 'react';
-import EngageGPTLogo from '../assets/images/EngageGPTLogo.png';
+import EngageGPTLogo from '@assets/images/EngageGPTLogo.png';
 
 const updates = [
   {

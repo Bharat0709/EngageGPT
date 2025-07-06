@@ -1,18 +1,14 @@
 import { useState, useEffect } from 'react';
-import { FiCopy, FiSettings } from 'react-icons/fi';
-import { AiOutlinePlus } from 'react-icons/ai';
-import { FiUserPlus } from 'react-icons/fi';
+import { Icons } from '@utils/constantData/icons';
+import { goTo } from '@utils/navigator';
 import { BiUnlink } from 'react-icons/bi';
 import { Button, message, Skeleton } from 'antd';
 import AddPeopleModal from '../Global/AddPeopleModal';
 import DisconnectConfirmationModal from './DisconnectModal';
-import { getAllMembers, addNewMember } from '../../../network/Members';
-import { FaLinkedin } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
+import { getAllMembers, addNewMember } from '@services/Members';
 import 'antd/dist/reset.css';
 
-const People = () => {
-  const navigate = useNavigate();
+export const People = () => {
   const [people, setPeople] = useState([]);
   const [isAddPeopleModalOpen, setIsAddPeopleModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -71,7 +67,7 @@ const People = () => {
   };
 
   const handleNavigateToSettings = (memberId) => {
-    navigate(`/dashboard/member-settings/${memberId}`);
+    goTo(`/dashboard/member-settings/${memberId}`);
   };
 
   const filterPeople = (filter) => {
@@ -102,7 +98,7 @@ const People = () => {
             onClick={() => setIsAddPeopleModalOpen(true)}
             className="global-button-primary rounded-full text-sm flex items-center gap-1 py-2 px-4"
           >
-            <AiOutlinePlus size={14} />
+            <Icons.Plus size={14} />
             Add Profile
           </button>
         </div>
@@ -184,7 +180,7 @@ const People = () => {
           ))
         ) : filteredPeople.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-10">
-            <FiUserPlus size={48} className="text-gray-300 mb-4" />
+            <Icons.Plus size={48} className="text-gray-300 mb-4" />
             <p className="text-lg text-gray-600 mb-4">No Data Found.</p>
           </div>
         ) : (
@@ -242,7 +238,7 @@ const People = () => {
                   Extension Connection Token
                   <Button
                     className="text-black hover:text-black"
-                    icon={<FiCopy />}
+                    icon={<Icons.Copy />}
                     onClick={() => handleCopy(person.connectionToken)}
                     type="link"
                   ></Button>
@@ -261,7 +257,7 @@ const People = () => {
                     className={`rounded-lg text-black bg-white p-2 px-2 flex items-center gap-2 text-xs`}
                   >
                     Connect
-                    <FaLinkedin className="text-sky-800" size={16} />
+                    <Icons.LinkedIn className="text-sky-800" size={16} />
                   </button>
                 )}
 
@@ -270,7 +266,7 @@ const People = () => {
                   className="rounded-lg text-black bg-white p-2 px-2 flex items-center gap-2 text-xs"
                 >
                   {' '}
-                  <FiSettings size={16} />
+                  <Icons.Settings size={16} />
                   Member Settings
                 </button>
               </div>
@@ -292,5 +288,3 @@ const People = () => {
     </div>
   );
 };
-
-export default People;

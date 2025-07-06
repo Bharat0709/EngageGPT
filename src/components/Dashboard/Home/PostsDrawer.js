@@ -1,21 +1,14 @@
 import React, { useRef } from 'react';
 import { Drawer } from 'antd';
-import { useNavigate } from 'react-router-dom';
-import linkedInIcon from '../../../assets/images/linkedInIcon.png';
-import {
-  AiOutlineBarChart,
-  AiOutlineEye,
-  AiOutlineHeart,
-  AiOutlineMessage,
-  AiOutlineShareAlt,
-} from 'react-icons/ai';
+import linkedInIcon from '@assets/images/linkedInIcon.png';
 import Tooltip from '../Global/ToolTip';
+import { goTo } from '@utils/navigator';
+import { Icons } from '@utils/constantData/icons';
 
 const PostDrawer = ({ post, handleDrawerClose, isOpen }) => {
   const drawerRef = useRef(null);
-  const navigate = useNavigate();
   const handleRewriteWithAI = () => {
-    navigate('/dashboard/create-post', {
+    goTo('/dashboard/create-post', {
       state: {
         initialTemplate: post?.textContent,
         description: 'Rewrite the following post',
@@ -72,7 +65,7 @@ const PostDrawer = ({ post, handleDrawerClose, isOpen }) => {
             {/* Likes */}
             <Tooltip text="Likes" position="bottom">
               <div className="flex bg-gray-50 px-2 items-center">
-                <AiOutlineHeart className="mr-2" />
+                <Icons.Heart className="mr-2" />
                 <span>
                   {post?.numLikes >= 1000
                     ? `${(post?.numLikes / 1000).toFixed(1)}k`
@@ -84,7 +77,7 @@ const PostDrawer = ({ post, handleDrawerClose, isOpen }) => {
             {/* Shares */}
             <Tooltip text="Shares" position="bottom">
               <div className="flex items-center">
-                <AiOutlineShareAlt className="mr-2" />
+                <Icons.Share className="mr-2" />
                 <span>
                   {post?.numShares >= 1000
                     ? `${(post?.numShares / 1000).toFixed(1)}k`
@@ -96,7 +89,7 @@ const PostDrawer = ({ post, handleDrawerClose, isOpen }) => {
             {/* Views */}
             <Tooltip text="Views" position="bottom">
               <div className="flex items-center">
-                <AiOutlineEye className="mr-2" />
+                <Icons.Eye className="mr-2" />
                 <span>
                   {post?.numViews >= 1000
                     ? `${(post?.numViews / 1000).toFixed(1)}k`
@@ -108,7 +101,7 @@ const PostDrawer = ({ post, handleDrawerClose, isOpen }) => {
             {/* Impressions */}
             <Tooltip text="Impressions" position="bottom">
               <div className="flex items-center">
-                <AiOutlineBarChart className="mr-2" />
+                <Icons.BarChart className="mr-2" />
                 <span>
                   {post?.numImpressions >= 1000
                     ? `${(post?.numImpressions / 1000).toFixed(1)}k`
@@ -118,7 +111,7 @@ const PostDrawer = ({ post, handleDrawerClose, isOpen }) => {
             </Tooltip>
 
             <div className="flex items-center">
-              <AiOutlineMessage className="mr-2" />
+              <Icons.AiMessage className="mr-2" />
               <span>
                 {post?.numComments >= 1000
                   ? `${(post?.numComments / 1000).toFixed(1)}k`

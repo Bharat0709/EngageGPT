@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import {
-  fetchOrganizationData,
-  forgotPassword,
-} from '../../../network/Organization';
-import { message, Skeleton } from 'antd';
-import { FiEdit } from 'react-icons/fi';
+import OrganizationProfileSkeleton from '@components/Dashboard/SkeletonLoaders/OrganizationSettings';
+import { fetchOrganizationData, forgotPassword } from '@services/Organization';
+import { message } from 'antd';
+import { Icons } from '@utils/constantData/icons';
 import EditOrgModal from './EditOrgModal';
-import BillingDetails from './BillingDetails';
-import People from './People';
+import { People } from './People';
 
 const OrganizationProfileSettings = () => {
   const [userData, setUserData] = useState(null);
@@ -49,17 +46,6 @@ const OrganizationProfileSettings = () => {
     }
   };
 
-  const handleBillingUpdate = async (updatedBillingDetails) => {
-    try {
-      setUserData((prevData) => ({
-        ...prevData,
-        billingDetails: updatedBillingDetails,
-      }));
-    } catch (err) {
-      throw new Error('Failed to update billing details');
-    }
-  };
-
   const handleViewToggle = (viewType) => {
     setView(viewType);
   };
@@ -68,33 +54,31 @@ const OrganizationProfileSettings = () => {
     setUserData((prevData) => ({ ...prevData, ...updatedData }));
   };
 
+  if (loading) {
+    return <OrganizationProfileSkeleton />;
+  }
+
   return (
     <div className="w-full h-full rounded-xl scrollbar-hide overflow-auto overflow-y-scroll mx-auto lg:p-6 p-4 bg-[#ededed] shadow-md">
-      <h2 className="text-2xl text-semibold mb-4">Organization Settings</h2>
+      <h2 className="text-2xl p-0 mt-0 text-semibold mb-4">
+        Organization Settings
+      </h2>
 
       <div className="flex bg-gray-50 rounded-xl p-3 text-sm justify-start gap-4 items-center mb-2">
-        <>
-          <button
-            onClick={() => handleViewToggle('general')}
-            className={`${
-              view === 'general' ? 'text-black font-semibold' : 'text-gray-600'
-            }`}
-          >
-            General
-          </button>{' '}
-        </>
+        <button
+          onClick={() => handleViewToggle('general')}
+          className={`${
+            view === 'general' ? 'text-black font-semibold' : 'text-gray-600'
+          }`}
+        >
+          General
+        </button>
       </div>
 
       <div className="mb-6 bg-white rounded-xl p-2 pr-4 flex flex-col gap-3 justify-between">
         <div className="p-2 pr-2 rounded-xl flex gap-6 items-start justify-between">
           <div className="flex justify-start items-center gap-4">
-            {loading ? (
-              <Skeleton.Avatar
-                active
-                size="large"
-                style={{ height: 64, width: 64 }}
-              />
-            ) : userData?.profilePicture ? (
+            {userData?.profilePicture ? (
               <img
                 src={userData?.profilePicture}
                 alt="Profile"
@@ -108,31 +92,12 @@ const OrganizationProfileSettings = () => {
               />
             )}
             <div className="flex flex-col gap-1">
-              {loading ? (
-                <>
-                  <Skeleton.Input
-                    style={{ height: 12 }}
-                    active
-                    size="small"
-                    className="w-40"
-                  />
-                  <Skeleton.Input
-                    style={{ height: 12 }}
-                    active
-                    size="small"
-                    className="w-60 "
-                  />
-                </>
-              ) : (
-                <>
-                  <p className="text-lg text-gray-900">
-                    {userData?.name || 'N/A'}
-                  </p>
-                  <p className="text-sm text-gray-900">
-                    {userData?.email || 'N/A'}
-                  </p>
-                </>
-              )}
+              <p className="text-lg p-0 m-0 text-gray-900">
+                {userData?.name || 'N/A'}
+              </p>
+              <p className="text-sm p-0 m-0 text-gray-900">
+                {userData?.email || 'N/A'}
+              </p>
             </div>
           </div>
 
@@ -145,65 +110,40 @@ const OrganizationProfileSettings = () => {
                 : 'cursor-pointer'
             }`}
           >
-            {loading ? (
-              <Skeleton.Button
-                style={{ width: 12, height: 24 }}
-                active
-                size="small"
-              />
-            ) : (
-              <FiEdit className="text-xl h-6 lg:mt-0 mt-2" />
-            )}
+            <Icons.Edit className="text-xl h-6 lg:mt-0 mt-2" />
           </button>
         </div>
 
-        <div className="flex w-full mb-2 justify-between items-center">
+        <div className="flex w-full justify-between items-center">
           <p className="w-full text-sm px-2 text-left text-gray-500">
-            {loading ? (
-              <div className="flex gap-4">
-                <Skeleton.Input
-                  style={{ height: 12 }}
-                  active
-                  size="small"
-                  className="w-40"
-                />
-                <Skeleton.Input
-                  style={{ height: 12 }}
-                  active
-                  size="small"
-                  className="w-40"
-                />
+            <div className="flex lg:flex-row flex-col justify-between w-full lg:items-center items-start lg:gap-2 gap-4">
+              <div className="flex lg:flex-row flex-col gap-2 lg:gap-4">
+                <p className="p-0 m-0">
+                  Logged in via:{' '}
+                  <span className="font-bold p-0 m-0">
+                    {userData.oauthProvider === 'google'
+                      ? 'Google'
+                      : 'Password'}
+                  </span>
+                </p>
+                <p className="p-0 m-0">
+                  Current Plan:{' '}
+                  <span className="font-bold p-0 m-0">
+                    {userData?.subscription.plan === 'basic'
+                      ? 'FREE'
+                      : userData?.subscription.plan.toUpperCase()}
+                  </span>
+                </p>
               </div>
-            ) : (
-              <div className="flex lg:flex-row flex-col justify-between w-full lg:items-center items-start lg:gap-2 gap-4">
-                <div className="flex lg:flex-row flex-col gap-2 lg:gap-4">
-                  <p>
-                    Logged in via:{' '}
-                    <span className="font-bold">
-                      {userData.oauthProvider === 'google'
-                        ? 'Google'
-                        : 'Password'}
-                    </span>
-                  </p>
-                  <p>
-                    Current Plan:{' '}
-                    <span className="font-bold">
-                      {userData?.subscription.plan === 'basic'
-                        ? 'FREE'
-                        : userData?.subscription.plan.toUpperCase()}
-                    </span>
-                  </p>
-                </div>
-                {!loading && userData.oauthProvider !== 'google' && (
-                  <button
-                    onClick={handleSendResetPasswordEmail}
-                    className="text-gray-800 text-left self-end text-sm p-0 m-0"
-                  >
-                    Reset Password
-                  </button>
-                )}
-              </div>
-            )}
+              {userData.oauthProvider !== 'google' && (
+                <button
+                  onClick={handleSendResetPasswordEmail}
+                  className="text-gray-800 text-left self-end text-sm p-0 m-0"
+                >
+                  Reset Password
+                </button>
+              )}
+            </div>
           </p>
         </div>
       </div>
@@ -214,14 +154,8 @@ const OrganizationProfileSettings = () => {
         userData={userData}
         onSave={handleSaveProfile}
       />
-      {view === 'billing' ? (
-        <BillingDetails
-          billingDetails={userData?.billingDetails}
-          onUpdate={handleBillingUpdate}
-        />
-      ) : (
-        <People />
-      )}
+
+      <People />
     </div>
   );
 };

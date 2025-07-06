@@ -247,7 +247,7 @@ const PostActions = ({
               }))}
             />
           ) : (
-            <p className="w-full text-sm text-center">
+            <p className="w-full m-0 p-0  text-sm text-center">
               Time Zone - {selectedTimeZone}
             </p>
           )}

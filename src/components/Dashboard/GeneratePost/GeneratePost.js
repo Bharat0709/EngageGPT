@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { fetchOrganizationData } from '../../../network/Organization';
-import { generatePost } from '../../../network/GenerateContent';
-import { useNavigate } from 'react-router-dom';
+import { fetchOrganizationData } from '@services/Organization';
+import { generatePost } from '@services/GenerateContent';
 import { message } from 'antd';
 import {
   FaLinkedin,
@@ -20,11 +19,10 @@ import {
   FaBars,
   FaTimes,
 } from 'react-icons/fa';
-import GeneratePostSkeletonLoading from './SkeletonLoading';
+import GeneratePostSkeletonLoading from '../SkeletonLoaders/GeneratePostSkeletonLoading';
+import { goTo } from '@utils/navigator';
 
 const LinkedInPostGenerator = () => {
-  const navigate = useNavigate();
-
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState('');
   const [loading, setLoading] = useState(false);
@@ -218,13 +216,12 @@ const LinkedInPostGenerator = () => {
       return;
     }
 
-    navigate('/dashboard/quick-post', {
+    goTo('/dashboard/quick-post', {
       state: {
         content: generatedPost,
         postContents: generatedPost,
       },
     });
-    // Add navigation logic here
 
     message.info('Proceeding to post editor...');
   };
@@ -244,10 +241,10 @@ const LinkedInPostGenerator = () => {
                 <FaLinkedin />
               </div>
               <div>
-                <h2 className="text-lg sm:text-2xl font-bold text-gray-800">
+                <h2 className="text-lg m-0 p-0 sm:text-2xl font-bold text-gray-800">
                   LinkedIn Post Generator
                 </h2>
-                <p className="text-sm text-gray-600 hidden sm:block">
+                <p className="text-sm m-0 p-0 text-gray-600 hidden sm:block">
                   Create engaging content with AI
                 </p>
               </div>
@@ -352,7 +349,7 @@ const LinkedInPostGenerator = () => {
                       }`}
                     >
                       <p
-                        className={`text-sm leading-relaxed whitespace-pre-wrap ${
+                        className={`text-sm mb-0 leading-relaxed whitespace-pre-wrap ${
                           message.type === 'user'
                             ? 'bg-[#0c4a6e] text-white rounded-br-md'
                             : 'bg-white text-gray-800 rounded-bl-md border border-gray-100'
@@ -361,7 +358,7 @@ const LinkedInPostGenerator = () => {
                         {message.content}
                       </p>
                       <p
-                        className={`text-xs mt-2 ${
+                        className={`text-xs mb-0 mt-2 ${
                           message.type === 'user'
                             ? 'text-blue-200'
                             : 'text-gray-500'
@@ -447,13 +444,13 @@ const LinkedInPostGenerator = () => {
                   <FaArrowRight />
                 </button>
               </div>
-              <p className="text-xs lg:hidden flex text-gray-500 mt-2">
+              <p className="text-xs lg:hidden flex mb-0 text-gray-500 mt-2">
                 {' '}
                 Click on the hamburger icon on top right corner to view the
                 generated post!
               </p>
               {creditsLeft <= 10 && creditsLeft > 0 && (
-                <p className="text-xs text-orange-600 mt-2 flex items-center space-x-1">
+                <p className="text-xs text-orange-600 mt-2 mb-0 flex items-center space-x-1">
                   <FaExclamationTriangle />
                   <span>Low credits remaining: {creditsLeft}</span>
                 </p>
@@ -502,10 +499,10 @@ const LinkedInPostGenerator = () => {
                         : 'U'}
                     </div>
                     <div>
-                      <p className="font-semibold text-gray-800">
+                      <p className="font-semibold m-0 text-gray-800">
                         {selectedProfile?.name || 'Your Name'}
                       </p>
-                      <p className="text-sm text-gray-500 flex items-center space-x-1">
+                      <p className="text-sm m-0 text-gray-500 flex items-center space-x-1">
                         <span>Just now</span>
                         <span>•</span>
                         <FaGlobe className="text-xs" />

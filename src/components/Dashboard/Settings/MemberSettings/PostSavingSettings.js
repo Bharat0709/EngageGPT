@@ -1,4 +1,5 @@
-import { updateMemberSettings } from '../../../../network/Members';
+import { useState } from 'react';
+import { updateMemberSettings } from '@services/Members';
 import {
   message,
   Switch,
@@ -9,8 +10,7 @@ import {
   Divider,
   InputNumber,
 } from 'antd';
-import { FiPlusCircle, FiXCircle } from 'react-icons/fi';
-import { useState } from 'react';
+import { Icons } from '@utils/constantData/icons';
 const { Option } = Select;
 
 function PostSavingSettings({ memberId, postSettings, setPostSettings }) {
@@ -211,7 +211,7 @@ function PostSavingSettings({ memberId, postSettings, setPostSettings }) {
                       type="primary"
                       className="global-button-primary rounded-lg"
                     >
-                      <FiPlusCircle />
+                      <Icons.Plus />
                     </Button>
                   </div>
                   <div className="flex flex-wrap gap-2 mt-2">
@@ -244,7 +244,7 @@ function PostSavingSettings({ memberId, postSettings, setPostSettings }) {
                       type="primary"
                       className="global-button-primary rounded-lg"
                     >
-                      <FiPlusCircle />
+                      <Icons.Plus />
                     </Button>
                   </div>
                   <div className="flex flex-wrap gap-2 mt-2">
@@ -293,7 +293,7 @@ function PostSavingSettings({ memberId, postSettings, setPostSettings }) {
                             onClick={() => handleRemoveCategory(category.name)}
                             className="text-red-500 hover:text-red-700"
                           >
-                            <FiXCircle size={16} />
+                            <Icons.Exclamation size={16} />
                           </button>
                         )}
                       </div>

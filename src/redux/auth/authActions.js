@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie';
-import { login, signup } from '../../network/Auth';
-import { encodeToken } from '../../utils/tokenUtils';
+import { login, signup } from '@services/Auth';
+import { encodeToken } from '@utils/tokenUtils';
 
 export const SET_AUTH_TOKEN = 'SET_AUTH_TOKEN';
 export const LOGOUT = 'LOGOUT';

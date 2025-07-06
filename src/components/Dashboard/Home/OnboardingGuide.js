@@ -1,9 +1,8 @@
 import AddMembersModal from '../Global/AddPeopleModal';
-import { OnboardingSteps } from '../../../assets/data/onBoardingSteps';
-import EngagegptBanner from '../../../assets/images/HomeBanner.png';
-import { AiFillLinkedin } from 'react-icons/ai';
+import { OnboardingSteps } from '@assets/data/onBoardingSteps';
+import EngagegptBanner from '@assets/images/HomeBanner.png';
 import { message } from 'antd';
-import { FiCopy, FiEye, FiZap, FiTarget, FiTrendingUp } from 'react-icons/fi';
+import { Icons } from '@utils/constantData/icons';
 
 const OnboardingGuide = ({
   onAddProfile,
@@ -63,7 +62,7 @@ const OnboardingGuide = ({
         </h3>
         <div className="space-y-4">
           <div className="flex items-start gap-3">
-            <FiTarget className="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0" />
+            <Icons.Target className="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0" />
             <div>
               <p className="font-medium text-slate-800 text-sm">
                 Targeted Engagement
@@ -74,7 +73,7 @@ const OnboardingGuide = ({
             </div>
           </div>
           <div className="flex items-start gap-3">
-            <FiTrendingUp className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+            <Icons.TrendingUp className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
             <div>
               <p className="font-medium text-slate-800 text-sm">
                 Boost Visibility
@@ -85,7 +84,7 @@ const OnboardingGuide = ({
             </div>
           </div>
           <div className="flex items-start gap-3">
-            <FiZap className="w-5 h-5 text-yellow-500 mt-0.5 flex-shrink-0" />
+            <Icons.Zap className="w-5 h-5 text-yellow-500 mt-0.5 flex-shrink-0" />
             <div>
               <p className="font-medium text-slate-800 text-sm">Save Time</p>
               <p className="text-slate-600 text-xs">
@@ -250,7 +249,7 @@ const OnboardingGuide = ({
               onClick={handleConnectLinkedIn}
               className="btn-primary flex items-center gap-2 whitespace-nowrap px-6 py-2 text-sm font-medium bg-white border border-black text-black w-fit transition-all shadow-[3px_3px_0px_black] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]"
             >
-              <AiFillLinkedin className="text-blue-900" size={20} />
+              <Icons.LinkedIn className="text-blue-900" size={20} />
               Connect
             </button>
           </div>
@@ -275,10 +274,12 @@ const OnboardingGuide = ({
                     className="w-12 h-12 rounded-full border border-gray-300"
                   />
                   <div>
-                    <h4 className="font-medium text-gray-800">
+                    <h4 className="font-medium m-0 p-0  text-gray-800">
                       {profile.name}
                     </h4>
-                    <p className="text-sm text-gray-600">{profile.email}</p>
+                    <p className="text-sm m-0 p-0 text-gray-600">
+                      {profile.email}
+                    </p>
                     <span
                       className={`text-xs ${
                         profile.isConnected === 'connected'
@@ -300,13 +301,13 @@ const OnboardingGuide = ({
                       onClick={() => message.info(profile.connectionToken)}
                       className="ml-2 text-gray-800 hover:text-black"
                     >
-                      <FiEye size={16} />
+                      <Icons.Eye size={16} />
                     </button>
                     <button
                       className="ml-2 text-gray-800 hover:text-black"
                       onClick={() => handleCopy(profile.connectionToken)}
                     >
-                      <FiCopy size={16} />
+                      <Icons.Copy size={16} />
                     </button>
                   </div>
                   <button
@@ -319,9 +320,9 @@ const OnboardingGuide = ({
                     }`}
                   >
                     {profile.isLinkedinConnected ? (
-                      <AiFillLinkedin className="text-white" size={20} />
+                      <Icons.LinkedIn className="text-white" size={20} />
                     ) : (
-                      <AiFillLinkedin
+                      <Icons.LinkedIn
                         className={`${'text-sky-900'}`}
                         size={20}
                       />

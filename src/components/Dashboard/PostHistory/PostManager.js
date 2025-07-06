@@ -3,7 +3,7 @@ import PostConfirmationModal from '../QuickPost/PostConfirmationModal';
 import EditPostModal from './EditPostModal';
 import MediaPreviewModal from './MediaPreview'; // Updated import
 import PostDrawer from './PostDrawer'; // Updated import
-import SkeletonCards from './SkeletonLoading';
+import SkeletonCardsPostHistory from '../SkeletonLoaders/SkeletonLoadingPostHistory';
 import TabNavigation from './TabNavigation';
 import PostsGrid from './PostGrid';
 import { usePostHistory, usePostActions } from './usePostHistory';
@@ -15,7 +15,6 @@ import {
 } from './PostUtils';
 
 const PostHistoryDashboard = ({ selectedProfile }) => {
-  // Custom hooks for data management
   const { postHistory, setPostHistory, isLoading, refreshPosts } =
     usePostHistory(selectedProfile);
   const { deletePost, updatePost, isDeleting, isEditing } = usePostActions(
@@ -85,7 +84,7 @@ const PostHistoryDashboard = ({ selectedProfile }) => {
 
   // Loading state
   if (isLoading || selectedProfile === null) {
-    return <SkeletonCards />;
+    return <SkeletonCardsPostHistory />;
   }
 
   return (

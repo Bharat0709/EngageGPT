@@ -1,7 +1,6 @@
 import { message } from 'antd';
 import { useState, useEffect } from 'react';
-import { FaLinkedin } from 'react-icons/fa';
-import { FiX, FiUser, FiMail } from 'react-icons/fi';
+import { Icons } from '@utils/constantData/icons';
 
 const AddMembersModal = ({ isOpen, onClose, onSubmit }) => {
   const [members, setMembers] = useState([{ name: '', email: '' }]);
@@ -110,8 +109,8 @@ const AddMembersModal = ({ isOpen, onClose, onSubmit }) => {
         <div className="bg-indigo-50 rounded-t-2xl p-6">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-3">
-              <FaLinkedin className="text-indigo-800" size={20} />
-              <h2 className="text-md lg:text-2xl font-bold text-indigo-800">
+              <Icons.FaLinkedin className="text-indigo-800" size={20} />
+              <h2 className="text-md lg:text-2xl mb-0 p-0 font-bold text-indigo-800">
                 Add LinkedIn Members
               </h2>
             </div>
@@ -119,7 +118,7 @@ const AddMembersModal = ({ isOpen, onClose, onSubmit }) => {
               className="text-gray-500 hover:text-gray-800 hover:bg-indigo-100 p-2 rounded-full transition-colors"
               onClick={handleClose}
             >
-              <FiX size={20} />
+              <Icons.Cross size={20} />
             </button>
           </div>
           <p className="text-gray-600 mt-2"></p>
@@ -144,7 +143,7 @@ const AddMembersModal = ({ isOpen, onClose, onSubmit }) => {
                     </label>
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <FiUser className="text-gray-400" />
+                        <Icons.User className="text-gray-400" />
                       </div>
                       <input
                         type="text"
@@ -173,7 +172,7 @@ const AddMembersModal = ({ isOpen, onClose, onSubmit }) => {
                     </label>
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <FiMail className="text-gray-400" />
+                        <Icons.Mail className="text-gray-400" />
                       </div>
                       <input
                         type="email"
@@ -199,13 +198,6 @@ const AddMembersModal = ({ isOpen, onClose, onSubmit }) => {
 
           {/* Footer Buttons */}
           <div className="flex justify-end gap-3 mt-2 pt-4">
-            <button
-              type="button"
-              onClick={handleClose}
-              className="px-5 py-2 border-none text-gray-700 font-medium rounded-full hover:bg-gray-50 transition-colors"
-            >
-              Cancel
-            </button>
             <button
               disabled={isAdding}
               type="submit"

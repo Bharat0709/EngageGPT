@@ -7,10 +7,10 @@ import {
   deleteContentCalendar,
   updateContentCalendar,
   addContentCalendar,
-} from '../../../network/Members';
+} from '@services/Members';
 import { FaRegCalendarAlt, FaLinkedin } from 'react-icons/fa';
 import { FiList, FiChevronDown, FiAlertTriangle } from 'react-icons/fi';
-import { getAllMembers } from '../../../network/Members';
+import { getAllMembers } from '@services/Members';
 import ContentCalendarModal from './ContentCalendarModal';
 import AddCalendarDropdown from './SavedcalendarModal/AddCalendarEntry';
 import ConfirmationModal from './SavedcalendarModal/ConfirmationModal';

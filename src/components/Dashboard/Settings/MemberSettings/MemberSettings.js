@@ -1,11 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { message } from 'antd';
-import {
-  getMemberDetails,
-  getFeedFilterSettings,
-} from '../../../../network/Members';
-import SkeletonLoadingMember from './SkeletonLoadingMember';
+import { getMemberDetails, getFeedFilterSettings } from '@services/Members';
+import SkeletonLoadingMember from '../../SkeletonLoaders/SkeletonLoadingMember';
 import MemberProfile from './MemberProfile';
 import PostSavingSettings from './PostSavingSettings';
 import FeedFilter from './FeedFilter';
@@ -137,7 +134,7 @@ const MemberSettings = () => {
           memberData={memberData}
           handleViewToggle={handleViewToggle}
           view={view}
-          showAccountOption={true} // Pass prop to show account settings option
+          showAccountOption={true}
         />
 
         <div className="bg-white rounded-xl p-4">

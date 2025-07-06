@@ -1,4 +1,4 @@
-const SkeletonCards = () => {
+const SkeletonCardsPostHistory = () => {
   const placeholders = Array.from({ length: 5 });
 
   return (
@@ -35,4 +35,4 @@ const SkeletonCards = () => {
   );
 };
 
-export default SkeletonCards;
+export default SkeletonCardsPostHistory;

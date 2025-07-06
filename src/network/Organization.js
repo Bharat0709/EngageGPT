@@ -97,3 +97,4 @@ export const updateProfile = async (name, profilePicture) => {
     throw new Error(errorMsg);
   }
 };
+

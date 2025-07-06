@@ -1,28 +1,3 @@
-.dot {
-  width: 11px;
-  height: 11px;
-  background-color: #1e40af; /* Choose your desired dot color */
-  border-radius: 50%;
-  opacity: 0; /* Initially hide the dot */
-  animation: moveUpDown 1.5s infinite alternate;
-}
-
-@keyframes moveUpDown {
-  0% {
-    transform: translateY(0);
-    opacity: 0; /* Show the dot at the start of the animation */
-  }
-  50% {
-    opacity: 1; /* Keep the dot visible while moving up */
-  }
-  100% {
-    transform: translateY(
-      -30px
-    ); /* Adjust the distance you want the dot to move */
-    opacity: 0; /* Hide the dot while moving down */
-  }
-}
-
 .logo {
   animation: slide 20s linear infinite;
 }

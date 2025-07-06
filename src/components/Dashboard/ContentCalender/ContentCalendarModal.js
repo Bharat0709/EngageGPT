@@ -11,7 +11,7 @@ import {
   FiLoader,
 } from 'react-icons/fi';
 import { message } from 'antd';
-import { fetchSheetDetails } from '../../../network/Members';
+import { fetchSheetDetails } from '@services/Members';
 import dayjs from 'dayjs';
 
 const ContentCalendarModal = ({

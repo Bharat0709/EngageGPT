@@ -1,5 +1,5 @@
 import React from 'react';
-import { FiFilter } from 'react-icons/fi';
+import { Icons } from '@utils/constantData/icons';
 
 const PostFilters = ({ posts, handleSortChange }) => {
   const filters = [
@@ -14,10 +14,10 @@ const PostFilters = ({ posts, handleSortChange }) => {
   return (
     <div className="flex-col  gap-2 py-3">
       <div className="toggle-buttons  rounded-xl flex justify-between bg-white p-3  gap-4">
-        <p className="text-sm">{posts.length} Posts Collected</p>
+        <p className="text-sm p-0 m-0">{posts.length} Posts Collected</p>
 
         <div className="items-center lg:flex hidden gap-2">
-          <FiFilter className="text-gray-400" />
+          <Icons.Filter className="text-gray-400" />
           {filters.map((filter) => (
             <p
               key={filter}

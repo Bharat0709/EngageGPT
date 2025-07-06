@@ -1,6 +1,6 @@
 import { Skeleton } from 'antd';
-import { FaLinkedin } from 'react-icons/fa';
 import ProfilesDropDown from '../Global/ProfilesDropDown';
+import { Icons } from '@utils/constantData/icons';
 
 const LinkedInConnection = ({
   invitedProfiles,
@@ -47,7 +47,7 @@ const LinkedInConnection = ({
       {invitedProfiles?.length === 0 && connectedProfiles?.length === 0 && (
         <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4">
           <div className="flex items-center gap-3">
-            <FaLinkedin className="w-5 h-5 text-yellow-600" />
+            <Icons.LinkedIn className="w-5 h-5 text-yellow-600" />
             <div>
               <h3 className="font-medium text-yellow-800">
                 No Connected Profiles

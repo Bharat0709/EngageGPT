@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Switch, Skeleton } from 'antd';
-import { FilePdfOutlined } from '@ant-design/icons';
+import { Icons } from '@utils/constantData/icons';
 
 const LinkedInPostPreview = ({
   isLoading,
@@ -42,7 +42,7 @@ const LinkedInPostPreview = ({
             key={index}
             className="flex items-center p-2 border rounded mb-2"
           >
-            <FilePdfOutlined style={{ color: 'red', fontSize: '24px' }} />
+            <Icons.PDF style={{ color: 'red', fontSize: '24px' }} />
             <span className="ml-2">{file.name}</span>
           </div>
         );

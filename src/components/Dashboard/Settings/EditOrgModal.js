@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { FiX } from 'react-icons/fi';
+import { Icons } from '@utils/constantData/icons';
 import { message } from 'antd';
-import { updateProfile } from '../../../network/Organization';
+import { updateProfile } from '@services/Organization';
 
 const EditOrgModal = ({ isOpen, onClose, userData, onSave }) => {
   const [name, setName] = useState('');
@@ -56,7 +56,7 @@ const EditOrgModal = ({ isOpen, onClose, userData, onSave }) => {
           className="text-gray-500 text-xl  self-end hover:text-gray-800"
           onClick={onClose}
         >
-          <FiX />
+          <Icons.Cross />
         </button>
         <div className="flex mb-4 justify-between items-center">
           <h2 className="lg:text-2xl text-xl text-center w-full font-bold">
@@ -101,13 +101,6 @@ const EditOrgModal = ({ isOpen, onClose, userData, onSave }) => {
           </div>
         </div>
         <div className="flex justify-end gap-2">
-          <button
-            type="button"
-            onClick={onClose}
-            className="global-button-secondary border-none rounded-full px-6"
-          >
-            Close
-          </button>
           <button
             type="submit"
             onClick={handleSave}

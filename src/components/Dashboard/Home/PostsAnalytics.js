@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { getMemberPosts } from '../../../network/Posts';
+import { getMemberPosts } from '@services/Posts';
 import PostDrawer from './PostsDrawer';
 import PostFilters from './PostsFilter';
 import PostsDiv from './PostsDiv';
-import NoPostsFound from '../../../assets/images/PostNotFound.png';
+import NoPostsFound from '@assets/images/PostNotFound.png';
 import { message } from 'antd';
 
 const PostDetails = ({ setStats, memberId }) => {

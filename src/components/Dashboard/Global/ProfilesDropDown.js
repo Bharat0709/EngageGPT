@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { FiUsers, FiChevronUp, FiChevronDown } from 'react-icons/fi';
-import { FaLinkedin } from 'react-icons/fa';
+import { Icons } from '@utils/constantData/icons';
 
 const ProfilesDropDown = ({
   profiles,
@@ -45,7 +44,7 @@ const ProfilesDropDown = ({
       <div className="flex items-center space-x-3 py-2 px-4 bg-white hover:bg-gray-50 rounded-xl  border border-gray-200 hover:border-gray-300 transition-all duration-200 cursor-pointer">
         <div className="flex items-center gap-3">
           <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-2 rounded-lg">
-            <FiUsers className="w-4 h-4 text-blue-600" />
+            <Icons.Users className="w-4 h-4 text-blue-600" />
           </div>
           <div className="flex items-center gap-2">
             <span className="text-gray-900 font-semibold">
@@ -57,8 +56,8 @@ const ProfilesDropDown = ({
           </div>
         </div>
         <div className="flex flex-col">
-          <FiChevronUp className="h-2 w-2 text-gray-400" />
-          <FiChevronDown className="h-2 w-2 text-gray-400" />
+          <Icons.Up className="h-2 w-2 text-gray-400" />
+          <Icons.Down className="h-2 w-2 text-gray-400" />
         </div>
       </div>
 
@@ -110,7 +109,7 @@ const ProfilesDropDown = ({
                   ></div>
                 </div>
                 <div className="flex flex-col gap-1">
-                  <h4 className="text-sm font-medium text-gray-900 group-hover/item:text-gray-700">
+                  <h4 className="text-sm p-0 m-0 font-medium text-gray-900 group-hover/item:text-gray-700">
                     {profile.name}
                   </h4>
                   <div className="flex items-center gap-2">
@@ -120,7 +119,7 @@ const ProfilesDropDown = ({
                       )}`}
                     ></div>
                     <p
-                      className={`text-xs font-medium ${getStatusTextColor(
+                      className={`text-xs p-0 m-0 font-medium ${getStatusTextColor(
                         profile,
                       )}`}
                     >
@@ -137,7 +136,7 @@ const ProfilesDropDown = ({
                   }}
                   className="flex items-center gap-1 px-4 py-2 text-xs bg-blue-900 text-white rounded-full hover:bg-blue-700 transition-colors"
                 >
-                  <FaLinkedin className="w-3 h-3" />
+                  <Icons.LinkedIn className="w-3 h-3" />
                   Connect
                 </button>
               )}

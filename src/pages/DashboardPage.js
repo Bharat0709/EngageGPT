@@ -1,15 +1,15 @@
 import { Routes, Route } from 'react-router-dom';
-import Home from '../components/Dashboard/Home/Home';
-import Sidebar from '../components/Dashboard/Sidebar/Sidebar';
-import Settings from '../components/Dashboard/Settings/Settings';
-import PostScheduler from '../components/Dashboard/QuickPost/PostScheduler';
-import LinkedInPostGenerator from '../components/Dashboard/GeneratePost/GeneratePost';
-import ProtectedRoute from '../components/ProtectedRoute';
-import PostDetails from '../components/Dashboard/PostHistory/PostQueue';
-import HiringPostsPage from '../components/Dashboard/HiringPosts/HiringPostsPage';
-import MemberSettings from '../components/Dashboard/Settings/MemberSettings/MemberSettings';
-import ContentCalendarPage from '../components/Dashboard/ContentCalender/ContentCalender';
-import EmailTemplatesComingSoon from '../components/Dashboard/EmailTemplates/EmailTemplateSoon';
+import Home from '@components/Dashboard/Home/Home';
+import Sidebar from '@components/Dashboard/Sidebar/Sidebar';
+import Settings from '@components/Dashboard/Settings/Settings';
+import PostScheduler from '@components/Dashboard/QuickPost/PostScheduler';
+import LinkedInPostGenerator from '@components/Dashboard/GeneratePost/GeneratePost';
+import ProtectedRoute from '@components/ProtectedRoute';
+import PostDetails from '@components/Dashboard/PostHistory/PostQueue';
+import HiringPostsPage from '@components/Dashboard/HiringPosts/HiringPostsPage';
+import MemberSettings from '@components/Dashboard/Settings/MemberSettings/MemberSettings';
+import ContentCalendarPage from '@components/Dashboard/ContentCalender/ContentCalender';
+import EmailTemplatesComingSoon from '@components/Dashboard/EmailTemplates/EmailTemplateSoon';
 
 function Dashboard() {
   return (
@@ -75,6 +75,7 @@ function Dashboard() {
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/email-template"
             element={

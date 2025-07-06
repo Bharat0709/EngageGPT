@@ -1,8 +1,8 @@
-import {LOGOUT, SET_AUTH_TOKEN} from './authActions';
+import { LOGOUT, SET_AUTH_TOKEN } from './authActions';
 import Cookies from 'js-cookie';
-import {decodeToken} from '../../utils/tokenUtils';
+import { decodeToken } from '@utils/tokenUtils';
 
-const encodedToken = Cookies.get('cold-emails');
+const encodedToken = Cookies.get('engage-gpt');
 const decodedToken = encodedToken ? decodeToken(encodedToken) : null;
 const initialState = {
   token: decodedToken || null,

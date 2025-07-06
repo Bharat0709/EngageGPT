@@ -1,8 +1,8 @@
 import React from 'react';
-import { updateMemberSummary } from '../../../../network/Members';
+import { updateMemberSummary } from '@services/Members';
 import { useState } from 'react';
 import { Button, Input, Select, Tag, Divider, message } from 'antd';
-import { FiPlusCircle } from 'react-icons/fi';
+import { Icons } from '@utils/constantData/icons';
 const { Option } = Select;
 
 function MemberSummary({
@@ -188,7 +188,7 @@ function MemberSummary({
               type="primary"
               className="global-button-primary rounded-lg"
             >
-              <FiPlusCircle />
+              <Icons.Plus />
             </Button>
           </div>
           <div className="flex flex-wrap gap-2 mt-2">

@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { message } from 'antd';
-import { getAllMembers } from '../../../network/Members';
-import {
-  saveDraftLinkedInPost,
-  scheduleLinkedInPost,
-  shareLinkedInPost,
-} from '../../../network/LinkedInAuth';
 import PostContentEditor from './PostEditor';
 import LinkedInConnection from './LinkedInConnected';
 import MediaUploader from './MediaUploader';
 import PostPreviewSection from './LinkedInPostPreview';
 import PostActions from './PostActions';
-import { getContentCalendar } from '../../../network/Members';
+import { message } from 'antd';
+import { getContentCalendar } from '@services/Members';
+import {
+  saveDraftLinkedInPost,
+  scheduleLinkedInPost,
+  shareLinkedInPost,
+} from '@services/LinkedInAuth';
+import { getAllMembers } from '@services/Members';
 
 const PostScheduler = () => {
   const location = useLocation();

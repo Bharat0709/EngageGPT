@@ -1,5 +1,5 @@
+import { goTo } from '@utils/navigator';
 import React, { useState, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const PostContentEditor = ({
   selectedPostTopic,
@@ -7,7 +7,6 @@ const PostContentEditor = ({
   setPostDetails,
   isLoading = false,
 }) => {
-  const navigate = useNavigate();
   const [isFocused, setIsFocused] = useState(false);
   const textareaRef = useRef(null);
 
@@ -19,7 +18,7 @@ const PostContentEditor = ({
   };
 
   const handleWriteWithAI = () => {
-    navigate('/dashboard/create-post');
+    goTo('/dashboard/create-post');
   };
 
   // LinkedIn-specific formatting functions
@@ -237,10 +236,10 @@ const PostContentEditor = ({
             <EditIcon />
           </div>
           <div>
-            <h2 className="text-lg sm:text-2xl font-bold text-gray-800">
+            <h2 className="text-lg m-0 p-0 sm:text-2xl font-bold text-gray-800">
               Quick Post Editor
             </h2>
-            <p className="text-sm text-gray-600 hidden sm:block">
+            <p className="text-sm m-0 p-0 text-gray-600 hidden sm:block">
               Post your thoughts, ideas, and updates quickly and easily!
             </p>
           </div>

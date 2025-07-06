@@ -99,10 +99,10 @@ const PostQueue = () => {
               <FaClock />
             </div>
             <div>
-              <h2 className="text-lg sm:text-2xl font-bold text-gray-800">
+              <h2 className="text-lg sm:text-2xl m-0 p-0 font-bold text-gray-800">
                 Post History
               </h2>
-              <p className="text-sm text-gray-600 hidden sm:block">
+              <p className="text-sm text-gray-600 m-0 p-0 hidden sm:block">
                 Manage your post history and track your LinkedIn activity
               </p>
             </div>
@@ -182,10 +182,10 @@ const PostQueue = () => {
             <FaClock />
           </div>
           <div>
-            <h2 className="text-lg sm:text-2xl font-bold text-gray-800">
+            <h2 className="text-lg m-0 p-0 sm:text-2xl font-bold text-gray-800">
               Post History
             </h2>
-            <p className="text-sm text-gray-600 hidden sm:block">
+            <p className="text-sm m-0 p-0 text-gray-600 hidden sm:block">
               Manage your post history and track your LinkedIn activity
             </p>
           </div>

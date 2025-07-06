@@ -24,8 +24,10 @@ const MembersProfileDropDown = ({ profiles, onProfileChange, onCopy }) => (
 
     <div className="absolute -left-9 lg:right-0 lg:top-9 mt-2 w-80 bg-white border border-gray-200 rounded-2xl hidden group-hover:block z-20 overflow-hidden backdrop-blur-sm">
       <div className="p-4 border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white">
-        <h3 className="text-sm font-semibold text-gray-900">Team Members</h3>
-        <p className="text-xs text-gray-500 mt-1">
+        <h3 className="text-sm  p-0 m-0 font-semibold text-gray-900">
+          Team Members
+        </h3>
+        <p className="text-xs p-0 mb-0 text-gray-500 mt-1">
           Select a profile to view analytics
         </p>
       </div>
@@ -64,7 +66,7 @@ const MembersProfileDropDown = ({ profiles, onProfileChange, onCopy }) => (
                 ></div>
               </div>
               <div className="flex flex-col gap-1">
-                <h4 className="text-sm font-medium text-gray-900 group-hover/item:text-gray-700">
+                <h4 className="text-sm  p-0 m-0 font-medium text-gray-900 group-hover/item:text-gray-700">
                   {profile.name}
                 </h4>
                 <div className="flex items-center gap-2">
@@ -78,7 +80,7 @@ const MembersProfileDropDown = ({ profiles, onProfileChange, onCopy }) => (
                     }`}
                   ></div>
                   <p
-                    className={`text-xs font-medium ${
+                    className={`text-xs p-0 m-0 font-medium ${
                       profile.isConnected === 'connected'
                         ? 'text-green-600'
                         : profile.isConnected === 'invited'

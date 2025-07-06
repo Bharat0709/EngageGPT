@@ -1,17 +1,8 @@
-import {
-  FaComments,
-  FaBullhorn,
-  FaChartBar,
-  FaCheckCircle,
-  FaLayerGroup,
-  FaBookmark,
-  FaEyeSlash,
-  FaCalendarPlus,
-} from 'react-icons/fa';
+import { Icons } from '@utils/constantData/icons';
 
 export const features = [
   {
-    icon: <FaChartBar className="w-6 h-6 text-green-500" />,
+    icon: <Icons.ChartBar className="w-6 h-6 text-green-500" />,
     gradient: 'bg-gradient-to-r from-yellow-200 to-green-200',
     title: 'Analytics Dashboard',
     description:
@@ -22,7 +13,7 @@ export const features = [
     tagColor: 'bg-gradient-to-r from-yellow-300 to-green-300',
   },
   {
-    icon: <FaComments className="w-6 h-6 text-blue-500" />,
+    icon: <Icons.Comments className="w-6 h-6 text-blue-500" />,
     gradient: 'bg-gradient-to-r from-blue-200 to-cyan-200',
     title: 'AI-Powered Comments',
     description:
@@ -34,7 +25,7 @@ export const features = [
   },
 
   {
-    icon: <FaCheckCircle className="w-6 h-6 text-green-500" />,
+    icon: <Icons.CheckCircle className="w-6 h-6 text-green-500" />,
     gradient: 'bg-gradient-to-r from-yellow-200 to-green-200',
     title: 'Viral Post Generator',
     description:
@@ -45,18 +36,18 @@ export const features = [
     tagColor: 'bg-gradient-to-r from-yellow-300 to-green-300',
   },
   {
-    icon: <FaCheckCircle className="w-6 h-6 text-blue-500" />,
+    icon: <Icons.CheckCircle className="w-6 h-6 text-blue-500" />,
     gradient: 'bg-gradient-to-r from-blue-200 to-cyan-300',
     title: 'Track Days Active',
     description:
       'Track your active days on LinkedIn and optimize your engagement strategy.',
     learnMoreText: 'Watch Video',
-    link: 'https://www.youtube.com/watch?v=Vja1vuFa1U4',
+    link: 'https://www.youtube.com/watch?v=Vja1vuIcons.1U4',
     tag: 'Most Used',
     tagColor: 'bg-gradient-to-r from-blue-400 to-cyan-400',
   },
   {
-    icon: <FaLayerGroup className="w-6 h-6 text-green-500" />,
+    icon: <Icons.LayerGroup className="w-6 h-6 text-green-500" />,
     gradient: 'bg-gradient-to-r from-yellow-200 to-green-200',
     title: 'Carousel Generator',
     description:
@@ -67,7 +58,7 @@ export const features = [
     tagColor: 'bg-gradient-to-r from-yellow-300 to-green-300',
   },
   {
-    icon: <FaBullhorn className="w-6 h-6 text-blue-500" />,
+    icon: <Icons.Bullhorn className="w-6 h-6 text-blue-500" />,
     gradient: 'bg-gradient-to-r from-blue-200 to-cyan-200',
     title: 'Automated Posting',
     description:
@@ -79,7 +70,7 @@ export const features = [
   },
 
   {
-    icon: <FaBookmark className="w-6 h-6 text-blue-500" />,
+    icon: <Icons.Bookmark className="w-6 h-6 text-blue-500" />,
     gradient: 'bg-gradient-to-r from-yellow-200 to-green-200',
     title: 'Post Saving',
     description:
@@ -90,7 +81,7 @@ export const features = [
     tagColor: 'bg-gradient-to-r from-yellow-300 to-green-300',
   },
   {
-    icon: <FaEyeSlash className="w-6 h-6 text-green-500" />,
+    icon: <Icons.EyeSlash className="w-6 h-6 text-green-500" />,
     gradient: 'bg-gradient-to-r from-blue-200 to-cyan-300',
     title: 'Hide Post',
     description:
@@ -101,7 +92,7 @@ export const features = [
     tagColor: 'bg-gradient-to-r from-blue-300 to-cyan-500',
   },
   {
-    icon: <FaCalendarPlus className="w-6 h-6 text-blue-500" />,
+    icon: <Icons.CalendarPlus className="w-6 h-6 text-blue-500" />,
     gradient: 'bg-gradient-to-r from-yellow-200 to-green-200',
     title: 'Content Calendar',
     description:

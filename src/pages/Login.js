@@ -1,20 +1,18 @@
 import React, { useState } from 'react';
 import { message } from 'antd';
-import { FcGoogle } from 'react-icons/fc';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import { Link, useNavigate } from 'react-router-dom';
-import EngageGPTLogo from '../assets/images/EngageGPTLogoIocn.png';
-import loginIllustration from '../assets/images/engagegptLogin.png';
-import { login } from '../network/Auth';
-import useAuthCheck from '../hooks/useAuth';
-import { forgotPassword } from '../network/Organization';
+import { Icons } from '@utils/constantData/icons';
+import { goTo } from '@utils/navigator';
+import { Link } from 'react-router-dom';
+import EngageGPTLogo from '@assets/images/EngageGPTLogoIocn.png';
+import loginIllustration from '@assets/images/engagegptLogin.png';
+import { login } from '@services/Auth';
+import useAuthCheck from '@hooks/useAuth';
+import { forgotPassword } from '@services/Organization';
 
 const Login = () => {
   useAuthCheck();
-  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -70,7 +68,7 @@ const Login = () => {
       setIsLoading(true);
       const loginResponse = await login(formData.email, formData.password);
       if (loginResponse.token) {
-        navigate(`/dashboard?token=${loginResponse.token}`);
+        goTo(`/dashboard?token=${loginResponse.token}`);
       }
 
       message.success('Login successful!');
@@ -102,7 +100,7 @@ const Login = () => {
             onClick={handleGoogleLogin}
             className="flex items-center  w-full justify-center border border-gray-300 bg-white text-sky-900 py-2 px-4 rounded-full"
           >
-            <FcGoogle className="mr-2" size={20} />
+            <Icons.Google className="mr-2" size={20} />
             Login in with Google
           </button>
           <div className="flex my-4 items-center justify-center space-x-2">
@@ -154,7 +152,7 @@ const Login = () => {
                   onClick={togglePasswordVisibility}
                   className="absolute top-5 right-3 cursor-pointer text-gray-300"
                 >
-                  {showPassword ? <FaEye /> : <FaEyeSlash />}
+                  {showPassword ? <Icons.Eye /> : <Icons.EyeSlash />}
                 </div>
               </div>
             </div>
@@ -183,7 +181,7 @@ const Login = () => {
                 <button
                   type="button"
                   className="text-sky-100 hover:underline ml-1"
-                  onClick={() => navigate('/signup')}
+                  onClick={() => goTo('/signup')}
                 >
                   Sign Up
                 </button>

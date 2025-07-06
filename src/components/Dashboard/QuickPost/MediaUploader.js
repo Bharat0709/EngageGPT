@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import MediaPreview from './MediaPreview';
-import { FaImage } from 'react-icons/fa';
+import { Icons } from '@utils/constantData/icons';
 
 const MediaUploader = ({ postDetails, setPostDetails }) => {
   const [isImageUpload, setIsImageUpload] = useState(true);
@@ -48,19 +48,8 @@ const MediaUploader = ({ postDetails, setPostDetails }) => {
             onClick={handleImageUpload}
             disabled={isImageUpload}
           >
-            <FaImage size={20} />
+            <Icons.Image size={20} />
           </button>
-          {/* <button
-            className={`py-4 px-4 rounded-md flex items-center justify-center ${
-              !isImageUpload
-                ? 'bg-gray-100'
-                : 'bg-white text-gray-700 hover:bg-gray-300'
-            }`}
-            onClick={handlePdfUpload}
-            disabled={!isImageUpload}
-          >
-            <FaFilePdf size={20} />
-          </button> */}
         </div>
       </div>
 

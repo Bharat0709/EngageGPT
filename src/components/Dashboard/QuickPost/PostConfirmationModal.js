@@ -3,7 +3,6 @@ const PostConfirmationModal = ({
   title,
   description,
   confirmButtonText,
-  isProcessingText,
   isProcessing,
   onConfirm,
   onClose,

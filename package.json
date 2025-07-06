@@ -35,11 +35,30 @@
     "webpack": "^5.91.0"
   },
   "scripts": {
-    "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
-    "test": "react-app-rewired test",
-    "eject": "react-scripts eject"
+    "start": "craco start",
+    "start:fast": "FAST_REFRESH=true craco start",
+    "build": "craco build",
+    "build:analyze": "ANALYZE=true craco build",
+    "build:speed": "MEASURE_SPEED=true craco build",
+    "build:progress": "SHOW_PROGRESS=true craco build",
+    "build:fast": "GENERATE_SOURCEMAP=false DISABLE_ESLINT_PLUGIN=true craco build",
+    "build:profile": "ANALYZE=true MEASURE_SPEED=true SHOW_PROGRESS=true craco build",
+    "build:clean": "rm -rf build .webpack-cache && npm run build",
+    "test": "craco test",
+    "serve": "serve -s build -l 3000",
+    "size": "npm run build && bundlesize",
+    "perf": "npm run build:profile && npm run size"
   },
+  "bundlesize": [
+    {
+      "path": "./build/static/js/*.js",
+      "maxSize": "500 kB"
+    },
+    {
+      "path": "./build/static/css/*.css",
+      "maxSize": "50 kB"
+    }
+  ],
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -59,9 +78,17 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "^7.28.0",
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@babel/preset-env": "^7.28.0",
+    "@babel/preset-react": "^7.27.1",
+    "@craco/craco": "^7.1.0",
+    "babel-plugin-transform-remove-console": "^6.9.4",
+    "cross-env": "^7.0.3",
     "react-app-rewired": "^2.2.1",
+    "serve": "^14.2.4",
     "tailwindcss": "^3.4.3",
-    "tailwindcss-highlights": "^1.0.0"
+    "tailwindcss-highlights": "^1.0.0",
+    "webpack-bundle-analyzer": "^4.10.2"
   }
 }

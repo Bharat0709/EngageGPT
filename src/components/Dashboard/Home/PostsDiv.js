@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  AiOutlineBarChart,
-  AiOutlineArrowRight,
-  AiOutlineHeart,
-  AiOutlineMessage,
-} from 'react-icons/ai';
+import { Icons } from '@utils/constantData/icons';
 
 // Custom Skeleton Components
 const SkeletonAvatar = () => (
@@ -90,10 +85,12 @@ const PostCard = ({ post, handlePostClick }) => {
               <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white"></div>
             </div>
             <div>
-              <h4 className="font-semibold text-gray-900 group-hover:text-blue-700 transition-colors duration-200">
+              <h4 className="font-semibold p-0 m-0  text-gray-900 group-hover:text-blue-700 transition-colors duration-200">
                 {post.author.name}
               </h4>
-              <p className="text-sm text-gray-500">{post.postedAround}</p>
+              <p className="text-sm p-0 m-0 text-gray-500">
+                {post.postedAround}
+              </p>
             </div>
           </div>
 
@@ -110,7 +107,7 @@ const PostCard = ({ post, handlePostClick }) => {
 
         {/* Content Preview */}
         <div className="space-y-2">
-          <p className="text-gray-700 text-sm leading-relaxed line-clamp-2">
+          <p className="text-gray-700 m-0 text-sm leading-relaxed line-clamp-2">
             {post.textContent.split(' ').slice(0, 15).join(' ')}
             {post.textContent.split(' ').length > 15 && '...'}
           </p>
@@ -120,7 +117,7 @@ const PostCard = ({ post, handlePostClick }) => {
         <div className="flex items-center justify-between pt-4 border-t border-gray-100 group-hover:border-gray-200 transition-colors duration-200">
           <div className="flex items-center gap-6">
             <div className="flex items-center gap-2 text-gray-600 hover:text-blue-600 transition-colors duration-200">
-              <AiOutlineBarChart className="w-4 h-4" />
+              <Icons.BarChart className="w-4 h-4" />
               <span className="text-sm font-medium">
                 {post.numImpressions >= 1000
                   ? `${(post.numImpressions / 1000).toFixed(1)}k`
@@ -129,7 +126,7 @@ const PostCard = ({ post, handlePostClick }) => {
             </div>
 
             <div className="flex items-center gap-2 text-gray-600 hover:text-red-500 transition-colors duration-200">
-              <AiOutlineHeart className="w-4 h-4" />
+              <Icons.Heart className="w-4 h-4" />
               <span className="text-sm font-medium">
                 {post.numLikes >= 1000
                   ? `${(post.numLikes / 1000).toFixed(1)}k`
@@ -138,7 +135,7 @@ const PostCard = ({ post, handlePostClick }) => {
             </div>
 
             <div className="flex items-center gap-2 text-gray-600 hover:text-green-600 transition-colors duration-200">
-              <AiOutlineMessage className="w-4 h-4" />
+              <Icons.AiMessage className="w-4 h-4" />
               <span className="text-sm font-medium">
                 {post.numComments?.toLocaleString() || '0'}
               </span>
@@ -149,7 +146,7 @@ const PostCard = ({ post, handlePostClick }) => {
             <span className="text-xs lg:flex hdden font-medium">
               View Details
             </span>
-            <AiOutlineArrowRight className="w-4 h-4 duration-200" />
+            <Icons.ArrowRight className="w-4 h-4 duration-200" />
           </div>
         </div>
       </div>
@@ -182,7 +179,7 @@ const PostsDiv = ({ handlePostClick, posts, isLoading }) => {
       {!isLoading && (!posts || posts.length === 0) && (
         <div className="text-center py-12">
           <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <AiOutlineBarChart className="w-8 h-8 text-gray-400" />
+            <Icons.BarChart className="w-8 h-8 text-gray-400" />
           </div>
           <h3 className="text-lg font-semibold text-gray-900 mb-2">
             No posts available

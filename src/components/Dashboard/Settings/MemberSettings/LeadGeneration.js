@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
-import { updateLeadGenerationGoals } from '../../../../network/Members';
-import { FiPlusCircle } from 'react-icons/fi';
+import { updateLeadGenerationGoals } from '@services/Members';
+import { Icons } from '@utils/constantData/icons';
 import { message, Input, Button, Select, Divider, Tag } from 'antd';
 
 function LeadGeneration({
@@ -122,6 +122,7 @@ function LeadGeneration({
       ),
     });
   };
+
   return (
     <div>
       {' '}
@@ -213,7 +214,7 @@ function LeadGeneration({
               type="primary"
               className="global-button-primary rounded-lg"
             >
-              <FiPlusCircle />
+              <Icons.Plus />
             </Button>
           </div>
           <div className="flex flex-wrap gap-2 mt-2">
@@ -246,7 +247,7 @@ function LeadGeneration({
               type="primary"
               className="global-button-primary rounded-lg"
             >
-              <FiPlusCircle />
+              <Icons.Plus />
             </Button>
           </div>
           <div className="flex flex-wrap gap-2 mt-2">
@@ -338,7 +339,7 @@ function LeadGeneration({
               type="primary"
               className="global-button-primary rounded-lg"
             >
-              <FiPlusCircle />
+              <Icons.Plus />
             </Button>
           </div>
           <div className="flex flex-wrap gap-2 mt-2">

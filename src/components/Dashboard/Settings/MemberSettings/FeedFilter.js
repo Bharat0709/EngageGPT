@@ -1,6 +1,6 @@
 import { message, Switch, Input, Button, Tag } from 'antd';
-import { FiPlusCircle } from 'react-icons/fi';
-import { updateFeedFilterSettings } from '../../../../network/Members';
+import { Icons } from '@utils/constantData/icons';
+import { updateFeedFilterSettings } from '@services/Members';
 import { useState } from 'react';
 
 function FeedFilter({ feedFilterSettings, setFeedFilterSettings, memberId }) {
@@ -10,7 +10,6 @@ function FeedFilter({ feedFilterSettings, setFeedFilterSettings, memberId }) {
   const handleSaveFeedFilters = async () => {
     setSavingFeedFilters(true);
     try {
-      // Use the dedicated feed filter API
       await updateFeedFilterSettings(memberId, feedFilterSettings);
       message.success('Feed filter settings saved successfully');
     } catch (error) {
@@ -43,6 +42,7 @@ function FeedFilter({ feedFilterSettings, setFeedFilterSettings, memberId }) {
       ),
     });
   };
+  
   return (
     <div>
       {' '}
@@ -97,7 +97,7 @@ function FeedFilter({ feedFilterSettings, setFeedFilterSettings, memberId }) {
                 type="primary"
                 className="global-button-primary rounded-lg"
               >
-                <FiPlusCircle />
+                <Icons.Plus />
               </Button>
             </div>
 

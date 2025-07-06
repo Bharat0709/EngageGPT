@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from 'antd';
-import { DeleteOutlined } from '@ant-design/icons';
+import { Icons } from '@utils/constantData/icons';
 
 const MediaPreview = ({ media, setPostDetails }) => {
   const handleDeleteFile = (fileName) => {
@@ -27,7 +27,7 @@ const MediaPreview = ({ media, setPostDetails }) => {
             <span className="text-sm">{file.name}</span>
           </div>
           <Button
-            icon={<DeleteOutlined />}
+            icon={<Icons.Trash />}
             onClick={() => handleDeleteFile(file.name)}
           ></Button>
         </div>

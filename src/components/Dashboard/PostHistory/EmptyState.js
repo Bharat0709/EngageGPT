@@ -1,14 +1,17 @@
 import React from 'react';
 import { Typography } from 'antd';
+import NotFound from '../../../assets/images/PostNotFound.png';
 
 const { Text, Title } = Typography;
 
 const EmptyState = ({ activeTab, getStatusIcon }) => {
   return (
     <div className="text-center py-12 bg-white rounded-xl">
-      <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-        {getStatusIcon(activeTab)}
-      </div>
+      <img
+        src={NotFound}
+        alt="No posts"
+        className="mx-auto lg:h-60 h-30 mb-4"
+      />
       <Title level={4} className="text-gray-600 mb-2">
         No {activeTab} posts found
       </Title>

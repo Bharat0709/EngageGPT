@@ -1,7 +1,7 @@
 import React from 'react';
 import LogoutButton from '../../Logout';
 
-const LogoutConfirmationModal = ({ isVisible, onClose, onConfirm }) => {
+const LogoutModal = ({ isVisible, onClose, onConfirm }) => {
   if (!isVisible) return null;
 
   return (
@@ -27,7 +27,7 @@ const LogoutConfirmationModal = ({ isVisible, onClose, onConfirm }) => {
           <button
             type="button"
             onClick={onConfirm}
-            className="global-button-primary rounded-full px-6 bg-red-600"
+            className=" py-1 px-4 rounded-full bg-red-600"
           >
             <LogoutButton />
           </button>
@@ -37,4 +37,4 @@ const LogoutConfirmationModal = ({ isVisible, onClose, onConfirm }) => {
   );
 };
 
-export default LogoutConfirmationModal;
+export default LogoutModal;

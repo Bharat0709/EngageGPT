@@ -1,69 +1,20 @@
 import { useEffect, useState } from 'react';
-import { message } from 'antd';
-import { FiRefreshCw } from 'react-icons/fi';
-import { formatDate } from '../../../utils/formatDate';
-import { AiOutlinePlus } from 'react-icons/ai';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { encodeToken } from '../../../utils/tokenUtils';
-import { setAuthTokenAction } from '../../../redux/auth/authActions';
+import { message } from 'antd';
+import { Icons } from '@utils/constantData/icons';
+import { formatDate } from '@utils/formatDate';
+import { goTo } from '@utils/navigator';
+import { encodeToken } from '@utils/tokenUtils';
+import { setAuthTokenAction } from '@redux/auth/authActions';
+import { getAllMembers, addNewMember } from '@services/Members';
 import Cookies from 'js-cookie';
-import { getAllMembers, addNewMember } from '../../../network/Members';
 import AddMembersModal from '../Global/AddPeopleModal';
 import PostDetails from './PostsAnalytics';
 import Stats from './Stats';
 import OnboardingGuide from './OnboardingGuide';
 import MembersProfileDropDown from '../Global/MembersDropDown';
-
-// Modern Skeleton Loading Component
-const ModernSkeleton = () => (
-  <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 p-6">
-    <div className="max-w-7xl mx-auto">
-      {/* Header Skeleton */}
-      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-8">
-        <div className="space-y-3">
-          <div className="h-8 w-48 bg-gray-200 rounded-lg animate-pulse"></div>
-          <div className="h-4 w-64 bg-gray-200 rounded animate-pulse"></div>
-        </div>
-        <div className="flex items-center gap-4">
-          <div className="h-12 w-40 bg-gray-200 rounded-xl animate-pulse"></div>
-          <div className="h-12 w-32 bg-gray-200 rounded-xl animate-pulse"></div>
-        </div>
-      </div>
-
-      {/* Stats Skeleton */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        {[...Array(4)].map((_, i) => (
-          <div
-            key={i}
-            className="bg-white rounded-2xl p-6 border border-gray-100"
-          >
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-gray-200 rounded-xl animate-pulse"></div>
-              <div className="w-16 h-6 bg-gray-200 rounded-lg animate-pulse"></div>
-            </div>
-            <div className="w-20 h-8 bg-gray-200 rounded-lg animate-pulse mb-2"></div>
-            <div className="w-24 h-4 bg-gray-200 rounded animate-pulse"></div>
-          </div>
-        ))}
-      </div>
-
-      {/* Content Skeleton */}
-      <div className="grid grid-cols-1 lg:grid-cols-1 gap-6">
-        <div className="lg:col-span-2 bg-white rounded-2xl p-6 border border-gray-100">
-          <div className="space-y-4">
-            {[...Array(5)].map((_, i) => (
-              <div
-                key={i}
-                className="h-16 bg-gray-200 rounded-xl animate-pulse"
-              ></div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-);
+import { ModernSkeleton } from '../SkeletonLoaders/SkeletonLoadingDashboard';
 
 // Status Badge Component
 const StatusBadge = ({ lastSyncedAt }) => {
@@ -96,7 +47,6 @@ const StatusBadge = ({ lastSyncedAt }) => {
 
 const Home = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const location = useLocation();
   const authToken = Cookies.get('engage-gpt');
   const [profiles, setProfiles] = useState([]);
@@ -113,7 +63,7 @@ const Home = () => {
 
     if (!token && !authToken) {
       message.info('Session expired, Please log in.');
-      navigate('/login');
+      goTo('/login');
       return;
     }
 
@@ -128,7 +78,7 @@ const Home = () => {
 
       dispatch(setAuthTokenAction(token));
     }
-  }, [location.search, authToken, dispatch, navigate]);
+  }, [location.search, authToken, dispatch, goTo]);
 
   useEffect(() => {
     const fetchAndSetUserData = async () => {
@@ -218,7 +168,7 @@ const Home = () => {
         <div className="flex flex-col lg:flex-row justify-between w-full items-start lg:items-center gap-6 mb-6">
           <div className="space-y-3 w-full">
             <div className="flex mx-auto w-full lg:flex-row flex-col lg:justify-start justify-center items-center gap-3">
-              <h1 className="text-2xl font-semibold text-gray-900 tracking-tight">
+              <h1 className="text-2xl  p-0 m-0 font-semibold text-gray-900 tracking-tight">
                 Dashboard
               </h1>
               <StatusBadge
@@ -230,7 +180,7 @@ const Home = () => {
                 className="p-2 text-gray-400 bg-white rounded-xl hover:text-gray-600 hover:bg-white transition-all hover:"
                 title="Refresh data"
               >
-                <FiRefreshCw className="w-4 h-4" />
+                <Icons.Refresh className="w-4 h-4" />
               </button>
             </div>
           </div>
@@ -247,7 +197,7 @@ const Home = () => {
               onClick={() => setIsAddMemberModalOpen(true)}
               className="flex items-center gap-2 rounded-full bg-[#0c4a6e] text-white px-4 py-2  font-medium"
             >
-              <AiOutlinePlus className="w-4 h-4" />
+              <Icons.Plus className="w-4 h-4" />
               Add Profile
             </button>
           </div>

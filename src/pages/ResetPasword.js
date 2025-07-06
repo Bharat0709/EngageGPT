@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { goTo } from '@utils/navigator';
 import { message } from 'antd';
-import EngageGPTLogo from '../assets/images/EngageGPTLogo.png';
-import { resetPassword } from '../network/Organization';
+import EngageGPTLogo from '@assets/images/EngageGPTLogo.png';
+import { resetPassword } from '@services/Organization';
 
 const ResetPassword = () => {
   const { token } = useParams();
-  const navigate = useNavigate();
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
@@ -29,7 +29,7 @@ const ResetPassword = () => {
     }
 
     if (!token) {
-      navigate('/');
+      goTo('/');
       return;
     }
 
@@ -39,7 +39,7 @@ const ResetPassword = () => {
       message.success('New password set successfully');
       setSuccess('Password reset successfully. Redirecting to login...');
       setTimeout(() => {
-        navigate('/login');
+        goTo('/login');
       }, 3000);
     } catch (err) {
       message.error(err.message || 'Something went wrong');

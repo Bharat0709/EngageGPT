@@ -244,3 +244,16 @@ export const updateLeadGenerationGoals = async (
     throw error;
   }
 };
+
+export const deleteMemberAccount = async (memberId) => {
+  console.log(memberId);
+  try {
+    const response = await axiosInstance.delete(
+      `${MEMBER_API_URL}/deleteAccount/${memberId}`,
+    );
+    return response.data;
+  } catch (error) {
+    const errorMsg = getErrorMessage(error);
+    throw new Error(errorMsg);
+  }
+};

@@ -1,9 +1,9 @@
 import { Skeleton } from 'antd';
 
-const renderHiringPostsSkeleton = () => (
-  <div className="dashboard-container bg-gray-100 rounded-xl mt-4">
+const SavedPostsSkeleton = () => (
+  <div className="dashboard-container bg-[#ededed] rounded-xl lg:p-6 p-4">
     {/* Tabs skeleton */}
-    <div className="mt-4 mb-6">
+    <div className="mt-2 mb-2">
       <div className="flex bg-gray-50 rounded-lg p-2">
         <Skeleton.Button
           active
@@ -34,7 +34,7 @@ const renderHiringPostsSkeleton = () => (
     </div>
 
     {/* Info card skeleton */}
-    <div className="person-card w-full bg-gray-50 p-4 rounded-xl flex justify-between items-center mb-6">
+    <div className="person-card w-full bg-gray-50 p-4 rounded-xl flex justify-between items-center mb-3">
       <div className="flex-grow items-center mt-1 gap-4">
         <Skeleton.Input
           active
@@ -65,7 +65,7 @@ const renderHiringPostsSkeleton = () => (
     </div>
 
     {/* Posts skeletons */}
-    <div className="flex bg-gray-100 flex-wrap gap-4 mt-4">
+    <div className="flex bg-[#ededed flex-wrap gap-4 mt-2">
       {Array.from({ length: 3 }).map((_, index) => (
         <div key={index} className="person-card w-full bg-white p-4 rounded-xl">
           <div className="flex justify-between items-start mb-4">
@@ -143,4 +143,4 @@ const renderHiringPostsSkeleton = () => (
   </div>
 );
 
-export default renderHiringPostsSkeleton;
+export default SavedPostsSkeleton;
