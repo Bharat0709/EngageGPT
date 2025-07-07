@@ -5,6 +5,7 @@ import { message } from 'antd';
 import { Icons } from '@utils/constantData/icons';
 import { formatDate } from '@utils/formatDate';
 import { goTo } from '@utils/navigator';
+import { Copy } from '@utils/copyText';
 import { encodeToken } from '@utils/tokenUtils';
 import { setAuthTokenAction } from '@redux/auth/authActions';
 import { getAllMembers, addNewMember } from '@services/Members';
@@ -96,14 +97,12 @@ const Home = () => {
         setInvitedProfiles(invited);
         setSelectedProfile(connected || null);
 
-        // Check if onboarding is complete
         const hasProfiles = data.length > 0;
         const hasConnected = connected !== undefined;
         const isProfileSynced = connected?.lastSyncedAt;
 
         setOnboardingComplete(hasProfiles && hasConnected && isProfileSynced);
       } catch (err) {
-        console.error('Error getting profile details!');
         setIsLoading(false);
         message.error('Failed to load member data');
       }
@@ -126,11 +125,6 @@ const Home = () => {
     }
   };
 
-  const handleCopy = (token) => {
-    navigator.clipboard.writeText(token);
-    message.success('Connection token copied!');
-  };
-
   const handleProfileChange = (profile) => {
     setSelectedProfile(profile);
   };
@@ -144,7 +138,6 @@ const Home = () => {
     return <ModernSkeleton />;
   }
 
-  // Show onboarding when needed
   if (!onboardingComplete) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
@@ -190,7 +183,9 @@ const Home = () => {
               profiles={profiles}
               selectedProfile={selectedProfile}
               onProfileChange={handleProfileChange}
-              onCopy={handleCopy}
+              onCopy={() =>
+                Copy(selectedProfile.connectionToken, 'Connection Token Copied')
+              }
             />
 
             <button
@@ -203,7 +198,6 @@ const Home = () => {
           </div>
         </div>
 
-        {/* Stats Component - Enhanced */}
         <div className="mb-8">
           <Stats
             isLoading={isLoading}
@@ -212,11 +206,10 @@ const Home = () => {
           />
         </div>
 
-        <div className="">
+        <div>
           <PostDetails setStats={setStats} memberId={selectedProfile?._id} />
         </div>
 
-        {/* Add Members Modal */}
         <AddMembersModal
           isOpen={isAddMemberModalOpen}
           onClose={() => setIsAddMemberModalOpen(false)}

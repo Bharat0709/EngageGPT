@@ -48,7 +48,7 @@ const MediaPreviewModal = ({ isOpen, onClose, media }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm">
+    <div className="fixed inset-0 z-[70] flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm">
       <div className="bg-white rounded-2xl shadow-2xl max-w-4xl w-11/12 max-h-[90vh] overflow-hidden">
         {/* Header */}
         <div className="bg-gradient-to-r from-gray-50 to-gray-100 px-6 py-4 border-b border-gray-200">

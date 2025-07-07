@@ -201,7 +201,7 @@ const AddMembersModal = ({ isOpen, onClose, onSubmit }) => {
             <button
               disabled={isAdding}
               type="submit"
-              className={`px-5 py-2 bg-sky-900 text-white font-medium rounded-full shadow-sm hover:bg-indigo-800 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-colors flex items-center gap-2 ${
+              className={`px-5 py-2 bg-sky-900 text-white font-medium text-sm rounded-full shadow-sm hover:bg-indigo-900 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-colors flex items-center gap-2 ${
                 isAdding ? 'opacity-70 cursor-not-allowed' : ''
               }`}
             >

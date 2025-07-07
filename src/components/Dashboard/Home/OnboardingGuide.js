@@ -3,6 +3,8 @@ import { OnboardingSteps } from '@assets/data/onBoardingSteps';
 import EngagegptBanner from '@assets/images/HomeBanner.png';
 import { message } from 'antd';
 import { Icons } from '@utils/constantData/icons';
+import { Copy } from '@utils/copyText';
+import { connectLinkedIn } from '@utils/connectLinkedIn';
 
 const OnboardingGuide = ({
   onAddProfile,
@@ -12,26 +14,18 @@ const OnboardingGuide = ({
   invitedProfiles = [],
   selectedProfile = null,
 }) => {
-  const handleConnectLinkedIn = () => {
-    const authUrl = process.env.REACT_APP_LINKEDIN_AUTH_URL;
-    window.location.href = authUrl;
-  };
-
-  const handleCopy = (token) => {
-    navigator.clipboard.writeText(token);
-    message.success('Connection token copied!');
-  };
-
   const isProfileAdded = invitedProfiles.length > 0 || selectedProfile !== null;
+
   const isExtensionInstalled =
     invitedProfiles?.some((profile) => profile.isConnected === 'connected') ||
     selectedProfile?.isConnected === 'connected';
+
   const isLinkedInConnected =
     selectedProfile?.isLinkedinConnected ||
     invitedProfiles.some((profile) => profile.isLinkedinConnected);
+
   const isProfileSynced = selectedProfile?.lastSyncedAt;
 
-  // Calculate which steps are completed
   const stepsCompletion = {
     'Add Profile': isProfileAdded,
     'Install Chrome Extension and Connect your profile using conection token':
@@ -39,7 +33,6 @@ const OnboardingGuide = ({
     'Sync your LinkedIn Profile': isProfileSynced,
   };
 
-  // Determine which steps are unlocked based on previous step completion
   const stepsUnlocked = {
     'Add Profile': true, // First step is always unlocked
     'Install Chrome Extension and Connect your profile using conection token':
@@ -64,10 +57,10 @@ const OnboardingGuide = ({
           <div className="flex items-start gap-3">
             <Icons.Target className="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0" />
             <div>
-              <p className="font-medium text-slate-800 text-sm">
+              <p className="font-medium m-0 text-slate-800 text-sm">
                 Targeted Engagement
               </p>
-              <p className="text-slate-600 text-xs">
+              <p className="text-slate-600 m-0 text-xs">
                 AI identifies the best opportunities
               </p>
             </div>
@@ -75,10 +68,10 @@ const OnboardingGuide = ({
           <div className="flex items-start gap-3">
             <Icons.TrendingUp className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
             <div>
-              <p className="font-medium text-slate-800 text-sm">
+              <p className="font-medium mb-0 text-slate-800 text-sm">
                 Boost Visibility
               </p>
-              <p className="text-slate-600 text-xs">
+              <p className="text-slate-600 mb-0 text-xs">
                 Increase your profile views by 3x
               </p>
             </div>
@@ -86,8 +79,10 @@ const OnboardingGuide = ({
           <div className="flex items-start gap-3">
             <Icons.Zap className="w-5 h-5 text-yellow-500 mt-0.5 flex-shrink-0" />
             <div>
-              <p className="font-medium text-slate-800 text-sm">Save Time</p>
-              <p className="text-slate-600 text-xs">
+              <p className="font-medium mb-0 text-slate-800 text-sm">
+                Save Time
+              </p>
+              <p className="text-slate-600 mb-0 text-xs">
                 Automate routine engagement tasks
               </p>
             </div>
@@ -98,25 +93,27 @@ const OnboardingGuide = ({
       <div className="bg-white border border-gray-600 p-6 mb-2">
         <div className="flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="flex-1">
-            <div className="flex justify-between items-start">
+            <div className="flex flex-col lg:flex-row justify-between items-start">
               <div className=" flex flex-col items-start mb-6">
-                <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+                <h2 className="text-2xl font-semibold text-gray-800 mb-2">
                   Get Started in Minutes
                 </h2>
-                <p className="text-gray-600 max-w-[40rem] mb-6">
+                <p className="text-gray-600 lg:text-lg text-xs max-w-[40rem] mb-6">
                   Follow these simple steps to set up your account and start
                   maximizing your LinkedIn engagement.
                 </p>
-                <p>Note: Refresh once each step is complete</p>
+                <p className="font-bold m-0">
+                  Refresh the page once each step is complete
+                </p>
               </div>
               <a
                 href="https://calendly.com/engagegpt/30min"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mx-auto flex justify-center items-center"
+                className="lg:mx-auto mx-0 mb-4 flex justify-center items-center"
               >
                 <div className="bg-white lg:flex items-center justify-center">
-                  <div className="px-6 py-2 text-sm font-medium bg-white text-black w-fit transition-all border border-gray-300 shadow-[3px_3px_0px_black] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]">
+                  <div className="lg:px-6 px-4 py-2 text-xs lg:text-sm font-medium bg-white text-black w-fit transition-all border border-gray-300 shadow-[3px_3px_0px_black] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]">
                     Book a Demo
                   </div>
                 </div>
@@ -246,7 +243,7 @@ const OnboardingGuide = ({
               </p>
             </div>
             <button
-              onClick={handleConnectLinkedIn}
+              onClick={connectLinkedIn}
               className="btn-primary flex items-center gap-2 whitespace-nowrap px-6 py-2 text-sm font-medium bg-white border border-black text-black w-fit transition-all shadow-[3px_3px_0px_black] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]"
             >
               <Icons.LinkedIn className="text-blue-900" size={20} />
@@ -305,15 +302,20 @@ const OnboardingGuide = ({
                     </button>
                     <button
                       className="ml-2 text-gray-800 hover:text-black"
-                      onClick={() => handleCopy(profile.connectionToken)}
+                      onClick={() =>
+                        Copy(
+                          profile?.connectionToken,
+                          'Connection Token Copied',
+                        )
+                      }
                     >
                       <Icons.Copy size={16} />
                     </button>
                   </div>
                   <button
-                    onClick={handleConnectLinkedIn}
+                    onClick={connectLinkedIn}
                     disabled={profile.isLinkedinConnected}
-                    className={`text-sm border-gray-400 font-semibold px-3 text-black flex items-center gap-2 p-2 ${
+                    className={`text-sm border-gray-400 text-center px-3 justify-center text-black flex items-center gap-2 p-2 ${
                       profile.isLinkedinConnected
                         ? 'bg-green-400 text-white font-semibold cursor-not-allowed'
                         : 'bg-gray-100'

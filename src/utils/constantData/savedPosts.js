@@ -1,4 +1,6 @@
-export const PostSavingGuide = () => (
+import { goTo } from '@utils/navigator';
+
+export const PostSavingGuide = ({ memberId }) => (
   <div className="w-full p-4 bg-white border border-gray-200 rounded-lg">
     <h3 className="text-lg font-semibold mb-3">
       Guide: How to Save LinkedIn Posts by Keywords
@@ -49,7 +51,7 @@ export const PostSavingGuide = () => (
 
     <div className="flex justify-center mt-6">
       <button
-        onClick={() => navigate(`/dashboard/member-settings/${memberId}`)}
+        onClick={() => goTo(`/dashboard/member-settings/${memberId}`)}
         className="btn-primary flex items-center gap-2 whitespace-nowrap px-6 py-2 text-sm font-medium bg-white border border-black text-black w-fit transition-all shadow-[3px_3px_0px_black] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]"
       >
         Go to Post Saving Settings

@@ -211,6 +211,7 @@ const HiringPostsDashboard = ({ memberId }) => {
 
   const renderHiringPosts = (posts) => (
     <div className="flex w-full flex-col gap-4">
+      {<PostSavingGuide memberId={memberId} />}
       {posts?.length === 0
         ? renderEmptyState()
         : posts?.map((post) => (

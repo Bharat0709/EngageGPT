@@ -22,7 +22,7 @@ const CustomDrawer = ({ isOpen, onClose, children, title }) => {
   return (
     <>
       <div
-        className={`fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm transition-opacity duration-300 z-40 ${
+        className={`fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm transition-opacity duration-300 z-[60] ${
           isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}
         onClick={onClose}
@@ -30,7 +30,7 @@ const CustomDrawer = ({ isOpen, onClose, children, title }) => {
 
       {/* Drawer */}
       <div
-        className={`fixed top-0 right-0 h-full bg-white shadow-2xl transform transition-transform duration-300 ease-in-out z-[1000] ${
+        className={`fixed top-0 right-0 h-full bg-white shadow-2xl transform transition-transform duration-300 ease-in-out z-[60] ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         } w-full max-w-md md:max-w-lg lg:max-w-xl`}
       >
