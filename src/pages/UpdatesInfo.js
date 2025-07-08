@@ -234,9 +234,11 @@ const UpdateInfoScreen = () => {
                   <p className="text-gray-600 leading-relaxed mb-6">
                     {capability.description}
                   </p>
-                  <button className="text-blue-600 hover:text-blue-700 font-bold flex items-center group-hover:translate-x-2 transition-transform">
-                    Learn More <FaArrowRight className="ml-2 w-4 h-4" />
-                  </button>
+                  <a href="https://engagegpt.in/dashboard">
+                    <button className="text-blue-600 hover:text-blue-700 font-bold flex items-center group-hover:translate-x-2 transition-transform">
+                      Learn More <FaArrowRight className="ml-2 w-4 h-4" />
+                    </button>
+                  </a>
                 </div>
               </div>
             ))}
