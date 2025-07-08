@@ -143,12 +143,21 @@ const UpdateInfoScreen = () => {
               Stay ahead with cutting-edge AI features designed to supercharge
               your LinkedIn presence.
             </p>
-            <div className="flex justify-center">
+            <div className="flex gap-4 justify-center">
+              <a
+                href="https://engagegpt.in/dashboard"
+                target="_blank"
+                rel="noreferrer noopener"
+                className="inline-flex items-center px-10 py-5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold text-lg rounded-2xl shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300 group"
+              >
+                View Dashboard
+                <FiArrowRight className="ml-3 w-6 h-6 group-hover:translate-x-2 transition-transform" />
+              </a>
               <a
                 href="https://www.linkedin.com/feed/"
                 target="_blank"
                 rel="noreferrer noopener"
-                className="inline-flex items-center px-10 py-5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold text-lg rounded-2xl shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300 group"
+                className="inline-flex items-center px-10 py-5 bg-gradient-to-r from-yellow-600 to-green-600 text-white font-bold text-lg rounded-2xl shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300 group"
               >
                 Try New Updates
                 <FiArrowRight className="ml-3 w-6 h-6 group-hover:translate-x-2 transition-transform" />
