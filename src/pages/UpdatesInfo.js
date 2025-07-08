@@ -1,5 +1,16 @@
 import React from 'react';
-import EngageGPTLogo from '@assets/images/EngageGPTLogo.png';
+import {
+  FaCheck,
+  FaCalendarAlt,
+  FaBookmark,
+  FaEye,
+  FaRocket,
+  FaArrowRight,
+  FaClock,
+  FaComments,
+  FaChartLine,
+} from 'react-icons/fa';
+import { FiCalendar, FiArrowRight } from 'react-icons/fi';
 
 const updates = [
   {
@@ -57,222 +68,267 @@ const comingSoon = [
     feature: 'DeepSeek AI Integration',
     description:
       'Advanced AI model for more contextual and engaging LinkedIn content generation.',
+    icon: <FaComments className="w-6 h-6" />,
+    color: 'from-purple-500 to-pink-500',
   },
   {
     feature: 'Claude AI for Comment Generation',
     description:
       'Leverage Claude AI to write thoughtful, relevant comments on LinkedIn posts.',
+    icon: <FaComments className="w-6 h-6" />,
+    color: 'from-blue-500 to-cyan-500',
   },
   {
     feature: 'Enhanced Analytics Dashboard',
     description:
       'More detailed insights and metrics to track your LinkedIn growth and engagement.',
+    icon: <FaChartLine className="w-6 h-6" />,
+    color: 'from-green-500 to-emerald-500',
+  },
+];
+
+const featuredCapabilities = [
+  {
+    title: 'Smart Post Saving',
+    description:
+      'Automatically save posts based on custom keywords with ALT + S shortcut',
+    icon: <FaBookmark className="w-7 h-7" />,
+    gradient: 'from-blue-500 to-cyan-500',
+    badge: 'New',
+    badgeColor: 'bg-blue-500',
+  },
+  {
+    title: 'Intelligent Feed Filtering',
+    description:
+      'Hide posts containing specific keywords to curate your perfect feed',
+    icon: <FaEye className="w-7 h-7" />,
+    gradient: 'from-emerald-500 to-teal-500',
+    badge: 'Popular',
+    badgeColor: 'bg-emerald-500',
+  },
+  {
+    title: 'Content Calendar',
+    description:
+      'Plan and schedule your LinkedIn posts with our intuitive calendar',
+    icon: <FiCalendar className="w-7 h-7" />,
+    gradient: 'from-purple-500 to-pink-500',
+    badge: 'Hot',
+    badgeColor: 'bg-purple-500',
   },
 ];
 
 const UpdateInfoScreen = () => {
   return (
-    <div className="flex flex-col items-center bg-gray-100 py-8 px-4">
-      {/* Header Section */}
-      <div className="max-w-4xl w-full bg-white rounded-lg p-6">
-        <div className="flex flex-wrap gap-3 items-center justify-between">
-          <a href="https://engagegpt.in">
-            <img
-              src={EngageGPTLogo}
-              alt="EngageGPT Logo"
-              className="h-16 w-auto"
-            />
-          </a>
-          <h1 className="text-2xl font-bold text-gray-800">
-            AI for LinkedIn - EngageGPT Updates
-          </h1>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+      {/* Hero Section */}
+      <div className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/5 to-indigo-600/5"></div>
+        <div className="absolute top-0 left-0 w-full h-full">
+          <div className="absolute top-20 left-20 w-64 h-64 bg-blue-400/10 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-20 right-20 w-96 h-96 bg-indigo-400/10 rounded-full blur-3xl"></div>
         </div>
-        <p className="text-gray-600 mt-4">
-          Discover the latest updates and improvements in EngageGPT. Stay
-          informed about the new features and fixes introduced in every version.
-        </p>
-        <a
-          rel="noreferrer noopener"
-          target="_blank"
-          href="https://www.linkedin.com/feed/"
-        >
-          <button
-            type="submit"
-            className="bg-[#004182] mt-4 text-xl whitespace-nowrap self-center lg:w-fit py-2 h-fit rounded-none font-medium w-fit transition-all shadow-[3px_3px_0px_black] hover:shadow-none hover:translate-x-[3px] px-6 text-white hover:translate-y-[3px]"
-          >
-            Try New Updates
-          </button>
-        </a>
-      </div>
 
-      {/* Current Version Section */}
-      <div className="max-w-4xl w-full bg-white rounded-lg mt-6 p-6">
-        <h2 className="text-xl font-semibold text-gray-800 mb-4">
-          Current Version: {updates[0].version}
-        </h2>
-        <p className="text-gray-600">Release Date: {updates[0].date}</p>
-        <ul className="list-disc list-inside mt-4 text-gray-700">
-          {updates[0].highlights.map((highlight, index) => (
-            <li key={index} className="mb-2">
-              {highlight}
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      {/* Featured New Capabilities */}
-      <div className="max-w-4xl w-full bg-white rounded-lg mt-6 p-6">
-        <h2 className="text-xl font-semibold text-gray-800 mb-4">
-          Featured New Capabilities
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-          <div className="p-4 rounded-lg bg-gradient-to-r from-blue-200 to-cyan-200">
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2">
-                <span className="text-blue-500">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-6 h-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
-                    />
-                  </svg>
-                </span>
-                <h3 className="font-bold">Post Saving</h3>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div className="text-center">
+            <div className="flex items-center justify-center mb-8">
+              <div className="bg-gradient-to-r from-blue-600 to-indigo-600 p-4 rounded-3xl shadow-xl">
+                <FaRocket className="w-10 h-10 text-white" />
               </div>
-              <span className="px-2 py-1 text-xs font-medium rounded-full bg-gradient-to-r from-blue-300 to-cyan-400 text-white">
-                New
-              </span>
+              <h1 className="ml-6 text-5xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
+                EngageGPT Updates
+              </h1>
             </div>
-            <p className="text-sm">
-              Save posts automatically based on custom keywords for easy
-              reference and inspiration.
+            <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed mb-10">
+              Discover the latest innovations and improvements in EngageGPT.
+              Stay ahead with cutting-edge AI features designed to supercharge
+              your LinkedIn presence.
             </p>
-            <a
-              href="/dashboard/saved-posts"
-              className="inline-block mt-3 text-blue-700 text-sm font-medium"
-            >
-              Learn More →
-            </a>
-          </div>
-
-          <div className="p-4 rounded-lg bg-gradient-to-r from-yellow-200 to-green-200">
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2">
-                <span className="text-green-500">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-6 h-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"
-                    />
-                  </svg>
-                </span>
-                <h3 className="font-bold">Hide Post</h3>
-              </div>
-              <span className="px-2 py-1 text-xs font-medium rounded-full bg-gradient-to-r from-yellow-300 to-green-300 text-white">
-                Popular
-              </span>
+            <div className="flex justify-center">
+              <a
+                href="https://www.linkedin.com/feed/"
+                target="_blank"
+                rel="noreferrer noopener"
+                className="inline-flex items-center px-10 py-5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold text-lg rounded-2xl shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300 group"
+              >
+                Try New Updates
+                <FiArrowRight className="ml-3 w-6 h-6 group-hover:translate-x-2 transition-transform" />
+              </a>
             </div>
-            <p className="text-sm">
-              Filter your feed by hiding posts containing specific keywords you
-              want to avoid.
-            </p>
-            <a
-              href="/dashboard/saved-posts"
-              className="inline-block mt-3 text-green-700 text-sm font-medium"
-            >
-              Learn More →
-            </a>
-          </div>
-
-          <div className="p-4 rounded-lg bg-gradient-to-r from-blue-200 to-cyan-300">
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2">
-                <span className="text-blue-500">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-6 h-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                    />
-                  </svg>
-                </span>
-                <h3 className="font-bold">Content Calendar</h3>
-              </div>
-              <span className="px-2 py-1 text-xs font-medium rounded-full bg-gradient-to-r from-blue-400 to-cyan-400 text-white">
-                Hot
-              </span>
-            </div>
-            <p className="text-sm">
-              Manage your posts efficiently with an intuitive content calendar.
-            </p>
-            <a
-              href="/dashboard/content-calendar"
-              className="inline-block mt-3 text-blue-700 text-sm font-medium"
-            >
-              Learn More →
-            </a>
           </div>
         </div>
       </div>
 
-      {/* Coming Soon Section */}
-      <div className="max-w-4xl w-full bg-white rounded-lg mt-6 p-6">
-        <h2 className="text-xl font-semibold text-gray-800 mb-4">
-          Coming Soon
-        </h2>
-        <div className="space-y-4">
-          {comingSoon.map((item, index) => (
-            <div key={index} className="border-l-4 border-blue-500 pl-4 py-2">
-              <h3 className="font-bold text-gray-800">{item.feature}</h3>
-              <p className="text-gray-600 text-sm">{item.description}</p>
-            </div>
-          ))}
-        </div>
-      </div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+        {/* Current Version Spotlight */}
+        <div className="bg-white rounded-3xl shadow-2xl border border-gray-100 p-10 mb-10 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-green-500/10 to-emerald-500/10 rounded-full -translate-y-20 translate-x-20"></div>
+          <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-blue-500/10 to-cyan-500/10 rounded-full translate-y-16 -translate-x-16"></div>
 
-      {/* Update History Section */}
-      <div className="max-w-4xl w-full bg-white rounded-lg mt-6 p-6">
-        <h2 className="text-xl font-semibold text-gray-800 mb-4">
-          Update History
-        </h2>
-        {updates.slice(1).map((update, index) => (
-          <div key={index} className="border-t border-gray-200 pt-4 mt-4">
-            <h3 className="text-lg font-bold text-gray-800">
-              Version {update.version}
-            </h3>
-            <p className="text-gray-600">Release Date: {update.date}</p>
-            <ul className="list-disc list-inside mt-2 text-gray-700">
-              {update.highlights.map((highlight, idx) => (
-                <li key={idx} className="mb-2">
-                  {highlight}
-                </li>
+          <div className="relative">
+            <div className="flex items-center justify-between mb-8">
+              <div className="flex items-center">
+                <div className="bg-gradient-to-r from-green-500 to-emerald-500 p-3 rounded-2xl shadow-lg">
+                  <FaCheck className="w-8 h-8 text-white" />
+                </div>
+                <div className="ml-6">
+                  <h2 className="text-3xl font-bold text-gray-900">
+                    Version {updates[0].version}
+                  </h2>
+                  <p className="text-gray-600 flex items-center mt-2">
+                    <FaCalendarAlt className="w-5 h-5 mr-3" />
+                    Released {updates[0].date}
+                  </p>
+                </div>
+              </div>
+              <span className="bg-gradient-to-r from-green-500 to-emerald-500 text-white px-6 py-3 rounded-full text-sm font-bold shadow-lg">
+                Latest Release
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {updates[0].highlights.map((highlight, index) => (
+                <div
+                  key={index}
+                  className="flex items-start p-6 bg-gradient-to-r from-gray-50 to-blue-50 rounded-2xl hover:shadow-md transition-shadow"
+                >
+                  <div className="flex-shrink-0 w-3 h-3 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full mt-2 mr-4"></div>
+                  <p className="text-gray-700 font-medium text-lg leading-relaxed">
+                    {highlight}
+                  </p>
+                </div>
               ))}
-            </ul>
+            </div>
           </div>
-        ))}
+        </div>
+
+        {/* Featured Capabilities */}
+        <div className="bg-white rounded-3xl shadow-2xl border border-gray-100 p-10 mb-10">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              Featured Capabilities
+            </h2>
+            <p className="text-gray-600 text-lg">
+              Powerful features that enhance your LinkedIn experience
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {featuredCapabilities.map((capability, index) => (
+              <div key={index} className="relative group">
+                <div className="bg-gradient-to-br from-white to-gray-50 rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 border border-gray-100 group-hover:border-gray-200 transform hover:-translate-y-2">
+                  <div className="flex items-center justify-between mb-6">
+                    <div
+                      className={`bg-gradient-to-r ${capability.gradient} p-4 rounded-2xl text-white shadow-lg`}
+                    >
+                      {capability.icon}
+                    </div>
+                    <span
+                      className={`${capability.badgeColor} text-white px-4 py-2 rounded-full text-sm font-bold`}
+                    >
+                      {capability.badge}
+                    </span>
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">
+                    {capability.title}
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed mb-6">
+                    {capability.description}
+                  </p>
+                  <button className="text-blue-600 hover:text-blue-700 font-bold flex items-center group-hover:translate-x-2 transition-transform">
+                    Learn More <FaArrowRight className="ml-2 w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Coming Soon */}
+        <div className="bg-white rounded-3xl shadow-2xl border border-gray-100 p-10 mb-10">
+          <div className="text-center mb-10">
+            <div className="inline-flex items-center justify-center p-4 bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl mb-6 shadow-lg">
+              <FaClock className="w-8 h-8 text-white" />
+            </div>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              Coming Soon
+            </h2>
+            <p className="text-gray-600 text-lg">
+              Exciting features currently in development
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {comingSoon.map((item, index) => (
+              <div key={index} className="relative group">
+                <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-8 border-2 border-dashed border-gray-200 hover:border-gray-300 transition-all duration-300 group-hover:shadow-lg">
+                  <div
+                    className={`inline-flex items-center justify-center p-4 bg-gradient-to-r ${item.color} rounded-2xl mb-6 text-white shadow-lg`}
+                  >
+                    {item.icon}
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">
+                    {item.feature}
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed">
+                    {item.description}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Update History */}
+        <div className="bg-white rounded-3xl shadow-2xl border border-gray-100 p-10">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              Update History
+            </h2>
+            <p className="text-gray-600 text-lg">
+              Track our journey of continuous improvement
+            </p>
+          </div>
+
+          <div className="space-y-8">
+            {updates.slice(1).map((update, index) => (
+              <div key={index} className="relative">
+                <div className="flex items-start">
+                  <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-r from-gray-600 to-gray-700 rounded-2xl flex items-center justify-center text-white font-bold text-lg shadow-lg">
+                    {update.version.split('.')[0]}.
+                    {update.version.split('.')[1]}
+                  </div>
+                  <div className="ml-8 flex-1">
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="text-2xl font-bold text-gray-900">
+                        Version {update.version}
+                      </h3>
+                      <span className="text-gray-500 flex items-center bg-gray-100 px-4 py-2 rounded-full">
+                        <FaCalendarAlt className="w-4 h-4 mr-2" />
+                        {update.date}
+                      </span>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {update.highlights.map((highlight, idx) => (
+                        <div
+                          key={idx}
+                          className="flex items-start p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors"
+                        >
+                          <div className="flex-shrink-0 w-2 h-2 bg-blue-500 rounded-full mt-2 mr-4"></div>
+                          <p className="text-gray-700 leading-relaxed">
+                            {highlight}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                {index < updates.slice(1).length - 1 && (
+                  <div className="absolute left-8 top-16 w-0.5 h-12 bg-gradient-to-b from-gray-300 to-transparent"></div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
