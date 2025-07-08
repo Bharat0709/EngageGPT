@@ -3,6 +3,16 @@ import EngageGPTLogo from '@assets/images/EngageGPTLogo.png';
 
 const updates = [
   {
+    version: '2.2.0',
+    date: '8th July, 2025',
+    highlights: [
+      'Profile Syncing Error is Resolved',
+      'Enhanced User Interface',
+      'Added a shortcut to enable post saving i.e ALT + S',
+      'Better Performance',
+    ],
+  },
+  {
     version: '2.1.0',
     date: '22th May, 2025',
     highlights: [
@@ -86,7 +96,10 @@ const UpdateInfoScreen = () => {
           target="_blank"
           href="https://www.linkedin.com/feed/"
         >
-          <button type="submit" className={`mt-4 global-button-primary`}>
+          <button
+            type="submit"
+            className="bg-[#004182] mt-4 text-xl whitespace-nowrap self-center lg:w-fit py-2 h-fit rounded-none font-medium w-fit transition-all shadow-[3px_3px_0px_black] hover:shadow-none hover:translate-x-[3px] px-6 text-white hover:translate-y-[3px]"
+          >
             Try New Updates
           </button>
         </a>
