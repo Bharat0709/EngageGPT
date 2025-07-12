@@ -7,6 +7,7 @@ const OrganizationCard = ({
   isOpen,
   isCardOpen,
   onSettingsClick,
+  setShowCreditsModal,
   setIsFeedbackModalOpen,
   setIsLogoutModalOpen,
   setIsHelpModalOpen,
@@ -80,9 +81,18 @@ const OrganizationCard = ({
       {/* User profile section */}
       <div
         className={`transition-all duration-300 ease-in-out ${
-          isOpen ? 'w-fit' : 'w-[78px]'
+          isOpen ? 'w-full' : 'w-[80px]'
         }`}
       >
+        {isOpen && (
+          <MenuButton
+            onClick={() => setShowCreditsModal(true)}
+            icon={<Icons.Credits size={16} />}
+            text={`Add More Credits`}
+            className="text-gray-700 mb-2 justify-center text-center bg-white"
+          />
+        )}
+
         <button
           onClick={onToggleCard}
           className="w-max mx-auto flex items-center justify-center gap-3 p-2 rounded-lg transition-all duration-200 hover:bg-white/30"
@@ -124,7 +134,7 @@ const OrganizationCard = ({
                     {name}
                   </div>
                   <div className="text-xs w-fit text-black capitalize">
-                    Free plan
+                    {`${credits} Credits Left`}
                   </div>
                 </div>
               </div>

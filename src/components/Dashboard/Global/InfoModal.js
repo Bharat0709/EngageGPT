@@ -5,7 +5,7 @@ const InfoModal = ({ isOpen, onClose, title, content }) => {
 
   return (
     <div className="fixed inset-0 w-full z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm transition-opacity">
-      <div className="bg-white flex flex-col lg:max-w-lg w-11/12 p-0 rounded-3xl shadow-xl transform transition-all duration-300 ease-in-out">
+      <div className="bg-white flex flex-col lg:max-w-lg w-11/12 h-3/4 overflow-y-scroll scrollbar-hide p-0 rounded-3xl shadow-xl transform transition-all duration-300 ease-in-out">
         {/* Header */}
         <div className="bg-indigo-50 rounded-t-3xl p-6">
           <div className="flex justify-between items-center">
@@ -13,7 +13,7 @@ const InfoModal = ({ isOpen, onClose, title, content }) => {
               <div className="w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center">
                 <span className="text-white text-sm font-bold">!</span>
               </div>
-              <h2 className="text-lg lg:text-xl font-bold text-indigo-800">
+              <h2 className="text-lg lg:text-xl mb-0 p-0 font-bold text-indigo-800">
                 {title}
               </h2>
             </div>

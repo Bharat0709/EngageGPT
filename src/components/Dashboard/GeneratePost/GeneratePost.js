@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { fetchOrganizationData } from '@services/Organization';
 import { generatePost, getMasterData } from '@services/GenerateContent';
+import { creditsModalContent } from '../Global/AddCreditsContent';
 import { message } from 'antd';
 import {
   FaLinkedin,
@@ -21,6 +22,7 @@ import {
 } from 'react-icons/fa';
 import GeneratePostSkeletonLoading from '../SkeletonLoaders/GeneratePostSkeletonLoading';
 import { goTo } from '@utils/navigator';
+import InfoModal from '../Global/InfoModal';
 
 const LinkedInPostGenerator = () => {
   const [messages, setMessages] = useState([]);
@@ -29,6 +31,7 @@ const LinkedInPostGenerator = () => {
   const [generatedPost, setGeneratedPost] = useState('');
   const [selectedAIOption, setSelectedAIOption] = useState('Gemini');
   const [availableAIOptions, setAvailableAIOptions] = useState([]);
+  const [showCreditsModal, setShowCreditsModal] = useState(false);
   const [selectedTone, setSelectedTone] = useState('Professional');
   const [creditsLeft, setCreditsLeft] = useState(0);
   const [showPreview, setShowPreview] = useState(false);
@@ -47,20 +50,12 @@ const LinkedInPostGenerator = () => {
     'Educational',
   ];
 
-  const sampleMessages = [
-    'I want to write about remote work benefits',
-    'Create a post about AI in marketing',
-    'Share insights on leadership skills',
-    'Write about work-life balance',
-  ];
-
   // Initialize data on component mount
   useEffect(() => {
     const initializeData = async () => {
       try {
         const organizationData = await fetchOrganizationData();
         const masterData = await getMasterData();
-        console.log(masterData.masterData);
         const enabledAIServices = Object.values(
           masterData.masterData.aiServices,
         )
@@ -246,6 +241,7 @@ const LinkedInPostGenerator = () => {
   if (!isInitialized) {
     return <GeneratePostSkeletonLoading />;
   }
+
   return (
     <div className="bg-[#ededed] h-screen lg:p-2 p-2 sm:p-4">
       <div className="mx-auto h-[calc(100vh-1rem)] sm:h-[calc(100vh-2rem)] bg-white rounded-xl sm:rounded-2xl overflow-hidden flex flex-col">
@@ -266,6 +262,13 @@ const LinkedInPostGenerator = () => {
               </div>
             </div>
             <div className="flex items-center space-x-2 sm:space-x-4">
+              <button
+                onClick={() => setShowCreditsModal(true)}
+                className="-mt-1 rounded-full lg:px-6 px-4 py-2 text-xs lg:text-sm font-medium bg-white text-black w-fit transition-all border border-gray-300 shadow-[3px_3px_0px_black] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px] "
+                title="How to get more 500 free credits"
+              >
+                Add 500 Credits
+              </button>
               {selectedProfile && (
                 <div className="hidden sm:flex items-center space-x-2 text-sm text-gray-600">
                   <div className="w-8 h-8 bg-[#0c4a6e] rounded-full flex items-center justify-center text-white font-semibold text-xs">
@@ -282,6 +285,7 @@ const LinkedInPostGenerator = () => {
                 </span>
                 <span className="text-gray-600 ml-1 text-sm">credits</span>
               </div>
+
               <button
                 onClick={() => setShowPreview(!showPreview)}
                 className="lg:hidden p-2 text-gray-600 hover:text-[#0c4a6e] rounded-lg transition-colors"
@@ -587,6 +591,13 @@ const LinkedInPostGenerator = () => {
           </div>
         </div>
       </div>
+
+      <InfoModal
+        isOpen={showCreditsModal}
+        onClose={() => setShowCreditsModal(false)}
+        title="How to Get 500 FREE Credits"
+        content={creditsModalContent}
+      />
     </div>
   );
 };

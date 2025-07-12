@@ -12,10 +12,13 @@ import SidebarLink from './SidebarLink';
 import '@assets/styles/GlobalCSS.css';
 import OrganizationCard from './OrganizationCard';
 import LogoutModal from '../Global/LogoutModal';
+import { creditsModalContent } from '../Global/AddCreditsContent';
+import InfoModal from '../Global/InfoModal';
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(true);
   const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
+  const [showCreditsModal, setShowCreditsModal] = useState(false);
   const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
   const [userData, setUserData] = useState(null);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
@@ -112,6 +115,7 @@ const Sidebar = () => {
               userData={userData}
               isOpen={isOpen}
               isCardOpen={isCardOpen}
+              setShowCreditsModal={setShowCreditsModal}
               isLogoutModalOpen={isLogoutModalOpen}
               setIsLogoutModalOpen={setIsLogoutModalOpen}
               email={userData?.email}
@@ -136,6 +140,13 @@ const Sidebar = () => {
         isVisible={isLogoutModalOpen}
         onClose={() => setIsLogoutModalOpen(false)}
         onConfirm={handleLogout}
+      />
+
+      <InfoModal
+        isOpen={showCreditsModal}
+        onClose={() => setShowCreditsModal(false)}
+        title="How to Get 500 FREE Credits"
+        content={creditsModalContent}
       />
     </div>
   );

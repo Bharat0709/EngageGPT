@@ -13,7 +13,8 @@ export const MenuButton = ({
     className={`flex items-center justify-between w-full py-1 px-3 rounded-lg hover:bg-gray-50 transition-all duration-200 group ${className}`}
   >
     <div className="flex items-center gap-3">
-      <span className="text-sm text-black group-hover:text-black transition-colors">
+      {icon}
+      <span className="text-sm  text-black group-hover:text-black transition-colors">
         {text}
       </span>
     </div>

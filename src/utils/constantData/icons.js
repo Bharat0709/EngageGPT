@@ -51,6 +51,7 @@ import {
   FaCalendarPlus,
   FaLinkedin,
   FaImage,
+  FaCoins,
 } from 'react-icons/fa';
 
 import { FcGoogle } from 'react-icons/fc';
@@ -145,5 +146,6 @@ export const Icons = {
   CheckCircle: AiOutlineCheckCircle,
   CloseCircle: AiOutlineCloseCircle,
   PDF: FilePdfOutlined,
-  Image: FaImage
+  Image: FaImage,
+  Credits: FaCoins,
 };
