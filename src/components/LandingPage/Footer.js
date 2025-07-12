@@ -1,5 +1,5 @@
-import Logo from '../../assets/images/EngageGPTLogoIocn.png';
-import { footerSections } from '../../assets/data/footerData';
+import Logo from '@assets/images/EngageGPTLogoIocn.png';
+import { footerSections } from '@assets/data/footerData';
 import { Socials } from './Socials';
 
 function Footer() {

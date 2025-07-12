@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ChevronDownIcon } from '@heroicons/react/outline';
-import { faqs } from '../../assets/data/faq';
+import { faqs } from '@assets/data/faq';
 
 function FAQ() {
   const [openIndex, setOpenIndex] = useState(null);

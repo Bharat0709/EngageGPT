@@ -1,6 +1,5 @@
 import AddMembersModal from '../Global/AddPeopleModal';
 import { OnboardingSteps } from '@assets/data/onBoardingSteps';
-import EngagegptBanner from '@assets/images/HomeBanner.png';
 import { message } from 'antd';
 import { Icons } from '@utils/constantData/icons';
 import { Copy } from '@utils/copyText';
@@ -44,7 +43,7 @@ const OnboardingGuide = ({
     <div className="container mx-auto px-4 lg:py-4 py-2 max-w-7xl animate-fade-in">
       <div className="text-center mb-2 border border-gray-600">
         <img
-          src={EngagegptBanner}
+          src="/banner.svg"
           alt="Banner-EngageGPT"
           className="mx-auto  max-h-1/2"
         />

@@ -1,10 +1,13 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import EngageGPTLogo from '../../assets/images/EngageGPTLogo.png';
-import dashboard from '../../assets/images/dashboard.png';
-import { useNavigate } from 'react-router-dom';
+import EngageGPTLogo from '@assets/images/EngageGPTLogo.png';
+import { goTo } from '@utils/navigator';
 import { FaCheck } from 'react-icons/fa';
+import OpenAI from '@assets/images/OpenAI-black-monoblossom.png';
+import Groq from '@assets/images/groq.svg';
+import Mistral from '@assets/images/Mistral-Ai.svg';
+import Gemini from '@assets/images/Gemini.svg';
 
 const HeroSection = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -22,9 +25,8 @@ const HeroSection = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navigate = useNavigate();
   const handleGetStarted = () => {
-    navigate('/signup');
+    goTo('/signup');
   };
 
   const handleViewDemo = () => {};
@@ -141,31 +143,62 @@ const HeroSection = () => {
           Engage - Analyze - Automate
         </p>
         <div className="flex flex-col w-full gap-3 items-center justify-center">
-          <button onClick={handleGetStarted}>
-            <div className="bg-white gap-4 flex flex-col items-center justify-center">
-              <div className="px-6 py-2 text-lg font-medium bg-[#004182] text-white w-fit transition-all shadow-[5px_5px_0px_black] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]">
-                Get Started
+          <div className="flex items-center gap-4 justify-center">
+            <button onClick={handleGetStarted}>
+              <div className="bg-white gap-4 flex flex-col items-center justify-center">
+                <div className="px-6 py-2  lg:text-lg text-md font-medium bg-[#004182] text-white w-fit transition-all translate-x-[3px] translate-y-[3px]">
+                  Get Started
+                </div>
               </div>
-            </div>
-          </button>
-          <div className="animate-fade-in mt-4 mb-4 inline-flex items-center px-4 py-2 rounded-full transition-colors">
+            </button>
+
+            <a
+              href="https://calendly.com/engagegpt/30min"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mx-auto flex justify-center items-center"
+            >
+              <div className="bg-white lg:flex items-center  mt-1 justify-center">
+                <div className="px-6 py-2 lg:text-lg text-md font-medium border  border-gray-300 bg-white text-black w-fit">
+                  Book a Demo
+                </div>
+              </div>
+            </a>
+          </div>
+          <div className="animate-fade-in mt-3 mb-4 inline-flex items-center px-4 py-2 rounded-full transition-colors">
             <span className="text-gray-700 flex gap-2 items-center text-sm font-medium">
               <FaCheck className="text-green-500 mr-1" />
               No Credit Card Required
             </span>
           </div>
-          <a
-            href="https://calendly.com/engagegpt/30min"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mx-auto flex justify-center items-center"
-          >
-            <div className="bg-white lg:flex items-center justify-center">
-              <div className="px-6 py-2 text-md font-medium border border-gray-300 bg-white text-black w-fit transition-all hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]">
-                Book a Demo
-              </div>
-            </div>
-          </a>
+          <p className="text-xl lg:text-xl text-gray-700 flex gap-2 items-center  font-medium">
+            Powered By
+          </p>
+          <div className="flex p-4 w-full lg:flex-nowrap flex-wrap lg:gap-14 gap-10 justify-center items-center">
+            <img
+              className="lg:h-16 h-12 hover:scale-110 transition-all duration-100"
+              src={OpenAI}
+              alt="Powered by Groq for fast inference."
+            />
+
+            <img
+              className="lg:h-16 h-12 hover:scale-110 transition-all duration-100"
+              src={Groq}
+              alt="Powered by Groq for fast inference."
+            />
+
+            <img
+              className="lg:h-16 h-12 hover:scale-110 transition-all duration-100"
+              src={Mistral}
+              alt="Powered by Groq for fast inference."
+            />
+
+            <img
+              className="lg:h-16 h-12 hover:scale-110 transition-all duration-100"
+              src={Gemini}
+              alt="Powered by Groq for fast inference."
+            />
+          </div>
         </div>
       </div>
       {/* Browser Mockup */}
@@ -184,7 +217,7 @@ const HeroSection = () => {
           </div>
           <img
             className="rounded-b-xl"
-            src={dashboard}
+            src="/dashboard.svg"
             alt="engagegpt-dashboard"
           />
         </div>

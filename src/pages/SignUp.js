@@ -3,7 +3,6 @@ import { message } from 'antd';
 import { Icons } from '@utils/constantData/icons';
 import { goTo } from '@utils/navigator';
 import EngageGPTLogo from '@assets/images/EngageGPTLogoIocn.png';
-import signupIllustration from '@assets/images/engagegptLogin.png';
 import { signup } from '@services/Auth';
 import useAuthCheck from '@hooks/useAuth';
 
@@ -210,7 +209,7 @@ const Signup = () => {
 
         <div className="lg:w-1/2 h-screen hidden lg:block">
           <img
-            src={signupIllustration}
+            src="/engagegptLogin.svg"
             alt="Signup Illustration"
             className="w-full h-full p-14"
           />

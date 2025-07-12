@@ -35,7 +35,8 @@ module.exports = {
       // Production optimizations
       if (env === 'production') {
         // Disable source maps for smaller builds (optional)
-        webpackConfig.devtool = false;
+        webpackConfig.devtool =
+          process.env.GENERATE_SOURCEMAP === 'true' ? 'source-map' : false;
 
         // Optimize chunks
         webpackConfig.optimization = {

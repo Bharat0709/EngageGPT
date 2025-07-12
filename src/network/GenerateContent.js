@@ -1,19 +1,17 @@
 import axiosInstance from './axiosConfig';
 import { getErrorMessage } from '../utils/errorHandler';
 
-const GENERATE_API_URL = '/ai';
-
 export const generatePost = async (
   tone,
   topic,
   language,
   template,
-  selectedFormat,
+  aiOption,
 ) => {
   try {
-    if (selectedFormat === 'Use Persona') {
+    if (aiOption === 'gemini') {
       const response = await axiosInstance.post(
-        `${GENERATE_API_URL}/generate-post/persona`,
+        `/ai/generate/post-content/gemini`,
         {
           postType: topic,
           language,
@@ -24,16 +22,27 @@ export const generatePost = async (
       return response.data;
     } else {
       const response = await axiosInstance.post(
-        `${GENERATE_API_URL}/generate-post/template`,
+        `/openai/generate/post-content`,
         {
           postType: topic,
           language,
           template,
           selectedTone: tone,
+          provider: aiOption,
         },
       );
       return response.data;
     }
+  } catch (error) {
+    const errorMsg = getErrorMessage(error);
+    throw new Error(errorMsg);
+  }
+};
+
+export const getMasterData = async () => {
+  try {
+    const response = await axiosInstance.get(`/master-data`);
+    return response.data;
   } catch (error) {
     const errorMsg = getErrorMessage(error);
     throw new Error(errorMsg);

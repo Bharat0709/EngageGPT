@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { fetchOrganizationData } from '@services/Organization';
-import { generatePost } from '@services/GenerateContent';
+import { generatePost, getMasterData } from '@services/GenerateContent';
 import { message } from 'antd';
 import {
   FaLinkedin,
@@ -27,6 +27,8 @@ const LinkedInPostGenerator = () => {
   const [inputValue, setInputValue] = useState('');
   const [loading, setLoading] = useState(false);
   const [generatedPost, setGeneratedPost] = useState('');
+  const [selectedAIOption, setSelectedAIOption] = useState('Gemini');
+  const [availableAIOptions, setAvailableAIOptions] = useState([]);
   const [selectedTone, setSelectedTone] = useState('Professional');
   const [creditsLeft, setCreditsLeft] = useState(0);
   const [showPreview, setShowPreview] = useState(false);
@@ -57,6 +59,20 @@ const LinkedInPostGenerator = () => {
     const initializeData = async () => {
       try {
         const organizationData = await fetchOrganizationData();
+        const masterData = await getMasterData();
+        console.log(masterData.masterData);
+        const enabledAIServices = Object.values(
+          masterData.masterData.aiServices,
+        )
+          .filter((service) => service.enabled && service.status === 'active')
+          .sort((a, b) => a.priority - b.priority);
+
+        setAvailableAIOptions(enabledAIServices);
+
+        // Set the first available AI option as default
+        if (enabledAIServices.length > 0) {
+          setSelectedAIOption(enabledAIServices[0].id);
+        }
         setSelectedProfile(organizationData);
         setCreditsLeft(organizationData?.credits || 0);
         setIsInitialized(true);
@@ -125,9 +141,9 @@ const LinkedInPostGenerator = () => {
       const generatedContent = await generatePost(
         selectedTone,
         currentInput,
-        'English', // Default language
-        '', // No persona
-        'Standard', // Default format
+        'English',
+        '',
+        selectedAIOption.toLowerCase(),
       );
 
       if (generatedContent?.generatedPostContent) {
@@ -308,10 +324,41 @@ const LinkedInPostGenerator = () => {
               </div>
             </div>
 
+            {/* AI Model Selection */}
+            <div className="p-3 sm:p-4 flex flex-wrap border-b bg-gray-50 justify-between items-center">
+              <div className="flex items-center space-x-2 mb-3">
+                <FaRobot className="text-lg text-blue-500" />
+                <span className="text-sm font-semibold text-gray-700">
+                  Select AI Model:
+                </span>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {availableAIOptions.map((aiOption) => (
+                  <button
+                    key={aiOption.id}
+                    onClick={() => setSelectedAIOption(aiOption.id)}
+                    disabled={loading}
+                    className={`px-3 sm:px-4 py-2 rounded-full text-xs font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed ${
+                      selectedAIOption === aiOption.id
+                        ? 'bg-[#0c4a6e] text-white transform scale-105'
+                        : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200 hover:border-[#0c4a6e]'
+                    }`}
+                  >
+                    <div className="flex items-center space-x-1">
+                      <span>{aiOption.name}</span>
+                      {aiOption.status === 'active' && (
+                        <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                      )}
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
             {/* Messages */}
             <div
               ref={chatContainerRef}
-              className="flex-1 overflow-y-scroll min-h-4xl scrollbar-hide p-4 sm:p-6 space-y-4"
+              className="flex-1 overflow-y-scroll scrollbar-hide p-4 sm:p-6 space-y-4"
               style={{ scrollBehavior: 'smooth' }}
             >
               {messages.map((message) => (
@@ -400,29 +447,6 @@ const LinkedInPostGenerator = () => {
               )}
               <div ref={messagesEndRef} />
             </div>
-
-            {/* Sample Messages */}
-            {messages.length <= 1 && !loading && (
-              <div className="p-4 border-t bg-gray-50 flex-shrink-0">
-                <p className="text-sm text-gray-600 mb-3 font-medium flex items-center space-x-2">
-                  <FaStar className="text-yellow-500" />
-                  <span>Try these suggestions:</span>
-                </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {sampleMessages.map((sample, index) => (
-                    <button
-                      key={index}
-                      onClick={() => handleSampleClick(sample)}
-                      className="text-left p-3 bg-white rounded-lg  hover:bg-blue-50 transition-all duration-200 text-sm group"
-                    >
-                      <span className="group-hover:text-[#0c4a6e]">
-                        {sample}
-                      </span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
 
             {/* Input */}
             <div className="p-4 border-t bg-white flex-shrink-0">

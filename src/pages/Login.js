@@ -4,7 +4,6 @@ import { Icons } from '@utils/constantData/icons';
 import { goTo } from '@utils/navigator';
 import { Link } from 'react-router-dom';
 import EngageGPTLogo from '@assets/images/EngageGPTLogoIocn.png';
-import loginIllustration from '@assets/images/engagegptLogin.png';
 import { login } from '@services/Auth';
 import useAuthCheck from '@hooks/useAuth';
 import { forgotPassword } from '@services/Organization';
@@ -191,7 +190,7 @@ const Login = () => {
         </div>
         <div className="lg:w-1/2 h-full hidden lg:block">
           <img
-            src={loginIllustration}
+            src="/engagegptLogin.svg"
             alt="Login Illustration"
             className="w-full h-full p-14"
           />
