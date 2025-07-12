@@ -14,6 +14,17 @@ import { FiCalendar, FiArrowRight } from 'react-icons/fi';
 
 const updates = [
   {
+    version: '2.3.0',
+    date: '13-14th July, 2025',
+    highlights: [
+      'New AI Options have been added i.e ChatGPT , Grok , Mistral and Gemini for both Comments and Posts',
+      'Comments Option may take 2 seconds to appear',
+      'No need to double tap now to enable comments options',
+      'Mistrql is added for blazing fast performance',
+      'Added a new option to get free 500 credits',
+    ],
+  },
+  {
     version: '2.2.0',
     date: '8th July, 2025',
     highlights: [

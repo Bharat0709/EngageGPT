@@ -165,10 +165,16 @@ const HeroSection = () => {
               </div>
             </a>
           </div>
-          <div className="animate-fade-in mt-3 mb-4 inline-flex items-center px-4 py-2 rounded-full transition-colors">
+          <div className="animate-fade-in mt-3 inline-flex items-center px-4 py-2 rounded-full transition-colors">
             <span className="text-gray-700 flex gap-2 items-center text-sm font-medium">
               <FaCheck className="text-green-500 mr-1" />
               No Credit Card Required
+            </span>
+          </div>
+          <div className="animate-fade-in mb-4 inline-flex items-center px-4 py-1 rounded-full transition-colors">
+            <span className="text-gray-700 flex gap-2 items-center text-sm font-medium">
+              <FaCheck className="text-green-500 mr-1" />
+              FREE 500 Credits
             </span>
           </div>
           <p className="text-xl lg:text-xl text-gray-700 flex gap-2 items-center  font-medium">
