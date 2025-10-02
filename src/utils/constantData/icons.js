@@ -55,6 +55,9 @@ import {
   FiEye,
   FiMapPin,
   FiSend,
+  FiTrendingDown,
+  FiList,
+  FiCreditCard,
 } from 'react-icons/fi';
 
 import {
@@ -107,6 +110,7 @@ import {
   AiOutlineBulb,
   AiOutlineExport,
   AiFillRobot,
+  AiOutlineMinus,
 } from 'react-icons/ai';
 
 import { IoChevronBack, IoChevronForward } from 'react-icons/io5';
@@ -220,4 +224,9 @@ export const Icons = {
   Notes: FaRegStickyNote,
   Send: FiSend,
   Files: FiFileText,
+  Minus : AiOutlineMinus,
+  Gift : FaCoins,
+  TrendingDown: FiTrendingDown,
+  List: FiList,
+  CreditCard: FiCreditCard
 };
