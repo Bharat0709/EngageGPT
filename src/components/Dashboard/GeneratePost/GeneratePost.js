@@ -256,7 +256,7 @@ const LinkedInPostGenerator = () => {
       <div className="mx-auto h-full bg-white  overflow-hidden flex flex-col">
         {/* Header */}
         <div className="px-2 py-2 sm:px-6 border-b border-gray-200 flex-shrink-0">
-          <div className="flex items-center justify-between">
+          <div className="flex lg:flex-row flex-wrap gap-2 items-center justify-between">
             <div className="flex items-center space-x-3">
               <div className="p-2 bg-[#0c4a6e] rounded-lg text-white text-lg sm:text-xl">
                 <FaLinkedin />

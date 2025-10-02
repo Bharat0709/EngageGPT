@@ -21,7 +21,7 @@ const MembersProfileDropDown = ({
               )}&background=6366f1&color=fff&size=40`
             }
             alt="Profile"
-            className="hidden sm:block w-8 h-8 rounded-full object-cover"
+            className="block w-8 h-8 rounded-full object-cover"
           />
           <span className="text-gray-900 font-semibold">{profiles.length}</span>
           <span className="text-sm text-gray-800 hidden sm:block">
@@ -41,7 +41,7 @@ const MembersProfileDropDown = ({
           Team Members
         </h3>
         <p className="text-xs p-0 mb-0 text-gray-500 mt-1">
-          Select a profile to view analytics
+          Select a profile to view page details
         </p>
       </div>
       <div className="max-h-64 overflow-y-auto">

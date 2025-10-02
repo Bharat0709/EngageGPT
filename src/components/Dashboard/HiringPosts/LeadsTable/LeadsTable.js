@@ -134,21 +134,21 @@ const LeadsTable = ({
       handler: () =>
         setBulkModal({ isOpen: true, type: 'priority', data: null }),
     },
-    {
-      key: 'updateAutomation',
-      label: 'Automation',
-      icon: <Icons.Edit />,
-      className: 'text-orange-600 hover:bg-orange-50',
-      handler: () =>
-        setBulkModal({ isOpen: true, type: 'automation', data: null }),
-    },
-    {
-      key: 'export',
-      label: 'Export',
-      icon: <Icons.Download />,
-      className: 'text-purple-600 hover:bg-purple-50',
-      handler: () => console.log('Export selected leads'),
-    },
+    // {
+    //   key: 'updateAutomation',
+    //   label: 'Automation',
+    //   icon: <Icons.Edit />,
+    //   className: 'text-orange-600 hover:bg-orange-50',
+    //   handler: () =>
+    //     setBulkModal({ isOpen: true, type: 'automation', data: null }),
+    // },
+    // {
+    //   key: 'export',
+    //   label: 'Export',
+    //   icon: <Icons.Download />,
+    //   className: 'text-purple-600 hover:bg-purple-50',
+    //   handler: () => console.log('Export selected leads'),
+    // },
   ];
 
   const handleBulkAction = (actionData) => {

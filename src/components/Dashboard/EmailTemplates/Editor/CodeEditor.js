@@ -109,10 +109,10 @@ Best regards,
   return (
     <div className="h-full rounded-t-3xl flex flex-col">
       {/* Header Controls */}
-      <div className="flex lg:flex-row flex-wrap gap-3 items-center rounded-3xl justify-between p-3 bg-white  ">
-        <div className="flex items-center space-x-2">
-          <Icons.Code className="w-4 h-4 text-gray-600" />
-          <span className="text-sm font-medium text-gray-700">
+      <div className="flex lg:flex-row flex-col gap-3 items-center rounded-3xl justify-between p-3 bg-white  ">
+        <div className="flex lg:flex-row gap-3 flex-col  items-center space-x-2">
+          <span className="text-sm flex items-center gap-2 font-medium text-gray-700">
+            <Icons.Code className="w-4 h-4 text-gray-600" />{' '}
             {formData.templateType === 'html' ? 'HTML Editor' : 'Text Editor'}
           </span>
           {formData.templateType === 'html' && (
@@ -156,7 +156,7 @@ Best regards,
             </div>
           )}
         </div>
-        <div className="flex items-center ml-6 space-x-3">
+        <div className="flex items-center lg:ml-6 space-x-3">
           <p className="bg-yellow-400 m-0 px-3 py-1 text-xs font-semibold text-yellow-900 rounded-full">
             Beta
           </p>

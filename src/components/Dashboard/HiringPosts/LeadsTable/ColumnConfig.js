@@ -251,13 +251,13 @@ export const ACTIONS_CONFIG = {
       className: 'hover:text-blue-600 hover:bg-blue-50',
       handler: 'onView',
     },
-    {
-      key: 'edit',
-      icon: Icons.Edit,
-      title: 'Edit Lead',
-      className: 'hover:text-blue-600 hover:bg-blue-50',
-      handler: 'onEdit',
-    },
+    // {
+    //   key: 'edit',
+    //   icon: Icons.Edit,
+    //   title: 'Edit Lead',
+    //   className: 'hover:text-blue-600 hover:bg-blue-50',
+    //   handler: 'onEdit',
+    // },
 
     {
       key: 'delete',

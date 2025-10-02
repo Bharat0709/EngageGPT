@@ -55,7 +55,7 @@ const TemplatesDrawer = ({
 
       {/* Drawer */}
       <div
-        className={`fixed top-0 right-0 h-full w-96 overflow-y-scroll scrollbar-hide bg-white shadow-2xl z-[60] transform transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 right-0 h-full lg:w-96 overflow-y-scroll scrollbar-hide bg-white shadow-2xl z-[60] transform transition-transform duration-300 ease-in-out ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >

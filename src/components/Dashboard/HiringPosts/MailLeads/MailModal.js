@@ -154,7 +154,7 @@ const EmailSendModal = ({ memberId, postData, onSend, onClose }) => {
 
             {/* Body Field */}
             <div>
-              <div className="flex items-center justify-between mb-2">
+              <div className="flex lg:flex-row flex-wrap items-center justify-between mb-2">
                 <label className="flex gap-4 items-center text-sm font-medium text-gray-700">
                   Email Body{' '}
                 </label>

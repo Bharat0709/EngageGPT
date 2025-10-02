@@ -103,7 +103,7 @@ const PostQueue = () => {
   if (!selectedProfile && invitedProfiles.length > 0) {
     return (
       <div className="dashboard-container bg-gray-50 rounded-xl h-full bg-white-50">
-        <div className="flex bg-white p-2 px-4  items-center mb-2 justify-between">
+        <div className="flex lg:flex-row flex-wrap  bg-white p-2 px-4  items-center justify-center gap-3 mb-2 lg:justify-between">
           <div className="flex items-center space-x-2">
             <div className="p-2 bg-[#0c4a6e] rounded-lg text-white text-lg sm:text-xl">
               <FaClock />

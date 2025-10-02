@@ -126,7 +126,7 @@ const AutomationSettingsStep = ({
                 <FiPower className="h-5 w-5 text-gray-600" />
                 Automation Control
               </h3>
-
+              {/* 
               <div className="bg-gradient-to-r from-purple-50 to-indigo-50 rounded-2xl p-6 border border-purple-200">
                 <div className="flex items-center justify-between">
                   <div>
@@ -152,7 +152,7 @@ const AutomationSettingsStep = ({
                     <div className="w-16 h-8 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-7 after:w-7 after:transition-all peer-checked:bg-purple-600"></div>
                   </label>
                 </div>
-              </div>
+              </div> */}
             </div>
 
             {formData.isEnabled && (
@@ -435,8 +435,9 @@ const AutomationSettingsStep = ({
                   Automation Disabled
                 </h4>
                 <p className="text-gray-500">
-                  You can complete the setup and enable automation later from
-                  your dashboard.
+                  You can complete the setup now and enable automation later
+                  from your dashboard. <br /> <br />  (Automations will be available in
+                  future updates)
                 </p>
               </div>
             )}

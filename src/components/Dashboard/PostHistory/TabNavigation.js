@@ -30,7 +30,7 @@ const TabNavigation = ({ activeTab, setActiveTab, postHistory }) => {
   ];
 
   return (
-    <div className="flex gap-1 px-2 items-center rounded-xl justify-start">
+    <div className="flex lg:flex-row flex-wrap gap-1 px-2 items-center rounded-xl  justify-center lg:justify-start">
       {tabs.map((tab) => {
         const Icon = tab.icon;
         return (
