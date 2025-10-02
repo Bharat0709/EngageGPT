@@ -1,7 +1,7 @@
 import { Skeleton } from 'antd';
 
 const SavedPostsSkeleton = () => (
-  <div className="dashboard-container bg-[#ededed] rounded-xl lg:p-6 p-4">
+  <div className="dashboard-container rounded-xl lg:p-6 p-4">
     {/* Tabs skeleton */}
     <div className="mt-2 mb-2">
       <div className="flex bg-gray-50 rounded-lg p-2">

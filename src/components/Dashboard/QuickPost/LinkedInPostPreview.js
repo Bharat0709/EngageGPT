@@ -68,7 +68,7 @@ const LinkedInPostPreview = ({
 
   return (
     <div
-      className={`p-4 max-h-[65vh] rounded-xl overflow-y-scroll mb-3 scrollbar-hide py-2 ${
+      className={`p-4 max-h-[65vh] rounded-2xl  overflow-y-scroll mb-3 scrollbar-hide py-2 ${
         isDarkMode ? 'bg-[#1d2226] text-white' : 'bg-white text-black'
       }`}
     >
@@ -107,9 +107,7 @@ const LinkedInPostPreview = ({
               <p className="font-bold m-0 p-0">
                 {selectedProfileDetails?.name || 'Your Name'}
               </p>
-              <p className="text-xs m-0 p-0">
-                Your bio will be present here...
-              </p>
+              <p className="text-xs m-0 p-0">Your bio</p>
               <p className="text-[8px] m-0 p-0">Just Now</p>
             </div>
           </div>

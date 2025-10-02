@@ -13,12 +13,14 @@ import { setNavigate } from '@utils/navigator';
 import PageSkeletonLoader from '@pages/PageSkeletonLoader';
 import LandingPage from '@pages/LandingPage';
 import ProtectedRoute from '@components/ProtectedRoute';
+import { NotificationProvider } from '@components/Common/Notification';
 
+const EmailVerification = lazy(() => import('@pages/EmailVerification'));
 const Login = lazy(() => import('@pages/Login'));
 const Signup = lazy(() => import('@pages/SignUp'));
 const Dashboard = lazy(() => import('@pages/DashboardPage'));
 const NotFound = lazy(() => import('@pages/NotFound'));
-const ResetPassword = lazy(() => import('@pages/ResetPasword'));
+const PasswordSetReset = lazy(() => import('@pages/ResetPasword'));
 const FeedbackSurvey = lazy(() => import('@pages/UninstallSurvey'));
 const UpdateInfoScreen = lazy(() => import('@pages/UpdatesInfo'));
 
@@ -42,7 +44,8 @@ const AppRoutes = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/dashboard/*" element={<Dashboard />} />
-        <Route path="/reset-password/:token" element={<ResetPassword />} />
+        <Route path="/verify-email" element={<EmailVerification />} />
+        <Route path="/reset-password/:token" element={<PasswordSetReset />} />
         <Route
           path="/survey"
           element={
@@ -62,7 +65,9 @@ const App = () => {
   return (
     <Router>
       <div className="App">
-        <AppRoutes />
+        <NotificationProvider position="top-center" maxNotifications={5}>
+          <AppRoutes />
+        </NotificationProvider>
       </div>
     </Router>
   );

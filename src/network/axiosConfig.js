@@ -24,7 +24,7 @@ axiosInstance.interceptors.request.use(
 );
 
 axiosInstance.interceptors.response.use(
-  (response) => response,
+  (response) => response, 
   (error) => {
     if (error.response && error.response.status === 401) {
       store.dispatch(logoutAction());

@@ -14,7 +14,7 @@ const SidebarLink = ({
   <Link
     to={to}
     onClick={onClick}
-    className={`flex pl-3 pr-3 items-center bg-gray-50 max-h-[38px] gap-3 rounded-md transition-all duration-500 ease-in-out relative
+    className={`flex pl-3 pr-3 items-center bg-white max-h-[38px] gap-3 rounded-md transition-all duration-500 ease-in-out relative
     ${isOpen ? 'py-2' : 'py-2'} 
     ${isActive ? activeClass : hoverClass}
   `}

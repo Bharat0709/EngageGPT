@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { message } from 'antd';
 import { Icons } from '@utils/constantData/icons';
-import { goTo } from '@utils/navigator';
-import { Link } from 'react-router-dom';
-import EngageGPTLogo from '@assets/images/EngageGPTLogoIocn.png';
 import { login } from '@services/Auth';
 import useAuthCheck from '@hooks/useAuth';
-import { forgotPassword } from '@services/Organization';
+import { AuthFooter } from '@components/Auth/Footer';
+import { GoogleAuth } from '@components/Auth/GoogleAuth';
+import { AuthHeader } from '@components/Auth/Header';
+import { goTo } from '@utils/navigator';
+import { useNotifications } from '@components/Common/Notification';
 
 const Login = () => {
   useAuthCheck();
@@ -16,6 +16,7 @@ const Login = () => {
     email: '',
     password: '',
   });
+  const message = useNotifications();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,41 +25,13 @@ const Login = () => {
       [name]: value,
     });
   };
+
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleGoogleLogin = async (e) => {
-    e.preventDefault();
-    const authUrl = `${process.env.REACT_APP_OAUTH_URL}`;
-    window.location.href = authUrl;
-  };
-
-  const handleSendResetPasswordEmail = async () => {
-    try {
-      if (!formData.email) {
-        message.info('Please enter your email');
-        return;
-      }
-      message.loading({
-        content: 'Sending password reset email...',
-        key: 'reset',
-      });
-
-      await forgotPassword(formData.email);
-      message.success({
-        content:
-          'Password reset email sent successfully! (Check spam folder as well)',
-        key: 'reset',
-      });
-    } catch (err) {
-      message.error(err.message);
-    }
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!formData.email || !formData.password) {
       message.error('Please fill out all required fields.');
       return;
@@ -69,7 +42,6 @@ const Login = () => {
       if (loginResponse.token) {
         goTo(`/dashboard?token=${loginResponse.token}`);
       }
-
       message.success('Login successful!');
     } catch (error) {
       message.error(error.message);
@@ -80,33 +52,10 @@ const Login = () => {
 
   return (
     <div className="flex items-center justify-center">
-      <div className="w-full h-screen lg:bg-white bg-sky-900 flex flex-col lg:flex-row">
+      <div className="w-full flex items-center justify-center h-screen bg-sky-900">
         <div className="lg:w-1/2 w-full text-white px-8 py-4 bg-sky-900">
-          <Link to="/">
-            <div className="w-full  mb-6 flex items-center gap-2 lg:justify-start justify-center">
-              <img
-                src={EngageGPTLogo}
-                alt="EngageGPT Logo"
-                className="flex w-10 h-10"
-              />
-              EngageGPT
-            </div>
-          </Link>
-          <h2 className="text-2xl lg:text-center text-center font-semibold text-white mb-6">
-            Login to Your Account
-          </h2>
-          <button
-            onClick={handleGoogleLogin}
-            className="flex items-center  w-full justify-center border border-gray-300 bg-white text-sky-900 py-2 px-4 rounded-full"
-          >
-            <Icons.Google className="mr-2" size={20} />
-            Login in with Google
-          </button>
-          <div className="flex my-4 items-center justify-center space-x-2">
-            <span className="h-px w-16 bg-gray-300"></span>
-            <span className="text-sm text-white">or</span>
-            <span className="h-px w-16 bg-gray-300"></span>
-          </div>
+          <AuthHeader heading="Log In to your account" />
+          <GoogleAuth />
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label
@@ -122,7 +71,7 @@ const Login = () => {
                 id="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="mt-1 block w-full p-3 border-b bg-sky-900 border-gray-300 focus:bg-sky-900 focus:outline-none [&::-webkit-autofill]:bg-sky-900 [&::-webkit-autofill]:text-white"
+                className="mt-2 block w-full p-3 border border-sky-700 rounded-full  bg-sky-900 focus:bg-sky-900 focus:outline-none [&::-webkit-autofill]:bg-sky-900 [&::-webkit-autofill]:text-white"
                 placeholder="you@example.com"
                 required
               />
@@ -143,7 +92,7 @@ const Login = () => {
                   id="password"
                   value={formData.password}
                   onChange={handleChange}
-                  className="mt-1 block w-full p-3 border-b bg-sky-900 border-gray-300 focus:outline-none [&::-webkit-autofill]:bg-sky-800"
+                  className="mt-1 block w-full p-3 border rounded-full  bg-sky-900 border-sky-700 focus:outline-none [&::-webkit-autofill]:bg-sky-800"
                   placeholder="••••••••"
                   required
                 />
@@ -162,38 +111,9 @@ const Login = () => {
             >
               {isLoading ? 'Logging In...' : 'Login'}
             </button>
-
-            <div className="flex m-0 p-0 w-full justify-between text-center">
-              <p className="text-white text-xs">Forgot your password? </p>
-              <button
-                type="button"
-                onClick={handleSendResetPasswordEmail}
-                className="text-sky-100 text-xs underline ml-1"
-              >
-                Reset Password
-              </button>
-            </div>
-
-            <div className="mt-4 text-center">
-              <p className="text-sm text-white">
-                Don't have an account?
-                <button
-                  type="button"
-                  className="text-sky-100 hover:underline ml-1"
-                  onClick={() => goTo('/signup')}
-                >
-                  Sign Up
-                </button>
-              </p>
-            </div>
           </form>
-        </div>
-        <div className="lg:w-1/2 h-full hidden lg:block">
-          <img
-            src="/engagegptLogin.svg"
-            alt="Login Illustration"
-            className="w-full h-full p-14"
-          />
+
+          <AuthFooter mode="login" email={formData.email} />
         </div>
       </div>
     </div>

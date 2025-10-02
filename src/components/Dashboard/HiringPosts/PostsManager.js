@@ -1,53 +1,39 @@
 import { useEffect, useState } from 'react';
-import { message } from 'antd';
 import {
-  getHiringPosts,
-  updateHiringPostStatus,
-  deleteHiringPost,
-  updateHiringPostNotes,
-  updateJobRole,
-} from '@services/HiringPosts';
-import { PostSavingGuide, formatDate } from '@utils/constantData/savedPosts';
-import NoPostsFound from '@assets/images/PostNotFound.png';
+  getSavedPosts,
+  deleteSavedPost,
+  bulkDeletePosts,
+  bulkUpdateStatus,
+  bulkUpdatePriority,
+  bulkUpdateAutomation,
+  updateSavedPost,
+} from '@services/SavePosts';
+import { formatDate } from '@utils/constantData/savedPosts';
 import PostConfirmationModal from '../QuickPost/PostConfirmationModal';
-import EditHiringPostModal from './EditPostModal';
+import EditHiringPostModal from './EditSavedPost/EditPostModal';
 import SavedPostsSkeleton from '../SkeletonLoaders/SavedPostsSkeletonLoading';
-import PostCardComponent from './PostCard';
-import PostDrawerComponent from './PostDrawer';
-import ActiveTabsComponent from './ActiveTabComponent';
+import LeadsTable from './LeadsTable/LeadsTable';
+import { useNotifications } from '@components/Common/Notification';
 
-const HiringPostsDashboard = ({ memberId }) => {
-  const [hiringPosts, setHiringPosts] = useState({
-    new: [],
-    contacted: [],
-    responded: [],
-    closed: [],
-    rejected: [],
-  });
+const HiringPostsDashboard = ({ memberId, activeTab, setActiveTab , setCurrentLead }) => {
   const [refresh, setRefresh] = useState(false);
-  const [activeTab, setActiveTab] = useState('new');
+  const [allSavedPosts, setAllSavedPosts] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [isUpdating, setIsUpdating] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedPost, setSelectedPost] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [totalStats, setTotalStats] = useState({
-    new: 0,
-    contacted: 0,
-    responded: 0,
-    closed: 0,
-    rejected: 0,
-  });
+  const message = useNotifications();
 
   useEffect(() => {
     if (memberId !== undefined && memberId !== null) {
-      fetchHiringPosts();
+      fetchSavedPosts();
     }
   }, [memberId, refresh]);
 
-  const fetchHiringPosts = async () => {
+  const fetchSavedPosts = async () => {
     try {
       setIsLoading(true);
       const params = {};
@@ -55,34 +41,9 @@ const HiringPostsDashboard = ({ memberId }) => {
         params.memberId = memberId;
       }
 
-      const data = await getHiringPosts(params);
-
-      const newPosts = data.data.filter((post) => post.status === 'new') || [];
-      const contactedPosts =
-        data.data.filter((post) => post.status === 'contacted') || [];
-      const respondedPosts =
-        data.data.filter((post) => post.status === 'responded') || [];
-      const closedPosts =
-        data.data.filter((post) => post.status === 'closed') || [];
-      const rejectedPosts =
-        data.data.filter((post) => post.status === 'rejected') || [];
-
-      setHiringPosts({
-        new: newPosts,
-        contacted: contactedPosts,
-        responded: respondedPosts,
-        closed: closedPosts,
-        rejected: rejectedPosts,
-      });
-
-      setTotalStats({
-        new: newPosts.length,
-        contacted: contactedPosts.length,
-        responded: respondedPosts.length,
-        closed: closedPosts.length,
-        rejected: rejectedPosts.length,
-      });
-
+      const data = await getSavedPosts(params);
+      console.log(data.data);
+      setAllSavedPosts(data.data);
       setIsLoading(false);
     } catch (error) {
       message.error('Failed to load posts');
@@ -99,31 +60,90 @@ const HiringPostsDashboard = ({ memberId }) => {
     setIsDeleting(true);
     if (!selectedPost) return;
     try {
-      await deleteHiringPost(selectedPost._id);
-
-      setHiringPosts((prev) => {
-        const updatedStatus = prev[selectedPost.status].filter(
-          (p) => p._id !== selectedPost._id,
-        );
-        return {
-          ...prev,
-          [selectedPost.status]: updatedStatus,
-        };
-      });
-
-      setTotalStats((prev) => ({
-        ...prev,
-        [selectedPost.status]: Math.max(0, prev[selectedPost.status] - 1),
-      }));
-
+      await deleteSavedPost(selectedPost._id);
       setIsDeleting(false);
       setRefresh(!refresh);
-      message.success('Hiring post deleted successfully!');
+      message.success('Lead deleted successfully!');
     } catch (error) {
       setIsDeleting(false);
       message.error('Failed to delete post. Please try again.');
     }
     setShowDeleteModal(false);
+  };
+
+  const onConfirmBulkDelete = async (postIds) => {
+    setIsUpdating(true);
+    if (postIds.length <= 0) {
+      message.error('No posts selected for deletion.');
+      setIsUpdating(false);
+      return;
+    }
+    try {
+      await bulkDeletePosts(postIds);
+      setIsUpdating(false);
+      setRefresh(!refresh);
+      message.success('Leads deleted successfully!');
+    } catch (error) {
+      setIsUpdating(false);
+      message.error('Failed to delete post. Please try again.');
+    }
+  };
+
+  const onConfirmBulkStatusUpdate = async (postIds, status) => {
+    setIsUpdating(true);
+    if (postIds.length <= 0) {
+      message.error('No posts selected for deletion.');
+      setIsUpdating(false);
+      return;
+    }
+    try {
+      await bulkUpdateStatus(postIds, status);
+      setIsUpdating(false);
+      setRefresh(!refresh);
+      message.success('Status deleted successfully!');
+    } catch (error) {
+      setIsUpdating(false);
+      message.error('Failed to update status Please try again.');
+    }
+  };
+
+  const onConfirmBulkPriorityUpdate = async (postIds, priority) => {
+    setIsUpdating(true);
+    if (postIds.length <= 0) {
+      message.error('No posts selected for deletion.');
+      setIsUpdating(false);
+      return;
+    }
+    try {
+      await bulkUpdatePriority(postIds, priority);
+      setIsUpdating(false);
+      setRefresh(!refresh);
+      message.success('Priority updated successfully!');
+    } catch (error) {
+      setIsUpdating(false);
+      message.error('Failed to update priority Please try again.');
+    }
+  };
+
+  const onConfirmBulkAutomationUpdate = async (postIds, automationData) => {
+    setIsUpdating(true);
+    if (postIds.length <= 0) {
+      message.error('No posts selected for automation update');
+      setIsUpdating(false);
+      return;
+    }
+    try {
+      console.log('Bulk automation update:', postIds, automationData);
+      await bulkUpdateAutomation(postIds, automationData);
+      setIsUpdating(false);
+      setRefresh(!refresh);
+      message.success('Automation Config updated successfully!');
+    } catch (error) {
+      setIsUpdating(false);
+      message.error(
+        'Failed to update Automation Configuration Please try again.',
+      );
+    }
   };
 
   const onEdit = (post) => {
@@ -133,59 +153,14 @@ const HiringPostsDashboard = ({ memberId }) => {
 
   const onCardClick = (post) => {
     setSelectedPost(post);
-    setIsDrawerOpen(true);
   };
 
   const onSavePost = async (postId, updatedPostData) => {
     setIsEditing(true);
     if (!updatedPostData) return;
     try {
-      const oldStatus = selectedPost.status;
-
-      if (updatedPostData.jobRole) {
-        await updateJobRole(postId, updatedPostData.jobRole);
-      }
-
-      if (updatedPostData.notes !== undefined) {
-        await updateHiringPostNotes(postId, updatedPostData.notes);
-      }
-
-      if (updatedPostData.status && updatedPostData.status !== oldStatus) {
-        await updateHiringPostStatus(postId, updatedPostData.status);
-
-        const updatedPost = { ...selectedPost, ...updatedPostData };
-
-        setHiringPosts((prev) => {
-          const oldStatusArray = prev[oldStatus].filter(
-            (p) => p._id !== postId,
-          );
-          const newStatusArray = [...prev[updatedPostData.status], updatedPost];
-
-          return {
-            ...prev,
-            [oldStatus]: oldStatusArray,
-            [updatedPostData.status]: newStatusArray,
-          };
-        });
-
-        setTotalStats((prev) => ({
-          ...prev,
-          [oldStatus]: Math.max(0, prev[oldStatus] - 1),
-          [updatedPostData.status]: prev[updatedPostData.status] + 1,
-        }));
-      } else {
-        setHiringPosts((prev) => {
-          const updatedArray = prev[oldStatus].map((p) =>
-            p._id === postId ? { ...p, ...updatedPostData } : p,
-          );
-
-          return {
-            ...prev,
-            [oldStatus]: updatedArray,
-          };
-        });
-      }
-
+      const updatedPost = await updateSavedPost(postId, updatedPostData);
+      console.log(updatedPost);
       setIsEditing(false);
       setRefresh(!refresh);
       message.success('Post updated successfully!');
@@ -196,65 +171,39 @@ const HiringPostsDashboard = ({ memberId }) => {
     }
   };
 
-  const renderEmptyState = () => (
-    <div className="flex flex-col items-center gap-4">
-      <p className="mt-4 text-center">
-        No {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)} Posts Found
-      </p>
-      <img
-        className="h-60 mt-2 w-72 rounded-lg mx-auto"
-        src={NoPostsFound}
-        alt="Posts Not Found"
-      />
-    </div>
-  );
-
-  const renderHiringPosts = (posts) => (
-    <div className="flex w-full flex-col gap-4">
-      {<PostSavingGuide memberId={memberId} />}
-      {posts?.length === 0
-        ? renderEmptyState()
-        : posts?.map((post) => (
-            <PostCardComponent
-              key={post._id}
-              post={post}
-              onEdit={onEdit}
-              onDelete={onDelete}
-              onCardClick={onCardClick}
-              formatDate={formatDate}
-            />
-          ))}
-    </div>
-  );
-
   if (isLoading) {
     return <SavedPostsSkeleton />;
   }
 
   return (
-    <div className="overflow-y-auto">
-      <ActiveTabsComponent
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-        totalStats={totalStats}
-      />
-
-      <div className="py-2">
-        {activeTab === 'new' && renderHiringPosts(hiringPosts.new)}
-        {activeTab === 'contacted' && renderHiringPosts(hiringPosts.contacted)}
-        {activeTab === 'responded' && renderHiringPosts(hiringPosts.responded)}
-        {activeTab === 'closed' && renderHiringPosts(hiringPosts.closed)}
-        {activeTab === 'rejected' && renderHiringPosts(hiringPosts.rejected)}
-      </div>
-
-      <PostDrawerComponent
-        isOpen={isDrawerOpen}
-        onClose={() => setIsDrawerOpen(false)}
-        post={selectedPost}
-        onEdit={onEdit}
-        onDelete={onDelete}
-        formatDate={formatDate}
-      />
+    <div className="overflow-y-auto p-2">
+      {allSavedPosts && (
+        <div className="flex w-full flex-col gap-4">
+          <LeadsTable
+            posts={allSavedPosts}
+            setCurrentLead = {setCurrentLead}
+            onBulkDelete={(leadIds) => onConfirmBulkDelete(leadIds)}
+            onBulkUpdateStatus={(leadIds, status) =>
+              onConfirmBulkStatusUpdate(leadIds, status)
+            }
+            onBulkUpdatePriority={(leadIds, priority) =>
+              onConfirmBulkPriorityUpdate(leadIds, priority)
+            }
+            onBulkUpdateAutomation={(leadIds, automationData) =>
+              onConfirmBulkAutomationUpdate(leadIds, automationData)
+            }
+            onBulkCopy={(leadIds) => console.log('Copy:', leadIds)}
+            onEdit={onEdit}
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+            onDelete={onDelete}
+            isUpdating={isUpdating}
+            onCardClick={onCardClick}
+            formatDate={formatDate}
+            memberId={memberId}
+          />
+        </div>
+      )}
 
       <PostConfirmationModal
         isVisible={showDeleteModal}

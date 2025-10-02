@@ -1,6 +1,7 @@
 import { message } from 'antd';
 import { useState, useEffect } from 'react';
 import { Icons } from '@utils/constantData/icons';
+import Button from '@components/Common/Button';
 
 const AddMembersModal = ({ isOpen, onClose, onSubmit }) => {
   const [members, setMembers] = useState([{ name: '', email: '' }]);
@@ -106,12 +107,12 @@ const AddMembersModal = ({ isOpen, onClose, onSubmit }) => {
     <div className="fixed inset-0 w-full z-50 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm transition-opacity">
       <div className="bg-white flex flex-col lg:max-h-2xl h-fit overflow-y-scroll scrollbar-hide  lg:w-2/5 w-11/12 p-0 rounded-3xl shadow-xl transform transition-all duration-300 ease-in-out">
         {/* Header */}
-        <div className="bg-indigo-50 rounded-t-2xl p-6">
+        <div className="bg-indigo-50 rounded-t-2xl p-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-3">
               <Icons.FaLinkedin className="text-indigo-800" size={20} />
-              <h2 className="text-md lg:text-2xl mb-0 p-0 font-bold text-indigo-800">
-                Add LinkedIn Members
+              <h2 className="text-md lg:text-xl mb-0 p-0 font-bold text-indigo-800">
+                Add LinkedIn Profile
               </h2>
             </div>
             <button
@@ -121,17 +122,17 @@ const AddMembersModal = ({ isOpen, onClose, onSubmit }) => {
               <Icons.Cross size={20} />
             </button>
           </div>
-          <p className="text-gray-600 mt-2"></p>
+          <p className="m-0 pt-2 text-gray-600 "></p>
           <strong>Email must be associated with a LinkedIn account.</strong>
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="p-4">
-          <div className="space-y-5 overflow-y-scroll mx-auto scrollbar-hide">
+        <form onSubmit={handleSubmit} className="">
+          <div className="space-y-3 overflow-y-scroll mx-auto scrollbar-hide">
             {members.map((member, index) => (
               <div
                 key={index}
-                className="bg-slate-50 p-4 rounded-xl hover:border-indigo-100 transition-all duration-200"
+                className=" p-4 rounded-xl hover:border-indigo-100 transition-all duration-200"
               >
                 <div className="space-y-4">
                   <div>
@@ -143,7 +144,7 @@ const AddMembersModal = ({ isOpen, onClose, onSubmit }) => {
                     </label>
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <Icons.User className="text-gray-400" />
+                        <Icons.User className="text-gray-700" />
                       </div>
                       <input
                         type="text"
@@ -152,8 +153,9 @@ const AddMembersModal = ({ isOpen, onClose, onSubmit }) => {
                         onChange={(e) =>
                           handleChange(index, 'name', e.target.value)
                         }
+                        required
                         placeholder="John Doe"
-                        className={`pl-10 pr-3 py-2 block w-full border  rounded-full`}
+                        className={`pl-10 pr-3 py-2 block w-full border border-gray-300  rounded-full`}
                       />
                     </div>
                     {getError(index, 'name') && (
@@ -172,17 +174,18 @@ const AddMembersModal = ({ isOpen, onClose, onSubmit }) => {
                     </label>
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <Icons.Mail className="text-gray-400" />
+                        <Icons.Mail className="text-gray-700" />
                       </div>
                       <input
                         type="email"
                         id={`email-${index}`}
                         value={member.email}
+                        required
                         onChange={(e) =>
                           handleChange(index, 'email', e.target.value)
                         }
                         placeholder="john@example.com"
-                        className={`pl-10 pr-3 py-2 block w-full border rounded-full`}
+                        className={`pl-10 pr-3 py-2 block w-full border border-gray-300 rounded-full`}
                       />
                     </div>
                     {getError(index, 'email') && (
@@ -197,42 +200,16 @@ const AddMembersModal = ({ isOpen, onClose, onSubmit }) => {
           </div>
 
           {/* Footer Buttons */}
-          <div className="flex justify-end gap-3 mt-2 pt-4">
-            <button
+          <div className="flex justify-end gap-3 mb-3 mr-3">
+            <Button
+              onClick={handleSubmit}
+              buttonText="Add Profile"
+              className="bg-sky-900 !rounded-full px-6 "
+              loadingText="Adding..."
+              isLoading={isAdding}
               disabled={isAdding}
-              type="submit"
-              className={`px-5 py-2 bg-sky-900 text-white font-medium text-sm rounded-full shadow-sm hover:bg-indigo-900 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-colors flex items-center gap-2 ${
-                isAdding ? 'opacity-70 cursor-not-allowed' : ''
-              }`}
-            >
-              {isAdding ? (
-                <>
-                  <svg
-                    className="animate-spin h-4 w-4 text-white"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <circle
-                      className="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                    ></circle>
-                    <path
-                      className="opacity-75"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                    ></path>
-                  </svg>
-                  <span>Adding...</span>
-                </>
-              ) : (
-                'Add Profile'
-              )}
-            </button>
+              theme="dark"
+            />
           </div>
         </form>
       </div>

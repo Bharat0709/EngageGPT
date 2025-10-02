@@ -11,8 +11,9 @@ import {
   saveDraftLinkedInPost,
   scheduleLinkedInPost,
   shareLinkedInPost,
-} from '@services/LinkedInAuth';
+} from '@services/LinkedIn';
 import { getAllMembers } from '@services/Members';
+import { fetchOrganizationData } from '@services/Organization';
 
 const PostScheduler = () => {
   const location = useLocation();
@@ -26,6 +27,7 @@ const PostScheduler = () => {
   });
   const [connectedProfiles, setConnectedProfiles] = useState(null);
   const [invitedProfiles, setInvitedProfiles] = useState([]);
+  const [orgData, setOrgData] = useState({});
   const [selectedProfile, setSelectedProfile] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [calendarData, setCalendarData] = useState([]);
@@ -54,9 +56,12 @@ const PostScheduler = () => {
       setIsLoading(true);
       try {
         const data = await getAllMembers();
+        const orgData = await fetchOrganizationData();
         const connected = data.filter((member) => member.isLinkedinConnected);
         const invited = data.filter((member) => !member.isLinkedinConnected);
+        console.log(orgData);
         setInvitedProfiles(invited);
+        setOrgData({ ...orgData });
         setConnectedProfiles(connected);
         setSelectedProfile(connected?.[0]?._id || null);
         setIsLoading(false);
@@ -162,7 +167,7 @@ const PostScheduler = () => {
       location.state = null;
     } catch (error) {
       setIsPosting(false);
-      message.error('Failed to share post. Please try again.');
+      message.error(error.message);
     }
   };
 
@@ -197,7 +202,7 @@ const PostScheduler = () => {
       location.state = null;
     } catch (error) {
       setIsSavingDraft(false);
-      message.error('Failed to save post as draft. Please try again.');
+      message.error(error.message);
     }
   };
 
@@ -233,12 +238,12 @@ const PostScheduler = () => {
       location.state = null;
     } catch (error) {
       setIsScheduling(false);
-      message.error('Failed to schedule post. Please try again.');
+      message.error(error.message);
     }
   };
 
   return (
-    <div className="flex flex-col h-screen bg-[#ededed]">
+    <div className="flex flex-col h-screen bg-gray-50">
       <div className="flex rounded-xl mt-2 flex-col lg:flex-row justify-between gap-3 lg:p-2 lg:pt-0 p-2 scrollbar-hide h-screen overflow-y-scroll">
         <div className="flex-1 mb-2 rounded-lg ">
           <>
@@ -273,6 +278,7 @@ const PostScheduler = () => {
             isSavingDraft={isSavingDraft}
             isScheduling={isScheduling}
             isPosting={isPosting}
+            orgData={orgData}
             connectedProfiles={connectedProfiles}
             selectedProfile={selectedProfile}
             selectedPostTopic={selectedPostTopic}

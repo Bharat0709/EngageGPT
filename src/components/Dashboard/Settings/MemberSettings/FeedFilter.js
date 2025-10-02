@@ -1,4 +1,5 @@
-import { message, Switch, Input, Button, Tag } from 'antd';
+import { Switch, Input, Button, Tag } from 'antd';
+import { useNotifications } from '@components/Common/Notification';
 import { Icons } from '@utils/constantData/icons';
 import { updateFeedFilterSettings } from '@services/Members';
 import { useState } from 'react';
@@ -6,7 +7,7 @@ import { useState } from 'react';
 function FeedFilter({ feedFilterSettings, setFeedFilterSettings, memberId }) {
   const [newHideKeyword, setNewHideKeyword] = useState('');
   const [savingFeedFilters, setSavingFeedFilters] = useState(false);
-
+  const message = useNotifications();
   const handleSaveFeedFilters = async () => {
     setSavingFeedFilters(true);
     try {
@@ -42,7 +43,7 @@ function FeedFilter({ feedFilterSettings, setFeedFilterSettings, memberId }) {
       ),
     });
   };
-  
+
   return (
     <div>
       {' '}

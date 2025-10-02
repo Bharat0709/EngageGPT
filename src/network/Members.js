@@ -1,14 +1,14 @@
 import axiosInstance from './axiosConfig';
 import { getErrorMessage } from '../utils/errorHandler';
 
-const MEMBER_API_URL = '/members';
+const MEMBER_API_URL = '/member';
 
 export const addNewMember = async (newMemberDetails) => {
   const { name, email } = newMemberDetails;
   const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   localStorage.setItem('userTimeZone', timeZone);
   try {
-    const response = await axiosInstance.post(`${MEMBER_API_URL}/create`, {
+    const response = await axiosInstance.post(`${MEMBER_API_URL}/add-member`, {
       name,
       email,
       timeZone,
@@ -43,7 +43,7 @@ export const createMemberPersona = async (
 export const fetchSheetDetails = async (gooleSheetUrl) => {
   try {
     const response = await axiosInstance.post(
-      `${MEMBER_API_URL}/integrations/googleSheet`,
+      `/calendar/integrations/googleSheet`,
       {
         googleSheetUrl: gooleSheetUrl,
       },
@@ -57,8 +57,10 @@ export const fetchSheetDetails = async (gooleSheetUrl) => {
 
 export const getAllMembers = async () => {
   try {
-    const response = await axiosInstance.get(`${MEMBER_API_URL}/all`);
-    return response.data.data;
+    const response = await axiosInstance.get(
+      `${MEMBER_API_URL}/associated-members`,
+    );
+    return response?.data?.members || [];
   } catch (error) {
     const errorMsg = getErrorMessage(error);
     throw new Error(errorMsg);
@@ -68,7 +70,7 @@ export const getAllMembers = async () => {
 export const getMemberDetails = async (memberId) => {
   try {
     const response = await axiosInstance.get(
-      `${MEMBER_API_URL}/member-profile/${memberId}`,
+      `${MEMBER_API_URL}/profile/${memberId}`,
     );
     return response.data.data;
   } catch (error) {
@@ -82,18 +84,6 @@ export const updateMemberSettings = async (memberId, settingsData) => {
     const response = await axiosInstance.put(
       `${MEMBER_API_URL}/settings/${memberId}`,
       settingsData,
-    );
-    return response.data.data;
-  } catch (error) {
-    const errorMsg = getErrorMessage(error);
-    throw new Error(errorMsg);
-  }
-};
-
-export const disconnectLinkedIn = async (memberId) => {
-  try {
-    const response = await axiosInstance.post(
-      `${MEMBER_API_URL}/linkedin/disconnect/${memberId}`,
     );
     return response.data.data;
   } catch (error) {
@@ -124,12 +114,9 @@ export const addContentCalendar = async (calendarData, memberId) => {
       };
     });
 
-    const response = await axiosInstance.post(
-      `${MEMBER_API_URL}/content-calendar/${memberId}`,
-      {
-        calendarData: formattedData,
-      },
-    );
+    const response = await axiosInstance.post(`/calendar/${memberId}`, {
+      calendarData: formattedData,
+    });
 
     return response.data.data;
   } catch (error) {
@@ -140,9 +127,7 @@ export const addContentCalendar = async (calendarData, memberId) => {
 
 export const getContentCalendar = async (memberId) => {
   try {
-    const response = await axiosInstance.get(
-      `${MEMBER_API_URL}/content-calendar/${memberId}`,
-    );
+    const response = await axiosInstance.get(`/calendar/${memberId}`);
     return response.data.data;
   } catch (error) {
     const errorMsg = getErrorMessage(error);
@@ -156,10 +141,12 @@ export const updateContentCalendar = async (
   updatedData,
 ) => {
   try {
+    console.log('DATAT', contentId, memberId, updatedData);
     const response = await axiosInstance.put(
-      `${MEMBER_API_URL}/content-calendar/${memberId}/${contentId}`,
+      `/calendar/${memberId}/${contentId}`,
       updatedData,
     );
+    console.log(response);
     return response.data.data;
   } catch (error) {
     const errorMsg = getErrorMessage(error);
@@ -173,7 +160,7 @@ export const deleteContentCalendar = async (contentDetails) => {
     const contentId = contentDetails._id;
 
     const response = await axiosInstance.delete(
-      `${MEMBER_API_URL}/content-calendar/${memberId}/${contentId}`,
+      `/calendar/${memberId}/${contentId}`,
     );
     return response.data;
   } catch (error) {
@@ -216,7 +203,7 @@ export const updateMemberSummary = async (memberId, summaryData) => {
     const response = await axiosInstance.put(
       `${MEMBER_API_URL}/summary/${memberId}`,
       {
-        summary: summaryData,
+        formData: summaryData,
       },
     );
 

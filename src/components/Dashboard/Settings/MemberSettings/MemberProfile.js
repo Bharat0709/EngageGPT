@@ -7,9 +7,8 @@ import {
   tabs,
 } from '@utils/constantData/memberSetttings';
 import props from 'prop-types';
-
-import InfoModal from '../../Global/InfoModal';
 import AccountSettings from './MemberAccountSettings';
+import InfoModal from '@components/Common/InfoModal';
 
 function MemberProfile({ memberData, view, handleViewToggle } = props) {
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);

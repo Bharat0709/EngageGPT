@@ -1,32 +1,23 @@
 import { useEffect, useState } from 'react';
-import { message } from 'antd';
 import { getAllMembers, addNewMember } from '@services/Members';
-import { getHiringStats } from '@services/HiringPosts';
 import HiringPostsDashboard from './PostsManager';
 import AddMembersModal from '../Global/AddPeopleModal';
-import MembersProfileDropDown from '../Global/MembersDropDown';
 import SavedPostsSkeleton from '../SkeletonLoaders/SavedPostsSkeletonLoading';
-import UserStats from './Stats';
-import { Icons } from '@utils/constantData/icons';
+import LeadsPageHeader from './LeadsPageHeader';
+import NotFound from '@assets/images/PostNotFound.png';
+import { useNotifications } from '@components/Common/Notification';
+import LeadGenerationSetup from './LeadsSettings/LeadGenerationSetup';
+import EmailSendModal from './MailLeads/MailModal';
 
 const HiringPostsPage = () => {
   const [selectedMemberId, setSelectedMemberId] = useState(null);
   const [memberProfiles, setMemberProfiles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [currentLead, setCurrentLead] = useState(null);
   const [refreshMembers, setRefreshMembers] = useState(false);
   const [isAddMemberModalOpen, setIsAddMemberModalOpen] = useState(false);
-  const [stats, setStats] = useState({
-    userStats: {
-      statusCounts: {
-        new: 0,
-        contacted: 0,
-        responded: 0,
-        closed: 0,
-        rejected: 0,
-      },
-      totalPosts: 0,
-    },
-  });
+  const [activeTab, setActiveTab] = useState('leads');
+  const message = useNotifications();
 
   useEffect(() => {
     const fetchAndSetMemberData = async () => {
@@ -45,22 +36,6 @@ const HiringPostsPage = () => {
     fetchAndSetMemberData();
   }, [refreshMembers]);
 
-  useEffect(() => {
-    const fetchHiringStats = async () => {
-      if (!selectedMemberId) return;
-      try {
-        const statsData = await getHiringStats('month', selectedMemberId);
-        setStats(statsData);
-      } catch (err) {
-        message.error('Failed to load hiring statistics');
-      }
-    };
-
-    if (selectedMemberId) {
-      fetchHiringStats();
-    }
-  }, [selectedMemberId]);
-
   const handleAddMembers = async (newPersons) => {
     try {
       for (const person of newPersons) {
@@ -75,6 +50,10 @@ const HiringPostsPage = () => {
     }
   };
 
+  const handleRefresh = () => {
+    setRefreshMembers(!refreshMembers);
+  };
+
   const handleProfileChange = (profile) => {
     const selectedProfile = memberProfiles.find((p) => p._id === profile._id);
     if (selectedProfile) {
@@ -82,69 +61,97 @@ const HiringPostsPage = () => {
     }
   };
 
+  // Function to render content based on active tab
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case 'leads':
+        return selectedMemberId ? (
+          <HiringPostsDashboard
+            setCurrentLead={setCurrentLead}
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+            memberId={selectedMemberId}
+          />
+        ) : (
+          <NoMemberSelected />
+        );
+      case 'settings':
+        return selectedMemberId ? (
+          <LeadGenerationSetup
+            memberId={selectedMemberId}
+            onComplete={(data) => console.log('Setup complete:', data)}
+            onCancel={() => navigate('/dashboard')}
+          />
+        ) : (
+          <NoMemberSelected />
+        );
+      case 'editor':
+        return (
+          <div className="bg-white p-8 rounded-lg">
+            <h3 className="text-lg font-medium mb-4">Editor</h3>
+            <p className="text-gray-600">
+              Editor functionality will be implemented here.
+            </p>
+          </div>
+        );
+      case 'mail':
+        return (
+          <div className="bg-gray-50 rounded-2xl">
+            <EmailSendModal
+              memberId={selectedMemberId}
+              postData={currentLead}
+            />
+          </div>
+        );
+      default:
+        return selectedMemberId ? (
+          <HiringPostsDashboard
+            setActiveTab={setActiveTab}
+            activeTab={activeTab}
+            memberId={selectedMemberId}
+          />
+        ) : (
+          <NoMemberSelected />
+        );
+    }
+  };
+
+  // No member selected component
+  const NoMemberSelected = () => (
+    <div className="bg-white p-8 m-2  rounded-2xl flex flex-col justify-center gap-2 text-center">
+      <img src={NotFound} alt="Not Found" className="h-50 w-60 mx-auto" />
+      <h3 className="text-lg font-medium mb-2">No Member Selected</h3>
+      <p className="text-gray-600 mb-4">
+        Please select a member to view their saved leads or add a new member.
+      </p>
+      <button
+        onClick={() => setIsAddMemberModalOpen(true)}
+        className="btn-primary flex items-center gap-2 self-center mx-auto whitespace-nowrap px-6 py-2 text-sm font-medium bg-white border border-black text-black w-fit transition-all shadow-[3px_3px_0px_black] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]"
+      >
+        Add Member
+      </button>
+    </div>
+  );
+
   if (isLoading) {
     return <SavedPostsSkeleton />;
   }
 
   return (
-    <div className="bg-[#ededed] min-h-screen rounded-xl lg:px-6 py-4 p-4">
-      <div className="flex lg:flex-row flex-col gap-3 justify-between items-center">
-        <div className="flex items-center space-x-4">
-          <h1 className="lg:text-2xl text-xl flex items-center text-black font-semibold">
-            Saved Posts{' '}
-            <span className="text-sm ml-2 text-gray-500">
-              ({stats.userStats?.totalPosts || 0} total)
-            </span>
-          </h1>
-        </div>
+    <div className="bg-[#fafafa] min-h-screen rounded-xl p-0">
+      {/* Use the new header component */}
+      <LeadsPageHeader
+        handleRefresh={handleRefresh}
+        selectedMemberId={selectedMemberId}
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        memberProfiles={memberProfiles}
+        handleProfileChange={handleProfileChange}
+        setIsAddMemberModalOpen={setIsAddMemberModalOpen}
+      />
 
-        <div className="flex flex-wrap justify-center items-center gap-4">
-          {/* Member Dropdown */}
-          <div className="relative">
-            {memberProfiles.length > 0 ? (
-              <MembersProfileDropDown
-                profiles={memberProfiles}
-                onProfileChange={handleProfileChange}
-                onCopy={() => message.success('Profile copied!')}
-              />
-            ) : (
-              <div className="text-gray-500">
-                No members available. Please add a member.
-              </div>
-            )}
-          </div>
+      <div>{renderTabContent()}</div>
 
-          <button
-            onClick={() => setIsAddMemberModalOpen(true)}
-            className="global-button-primary text-sm flex items-center gap-1 py-2 px-4 rounded-full"
-          >
-            <Icons.Plus size={14} />
-            Add Member
-          </button>
-        </div>
-      </div>
-
-      {/* Stats cards */}
-      <UserStats isLoading={isLoading} stats={stats} />
-
-      {selectedMemberId ? (
-        <HiringPostsDashboard memberId={selectedMemberId} />
-      ) : (
-        <div className="bg-white p-8 rounded-lg flex flex-col justify-center gap-2 text-center">
-          <Icons.Users size={40} className="mx-auto text-gray-400 mb-4" />
-          <h3 className="text-lg font-medium mb-2">No Member Selected</h3>
-          <p className="text-gray-600 mb-4">
-            Please select a member to view their saved posts or add a new
-            member.
-          </p>
-          <button
-            onClick={() => setIsAddMemberModalOpen(true)}
-            className="btn-primary flex items-center gap-2  self-center mx-auto whitespace-nowrap px-6 py-2 text-sm font-medium bg-white border border-black text-black w-fit transition-all shadow-[3px_3px_0px_black] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]"
-          >
-            Add Member
-          </button>
-        </div>
-      )}
       <AddMembersModal
         isOpen={isAddMemberModalOpen}
         onClose={() => setIsAddMemberModalOpen(false)}

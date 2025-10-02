@@ -43,6 +43,8 @@ const CalendarGrid = ({
     setCurrentMonth(date);
   };
 
+  
+
   // Custom cell content with enhanced styling
   const dateCellRender = (value) => {
     const dateItems = getItemsForDate(value);

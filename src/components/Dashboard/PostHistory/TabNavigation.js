@@ -1,5 +1,5 @@
+import { Icons } from '@utils/constantData/icons';
 import React from 'react';
-import { FiFilter } from 'react-icons/fi';
 
 const TabNavigation = ({ activeTab, setActiveTab, postHistory }) => {
   const tabs = [
@@ -7,26 +7,57 @@ const TabNavigation = ({ activeTab, setActiveTab, postHistory }) => {
       key: 'scheduled',
       label: 'Scheduled',
       count: postHistory.scheduled.length,
+      icon: Icons.Clock,
     },
-    { key: 'posted', label: 'Posted', count: postHistory.posted.length },
-    { key: 'drafts', label: 'Drafts', count: postHistory.drafts.length },
-    { key: 'failed', label: 'Failed', count: postHistory.failed.length },
+    {
+      key: 'posted',
+      label: 'Posted',
+      count: postHistory.posted.length,
+      icon: Icons.CheckCircle,
+    },
+    {
+      key: 'drafts',
+      label: 'Drafts',
+      count: postHistory.drafts.length,
+      icon: Icons.Edit3,
+    },
+    {
+      key: 'failed',
+      label: 'Failed',
+      count: postHistory.failed.length,
+      icon: Icons.Alert,
+    },
   ];
 
   return (
-    <div className="flex gap-1 px-2 py-1 items-center rounded-xl bg-gray-50 justify-start">
-      <FiFilter className="text-gray-400 ml-2" />
-      {tabs.map((tab) => (
-        <button
-          key={tab.key}
-          className={`py-2 px-2 text-center text-sm flex items-center justify-center gap-2 ${
-            activeTab === tab.key ? 'font-semibold text-black' : 'text-gray-500'
-          }`}
-          onClick={() => setActiveTab(tab.key)}
-        >
-          {tab.label} ({tab.count})
-        </button>
-      ))}
+    <div className="flex gap-1 px-2 items-center rounded-xl justify-start">
+      {tabs.map((tab) => {
+        const Icon = tab.icon;
+        return (
+          <button
+            key={tab.key}
+            className={`py-4 px-3 text-center text-sm flex items-center justify-center gap-2 transition-all ${
+              activeTab === tab.key
+                ? 'font-semibold border-b-2 border-black text-black bg-white shadow-sm'
+                : 'text-gray-500 hover:text-gray-700'
+            }`}
+            onClick={() => setActiveTab(tab.key)}
+          >
+            <Icon
+              size={15}
+              className={activeTab === tab.key ? 'text-black' : 'text-gray-400'}
+            />
+            <span>{tab.label}</span>
+            <span
+              className={`text-sm ${
+                activeTab === tab.key ? 'text-gray-600' : 'text-gray-400'
+              }`}
+            >
+              ({tab.count})
+            </span>
+          </button>
+        );
+      })}
     </div>
   );
 };

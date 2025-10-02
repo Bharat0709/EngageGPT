@@ -11,7 +11,7 @@ const LinkedInConnection = ({
 }) => {
   if (isLoading) {
     return (
-      <div className="bg-white rounded-xl p-4 mb-4 border border-gray-200">
+      <div className="bg-slate-100 rounded-xl p-4 mb-4 ">
         <div className="flex items-center justify-between">
           <Skeleton.Button
             active

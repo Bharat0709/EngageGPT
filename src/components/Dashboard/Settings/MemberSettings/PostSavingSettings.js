@@ -1,22 +1,15 @@
 import { useState } from 'react';
 import { updateMemberSettings } from '@services/Members';
-import {
-  message,
-  Switch,
-  Button,
-  Input,
-  Select,
-  Tag,
-  Divider,
-  InputNumber,
-} from 'antd';
+import { Switch, Button, Input, Select, Tag, Divider, InputNumber } from 'antd';
 import { Icons } from '@utils/constantData/icons';
+import { useNotifications } from '@components/Common/Notification';
 const { Option } = Select;
 
 function PostSavingSettings({ memberId, postSettings, setPostSettings }) {
   const [savingPostSettings, setSavingPostSettings] = useState(false);
   const [newKeyword, setNewKeyword] = useState('');
   const [newExcludeKeyword, setNewExcludeKeyword] = useState('');
+  const message = useNotifications();
 
   const handleSavePostSettings = async () => {
     setSavingPostSettings(true);

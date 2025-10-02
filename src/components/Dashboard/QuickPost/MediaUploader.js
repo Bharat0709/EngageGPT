@@ -33,14 +33,14 @@ const MediaUploader = ({ postDetails, setPostDetails }) => {
   };
 
   return (
-    <div className="p-3 mt-3 mb-2 rounded-xl bg-white">
-      <div className="flex items-center justify-between">
+    <div className="p-2 mb-2  mt-3 rounded-2xl bg-white ">
+      <div className="flex px-2 items-center justify-between">
         <h4 className="text-lg font-semibold text-gray-700 mb-4">
           Upload Media
         </h4>
         <div className="flex gap-4 mb-4">
           <button
-            className={`py-4 px-4 rounded-md flex items-center justify-center ${
+            className={`py-2 px-2 rounded-md flex items-center justify-center ${
               isImageUpload
                 ? 'bg-gray-100'
                 : 'bg-white text-gray-700 hover:bg-gray-300'
@@ -53,7 +53,7 @@ const MediaUploader = ({ postDetails, setPostDetails }) => {
         </div>
       </div>
 
-      <div className="relative mt-1 flex-col border-dashed border-2 border-gray-300 rounded-lg p-4 flex items-center justify-center cursor-pointer hover:bg-gray-100">
+      <div className="relative flex-col border-dashed border-2 border-gray-300 rounded-xl p-4 flex items-center justify-center cursor-pointer hover:bg-gray-100">
         <span className="text-gray-600 text-center">
           {isImageUpload ? 'Click to upload images' : 'Click to upload a PDF'}
         </span>
@@ -66,7 +66,12 @@ const MediaUploader = ({ postDetails, setPostDetails }) => {
         />
       </div>
 
-      <MediaPreview media={postDetails.media} setPostDetails={setPostDetails} />
+      {postDetails.media.length > 0 && (
+        <MediaPreview
+          media={postDetails.media}
+          setPostDetails={setPostDetails}
+        />
+      )}
     </div>
   );
 };

@@ -103,6 +103,9 @@ const OnboardingGuide = ({
                 </p>
                 <p className="font-bold m-0">
                   Refresh the page once each step is complete
+                  {isProfileAdded && (
+                    <span> | SCROLL DOWN FOR CONNECTION TOKEN</span>
+                  )}
                 </p>
               </div>
               <a

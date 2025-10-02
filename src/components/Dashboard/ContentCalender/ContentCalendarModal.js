@@ -185,9 +185,6 @@ const ContentCalendarModal = ({
     try {
       setIsSaving(true);
       await onSave(calendarData);
-      message.success(
-        `Successfully saved ${calendarData.length} content ideas for ${selectedProfileName}!`,
-      );
       setCalendarData([]);
       onClose();
     } catch (error) {
@@ -227,8 +224,8 @@ const ContentCalendarModal = ({
               </span>
             </div>
             <div>
-              <p className="font-medium">Scheduling content for</p>
-              <h3 className="text-lg font-bold text-indigo-800">
+              <p className="font-medium  mb-0">Scheduling content for</p>
+              <h3 className="text-lg mt-1 mb-0 font-bold text-indigo-800">
                 {selectedProfileName}
               </h3>
             </div>

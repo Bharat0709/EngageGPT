@@ -8,6 +8,7 @@ import OpenAI from '@assets/images/OpenAI-black-monoblossom.png';
 import Groq from '@assets/images/groq.svg';
 import Mistral from '@assets/images/Mistral-Ai.svg';
 import Gemini from '@assets/images/Gemini.svg';
+import Perplexity from '@assets/images/perplexity-text.svg';
 
 const HeroSection = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -174,7 +175,7 @@ const HeroSection = () => {
           <div className="animate-fade-in mb-4 inline-flex items-center px-4 py-1 rounded-full transition-colors">
             <span className="text-gray-700 flex gap-2 items-center text-sm font-medium">
               <FaCheck className="text-green-500 mr-1" />
-              FREE 500 Credits
+              FREE 200 Credits
             </span>
           </div>
           <p className="text-xl lg:text-xl text-gray-700 flex gap-2 items-center  font-medium">
@@ -203,6 +204,12 @@ const HeroSection = () => {
               className="lg:h-16 h-12 hover:scale-110 transition-all duration-100"
               src={Gemini}
               alt="Powered by Groq for fast inference."
+            />
+
+            <img
+              className="lg:h-12 h-12 hover:scale-110 transition-all duration-100"
+              src={Perplexity}
+              alt="Perplexity"
             />
           </div>
         </div>

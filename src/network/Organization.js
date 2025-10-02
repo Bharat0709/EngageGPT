@@ -34,48 +34,28 @@ export const sendFeeback = async (feedbackContent, rating) => {
   }
 };
 
-export const forgotPassword = async (email) => {
-  try {
-    const response = await axiosInstance.post(
-      `${ORGANIZATION_API_URL}/auth/forgot-password`,
-      {
-        email,
-      },
-    );
-    return response.data;
-  } catch (error) {
-    const errorMsg = getErrorMessage(error);
-    throw new Error(errorMsg);
-  }
-};
-
-export const resetPassword = async (token, password, passwordConfirm) => {
-  try {
-    const response = await axiosInstance.post(
-      `${ORGANIZATION_API_URL}/auth/reset-password/${token}`,
-      {
-        password,
-        passwordConfirm,
-      },
-    );
-    return response.data;
-  } catch (error) {
-    const errorMsg = getErrorMessage(error);
-    throw new Error(errorMsg);
-  }
-};
-
 export const fetchOrganizationData = async () => {
   try {
-    const response = await axiosInstance.get(`${ORGANIZATION_API_URL}/auth`);
-    return response.data.user;
+    const response = await axiosInstance.get(`${ORGANIZATION_API_URL}/profile`);
+    return response.data.profile;
   } catch (error) {
     const errorMsg = getErrorMessage(error);
     throw new Error(errorMsg);
   }
 };
 
-// New function to update profile
+export const getCreditsLeft = async () => {
+  try {
+    const response = await axiosInstance.get(
+      `${ORGANIZATION_API_URL}/credits-left`,
+    );
+    return response?.data?.credits || 0;
+  } catch (error) {
+    const errorMsg = getErrorMessage(error);
+    throw new Error(errorMsg);
+  }
+};
+
 export const updateProfile = async (name, profilePicture) => {
   try {
     const formData = new FormData();
@@ -98,3 +78,27 @@ export const updateProfile = async (name, profilePicture) => {
   }
 };
 
+// Add this to your organization network file
+
+export const fetchDodoProducts = async () => {
+  try {
+    const response = await axiosInstance.get('/payments/dodo-products');
+    console.log(response.data.data.products.items);
+    return response.data.data.products.items;
+  } catch (error) {
+    const errorMsg = getErrorMessage(error);
+    throw new Error(errorMsg);
+  }
+};
+
+export const createCheckoutSession = async (productId) => {
+  try {
+    const response = await axiosInstance.post('/payments/create', {
+      product_id: productId,
+    });
+    return response.data;
+  } catch (error) {
+    const errorMsg = getErrorMessage(error);
+    throw new Error(errorMsg);
+  }
+};

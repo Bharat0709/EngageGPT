@@ -9,7 +9,6 @@ const Testimonials = () => {
   const handleGetStarted = () => {
     navigate('/signup');
   };
-  // eslint-disable-next-line
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
@@ -70,115 +69,13 @@ const Testimonials = () => {
           </motion.p>
         </div>
 
-        {/* Featured Testimonial
-        <motion.div
-          className="mb-16"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-        >
-          <div className="bg-white px-4 py-2 text-sm font-medium text-black w-fit transition-all shadow-[3px_3px_0px_black] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px] border border-black flex items-center  p-8 relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-purple-500 via-pink-500 to-red-500" />
-            <div className="flex flex-col md:flex-row gap-8 items-center">
-              <div className="md:w-1/3 relative">
-                <div className="absolute -top-2 -left-2 bg-gradient-to-br from-purple-500 to-pink-500 w-full h-full rounded-xl blur-sm opacity-30" />
-                <img
-                  src={ProfilePic}
-                  alt="Featured testimonial"
-                  className="w-32 h-32 md:w-48 md:h-48 rounded-xl object-cover relative z-10 mx-auto"
-                />
-                <div
-                  className={`absolute -bottom-4 -right-4 ${testimonials[0].color} w-20 h-20 rounded-full opacity-20 blur-md`}
-                />
-              </div>
-              <div className="md:w-2/3">
-                <div className="flex mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <svg
-                      key={i}
-                      className="w-6 h-6 text-yellow-400 fill-current"
-                      viewBox="0 0 24 24"
-                    >
-                      <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                    </svg>
-                  ))}
-                </div>
-                <blockquote className="text-xl font-medium mb-6 relative">
-                  <svg
-                    className="absolute -top-4 -left-4 h-8 w-8 text-gray-200"
-                    fill="currentColor"
-                    viewBox="0 0 32 32"
-                  >
-                    <path d="M9.352 4C4.456 7.456 1 13.12 1 19.36c0 5.088 3.072 8.064 6.624 8.064 3.36 0 5.856-2.688 5.856-5.856 0-3.168-2.208-5.472-5.088-5.472-.576 0-1.344.096-1.536.192.48-3.264 3.552-7.104 6.624-9.024L9.352 4zm16.512 0c-4.8 3.456-8.256 9.12-8.256 15.36 0 5.088 3.072 8.064 6.624 8.064 3.264 0 5.856-2.688 5.856-5.856 0-3.168-2.304-5.472-5.184-5.472-.576 0-1.248.096-1.44.192.48-3.264 3.456-7.104 6.528-9.024L25.864 4z" />
-                  </svg>
-                  {testimonials[0].review}
-                </blockquote>
-                <div className="flex items-center">
-                  <div>
-                    <p className="font-bold text-lg">{testimonials[0].name}</p>
-                    <p className="text-gray-600">
-                      {testimonials[0].designation}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </motion.div> */}
-
         <div className="border  w-fit mb-12 border-gray-700 mx-auto p-2 backdrop-blur-lg rounded-full flex items-center justify-center">
           <span className="text-gray-700 font-bold text-xs px-4 lg:text-base ">
-            Rated 4.4 ⭐on Chrome Web Store
+            Rated 4.6 ⭐on Chrome Web Store
           </span>
         </div>
 
-        {/* Scrolling Testimonials */}
         <div className="relative">
-          <div className="absolute inset-0 flex items-center justify-between z-10 pointer-events-none">
-            {/* <button
-              onClick={() =>
-                setActiveIndex(
-                  (activeIndex - 1 + testimonials.length) % testimonials.length,
-                )
-              }
-              className="bg-white shadow-lg rounded-full w-10 h-10 flex items-center justify-center text-gray-800 hover:bg-gray-100 pointer-events-auto"
-            >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M15 19l-7-7 7-7"
-                />
-              </svg>
-            </button>
-            <button
-              onClick={() =>
-                setActiveIndex((activeIndex + 1) % testimonials.length)
-              }
-              className="bg-white shadow-lg rounded-full w-10 h-10 flex items-center justify-center text-gray-800 hover:bg-gray-100 pointer-events-auto"
-            >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
-            </button> */}
-          </div>
-
           <div className="flex gap-6 overflow-hidden">
             {visibleIndexes.map((index, i) => (
               <motion.div
@@ -240,20 +137,6 @@ const Testimonials = () => {
           </div>
         </div>
 
-        {/* Pagination Dots
-        <div className="flex justify-center mt-8">
-          {testimonials.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setActiveIndex(index)}
-              className={`w-3 h-3 mx-1 rounded-full ${
-                visibleIndexes.includes(index) ? 'bg-[#004182]' : 'bg-gray-300'
-              }`}
-            />
-          ))}
-        </div> */}
-
-        {/* Call to Action */}
         <motion.div
           className="mt-8 text-center"
           initial={{ opacity: 0, y: 20 }}

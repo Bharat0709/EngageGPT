@@ -2,12 +2,13 @@ import { Icons } from '@utils/constantData/icons';
 import { useState } from 'react';
 import { DeleteAccountModal } from './DeleteAccountModal';
 import { deleteMemberAccount } from '@services/Members';
-import { message } from 'antd';
+import { useNotifications } from '@components/Common/Notification';
 import { goTo } from '@utils/navigator';
 
 const AccountSettings = ({ onClose, memberData }) => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [loading, setLoading] = useState(false);
+  const message = useNotifications();
   const handleDeleteAccount = async () => {
     setLoading(true);
     try {

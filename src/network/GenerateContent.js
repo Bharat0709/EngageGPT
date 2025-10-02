@@ -9,6 +9,7 @@ export const generatePost = async (
   aiOption,
 ) => {
   try {
+    console.log(tone, topic, language, template, aiOption);
     if (aiOption === 'gemini') {
       const response = await axiosInstance.post(
         `/ai/generate/post-content/gemini`,
@@ -28,6 +29,43 @@ export const generatePost = async (
           language,
           template,
           selectedTone: tone,
+          provider: aiOption,
+        },
+      );
+      return response.data;
+    }
+  } catch (error) {
+    const errorMsg = getErrorMessage(error);
+    throw new Error(errorMsg);
+  }
+};
+
+export const generateEmailTemplate = async (
+  format,
+  templateType,
+  prompt,
+  aiOption,
+) => {
+  console.log(format, templateType, prompt, aiOption);
+  try {
+    if (aiOption === 'gemini') {
+      const response = await axiosInstance.post(
+        `/ai/generate/email-template/gemini`,
+        {
+          format,
+          templateType,
+          prompt,
+        },
+      );
+      console.log('Response from API:', response);
+      return response.data;
+    } else {
+      const response = await axiosInstance.post(
+        `/openai/generate/email-template`,
+        {
+          format,
+          templateType,
+          prompt,
           provider: aiOption,
         },
       );

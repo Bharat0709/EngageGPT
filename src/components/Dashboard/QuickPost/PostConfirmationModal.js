@@ -1,9 +1,12 @@
+import Button from '@components/Common/Button';
+
 const PostConfirmationModal = ({
   isVisible,
   title,
   description,
   confirmButtonText,
   isProcessing,
+  isProcessingText,
   onConfirm,
   onClose,
 }) => {
@@ -21,23 +24,21 @@ const PostConfirmationModal = ({
         <h2 className="text-xl mt-2 text-center mb-4">{title}</h2>
         <p className="text-center text-base text-gray-600">{description}</p>
         <div className="flex justify-end gap-4 mt-6">
-          <button
-            type="button"
+          <Button
             onClick={onClose}
-            className="global-button-secondary rounded-full text-sm"
-          >
-            Cancel
-          </button>
-          <button
-            type="button"
-            onClick={onConfirm}
-            className={`global-button-primary text-sm rounded-full flex ${
-              isProcessing ? 'opacity-50 cursor-not-allowed' : ''
-            }`}
+            theme="light"
+            buttonText="Cancel"
+            className="border-none hover:bg-gray-50 rounded-full"
+          />
+          <Button
+            isLoading={isProcessing}
             disabled={isProcessing}
-          >
-            {confirmButtonText}
-          </button>
+            loadingText={isProcessingText}
+            onClick={onConfirm}
+            theme="dark"
+            buttonText={confirmButtonText}
+            className="px-6 !rounded-full bg-red-600 hover:bg-red-700"
+          />
         </div>
       </div>
     </div>

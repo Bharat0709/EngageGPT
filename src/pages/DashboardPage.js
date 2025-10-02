@@ -9,13 +9,14 @@ import PostDetails from '@components/Dashboard/PostHistory/PostQueue';
 import HiringPostsPage from '@components/Dashboard/HiringPosts/HiringPostsPage';
 import MemberSettings from '@components/Dashboard/Settings/MemberSettings/MemberSettings';
 import ContentCalendarPage from '@components/Dashboard/ContentCalender/ContentCalender';
-import EmailTemplatesComingSoon from '@components/Dashboard/EmailTemplates/EmailTemplateSoon';
+import EmailTemplateManager from '@components/Dashboard/EmailTemplates/EmailTemplatesPage';
+import AutomationManager from '@components/Dashboard/Automation/AutomationManager';
 
 function Dashboard() {
   return (
-    <div className="flex lg:flex-row scrollbar-hide lg:pt-2 lg:px-2 p-0 rounded-xl flex-col h-screen">
+    <div className="flex lg:flex-row scrollbar-hide p-0 flex-col h-screen">
       <Sidebar />
-      <div className="flex-1 scrollbar-hide rounded-2xl h-[98vh] overflow-auto">
+      <div className="flex-1 scrollbar-hide h-[100vh] overflow-auto">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route
@@ -52,7 +53,7 @@ function Dashboard() {
             }
           />
           <Route
-            path="/saved-posts"
+            path="/saved-leads"
             element={
               <ProtectedRoute>
                 <HiringPostsPage />
@@ -75,12 +76,19 @@ function Dashboard() {
               </ProtectedRoute>
             }
           />
-
           <Route
-            path="/email-template"
+            path="/leads-automation"
             element={
               <ProtectedRoute>
-                <EmailTemplatesComingSoon />
+                <AutomationManager />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/email-templates"
+            element={
+              <ProtectedRoute>
+                <EmailTemplateManager />
               </ProtectedRoute>
             }
           />

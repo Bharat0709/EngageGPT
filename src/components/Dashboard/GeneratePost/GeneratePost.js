@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { fetchOrganizationData } from '@services/Organization';
-import { generatePost, getMasterData } from '@services/GenerateContent';
+import { fetchOrganizationData, getCreditsLeft } from '@services/Organization';
+import { generatePost } from '@services/GenerateContent';
 import { creditsModalContent } from '../Global/AddCreditsContent';
 import { message } from 'antd';
 import {
@@ -22,7 +22,8 @@ import {
 } from 'react-icons/fa';
 import GeneratePostSkeletonLoading from '../SkeletonLoaders/GeneratePostSkeletonLoading';
 import { goTo } from '@utils/navigator';
-import InfoModal from '../Global/InfoModal';
+import { Icons } from '@utils/constantData/icons';
+import InfoModal from '@components/Common/InfoModal';
 
 const LinkedInPostGenerator = () => {
   const [messages, setMessages] = useState([]);
@@ -55,21 +56,20 @@ const LinkedInPostGenerator = () => {
     const initializeData = async () => {
       try {
         const organizationData = await fetchOrganizationData();
-        const masterData = await getMasterData();
-        const enabledAIServices = Object.values(
-          masterData.masterData.aiServices,
-        )
-          .filter((service) => service.enabled && service.status === 'active')
-          .sort((a, b) => a.priority - b.priority);
+        // const masterData = await getMasterData();
+        const enabledAIServices = organizationData.planFeatures.aiModels.map(
+          (model) => model.charAt(0).toUpperCase() + model.slice(1),
+        );
 
         setAvailableAIOptions(enabledAIServices);
+        console.log(enabledAIServices);
 
         // Set the first available AI option as default
         if (enabledAIServices.length > 0) {
-          setSelectedAIOption(enabledAIServices[0].id);
+          setSelectedAIOption(enabledAIServices[0]);
         }
         setSelectedProfile(organizationData);
-        setCreditsLeft(organizationData?.credits || 0);
+        setCreditsLeft(organizationData?.credits.balance || 0);
         setIsInitialized(true);
 
         // Initialize welcome message only once
@@ -78,7 +78,7 @@ const LinkedInPostGenerator = () => {
             id: 1,
             type: 'bot',
             content:
-              "👋 Hi! I'm here to help you create engaging LinkedIn posts. What would you like to write about today?",
+              "👋 Hi! I'm here to help you create engaging LinkedIn posts. What would you like to write about today? Give me the topic of your post! ",
             timestamp: new Date().toLocaleTimeString([], {
               hour: '2-digit',
               minute: '2-digit',
@@ -189,10 +189,6 @@ const LinkedInPostGenerator = () => {
     }
   };
 
-  const handleSampleClick = (sample) => {
-    setInputValue(sample);
-  };
-
   const handleCopyPost = async () => {
     if (!generatedPost) {
       message.warning('No post to copy');
@@ -237,37 +233,48 @@ const LinkedInPostGenerator = () => {
     message.info('Proceeding to post editor...');
   };
 
+  const handleRefresh = async () => {
+    message.info('Refreshing Credits');
+    try {
+      const NewcreditsLeft = await getCreditsLeft();
+      // console.log(New)
+      setCreditsLeft(NewcreditsLeft);
+      console.log(NewcreditsLeft);
+      message.success('Credits Updated');
+    } catch (err) {
+      console.log(err);
+      message.error(err.message || 'Failed to send invite');
+    }
+  };
   // Show loading state while initializing
   if (!isInitialized) {
     return <GeneratePostSkeletonLoading />;
   }
 
   return (
-    <div className="bg-[#ededed] h-screen lg:p-2 p-2 sm:p-4">
-      <div className="mx-auto h-[calc(100vh-1rem)] sm:h-[calc(100vh-2rem)] bg-white rounded-xl sm:rounded-2xl overflow-hidden flex flex-col">
+    <div className="bg-[#ededed] h-[98vh] p-2 lg:p-0 sm:p-4">
+      <div className="mx-auto h-full bg-white  overflow-hidden flex flex-col">
         {/* Header */}
-        <div className="p-4 sm:p-6 border-b border-gray-200 flex-shrink-0">
+        <div className="px-2 py-2 sm:px-6 border-b border-gray-200 flex-shrink-0">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <div className="p-2 bg-[#0c4a6e] rounded-lg text-white text-lg sm:text-xl">
                 <FaLinkedin />
               </div>
               <div>
-                <h2 className="text-lg m-0 p-0 sm:text-2xl font-bold text-gray-800">
+                <h2 className="text-base m-0 p-0 sm:text-xl text-gray-800">
                   LinkedIn Post Generator
                 </h2>
-                <p className="text-sm m-0 p-0 text-gray-600 hidden sm:block">
-                  Create engaging content with AI
-                </p>
               </div>
             </div>
             <div className="flex items-center space-x-2 sm:space-x-4">
               <button
-                onClick={() => setShowCreditsModal(true)}
-                className="-mt-1 rounded-full lg:px-6 px-4 py-2 text-xs lg:text-sm font-medium bg-white text-black w-fit transition-all border border-gray-300 shadow-[3px_3px_0px_black] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px] "
-                title="How to get more 500 free credits"
+                onClick={handleRefresh}
+                className="p-2 text-gray-400 flex gap-3 bg-white rounded-xl hover:text-gray-600 hover:bg-white transition-all hover:"
+                title="Refresh data"
               >
-                Add 500 Credits
+                <Icons.Refresh className="w-4 h-4" />
+                Refresh Credits
               </button>
               {selectedProfile && (
                 <div className="hidden sm:flex items-center space-x-2 text-sm text-gray-600">
@@ -279,6 +286,7 @@ const LinkedInPostGenerator = () => {
                   <span>{selectedProfile.name || 'User'}</span>
                 </div>
               )}
+
               <div className="bg-gray-100 px-3 sm:px-4 py-2 rounded-lg border">
                 <span className="font-semibold text-[#0c4a6e] text-sm sm:text-base">
                   {creditsLeft}
@@ -340,19 +348,17 @@ const LinkedInPostGenerator = () => {
                 {availableAIOptions.map((aiOption) => (
                   <button
                     key={aiOption.id}
-                    onClick={() => setSelectedAIOption(aiOption.id)}
+                    onClick={() => setSelectedAIOption(aiOption)}
                     disabled={loading}
                     className={`px-3 sm:px-4 py-2 rounded-full text-xs font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed ${
-                      selectedAIOption === aiOption.id
+                      selectedAIOption === aiOption
                         ? 'bg-[#0c4a6e] text-white transform scale-105'
                         : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200 hover:border-[#0c4a6e]'
                     }`}
                   >
                     <div className="flex items-center space-x-1">
-                      <span>{aiOption.name}</span>
-                      {aiOption.status === 'active' && (
-                        <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                      )}
+                      <span>{aiOption}</span>
+                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                     </div>
                   </button>
                 ))}
@@ -396,14 +402,14 @@ const LinkedInPostGenerator = () => {
                       className={`rounded-2xl p-3 sm:p-4 ${
                         message.type === 'user'
                           ? 'bg-[#0c4a6e] text-white rounded-br-md'
-                          : 'bg-white text-gray-800 rounded-bl-md border border-gray-100'
+                          : 'bg-gray-100 text-gray-800 rounded-bl-md'
                       }`}
                     >
                       <p
                         className={`text-sm mb-0 leading-relaxed whitespace-pre-wrap ${
                           message.type === 'user'
                             ? 'bg-[#0c4a6e] text-white rounded-br-md'
-                            : 'bg-white text-gray-800 rounded-bl-md border border-gray-100'
+                            : 'bg-gray-100 text-gray-800 rounded-bl-md '
                         }`}
                       >
                         {message.content}
@@ -461,7 +467,7 @@ const LinkedInPostGenerator = () => {
                   onChange={(e) => setInputValue(e.target.value)}
                   onKeyPress={handleKeyPress}
                   placeholder="What would you like to write about?"
-                  className="flex-1 p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0c4a6e] focus:border-transparent transition-all duration-200 text-sm sm:text-base"
+                  className="flex-1 p-3 border border-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0c4a6e] focus:border-transparent transition-all duration-200 text-sm sm:text-base"
                   disabled={loading}
                 />
                 <button

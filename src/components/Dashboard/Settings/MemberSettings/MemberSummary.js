@@ -1,7 +1,8 @@
 import React from 'react';
 import { updateMemberSummary } from '@services/Members';
 import { useState } from 'react';
-import { Button, Input, Select, Tag, Divider, message } from 'antd';
+import { Button, Input, Select, Tag, Divider } from 'antd';
+import { useNotifications } from '@components/Common/Notification';
 import { Icons } from '@utils/constantData/icons';
 const { Option } = Select;
 
@@ -12,6 +13,7 @@ function MemberSummary({
 }) {
   const [savingSummary, setSavingSummary] = useState(false);
   const [newFunctionalArea, setNewFunctionalArea] = useState('');
+  const message = useNotifications();
 
   const handleAddFunctionalArea = () => {
     if (

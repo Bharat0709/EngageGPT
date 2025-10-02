@@ -2,11 +2,12 @@ import { useState, useEffect } from 'react';
 import { Icons } from '@utils/constantData/icons';
 import { goTo } from '@utils/navigator';
 import { BiUnlink } from 'react-icons/bi';
-import { Button, message, Skeleton } from 'antd';
+import { Button, Skeleton } from 'antd';
 import AddPeopleModal from '../Global/AddPeopleModal';
 import DisconnectConfirmationModal from './DisconnectModal';
 import { getAllMembers, addNewMember } from '@services/Members';
 import 'antd/dist/reset.css';
+import { useNotifications } from '@components/Common/Notification';
 
 export const People = () => {
   const [people, setPeople] = useState([]);
@@ -16,6 +17,7 @@ export const People = () => {
   const [selectedPersonId, setSelectedPersonId] = useState(null);
   const [selectedFilter, setSelectedFilter] = useState('All');
   const [refreshPeoplePage, setRefreshPeoplePage] = useState(false);
+  const message = useNotifications();
 
   useEffect(() => {
     const fetchMembers = async () => {

@@ -6,83 +6,69 @@ import {
   FiGlobe,
   FiEdit3,
   FiImage,
-  FiVideo,
   FiTrash2,
   FiUpload,
-  FiFileText,
+  FiAlertCircle,
 } from 'react-icons/fi';
 import { message } from 'antd';
-import Select from 'react-select';
-import moment from 'moment-timezone';
+import TimezonePicker from '@components/Common/TimeZonePicker';
+import DateTimeSelector from '@components/Common/DateTImePicker';
 
-const timeZones = moment.tz.names().map((tz) => ({ label: tz, value: tz }));
 const statusOptions = [
-  { label: 'Draft', value: 'Draft' },
-  { label: 'Scheduled', value: 'Scheduled' },
-  { label: 'Posted', value: 'Posted' },
+  { label: 'Draft', value: 'Draft', color: 'bg-gray-100 text-gray-700' },
+  {
+    label: 'Scheduled',
+    value: 'Scheduled',
+    color: 'bg-blue-100 text-blue-700',
+  },
+  { label: 'Posted', value: 'Posted', color: 'bg-green-100 text-green-700' },
 ];
-
-const customSelectStyles = {
-  control: (provided, state) => ({
-    ...provided,
-    borderColor: state.isFocused ? '#3b82f6' : '#e5e7eb',
-    boxShadow: state.isFocused ? '0 0 0 3px rgba(59, 130, 246, 0.1)' : 'none',
-    '&:hover': {
-      borderColor: '#3b82f6',
-    },
-    borderRadius: '12px',
-    padding: '2px',
-    backgroundColor: '#ffffff',
-    minHeight: '48px',
-  }),
-  option: (provided, state) => ({
-    ...provided,
-    backgroundColor: state.isSelected
-      ? '#3b82f6'
-      : state.isFocused
-      ? '#f3f4f6'
-      : 'white',
-    color: state.isSelected ? 'white' : '#374151',
-  }),
-  menu: (provided) => ({
-    ...provided,
-    borderRadius: '12px',
-    boxShadow:
-      '0 10px 25px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-  }),
-};
 
 const MediaPreview = ({ media, removeMedia }) => {
   if (!media || media.length === 0) return null;
 
   return (
-    <div className="space-y-3">
-      <h3 className="text-sm font-semibold text-gray-700 flex items-center gap-2">
-        <FiImage className="w-4 h-4" />
-        Media Files ({media.length})
-      </h3>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+    <div className="space-y-4">
+      <div className="flex items-center gap-2">
+        <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+          <FiImage className="w-4 h-4 text-white" />
+        </div>
+        <h3 className="text-sm font-semibold text-gray-800">
+          Media Files ({media.length})
+        </h3>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {media.map((item, index) => (
           <div
             key={index}
-            className="group relative bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl  border border-gray-200 hover:border-gray-300 transition-all duration-200 hover:shadow-sm"
+            className="group relative bg-white rounded-2xl border-2 border-gray-100 hover:border-gray-200 transition-all duration-300 hover:shadow-lg overflow-hidden"
           >
-            {/* Preview thumbnail for images */}
             {item.url && item.type?.includes('image') && (
-              <div className="rounded-lg overflow-hidden">
-                <img
-                  src={item.url}
-                  alt={item.name || 'Preview'}
-                  className="w-full h-30 object-cover"
-                />
-                <button
-                  onClick={() => removeMedia(index, !item.file)}
-                  className="transition-opacity duration-200 p-2 hover:bg-red-50 hover:text-red-600 rounded-full"
-                  title="Remove media"
-                >
-                  <FiTrash2 className="w-4 h-4" />
-                </button>
-              </div>
+              <>
+                <div className="aspect-video rounded-xl overflow-hidden">
+                  <img
+                    src={item.url}
+                    alt={item.name || 'Preview'}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div className="absolute top-2 right-2">
+                  <button
+                    onClick={() => removeMedia(index, !item.file)}
+                    className="w-8 h-8 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-200 hover:scale-110"
+                    title="Remove media"
+                  >
+                    <FiTrash2 className="w-4 h-4" />
+                  </button>
+                </div>
+                <div className="absolute bottom-2 left-2 right-2">
+                  <div className="bg-black/60 backdrop-blur-sm rounded-lg px-2 py-1">
+                    <p className="text-white text-xs font-medium truncate">
+                      {item.name || 'Image'}
+                    </p>
+                  </div>
+                </div>
+              </>
             )}
           </div>
         ))}
@@ -91,11 +77,27 @@ const MediaPreview = ({ media, removeMedia }) => {
   );
 };
 
+// Utility function to format date time for API
+export const formatDateTimeForAPI = (dateTime) => {
+  if (!dateTime) return { date: null, time: null };
+
+  const day = String(dateTime.getDate()).padStart(2, '0');
+  const month = String(dateTime.getMonth() + 1).padStart(2, '0');
+  const year = dateTime.getFullYear();
+  const formattedDate = `${day}-${month}-${year}`;
+
+  const hours = String(dateTime.getHours()).padStart(2, '0');
+  const minutes = String(dateTime.getMinutes()).padStart(2, '0');
+  const seconds = String(dateTime.getSeconds()).padStart(2, '0');
+  const formattedTime = `${hours}:${minutes}:${seconds}`;
+
+  return { date: formattedDate, time: formattedTime };
+};
+
 const EditPostModal = ({ isOpen, onClose, post, onSave, isEditing }) => {
   const [postData, setPostData] = useState({
-    postDate: '',
-    postTime: '',
-    timeZone: 'UTC',
+    dateTime: null,
+    timeZone: 'Asia/Kolkata',
     content: '',
     visibility: 'PUBLIC',
     status: 'Draft',
@@ -107,12 +109,24 @@ const EditPostModal = ({ isOpen, onClose, post, onSave, isEditing }) => {
 
   useEffect(() => {
     if (post) {
+      // Parse existing date and time into Date object
+      let dateTimeObj = null;
+      if (post.postDate && post.postTime) {
+        const [day, month, year] = post.postDate.split('-');
+        const [hours, minutes, seconds = '00'] = post.postTime.split(':');
+        dateTimeObj = new Date(
+          parseInt(year),
+          parseInt(month) - 1,
+          parseInt(day),
+          parseInt(hours),
+          parseInt(minutes),
+          parseInt(seconds),
+        );
+      }
+
       setPostData({
-        postDate: post.postDate
-          ? moment(post.postDate, 'DD-MM-YYYY').format('YYYY-MM-DD')
-          : '',
-        postTime: post.postTime || '',
-        timeZone: post.timeZone || 'UTC',
+        dateTime: dateTimeObj,
+        timeZone: post.timeZone || 'Asia/Kolkata',
         content: post.content || '',
         status: post.status || 'Draft',
         mediaUrls: post.media || [],
@@ -159,29 +173,13 @@ const EditPostModal = ({ isOpen, onClose, post, onSave, isEditing }) => {
       newErrors.content = 'Content is required';
     }
 
-    // Date validation
-    if (!postData.postDate) {
-      newErrors.postDate = 'Date is required';
-    }
-
-    // Time validation
-    if (!postData.postTime) {
-      newErrors.postTime = 'Time is required';
-    }
-
     // DateTime validation
-    if (postData.postDate && postData.postTime) {
-      const selectedDateTime = moment.tz(
-        `${postData.postDate} ${postData.postTime}`,
-        'YYYY-MM-DD HH:mm',
-        postData.timeZone,
-      );
-      const now = moment().tz(postData.timeZone);
-
-      if (!selectedDateTime.isValid()) {
-        newErrors.datetime = 'Invalid date or time format';
-      } else if (selectedDateTime.isBefore(now)) {
-        newErrors.datetime = 'Selected date and time must be in the future';
+    if (!postData.dateTime) {
+      newErrors.dateTime = 'Date and time are required';
+    } else {
+      const now = new Date();
+      if (postData.dateTime <= now) {
+        newErrors.dateTime = 'Selected date and time must be in the future';
       }
     }
 
@@ -191,17 +189,16 @@ const EditPostModal = ({ isOpen, onClose, post, onSave, isEditing }) => {
 
   const handleSave = async () => {
     if (!validateForm()) return;
-
     setLoading(true);
     try {
-      // Convert date format for backend
-      const formattedDate = moment(postData.postDate).format('DD-MM-YYYY');
-      const formattedTime = postData.postTime;
-
+      const { date, time } = formatDateTimeForAPI(postData.dateTime);
       await onSave(post.id, {
-        ...postData,
-        postDate: formattedDate,
-        postTime: formattedTime,
+        postDate: date,
+        postTime: time,
+        timeZone: postData.timeZone,
+        content: postData.content,
+        status: postData.status,
+        visibility: postData.visibility,
         existingMediaUrls: postData.mediaUrls,
         newMediaFiles: postData.newMediaFiles.map((file) => file.file),
       });
@@ -229,214 +226,226 @@ const EditPostModal = ({ isOpen, onClose, post, onSave, isEditing }) => {
     })),
   ];
 
+  const selectedStatus = statusOptions.find(
+    (opt) => opt.value === postData.status,
+  );
+
   return (
-    <div className="fixed inset-0 w-full z-[70] flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm transition-opacity">
-      <div className="bg-white flex flex-col rounded-3xl h-[90vh] lg:w-2/3 xl:w-1/2 w-11/12 relative shadow-2xl">
-        {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-100">
-          <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-3">
-            <div className="w-10 h-10 bg-[#0c4a6e] rounded-xl flex items-center justify-center">
-              <FiEdit3 className="w-5 h-5 text-white" />
+    <div className="fixed inset-0 w-full z-[70] flex items-center justify-center bg-black/70 backdrop-blur-md transition-all duration-300">
+      <div className="bg-white flex flex-col rounded-3xl  h-[95vh] lg:w-3/4 xl:w-2/3 2xl:w-1/2 w-11/12 relative shadow-2xl border border-gray-100 overflow-hidden">
+        {/* Header with gradient background */}
+        <div className="relative p-4">
+          <div className="relative flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12  backdrop-blur-sm rounded-2xl flex items-center justify-center">
+                <FiEdit3 className="w-6 h-6 text-black" />
+              </div>
+              <div>
+                <h2 className="text-2xl font-bold text-black m-0 ">
+                  Edit Post
+                </h2>
+                <p className="text-black  text-sm mt-1 mb-0">
+                  Update your scheduled post
+                </p>
+              </div>
             </div>
-            Edit Post
-          </h2>
-          <button
-            className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-full transition-colors"
-            onClick={onClose}
-          >
-            <FiX className="w-5 h-5" />
-          </button>
+            <button
+              className="p-3 text-black/80 hover:text-black hover:bg-white/20 rounded-2xl transition-all duration-200"
+              onClick={onClose}
+            >
+              <FiX className="w-6 h-6" />
+            </button>
+          </div>
         </div>
 
         {/* Content */}
-        <div className="flex-1 overflow-y-auto p-6 space-y-6">
-          {/* Date and Time Row */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
-                <FiCalendar className="w-4 h-4" />
-                Date
-              </label>
-              <input
-                type="date"
-                className={`w-full border-2 rounded-xl p-3 transition-all duration-200 focus:border-black-500 focus:ring-1 focus:ring-blue-500/10 outline-none ${
-                  errors.postDate ? 'border-red-500' : 'border-gray-200'
-                }`}
-                value={postData.postDate}
-                onChange={(e) => {
-                  setPostData({ ...postData, postDate: e.target.value });
-                  if (errors.postDate) {
-                    setErrors({ ...errors, postDate: null });
-                  }
-                }}
-              />
-              {errors.postDate && (
-                <p className="text-red-500 text-xs">{errors.postDate}</p>
-              )}
-            </div>
-            <div className="space-y-2">
-              <label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
-                <FiClock className="w-4 h-4" />
-                Time
-              </label>
-              <input
-                type="time"
-                className={`w-full border-2 rounded-xl p-3 transition-all duration-200 focus:border-black-500 focus:ring-1 focus:ring-blue-500/10 outline-none ${
-                  errors.postTime ? 'border-red-500' : 'border-gray-200'
-                }`}
-                value={postData.postTime}
-                onChange={(e) => {
-                  setPostData({ ...postData, postTime: e.target.value });
-                  if (errors.postTime) {
-                    setErrors({ ...errors, postTime: null });
-                  }
-                }}
-              />
-              {errors.postTime && (
-                <p className="text-red-500 text-xs">{errors.postTime}</p>
-              )}
-            </div>
-          </div>
-
-          {/* DateTime Error */}
-          {errors.datetime && (
-            <div className="bg-red-50 border border-red-200 rounded-xl p-3">
-              <p className="text-red-600 text-sm">{errors.datetime}</p>
-            </div>
-          )}
-
-          {/* Time Zone */}
-          <div className="space-y-2">
-            <label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
-              <FiGlobe className="w-4 h-4" />
-              Time Zone
-            </label>
-            <Select
-              options={timeZones}
-              value={timeZones.find((tz) => tz.value === postData.timeZone)}
-              onChange={(selected) =>
-                setPostData({ ...postData, timeZone: selected.value })
-              }
-              styles={customSelectStyles}
-              placeholder="Select timezone..."
-            />
-          </div>
-
-          {/* Status */}
-          <div className="space-y-2">
-            <label className="text-sm font-semibold text-gray-700">
-              Status
-            </label>
-            <Select
-              options={statusOptions}
-              value={statusOptions.find(
-                (status) => status.value === postData.status,
-              )}
-              onChange={(selected) =>
-                setPostData({ ...postData, status: selected.value })
-              }
-              styles={customSelectStyles}
-              placeholder="Select status..."
-            />
-          </div>
-
-          {/* Content */}
-          <div className="space-y-2">
-            <label className="text-sm font-semibold text-gray-700">
-              Content
-            </label>
-            <textarea
-              className={`w-full border-2 leading-8 rounded-xl p-4 transition-all duration-200  outline-none resize-none ${
-                errors.content ? 'border-red-500' : 'border-gray-200'
-              }`}
-              rows="20"
-              placeholder="What's on your mind?"
-              value={postData.content}
-              onChange={(e) => {
-                setPostData({ ...postData, content: e.target.value });
-                if (errors.content) {
-                  setErrors({ ...errors, content: null });
-                }
-              }}
-            />
-            {errors.content && (
-              <p className="text-red-500 text-xs">{errors.content}</p>
-            )}
-          </div>
-
-          {/* Media Upload */}
-          <div className="space-y-4">
-            <div className="relative">
-              <input
-                type="file"
-                accept="image/*"
-                multiple
-                onChange={handleFileChange}
-                className="absolute inset-0 w-full h-1/2 opacity-0 cursor-pointer"
-                id="media-upload"
-              />
-              <label
-                htmlFor="media-upload"
-                className="flex flex-col items-center justify-center p-6 border-2 border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition-all duration-200"
-              >
-                <div className="w-12 h-12 bg-[#0c4a6e] rounded-xl flex items-center justify-center mb-4">
-                  <FiUpload className="w-6 h-6 text-white" />
+        <div className="flex-1 p-2 overflow-y-auto">
+          <div className="p-4 space-y-2">
+            {/* Date Time and Timezone Section */}
+            <div className="bg-gradient-to-r from-gray-50 to-blue-50 rounded-2xl p-4 border border-gray-100">
+              <div className="flex items-start justify-start flex-wrap gap-4 w-full">
+                <div className="space-y-2 w-1/2">
+                  <label className="text-xs font-semibold w-full text-gray-700 flex items-center gap-2">
+                    Date & Time
+                  </label>
+                  <DateTimeSelector
+                    value={postData.dateTime}
+                    onChange={(dateTime) => {
+                      setPostData({ ...postData, dateTime });
+                      if (errors.dateTime) {
+                        setErrors({ ...errors, dateTime: null });
+                      }
+                    }}
+                    placeholder="Select date and time"
+                    showTime={true}
+                  />
+                  {errors.dateTime && (
+                    <div className="flex items-center gap-2 text-red-500 text-sm bg-red-50 p-2 rounded-lg">
+                      <FiAlertCircle className="w-4 h-4" />
+                      {errors.dateTime}
+                    </div>
+                  )}
                 </div>
-                <p className="text-gray-600 text-center font-medium">
-                  Drag & drop or click to upload media
-                </p>
-                <p className="text-gray-400 text-sm mt-1">
-                  Support for images only
-                </p>
-              </label>
+
+                <div className="space-y-2 min-w-[16rem]">
+                  <label className="text-xs font-semibold text-gray-700 flex items-center gap-2">
+                    Timezone
+                  </label>
+                  <TimezonePicker
+                    value={postData.timeZone}
+                    onChange={(timeZone) =>
+                      setPostData({ ...postData, timeZone })
+                    }
+                    placeholder="Select timezone"
+                  />
+                </div>
+              </div>
             </div>
 
-            {/* Media Preview */}
-            {allMedia.length > 0 && (
-              <MediaPreview
-                media={allMedia}
-                removeMedia={(index) => {
-                  const mediaItem = allMedia[index];
-                  if (mediaItem.isExisting) {
-                    // Find the actual index in mediaUrls array
-                    const actualIndex = postData.mediaUrls.findIndex(
-                      (media, i) => i === mediaItem.index,
-                    );
-                    removeMedia(actualIndex, true);
-                  } else {
-                    // Find the actual index in newMediaFiles array
-                    const actualIndex = postData.newMediaFiles.findIndex(
-                      (media, i) => i === mediaItem.index,
-                    );
-                    removeMedia(actualIndex, false);
-                  }
-                }}
-              />
-            )}
+            {/* Status Section */}
+            <div className="w-full p-2 px-4 bg-gradient-to-r from-gray-50 to-blue-50  flex items-center rounded-2xl justify-start gap-4">
+              <label className="text-sm font-semibold text-gray-700">
+                Status
+              </label>
+              <div className="flex gap-2">
+                {statusOptions.map((status) => (
+                  <button
+                    key={status.value}
+                    onClick={() =>
+                      setPostData({ ...postData, status: status.value })
+                    }
+                    className={`px-4 py-2 rounded-xl font-medium text-sm transition-all duration-200 border ${
+                      postData.status === status.value
+                        ? `${status.color} border-current `
+                        : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-100'
+                    }`}
+                  >
+                    {status.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Content Section */}
+            <div className="space-y-3">
+              <label className="text-sm font-semibold text-gray-700">
+                Content
+              </label>
+              <div className="relative">
+                <textarea
+                  className={`w-full font-normal leading-8 border-2 rounded-2xl p-6 transition-all duration-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none resize-none bg-white/50 backdrop-blur-sm ${
+                    errors.content ? 'border-red-500' : 'border-gray-200'
+                  }`}
+                  rows="12"
+                  placeholder="What's on your mind? Share your thoughts..."
+                  value={postData.content}
+                  onChange={(e) => {
+                    setPostData({ ...postData, content: e.target.value });
+                    if (errors.content) {
+                      setErrors({ ...errors, content: null });
+                    }
+                  }}
+                />
+                <div className="absolute bottom-4 right-4 text-xs text-gray-400 bg-white/80 backdrop-blur-sm px-2 py-1 rounded-lg">
+                  {postData.content.length} characters
+                </div>
+              </div>
+              {errors.content && (
+                <div className="flex items-center gap-2 text-red-500 text-sm bg-red-50 p-3 rounded-xl">
+                  <FiAlertCircle className="w-4 h-4" />
+                  {errors.content}
+                </div>
+              )}
+            </div>
+
+            {/* Media Upload Section */}
+            <div className="space-y-4">
+              <div className="relative group">
+                <input
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  onChange={handleFileChange}
+                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                  id="media-upload"
+                />
+                <label
+                  htmlFor="media-upload"
+                  className="flex flex-col items-center justify-center p-8 border-2 border-dashed border-gray-300 rounded-2xl cursor-pointer hover:border-blue-500 hover:bg-gradient-to-br hover:from-blue-50 hover:to-purple-50 transition-all duration-300 group-hover:scale-[1.02]"
+                >
+                  <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                    <FiUpload className="w-8 h-8 text-white" />
+                  </div>
+                  <p className="text-gray-700 text-center m-0 font-semibold text-lg">
+                    Drag & drop or click to upload media
+                  </p>
+                  <p className="text-gray-500 text-sm  mb-0 mt-2">
+                    Support for images • Max 10MB per file
+                  </p>
+                </label>
+              </div>
+
+              {/* Media Preview */}
+              {allMedia.length > 0 && (
+                <MediaPreview
+                  media={allMedia}
+                  removeMedia={(index) => {
+                    const mediaItem = allMedia[index];
+                    if (mediaItem.isExisting) {
+                      const actualIndex = postData.mediaUrls.findIndex(
+                        (media, i) => i === mediaItem.index,
+                      );
+                      removeMedia(actualIndex, true);
+                    } else {
+                      const actualIndex = postData.newMediaFiles.findIndex(
+                        (media, i) => i === mediaItem.index,
+                      );
+                      removeMedia(actualIndex, false);
+                    }
+                  }}
+                />
+              )}
+            </div>
           </div>
         </div>
 
         {/* Footer */}
-        <div className="flex justify-end gap-3 p-6 border-t border-gray-100">
-          <button
-            type="button"
-            onClick={onClose}
-            className="px-6 py-3 text-gray-600 hover:text-gray-800 hover:bg-gray-100 rounded-xl font-medium transition-colors"
-          >
-            Cancel
-          </button>
-          <button
-            type="submit"
-            onClick={handleSave}
-            disabled={loading}
-            className={`px-6 rounded-full py-3 bg-[#0c4a6e] text-white  font-medium transition-all duration-200 ${
-              loading
-                ? 'opacity-50 cursor-not-allowed'
-                : 'hover:shadow-lg hover:shadow-blue-500/25 transform hover:scale-[1.02]'
-            }`}
-          >
-            {loading ? 'Updating...' : 'Update Post'}
-          </button>
+        <div className="border-t border-gray-100 bg-gradient-to-r from-gray-50 to-white p-2 py-4 px-4 pt-4">
+          <div className="flex justify-between items-center">
+            <div className="text-sm text-gray-500">
+              {postData.dateTime && (
+                <span>Scheduled for {postData.dateTime.toLocaleString()}</span>
+              )}
+            </div>
+            <div className="flex gap-4">
+              <button
+                type="button"
+                onClick={onClose}
+                className="px-6 py-3 text-gray-600 hover:text-gray-800 hover:bg-gray-100 rounded-full font-semibold transition-all duration-200"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                onClick={handleSave}
+                disabled={loading}
+                className={`px-6 py-3 bg-[#0c4a6e] text-white rounded-full font-semibold transition-all duration-200 shadow-lg hover:shadow-xl text-md ${
+                  loading
+                    ? 'opacity-50 cursor-not-allowed'
+                    : 'hover:scale-105 active:scale-95'
+                }`}
+              >
+                {loading ? (
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                    Updating...
+                  </div>
+                ) : (
+                  'Update Post'
+                )}
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

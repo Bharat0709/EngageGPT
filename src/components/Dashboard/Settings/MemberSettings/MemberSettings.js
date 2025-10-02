@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { message } from 'antd';
 import { getMemberDetails, getFeedFilterSettings } from '@services/Members';
 import SkeletonLoadingMember from '../../SkeletonLoaders/SkeletonLoadingMember';
 import MemberProfile from './MemberProfile';
@@ -9,6 +8,8 @@ import FeedFilter from './FeedFilter';
 import MemberSummary from './MemberSummary';
 import LeadGeneration from './LeadGeneration';
 import AccountSettings from './MemberAccountSettings';
+import { useNotifications } from '@components/Common/Notification';
+
 const MemberSettings = () => {
   const { memberId } = useParams();
   const [loading, setLoading] = useState(true);
@@ -75,6 +76,7 @@ const MemberSettings = () => {
   const handleCloseAccountSettings = () => {
     setShowAccountSettings(false);
   };
+  const message = useNotifications();
 
   useEffect(() => {
     const fetchMemberData = async () => {

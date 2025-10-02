@@ -11,11 +11,11 @@ const MediaPreview = ({ media, setPostDetails }) => {
   };
 
   return (
-    <div className="flex flex-col mt-4 gap-3 ">
+    <div className="flex flex-col mb-2 pb-2 mt-4 gap-3 ">
       {media.map((file) => (
         <div
           key={file.name}
-          className="p-2 pr-4 border rounded-lg justify-between flex gap-3 items-center"
+          className="p-2 pr-4 border  rounded-lg justify-between flex gap-3 items-center"
         >
           <div className="flex gap-2 items-center">
             <img

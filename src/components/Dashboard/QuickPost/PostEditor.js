@@ -98,40 +98,6 @@ const PostContentEditor = ({
     }, 0);
   };
 
-  // Quick insert functions for common LinkedIn patterns
-  const insertTemplate = (template) => {
-    const textarea = textareaRef.current;
-    if (!textarea) return;
-
-    const start = textarea.selectionStart;
-    const beforeText = textarea.value.substring(0, start);
-    const afterText = textarea.value.substring(start);
-
-    const updatedContent = beforeText + template + afterText;
-
-    setPostDetails((prev) => ({
-      ...prev,
-      content: updatedContent,
-    }));
-
-    setTimeout(() => {
-      textarea.focus();
-      textarea.setSelectionRange(
-        start + template.length,
-        start + template.length,
-      );
-    }, 0);
-  };
-
-  const templates = {
-    hook: "🎯 Here's something that might surprise you:\n\n",
-    question: '❓ Quick question for my network:\n\n',
-    story: '📖 Let me share a quick story:\n\n',
-    tip: '💡 Pro tip:\n\n',
-    announcement: '🚀 Exciting news:\n\n',
-    lesson: '📚 Key takeaway:\n\n',
-  };
-
   const TwinStarsIcon = () => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -228,7 +194,7 @@ const PostContentEditor = ({
   }
 
   return (
-    <div className="bg-white rounded-xl transition-all duration-300 lg:p-4 p-4">
+    <div className="bg-white rounded-2xl transition-all duration-300 lg:p-4 p-4">
       {/* Header Section */}
       <div className="flex items-center lg:flex-row flex-col justify-center gap-4 lg:justify-between mb-6">
         <div className="flex items-center gap-3">
@@ -236,12 +202,9 @@ const PostContentEditor = ({
             <EditIcon />
           </div>
           <div>
-            <h2 className="text-lg m-0 p-0 sm:text-2xl font-bold text-gray-800">
-              Quick Post Editor
+            <h2 className="text-lg m-0 p-0 sm:text-xl text-gray-800">
+              Quick Post on LinkedIn
             </h2>
-            <p className="text-sm m-0 p-0 text-gray-600 hidden sm:block">
-              Post your thoughts, ideas, and updates quickly and easily!
-            </p>
           </div>
         </div>
 
@@ -270,69 +233,38 @@ const PostContentEditor = ({
       )}
 
       {/* LinkedIn Formatting Toolbar */}
-      <div className="mb-4 p-4 bg-white rounded-xl border border-slate-200">
-        <div className="flex items-center justify-between mb-3">
-          <span className="text-sm font-medium text-slate-700">
-            LinkedIn Formatting Tools
-          </span>
-          <div className="text-xs text-slate-500 bg-white px-2 py-1 rounded-lg">
-            Native LinkedIn Style
-          </div>
-        </div>
-
-        <div className="grid grid-cols-2 gap-4 mb-4">
-          <div>
-            <p className="text-xs font-medium text-slate-600 mb-2">
-              Special Elements
-            </p>
-            <div className="flex flex-wrap gap-1">
-              <button
-                onClick={() =>
-                  insertLinkedInFormat('emoji-bullet', 'list item')
-                }
-                className="flex items-center gap-1 p-2 hover:bg-white hover  rounded-lg transition-all duration-150 text-slate-600 hover:text-slate-800"
-                title="Emoji Bullet"
-              >
-                <span>✅</span>
-                <span className="text-xs font-medium">Check</span>
-              </button>
-              <button
-                onClick={() =>
-                  insertLinkedInFormat('callout', 'important message')
-                }
-                className="flex items-center gap-1 p-2 hover:bg-white hover  rounded-lg transition-all duration-150 text-slate-600 hover:text-slate-800"
-                title="Callout"
-              >
-                <span>📢</span>
-                <span className="text-xs font-medium">Alert</span>
-              </button>
-              <button
-                onClick={() => insertLinkedInFormat('line')}
-                className="flex items-center gap-1 p-2 hover:bg-white hover  rounded-lg transition-all duration-150 text-slate-600 hover:text-slate-800"
-                title="Divider Line"
-              >
-                <span>───</span>
-                <span className="text-xs font-medium">Line</span>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Content Templates */}
-        <div className="border-t border-slate-200 pt-3">
+      <div className="mb-2 p-2 px-4 bg-white rounded-xl border border-slate-200">
+        <div className="flex items-center justify-between">
           <p className="text-xs font-medium text-slate-600 mb-2">
-            Quick Templates
+            Special Elements
           </p>
-          <div className="flex flex-wrap gap-2">
-            {Object.entries(templates).map(([key, template]) => (
-              <button
-                key={key}
-                onClick={() => insertTemplate(template)}
-                className="px-3 py-1.5 text-xs bg-white border border-slate-200 rounded-lg hover:bg-slate-50 hover:border-slate-300 transition-colors capitalize"
-              >
-                {key}
-              </button>
-            ))}
+          <div className="flex flex-wrap gap-1">
+            <button
+              onClick={() => insertLinkedInFormat('emoji-bullet', 'list item')}
+              className="flex items-center gap-1 p-2 hover:bg-white hover  rounded-lg transition-all duration-150 text-slate-600 hover:text-slate-800"
+              title="Emoji Bullet"
+            >
+              <span>✅</span>
+              <span className="text-xs font-medium">Check</span>
+            </button>
+            <button
+              onClick={() =>
+                insertLinkedInFormat('callout', 'important message')
+              }
+              className="flex items-center gap-1 p-2 hover:bg-white hover  rounded-lg transition-all duration-150 text-slate-600 hover:text-slate-800"
+              title="Callout"
+            >
+              <span>📢</span>
+              <span className="text-xs font-medium">Alert</span>
+            </button>
+            <button
+              onClick={() => insertLinkedInFormat('line')}
+              className="flex items-center gap-1 p-2 hover:bg-white hover  rounded-lg transition-all duration-150 text-slate-600 hover:text-slate-800"
+              title="Divider Line"
+            >
+              <span>───</span>
+              <span className="text-xs font-medium">Line</span>
+            </button>
           </div>
         </div>
       </div>
@@ -372,7 +304,7 @@ Try starting with:
       </div>
 
       {/* Stats Section */}
-      <div className="mt-6 flex items-center justify-between">
+      <div className="mt-2 flex items-center justify-between">
         {/* Progress Bar */}
         <div className="flex-1 mr-6">
           <div className="flex items-center gap-3">
@@ -442,37 +374,6 @@ Try starting with:
           </p>
         </div>
       )}
-
-      {/* LinkedIn-specific tips */}
-      <div className="mt-4 p-4 bg-blue-50  rounded-lg">
-        <div className="flex items-start gap-3">
-          <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-            <svg
-              width="12"
-              height="12"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              className="text-blue-600"
-            >
-              <path d="M9 11H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h4v-9zM13 9h4a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-4V9z" />
-              <path d="M9 7v4M13 3v6" />
-            </svg>
-          </div>
-          <div>
-            <p className="text-sm text-blue-700 font-medium mb-1">
-              LinkedIn Best Practices
-            </p>
-            <ul className="text-xs text-blue-600 space-y-1">
-              <li>• Use emojis and bullet points to improve readability</li>
-              <li>• Add 3-5 relevant hashtags for better visibility</li>
-              <li>• Ask questions to encourage engagement</li>
-              <li>• Keep paragraphs short (2-3 lines max)</li>
-            </ul>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };

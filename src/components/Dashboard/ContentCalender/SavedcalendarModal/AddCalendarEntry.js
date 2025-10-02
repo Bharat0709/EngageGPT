@@ -1,19 +1,16 @@
 import { useState } from 'react';
-import { message } from 'antd';
-import {
-  FiCalendar,
-  FiClock,
-  FiPlus,
-  FiTrash2,
-  FiChevronUp,
-  FiChevronDown,
-} from 'react-icons/fi';
+import { Modal, message } from 'antd';
+import { FiPlus, FiTrash2, FiCalendar, FiClock, FiType } from 'react-icons/fi';
 import dayjs from 'dayjs';
+import DateTimeSelector from '@components/Common/DateTImePicker';
 
-const AddCalendarEntry = ({ setIsOpen, onAddEntry, isSavingNewEntries }) => {
-  const [entries, setEntries] = useState([
-    { Title: '', Date: null, Time: null },
-  ]);
+const AddCalendarEntryModal = ({
+  isVisible,
+  onClose,
+  onAddEntry,
+  isSavingNewEntries,
+}) => {
+  const [entries, setEntries] = useState([{ Title: '', DateTime: null }]);
 
   const handleInputChange = (index, field, value) => {
     const updatedEntries = [...entries];
@@ -22,108 +19,113 @@ const AddCalendarEntry = ({ setIsOpen, onAddEntry, isSavingNewEntries }) => {
   };
 
   const addNewEntry = () => {
-    setEntries([...entries, { Title: '', Date: null, Time: null }]);
+    setEntries([...entries, { Title: '', DateTime: null }]);
   };
 
   const handleSaveEntries = () => {
     const validEntries = entries.filter(
       (entry) => entry.Title && entry.Date && entry.Time,
     );
-    if (validEntries.length) {
-      const formattedEntries = validEntries.map((entry) => ({
-        Title: entry.Title,
-        Date: dayjs(entry.Date).format('DD-MM-YYYY'),
-        Time: dayjs(entry.Time).format('hh:mm A'),
-      }));
-      setIsOpen(false);
-      onAddEntry(formattedEntries);
-      setEntries([{ Title: '', Date: null, Time: null }]); // Reset form
-    } else {
+
+    if (validEntries.length === 0) {
       message.error('Please fill out all fields before saving.');
+      return;
     }
+
+    const formattedEntries = validEntries.map((entry) => ({
+      Title: entry.Title,
+      Date: dayjs(entry.Date).format('DD-MM-YYYY'),
+      Time: dayjs(entry.Time).format('hh:mm A'),
+    }));
+
+    onAddEntry(formattedEntries);
+    setEntries([{ Title: '', Date: null, Time: null }]); // Reset form
   };
 
   const handleDeleteEntry = (index) => {
-    const updatedEntries = entries.filter((_, i) => i !== index);
-    setEntries(updatedEntries);
+    if (entries.length > 1) {
+      const updatedEntries = entries.filter((_, i) => i !== index);
+      setEntries(updatedEntries);
+    }
   };
 
-  // Custom date picker
-  const CustomDatePicker = ({ value, onChange, index }) => {
-    return (
-      <div className="relative">
-        <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-          <FiCalendar className="text-gray-500" />
-        </div>
-        <input
-          type="date"
-          className="pl-10 pr-3 py-2 border border-gray-300 rounded-lg w-full text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none"
-          value={value ? dayjs(value).format('YYYY-MM-DD') : ''}
-          onChange={(e) => {
-            if (e.target.value) {
-              onChange(index, 'Date', dayjs(e.target.value));
-            }
-          }}
-        />
-      </div>
-    );
-  };
-
-  // Custom time picker
-  const CustomTimePicker = ({ value, onChange, index }) => {
-    return (
-      <div className="relative">
-        <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-          <FiClock className="text-gray-500" />
-        </div>
-        <input
-          type="time"
-          className="pl-10 pr-3 py-2 border border-gray-300 rounded-lg w-full text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none"
-          value={value ? dayjs(value).format('HH:mm') : ''}
-          onChange={(e) => {
-            if (e.target.value) {
-              onChange(index, 'Time', dayjs(`2023-01-01 ${e.target.value}`));
-            }
-          }}
-        />
-      </div>
-    );
+  const handleCancel = () => {
+    setEntries([{ Title: '', DateTime: null }]);
+    onClose();
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-      <h3 className="text-lg font-semibold text-gray-800 mb-4">
-        Add Content Calendar Items
-      </h3>
-
-      <div className="space-y-6">
+    <Modal
+      title={
+        <div className="flex items-center gap-3 pb-2">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
+            <FiCalendar className="text-white" size={20} />
+          </div>
+          <div>
+            <h2 className="text-xl font-semibold text-gray-900">
+              Add Content Ideas
+            </h2>
+            <p className="text-sm text-gray-500 mt-1">
+              Schedule your content topics with dates and times
+            </p>
+          </div>
+        </div>
+      }
+      open={isVisible}
+      onCancel={handleCancel}
+      width={800}
+      centered
+      footer={null}
+      className="add-calendar-modal"
+      styles={{
+        header: {
+          borderBottom: '1px solid #f0f0f0',
+          paddingBottom: '16px',
+          marginBottom: '24px',
+        },
+        body: {
+          padding: '0 24px 24px 24px',
+        },
+      }}
+    >
+      <div className="space-y-6 max-h-[60vh] overflow-y-auto pr-2">
         {entries.map((entry, index) => (
-          <div
-            key={index}
-            className="p-4 border border-gray-200 rounded-lg bg-gray-50 hover:shadow-sm transition-shadow"
-          >
-            <div className="flex justify-between mb-2">
-              <div className="text-sm font-medium text-gray-700">
-                Item #{index + 1}
-              </div>
-              <button
-                onClick={() => handleDeleteEntry(index)}
-                className="text-gray-400 hover:text-red-600 transition-colors"
-                title="Delete entry"
-              >
-                <FiTrash2 size={18} />
-              </button>
-            </div>
+          <div key={index} className="relative group">
+            <div className="bg-gradient-to-r from-gray-50 to-gray-100 rounded-2xl p-6 border border-gray-200 hover:shadow-md transition-all duration-200">
+              {/* Header with item number and delete button */}
+              <div className="flex justify-between items-center mb-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
+                    <span className="text-sm font-semibold text-blue-600">
+                      {index + 1}
+                    </span>
+                  </div>
+                  <span className="text-sm font-medium text-gray-700">
+                    Content Item #{index + 1}
+                  </span>
+                </div>
 
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Content Topic/Title
+                {entries.length > 1 && (
+                  <button
+                    onClick={() => handleDeleteEntry(index)}
+                    className="opacity-0 group-hover:opacity-100 w-8 h-8 rounded-full bg-red-50 text-red-500 hover:bg-red-100 hover:text-red-600 transition-all duration-200 flex items-center justify-center"
+                    title="Delete entry"
+                  >
+                    <FiTrash2 size={16} />
+                  </button>
+                )}
+              </div>
+
+              {/* Content Topic Input */}
+              <div className="mb-5">
+                <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
+                  <FiType size={16} className="text-gray-500" />
+                  Content Topic
                 </label>
                 <input
                   type="text"
-                  className="w-full p-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="Enter topic or title for your content"
+                  className="w-full px-4 py-3 text-sm border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-white hover:border-gray-400"
+                  placeholder="Enter your content topic or idea..."
                   value={entry.Title}
                   onChange={(e) =>
                     handleInputChange(index, 'Title', e.target.value)
@@ -131,26 +133,21 @@ const AddCalendarEntry = ({ setIsOpen, onAddEntry, isSavingNewEntries }) => {
                 />
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Date and Time Row */}
+              <div className="grid grid-cols-1 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Scheduled Date
+                  <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
+                    <FiCalendar size={16} className="text-gray-500" />
+                    Scheduled Date & Time
                   </label>
-                  <CustomDatePicker
-                    value={entry.Date}
-                    onChange={handleInputChange}
-                    index={index}
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Scheduled Time
-                  </label>
-                  <CustomTimePicker
-                    value={entry.Time}
-                    onChange={handleInputChange}
-                    index={index}
+                  <DateTimeSelector
+                    value={entry.DateTime}
+                    onChange={(dateTime) =>
+                      handleInputChange(index, 'DateTime', dateTime)
+                    }
+                    placeholder="Select date and time"
+                    showTime={true}
+                    className="w-full"
                   />
                 </div>
               </div>
@@ -159,74 +156,73 @@ const AddCalendarEntry = ({ setIsOpen, onAddEntry, isSavingNewEntries }) => {
         ))}
       </div>
 
-      <div className="flex items-center justify-center mt-6 mb-2">
+      {/* Add Another Item Button */}
+      <div className="flex justify-center mt-6 pt-4 border-t border-gray-200">
         <button
           type="button"
           onClick={addNewEntry}
-          className="flex items-center justify-center gap-2 text-blue-600 px-4 py-2 border border-blue-300 rounded-full bg-blue-50 hover:bg-blue-100 transition-colors"
+          className="flex items-center gap-2 px-6 py-3 text-blue-600 bg-blue-50 border border-blue-200 rounded-full hover:bg-blue-100 hover:border-blue-300 transition-all duration-200 font-medium"
         >
-          <FiPlus size={16} />
+          <FiPlus size={18} />
           <span>Add Another Item</span>
         </button>
       </div>
 
-      <div className="flex justify-end gap-3 mt-6 pt-4 border-t">
+      {/* Footer Actions */}
+      <div className="flex justify-end gap-3 mt-8 pt-6 border-t border-gray-200">
         <button
           type="button"
-          className="px-5 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
-          onClick={() => setIsOpen(false)}
+          className="px-6 py-3 rounded-xl text-gray-700 bg-gray-100 hover:bg-gray-200 transition-all duration-200 font-medium"
+          onClick={handleCancel}
+          disabled={isSavingNewEntries}
         >
           Cancel
         </button>
         <button
           type="button"
-          className="px-5 py-2 bg-blue-900 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+          className="px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 rounded-xl text-white hover:from-blue-700 hover:to-blue-800 transition-all duration-200 flex items-center gap-2 font-medium shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
           onClick={handleSaveEntries}
           disabled={isSavingNewEntries}
         >
-          {isSavingNewEntries ? 'Saving...' : 'Save Entries'}
-        </button>
-      </div>
-    </div>
-  );
-};
-
-const AddCalendarDropdown = ({ isSavingNewEntries, onAddEntry }) => {
-  const [isOpen, setIsOpen] = useState(true); // Start expanded by default in the modal
-
-  const toggleDropdown = () => {
-    setIsOpen((prev) => !prev);
-  };
-
-  return (
-    <div className="bg-white rounded-lg">
-      <div
-        className="flex justify-between items-center cursor-pointer px-6 py-3 border-b border-gray-200"
-        onClick={toggleDropdown}
-      >
-        <h3 className="text-lg font-medium text-gray-800">
-          Content Calendar Entries
-        </h3>
-        <button className="p-1 rounded-full hover:bg-gray-100">
-          {isOpen ? (
-            <FiChevronUp className="text-gray-600" size={20} />
+          {isSavingNewEntries ? (
+            <>
+              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+              <span>Saving...</span>
+            </>
           ) : (
-            <FiChevronDown className="text-gray-600" size={20} />
+            <>
+              <FiCalendar size={16} />
+              <span>Save {entries.length > 1 ? 'Entries' : 'Entry'}</span>
+            </>
           )}
         </button>
       </div>
 
-      {isOpen && (
-        <div className="p-2">
-          <AddCalendarEntry
-            setIsOpen={setIsOpen}
-            isSavingNewEntries={isSavingNewEntries}
-            onAddEntry={onAddEntry}
-          />
-        </div>
-      )}
-    </div>
+      <style jsx>{`
+        .add-calendar-modal .ant-modal-content {
+          border-radius: 20px;
+          overflow: hidden;
+        }
+
+        .add-calendar-modal .ant-modal-header {
+          background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        }
+
+        .add-calendar-modal .ant-picker {
+          border-radius: 12px;
+        }
+
+        .add-calendar-modal .ant-picker:hover {
+          border-color: #9ca3af;
+        }
+
+        .add-calendar-modal .ant-picker-focused {
+          border-color: #3b82f6;
+          box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+        }
+      `}</style>
+    </Modal>
   );
 };
 
-export default AddCalendarDropdown;
+export default AddCalendarEntryModal;

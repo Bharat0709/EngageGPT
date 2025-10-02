@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import PostConfirmationModal from '../QuickPost/PostConfirmationModal';
 import EditPostModal from './EditPostModal';
-import MediaPreviewModal from './MediaPreview'; // Updated import
-import PostDrawer from './PostDrawer'; // Updated import
+import MediaPreviewModal from './MediaPreview';
+import PostDrawer from './PostDrawer';
 import SkeletonCardsPostHistory from '../SkeletonLoaders/SkeletonLoadingPostHistory';
-import TabNavigation from './TabNavigation';
-import PostsGrid from './PostGrid';
+import PostHistoryTable from './PostHistoryTable/PostHistoryTable';
 import { usePostHistory, usePostActions } from './usePostHistory';
 import {
   formatDateTime,
@@ -14,7 +13,7 @@ import {
   getCurrentPosts,
 } from './PostUtils';
 
-const PostHistoryDashboard = ({ selectedProfile }) => {
+const PostHistoryDashboard = ({ activeTab, selectedProfile }) => {
   const { postHistory, setPostHistory, isLoading, refreshPosts } =
     usePostHistory(selectedProfile);
   const { deletePost, updatePost, isDeleting, isEditing } = usePostActions(
@@ -22,24 +21,22 @@ const PostHistoryDashboard = ({ selectedProfile }) => {
     refreshPosts,
   );
 
-  // UI state
-  const [activeTab, setActiveTab] = useState('scheduled');
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showBulkDeleteModal, setShowBulkDeleteModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedPost, setSelectedPost] = useState(null);
+  const [selectedPostIds, setSelectedPostIds] = useState([]);
   const [showMediaModal, setShowMediaModal] = useState(false);
   const [selectedMedia, setSelectedMedia] = useState(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
-  // Event handlers
+  // Single post event handlers
   const handleDelete = async (post) => {
-    console.log('Selected post for deletion:', post);
     setSelectedPost(post);
     setShowDeleteModal(true);
   };
 
   const onConfirmDelete = async () => {
-    console.log('Deleting post:', selectedPost);
     if (!selectedPost) return;
     await deletePost(selectedPost._id);
     setShowDeleteModal(false);
@@ -48,7 +45,6 @@ const PostHistoryDashboard = ({ selectedProfile }) => {
 
   const handleEdit = (post) => {
     setSelectedPost(post);
-    console.log('Selected post for editing:', post);
     setShowEditModal(true);
   };
 
@@ -79,6 +75,28 @@ const PostHistoryDashboard = ({ selectedProfile }) => {
     setSelectedMedia(null);
   };
 
+  // Bulk action handlers
+  const handleBulkDelete = async (postIds) => {
+    setSelectedPostIds(postIds);
+    setShowBulkDeleteModal(true);
+  };
+
+  const onConfirmBulkDelete = async () => {
+    if (!selectedPostIds || selectedPostIds.length === 0) return;
+
+    try {
+      // Delete all selected posts
+      for (const postId of selectedPostIds) {
+        await deletePost(postId);
+      }
+      setShowBulkDeleteModal(false);
+      setSelectedPostIds([]);
+    } catch (error) {
+      console.error('Error deleting posts:', error);
+    }
+  };
+
+
   // Get current posts for active tab
   const currentPosts = getCurrentPosts(postHistory, activeTab);
 
@@ -88,31 +106,22 @@ const PostHistoryDashboard = ({ selectedProfile }) => {
   }
 
   return (
-    <div className="pt-2 overflow-y-auto">
+    <div className="overflow-y-auto">
       {selectedProfile && (
         <div className="rounded-lg">
-          {/* Tab Navigation */}
-          <TabNavigation
+          {/* Posts Table */}
+          <PostHistoryTable
+            posts={currentPosts}
+            selectedProfile={selectedProfile}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+            onOpenDrawer={handleOpenDrawer}
+            formatDateTime={formatDateTime}
+            getStatusColor={getStatusColor}
+            getStatusIcon={getStatusIcon}
             activeTab={activeTab}
-            setActiveTab={setActiveTab}
-            postHistory={postHistory}
+            onBulkDelete={handleBulkDelete}
           />
-
-          {/* Posts Grid */}
-          <div className="py-2">
-            <PostsGrid
-              selectedProfile={selectedProfile}
-              currentPosts={currentPosts}
-              isLoading={isLoading}
-              activeTab={activeTab}
-              handleOpenDrawer={handleOpenDrawer}
-              handleEdit={handleEdit}
-              handleDelete={handleDelete}
-              formatDateTime={formatDateTime}
-              getStatusColor={getStatusColor}
-              getStatusIcon={getStatusIcon}
-            />
-          </div>
         </div>
       )}
 
@@ -127,7 +136,7 @@ const PostHistoryDashboard = ({ selectedProfile }) => {
         selectedProfile={selectedProfile}
       />
 
-      {/* Delete Confirmation Modal */}
+      {/* Single Delete Confirmation Modal */}
       <PostConfirmationModal
         isVisible={showDeleteModal}
         onClose={() => {
@@ -139,7 +148,26 @@ const PostHistoryDashboard = ({ selectedProfile }) => {
         description="Are you sure you want to delete this post? This action cannot be undone."
         confirmButtonText="Delete"
         isProcessing={isDeleting}
-        isProcessingText={'Deleting...'}
+        isProcessingText="Deleting..."
+      />
+
+      {/* Bulk Delete Confirmation Modal */}
+      <PostConfirmationModal
+        isVisible={showBulkDeleteModal}
+        onClose={() => {
+          setShowBulkDeleteModal(false);
+          setSelectedPostIds([]);
+        }}
+        onConfirm={onConfirmBulkDelete}
+        title="Delete Multiple Posts"
+        description={`Are you sure you want to delete ${
+          selectedPostIds.length
+        } post${
+          selectedPostIds.length > 1 ? 's' : ''
+        }? This action cannot be undone.`}
+        confirmButtonText="Delete All"
+        isProcessing={isDeleting}
+        isProcessingText="Deleting..."
       />
 
       {/* Edit Post Modal */}

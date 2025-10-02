@@ -13,7 +13,7 @@ import '@assets/styles/GlobalCSS.css';
 import OrganizationCard from './OrganizationCard';
 import LogoutModal from '../Global/LogoutModal';
 import { creditsModalContent } from '../Global/AddCreditsContent';
-import InfoModal from '../Global/InfoModal';
+import InfoModal from '@components/Common/InfoModal';
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(true);
@@ -32,6 +32,7 @@ const Sidebar = () => {
       setIsLoading(true);
       try {
         const data = await fetchOrganizationData();
+        console.log(data);
         setUserData(data);
         setIsLoading(false);
       } catch (err) {
@@ -79,8 +80,8 @@ const Sidebar = () => {
       </div>
 
       <div
-        className={`mulish-normal h-[90vh] lg:h-[98vh] lg:rounded-r-xl lg:rounded-l-xl scrollbar-hide mr-1 fixed lg:relative lg:top-0 lg:left-0 top-2 left-0 rounded-xl bg-gray-50 text-black transition-all duration-1000 ease-in-out z-[50] ${
-          isOpen ? 'translate-x-0 lg:ml-0 ml-2' : '-translate-x-full'
+        className={`mulish-normal h-[90vh] lg:h-[100vh] scrollbar-hide mr-1 fixed lg:relative lg:top-0 lg:left-0 top-2 left-0  bg-white text-black transition-all duration-1000 ease-in-out z-[50] ${
+          isOpen ? 'translate-x-0 lg:ml-0 ml-0' : '-translate-x-full'
         } lg:translate-x-0`}
         style={{ width: isOpen ? '240px' : '78px' }}
       >
@@ -90,7 +91,7 @@ const Sidebar = () => {
           isMobile={isMobile}
         />
 
-        <nav className="flex flex-col rounded-xl h-[79vh] lg:h-[86vh] bg-gray-50 justify-between p-2">
+        <nav className="flex flex-col rounded-xl h-[79vh] lg:h-[90vh] bg-white justify-between p-2">
           <div className="flex flex-col p-2 space-y-1">
             {menuItems.map((item) => (
               <SidebarLink

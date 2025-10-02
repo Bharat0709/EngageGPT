@@ -4,7 +4,7 @@ import {
   deleteSchduledPost,
   getScheduledPosts,
   updateScheduledOrDraftPost,
-} from '../../../network/LinkedInAuth';
+} from '../../../network/LinkedIn';
 
 export const usePostHistory = (selectedProfile) => {
   const [postHistory, setPostHistory] = useState({
@@ -78,7 +78,7 @@ export const usePostActions = (setPostHistory, refreshPosts) => {
       refreshPosts();
       message.success('Post deleted successfully!');
     } catch (error) {
-      message.error('Failed to delete post. Please try again.');
+      message.error(error.message);
     } finally {
       setIsDeleting(false);
     }
@@ -101,7 +101,7 @@ export const usePostActions = (setPostHistory, refreshPosts) => {
       refreshPosts();
       message.success('Post updated successfully!');
     } catch (error) {
-      message.error('Failed to update post. Please try again.');
+      message.error(error.message);
     } finally {
       setIsEditing(false);
     }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { message } from 'antd';
-import { disconnectLinkedIn } from '@services/Members';
+import { disconnectLinkedIn } from '@services/LinkedIn';
 
 const DisconnectConfirmationModal = ({
   isVisible,

@@ -1,20 +1,100 @@
-import React, { useState } from 'react';
-import { message } from 'antd';
-import { Icons } from '@utils/constantData/icons';
+import React, { useState, useEffect } from 'react';
+
 import { goTo } from '@utils/navigator';
-import EngageGPTLogo from '@assets/images/EngageGPTLogoIocn.png';
-import { signup } from '@services/Auth';
+import {
+  signup,
+  sendVerificationEmail,
+  checkVerificationStatus,
+  resendVerificationEmail,
+} from '@services/Auth';
 import useAuthCheck from '@hooks/useAuth';
+import {
+  EmailStatus,
+  StatusMessage,
+} from '@components/Auth/SignUp/StatusMessage';
+import { PasswordFields } from '@components/Auth/SignUp/PasswordFields';
+import { AuthFooter } from '@components/Auth/Footer';
+import { GoogleAuth } from '@components/Auth/GoogleAuth';
+import { AuthHeader } from '@components/Auth/Header';
+import { getButtonConfig, formatTime } from '@components/Auth/SignUp/Helpers';
+import isPasswordValid from '@components/Auth/SignUp/Helpers';
+import { useNotifications } from '@components/Common/Notification';
 
 const Signup = () => {
   useAuthCheck();
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [verificationStep, setVerificationStep] = useState('email');
+  const [passwordStatus, setPasswordStatus] = useState(false);
+  const [organizationStatus, setOrganizationStatus] = useState('');
+  const [timeLeft, setTimeLeft] = useState(0);
+  const [canResend, setCanResend] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
     confirmPassword: '',
   });
+
+  const [passwordValidation, setPasswordValidation] = useState({
+    minLength: false,
+    hasNumber: false,
+    hasUppercase: false,
+    hasLowercase: false,
+    hasSpecialChar: false,
+  });
+  const message = useNotifications();
+
+  useEffect(() => {
+    let interval;
+    if (timeLeft > 0) {
+      interval = setInterval(() => {
+        setTimeLeft((prev) => {
+          if (prev <= 1) {
+            setCanResend(true);
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [timeLeft]);
+
+  useEffect(() => {
+    let interval;
+    if (verificationStep === 'pending' && formData.email) {
+      interval = setInterval(async () => {
+        await checkVerification();
+      }, 5000);
+    }
+    return () => clearInterval(interval);
+  }, [verificationStep, formData.email]);
+
+  useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      if (verificationStep === 'pending' || verificationStep === 'verified') {
+        e.preventDefault();
+        e.returnValue = '';
+        return '';
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, [verificationStep]);
+
+  const validatePassword = (password) => {
+    const validation = {
+      minLength: password.length >= 8,
+      hasNumber: /\d/.test(password),
+      hasUppercase: /[A-Z]/.test(password),
+      hasLowercase: /[a-z]/.test(password),
+      hasSpecialChar: /[!@#$%^&*(),.?":{}|<>]/.test(password),
+    };
+    setPasswordValidation(validation);
+    return validation;
+  };
+
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -25,19 +105,114 @@ const Signup = () => {
       ...formData,
       [name]: type === 'checkbox' ? checked : value,
     });
+
+    if (name === 'password') {
+      validatePassword(value);
+    }
   };
 
-  const handleGoogleSignUp = async (e) => {
+  const handleEmailVerification = async (e) => {
     e.preventDefault();
-    const authUrl = `${process.env.REACT_APP_OAUTH_URL}`;
-    window.location.href = authUrl;
+
+    if (!formData.email) {
+      message.error('Please enter your work email address.');
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      message.error('Please enter a valid email address.');
+      return;
+    }
+
+    const timeZone =
+      Intl.DateTimeFormat().resolvedOptions().timeZone || 'Asia/Calcutta';
+
+    try {
+      setIsLoading(true);
+      const result = await sendVerificationEmail(formData.email, timeZone);
+      setPasswordStatus(result.data.isPasswordPresent);
+      const isOrgVerified = result.data.isVerified;
+      setOrganizationStatus(isOrgVerified ? 'Verified' : 'Unverified');
+
+      if (isOrgVerified && result.data.isPasswordPresent) {
+        message.info('Account already exists. Please login instead.');
+        goTo('/login');
+        return;
+      } else if (isOrgVerified && !result.data.isPasswordPresent) {
+        setVerificationStep('emailSetup');
+        message.info(
+          'Email verified! Please check your email to set your password.',
+        );
+      } else {
+        setVerificationStep('pending');
+        setTimeLeft(300);
+        setCanResend(false);
+        message.success(result.message);
+      }
+    } catch (error) {
+      message.error(error.message || 'Failed to send verification email');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const checkVerification = async () => {
+    try {
+      const isVerified = await checkVerificationStatus(formData.email);
+
+      if (isVerified) {
+        setOrganizationStatus('Verified');
+
+        if (passwordStatus === false) {
+          setVerificationStep('setPassword');
+          message.success(
+            'Email verified successfully! Please set your password.',
+          );
+        } else {
+          message.info('Account already exists. Please login instead.');
+          goTo('/login');
+        }
+      }
+    } catch (error) {
+      console.error('Verification check failed:', error);
+    }
+  };
+
+  const handleResendEmail = async (e) => {
+    e.preventDefault();
+    try {
+      setIsLoading(true);
+      await resendVerificationEmail(formData.email);
+      setTimeLeft(300);
+      setCanResend(false);
+      message.success('Verification email resent!');
+    } catch (error) {
+      message.error(error.message || 'Failed to resend verification email');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!formData.email || !formData.password) {
+    if (verificationStep === 'email') {
+      return handleEmailVerification(e);
+    }
+
+    if (verificationStep !== 'setPassword') {
+      message.error('Please verify your email first.');
+      return;
+    }
+
+    if (!formData.password || !formData.confirmPassword) {
       message.error('Please fill out all required fields.');
+      return;
+    }
+
+    if (!isPasswordValid({ passwordValidation })) {
+      message.error('Password does not meet the requirements.');
       return;
     }
 
@@ -45,6 +220,7 @@ const Signup = () => {
       message.error('Passwords do not match.');
       return;
     }
+
     try {
       setIsLoading(true);
       const signupResponse = await signup(
@@ -53,7 +229,7 @@ const Signup = () => {
         formData.confirmPassword,
       );
       goTo(`/dashboard?token=${signupResponse.token}`);
-      message.success('Signup successful!');
+      message.success('Account created successfully!');
     } catch (error) {
       message.error(error.message);
     } finally {
@@ -61,158 +237,67 @@ const Signup = () => {
     }
   };
 
+  const buttonConfig = getButtonConfig({
+    verificationStep,
+    passwordValidation,
+    isLoading,
+    formData,
+  });
+
   return (
-    <div className="flex items-center justify-center">
-      <div className="w-full h-full lg:bg-white bg-sky-900 flex flex-col lg:flex-row">
-        <div className="lg:w-1/2 w-full text-white px-8 py-4 bg-sky-900">
-          <div className="w-full mb-6 flex items-center gap-2 lg:justify-start justify-center">
-            <img
-              src={EngageGPTLogo}
-              alt="EngageGPT Logo"
-              className="flex w-10 h-10"
-            />
-            EngageGPT
-          </div>
-          <h2 className="text-2xl font-semibold text-white  text-center mb-6">
-            Create Your Account
-          </h2>
-
-          <button
-            onClick={handleGoogleSignUp}
-            className="flex w-full items-center justify-center border border-gray-300 bg-white text-sky-900 py-2 px-4 rounded-full"
-          >
-            <Icons.Google className="mr-2" size={20} />
-            Sign in with Google
-          </button>
-
-          <div className="flex my-4 items-center justify-center space-x-2">
-            <span className="h-px w-16 bg-gray-300"></span>
-            <span className="text-sm text-white">or</span>
-            <span className="h-px w-16 bg-gray-300"></span>
-          </div>
-
+    <div className="flex min-h-screen items-center py-4 bg-sky-900 justify-center">
+      <div className="w-full h-full bg-sky-900 flex flex-col items-center justify-center lg:flex-row">
+        <div className="lg:w-1/2 my-auto w-full items-center justify-center text-white px-8 bg-sky-900">
+          <AuthHeader heading="Ready to join us? Sign up now" />
+          <GoogleAuth />
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-white"
-              >
-                Email Address
-              </label>
               <input
                 type="email"
                 name="email"
                 id="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="mt-1 block w-full p-3 border-b border-gray-300 bg-sky-900  focus:outline-none [&::-webkit-autofill]:bg-sky-800"
-                placeholder="you@example.com"
+                disabled={verificationStep !== 'email'}
+                className="mt-1 block w-full p-3 border border-sky-700 rounded-full pl-4 bg-sky-900 focus:outline-none [&::-webkit-autofill]:bg-sky-800 disabled:opacity-50"
+                placeholder="Enter your personal or work email"
                 required
+              />
+
+              <EmailStatus
+                verificationStep={verificationStep}
+                organizationStatus={organizationStatus}
+                timeLeft={timeLeft}
+                canResend={canResend}
+                isLoading={isLoading}
+                onResendEmail={handleResendEmail}
+                formatTime={formatTime}
               />
             </div>
 
-            <div>
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium text-white"
-              >
-                Password
-              </label>
-              <div className="relative">
-                <input
-                  type={showPassword ? 'text' : 'password'}
-                  name="password"
-                  id="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  className="mt-1 block w-full p-3 border-b border-gray-300 bg-sky-900 focus:outline-none [&::-webkit-autofill]:bg-sky-800"
-                  placeholder="••••••••"
-                  required
-                />
-                <div
-                  onClick={togglePasswordVisibility}
-                  className="absolute top-4 right-3 cursor-pointer text-gray-300"
-                >
-                  {showPassword ? <Icons.Eye /> : <Icons.EyeSlash />}
-                </div>
-              </div>
-            </div>
+            <StatusMessage
+              verificationStep={verificationStep}
+              organizationStatus={organizationStatus}
+            />
 
-            <div>
-              <label
-                htmlFor="confirmPassword"
-                className="block text-sm font-medium text-white"
-              >
-                Confirm Password
-              </label>
-              <div className="relative">
-                <input
-                  type={showPassword ? 'text' : 'password'}
-                  name="confirmPassword"
-                  id="confirmPassword"
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
-                  className="mt-1 block w-full p-3 border-b border-gray-300 bg-sky-900 focus:outline-none [&::-webkit-autofill]:bg-sky-800"
-                  placeholder="••••••••"
-                  required
-                />
-                <div
-                  onClick={togglePasswordVisibility}
-                  className="absolute top-4 right-3 cursor-pointer text-gray-300"
-                >
-                  {showPassword ? <Icons.Eye /> : <Icons.EyeSlash />}
-                </div>
-              </div>
-            </div>
+            <PasswordFields
+              verificationStep={verificationStep}
+              formData={formData}
+              onChange={handleChange}
+              showPassword={showPassword}
+              onTogglePassword={togglePasswordVisibility}
+              passwordValidation={passwordValidation}
+            />
 
             <button
               type="submit"
-              className="w-full flex items-center justify-center rounded-full bg-white text-sky-900 py-2 px-10"
+              disabled={buttonConfig.disabled}
+              className="w-full flex items-center justify-center rounded-full bg-white text-sky-900 py-2 px-10 disabled:opacity-50"
             >
-              {isLoading ? 'Signing Up...' : 'Sign Up'}
+              {buttonConfig.text}
             </button>
-
-            <div className="flex items-center justify-center">
-              <p className="text-sm text-center text-white">
-                By signing in, you agree to our
-                <a
-                  href="https://engagegpt.in/terms-of-service"
-                  className="text-sky-100 hover:underline ml-1"
-                >
-                  Terms of Service
-                </a>{' '}
-                and{' '}
-                <a
-                  href="https://engagegpt.in/privacy-policy"
-                  className="text-sky-100 hover:underline ml-1"
-                >
-                  Privacy Policy
-                </a>
-                .
-              </p>
-            </div>
-
-            <div className="mt-4 text-center">
-              <p className="text-sm text-white">
-                Already have an account?
-                <button
-                  type="button"
-                  className="text-sky-100 hover:underline ml-1"
-                  onClick={() => goTo('/login')}
-                >
-                  Login
-                </button>
-              </p>
-            </div>
           </form>
-        </div>
-
-        <div className="lg:w-1/2 h-screen hidden lg:block">
-          <img
-            src="/engagegptLogin.svg"
-            alt="Signup Illustration"
-            className="w-full h-full p-14"
-          />
+          <AuthFooter mode="signup" />
         </div>
       </div>
     </div>

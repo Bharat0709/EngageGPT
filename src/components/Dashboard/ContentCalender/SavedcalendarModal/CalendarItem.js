@@ -1,13 +1,14 @@
+import { formatTo12Hour } from '@utils/formatTime';
 import { FiEdit, FiTrash2, FiCheck } from 'react-icons/fi';
+
 const CalendarItem = ({ data, onSelect, onEdit, onDelete, isSelected }) => {
-  // Custom status styling
   const getStatusStyle = (status) => {
     switch (status) {
       case 'Posted':
         return 'bg-green-100 text-green-700 border-green-300';
       case 'Scheduled':
         return 'bg-yellow-100 text-yellow-700 border-yellow-300';
-      default: // Planned
+      default:
         return 'bg-blue-100 text-blue-700 border-blue-300';
     }
   };
@@ -15,11 +16,11 @@ const CalendarItem = ({ data, onSelect, onEdit, onDelete, isSelected }) => {
   return (
     <div
       onClick={() => onSelect(data)}
-      className={`bg-white rounded-xl p-4 cursor-pointer  transition-all duration-200 
+      className={`bg-white rounded-xl p-4 cursor-pointer transition-all duration-200 
         ${isSelected ? 'border-2 border-blue-800' : 'border border-gray-200'}`}
     >
       <div className="flex justify-between items-start mb-3">
-        <h3 className="text-sm font-semibold text-gray-800 ">{data.topic}</h3>
+        <h3 className="text-sm font-semibold text-gray-800">{data.topic}</h3>
         <span
           className={`text-xs px-2 py-1 rounded-lg ${getStatusStyle(
             data.status,
@@ -32,7 +33,7 @@ const CalendarItem = ({ data, onSelect, onEdit, onDelete, isSelected }) => {
       <div className="flex items-center gap-2 text-xs text-gray-500 mb-4">
         <span>{data.date}</span>
         <span>•</span>
-        <span>{data.time}</span>
+        <span>{formatTo12Hour(data.time)}</span>
       </div>
 
       <div className="flex justify-between items-center mt-2">

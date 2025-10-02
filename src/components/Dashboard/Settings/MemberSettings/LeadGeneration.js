@@ -2,7 +2,8 @@ import React from 'react';
 import { useState } from 'react';
 import { updateLeadGenerationGoals } from '@services/Members';
 import { Icons } from '@utils/constantData/icons';
-import { message, Input, Button, Select, Divider, Tag } from 'antd';
+import { Input, Button, Select, Divider, Tag } from 'antd';
+import { useNotifications } from '@components/Common/Notification';
 
 function LeadGeneration({
   leadGenerationGoals,
@@ -14,6 +15,7 @@ function LeadGeneration({
   const [newIndustry, setNewIndustry] = useState('');
   const [newServiceOffering, setNewServiceOffering] = useState('');
   const [savingLeadGeneration, setSavingLeadGeneration] = useState(false);
+  const message = useNotifications();
 
   const handleSaveLeadGeneration = async () => {
     setSavingLeadGeneration(true);

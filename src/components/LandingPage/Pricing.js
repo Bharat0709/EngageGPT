@@ -18,12 +18,12 @@ const PricingCard = ({ tier, price, features, buttonText, isPrimary }) => {
       {/* Header */}
       <div className="px-8 pt-8 pb-4">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-2xl font-bold">{tier}</h3>
-          {/* {!isPrimary && (
+          <h3 className="text-2xl m-0 font-bold">{tier}</h3>
+          {isPrimary && (
             <span className="px-3 py-1 text-xs font-semibold bg-indigo-800 text-white rounded-full">
               RECOMMENDED
             </span>
-          )} */}
+          )}
         </div>
         <div className="mb-4">
           <span className="text-4xl font-bold">{price}</span>
@@ -31,7 +31,7 @@ const PricingCard = ({ tier, price, features, buttonText, isPrimary }) => {
             <span className="text-lg ml-1">/month</span>
           )}
         </div>
-        <p className={`text-sm  text-black}`}>
+        <p className={`text-sm m-0 text-black}`}>
           {isPrimary
             ? 'Get access to all premium features to boost your productivity'
             : 'Perfect for individuals just getting started'}
@@ -54,11 +54,11 @@ const PricingCard = ({ tier, price, features, buttonText, isPrimary }) => {
         </p>
         <ul className="space-y-4">
           {features.map((feature, index) => (
-            <li key={index} className="flex items-start">
+            <li key={index} className="flex items-center">
               <div className={`mr-3 mt-1 flex-shrink-0 ${'text-black'}`}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
+                  className="h-6 w-6"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                 >
@@ -129,9 +129,9 @@ const Pricing = () => {
 
           <PricingCard
             tier="PRO"
-            price="Coming Soon"
+            price="$12"
             features={featuresPro}
-            buttonText="Try Free Plan"
+            buttonText="Buy Now"
             isPrimary={true}
           />
         </div>
@@ -142,7 +142,7 @@ const Pricing = () => {
           </p>
           <button
             className="px-8 py-3 overflow-hidden hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px] bg-white text-black font-medium transition-all shadow-[5px_5px_0px_black]"
-            onClick={() => scrollToSection('footercta')}
+            onClick={() => scrollToSection('footer')}
           >
             Contact Us
           </button>
