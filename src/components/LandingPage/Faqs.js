@@ -34,7 +34,9 @@ function FAQ() {
                 className="flex items-center justify-between py-4 px-6 w-full text-left focus:outline-none"
                 onClick={() => toggleFAQ(index)}
               >
-                <span className="text-lg font-semibold">{faq.question}</span>
+                <span className="lg:text-lg text-sm font-semibold">
+                  {faq.question}
+                </span>
                 <ChevronDownIcon
                   className={`h-6 w-6 transition-transform ${
                     openIndex === index ? 'rotate-180' : 'rotate-0'

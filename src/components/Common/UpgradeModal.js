@@ -78,7 +78,7 @@ const UpgradeModal = ({ isOpen, onClose }) => {
 
   const formatUSDApprox = (priceInCents) => {
     const price = priceInCents / 88.67;
-    return `~$${price.toFixed(2)}`;
+    return `$${price.toFixed(2)}`;
   };
 
   const getFilteredPlans = () => {
@@ -192,7 +192,7 @@ const UpgradeModal = ({ isOpen, onClose }) => {
                     <div className="text-center mb-6">
                       <div className="flex items-baseline justify-center gap-2 mb-2">
                         <span className="text-2xl font-black bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-                          {formatPrice(plan.price, plan.currency)} OR  ~{' '}
+                          {formatPrice(plan.price, plan.currency)} OR {' '}
                           {formatUSDApprox(plan.priceUSD)}
                         </span>
                       </div>
@@ -216,12 +216,6 @@ const UpgradeModal = ({ isOpen, onClose }) => {
                         </span>
                       )}
                     </button>
-
-                    {/* Per Credit Cost */}
-                    <p className="text-center text-md text-gray-500 mt-4">
-                      {(plan.price / plan.credits / 100).toFixed(2)*5}{' '}
-                      {plan.currency === 'INR' ? '₹' : '$'} per 5 credits
-                    </p>
                   </div>
                 </div>
               ))}

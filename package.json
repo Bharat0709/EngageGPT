@@ -19,7 +19,7 @@
     "date-fns": "^4.1.0",
     "dotenv": "^16.4.5",
     "firebase": "^10.11.1",
-    "framer-motion": "^11.2.13",
+    "framer-motion": "^11.18.2",
     "js-beautify": "^1.15.4",
     "js-cookie": "^3.0.5",
     "moment-timezone": "^0.5.48",

@@ -1,98 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { featuresFree, featuresPro } from '../../assets/data/pricingfeatures';
-
-const PricingCard = ({ tier, price, features, buttonText, isPrimary }) => {
-  const Navigate = useNavigate();
-  const handleNavigate = () => {
-    Navigate('/login');
-  };
-  return (
-    <div
-      className={`flex flex-col overflow-hidden transition-all hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px] max-w-md w-full ${
-        isPrimary
-          ? 'bg-gradient-to-br from-blue-100 to-indigo-200 text-black'
-          : 'bg-white'
-      }`}
-    >
-      {/* Header */}
-      <div className="px-8 pt-8 pb-4">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-2xl m-0 font-bold">{tier}</h3>
-          {isPrimary && (
-            <span className="px-3 py-1 text-xs font-semibold bg-indigo-800 text-white rounded-full">
-              RECOMMENDED
-            </span>
-          )}
-        </div>
-        <div className="mb-4">
-          <span className="text-4xl font-bold">{price}</span>
-          {price !== 'Coming Soon' && (
-            <span className="text-lg ml-1">/month</span>
-          )}
-        </div>
-        <p className={`text-sm m-0 text-black}`}>
-          {isPrimary
-            ? 'Get access to all premium features to boost your productivity'
-            : 'Perfect for individuals just getting started'}
-        </p>
-      </div>
-
-      {/* Divider */}
-      <div
-        className={`w-full h-px ${isPrimary ? 'bg-blue-400' : 'bg-gray-200'}`}
-      ></div>
-
-      {/* Features */}
-      <div className="flex-grow px-8 py-6">
-        <p
-          className={`text-sm font-medium mb-4 ${
-            isPrimary ? '' : 'text-gray-700'
-          }`}
-        >
-          INCLUDES:
-        </p>
-        <ul className="space-y-4">
-          {features.map((feature, index) => (
-            <li key={index} className="flex items-center">
-              <div className={`mr-3 mt-1 flex-shrink-0 ${'text-black'}`}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </div>
-              <span className={isPrimary ? 'text-black' : 'text-black'}>
-                {feature}
-              </span>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      {/* Button */}
-      <div className="px-8 pb-8">
-        <button
-          onClick={handleNavigate}
-          className={`w-full py-4 overflow-hidden hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px] shadow-[5px_5px_0px_black] font-medium transition-all ${
-            isPrimary
-              ? 'bg-white text-indigo-700  hover:bg-indigo-50'
-              : 'bg-[#004182] text-white hover:bg-indigo-700'
-          }`}
-        >
-          {buttonText}
-        </button>
-      </div>
-    </div>
-  );
-};
+import { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { FiArrowUpRight } from 'react-icons/fi';
 
 const Pricing = () => {
   const scrollToSection = (sectionId) => {
@@ -103,53 +13,210 @@ const Pricing = () => {
   };
 
   return (
-    <section
-      style={{
-        backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='2' height='40' fill='rgba(0,0,0,0.05)'/%3E%3Crect y='0' x='0' width='40' height='2' fill='rgba(0,0,0,0.05)'/%3E%3C/svg%3E")`,
-        backgroundSize: '40px 40px',
-      }}
-      id="pricing"
-      className="pb-12 lg:pt-12 pt-8 bg-gray-50"
-    >
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="lg:text-3xl lg:mt-1 mt-6 text-xl font-bold text-center mb-8 border-4 border-black shadow-[5px_5px_0px_black] py-2 px-6 max-w-md mx-auto bg-white">
-            Pricing
-          </h2>
-        </div>
-
-        <div className="flex flex-wrap justify-center gap-8">
-          <PricingCard
-            tier="FREE"
-            price="$0"
-            features={featuresFree}
-            buttonText="Get Started for Free"
-            isPrimary={false}
-          />
-
-          <PricingCard
-            tier="PRO"
-            price="$12"
-            features={featuresPro}
-            buttonText="Buy Now"
-            isPrimary={true}
-          />
-        </div>
-
-        <div className="mt-10 text-center">
-          <p className="text-gray-600 mb-6">
-            Need a custom solution for your enterprise?
-          </p>
-          <button
-            className="px-8 py-3 overflow-hidden hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px] bg-white text-black font-medium transition-all shadow-[5px_5px_0px_black]"
-            onClick={() => scrollToSection('footer')}
-          >
-            Contact Us
-          </button>
-        </div>
-      </div>
-    </section>
+    <>
+      <TextParallaxContentExample />
+    </>
   );
 };
 
 export default Pricing;
+
+export const TextParallaxContentExample = () => {
+  return (
+    <div
+      style={{
+        backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='2' height='40' fill='rgba(0,0,0,0.05)'/%3E%3Crect y='0' x='0' width='40' height='2' fill='rgba(0,0,0,0.05)'/%3E%3C/svg%3E")`,
+        backgroundSize: '40px 40px',
+      }}
+      className="bg-white"
+    >
+      <div className="text-center mb-16 lg:mx-0 mx-6 ">
+        <h2 className="lg:text-3xl lg:mt-1 mt-6 text-xl font-bold text-center mb-8 border-4 border-black shadow-[5px_5px_0px_black] py-2 px-6 max-w-md mx-auto bg-white">
+          Pricing
+        </h2>
+      </div>
+      <TextParallaxContent
+        imgUrl="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2671&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        subheading="Simple & Flexible"
+        heading="Pay Only for What You Use"
+      >
+        <ExampleContent />
+      </TextParallaxContent>
+      <TextParallaxContent
+        imgUrl="https://images.unsplash.com/photo-1530893609608-32a9af3aa95c?q=80&w=2564&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        subheading="Get Started Free"
+        heading="200 Credits on Sign Up"
+      >
+        <FreeCreditsContent />
+      </TextParallaxContent>
+      <TextParallaxContent
+        imgUrl="https://images.unsplash.com/photo-1504610926078-a1611febcad3?q=80&w=2416&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        subheading="Transparent"
+        heading="Know What You're Paying For"
+      >
+        <CreditBreakdownContent />
+      </TextParallaxContent>
+    </div>
+  );
+};
+
+const IMG_PADDING = 12;
+
+const TextParallaxContent = ({ imgUrl, subheading, heading, children }) => {
+  return (
+    <div
+      style={{
+        paddingLeft: IMG_PADDING,
+        paddingRight: IMG_PADDING,
+      }}
+    >
+      <div className="relative h-[150vh]">
+        <StickyImage imgUrl={imgUrl} />
+        <OverlayCopy heading={heading} subheading={subheading} />
+      </div>
+      {children}
+    </div>
+  );
+};
+
+const StickyImage = ({ imgUrl }) => {
+  const targetRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: targetRef,
+    offset: ['end end', 'end start'],
+  });
+
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.85]);
+  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
+
+  return (
+    <motion.div
+      style={{
+        backgroundImage: `url(${imgUrl})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        height: `calc(100vh - ${IMG_PADDING * 2}px)`,
+        top: IMG_PADDING,
+        scale,
+      }}
+      ref={targetRef}
+      className="sticky z-0 overflow-hidden rounded-3xl"
+    >
+      <motion.div
+        className="absolute inset-0 bg-neutral-950/70"
+        style={{
+          opacity,
+        }}
+      />
+    </motion.div>
+  );
+};
+
+const OverlayCopy = ({ subheading, heading }) => {
+  const targetRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: targetRef,
+    offset: ['start end', 'end start'],
+  });
+
+  const y = useTransform(scrollYProgress, [0, 1], [250, -250]);
+  const opacity = useTransform(scrollYProgress, [0.25, 0.5, 0.75], [0, 1, 0]);
+
+  return (
+    <motion.div
+      style={{
+        y,
+        opacity,
+      }}
+      ref={targetRef}
+      className="absolute left-0 top-0 flex h-screen w-full flex-col items-center justify-center text-white"
+    >
+      <p className="mb-2 text-center text-xl md:mb-4 md:text-3xl">
+        {subheading}
+      </p>
+      <p className="text-center text-4xl font-bold md:text-7xl">{heading}</p>
+    </motion.div>
+  );
+};
+
+const ExampleContent = () => (
+  <div className="mx-auto grid max-w-6xl grid-cols-1 gap-8 px-4 pb-24 pt-12 md:grid-cols-12">
+    <h2 className="col-span-1 text-3xl font-bold md:col-span-4">
+      No Monthly Subscriptions
+    </h2>
+    <div className="col-span-1 md:col-span-8">
+      <p className="mb-4 text-lg text-neutral-600 md:text-xl">
+        We believe in transparency and flexibility. There are no monthly plans
+        or recurring fees. Simply purchase credits when you need them and use
+        them at your own pace.
+      </p>
+      <p className="mb-8 text-lg text-neutral-600 md:text-xl">
+        Top up your credits anytime and pay only for what you actually use. It's
+        that simple.
+      </p>
+      <a
+        href="/signup"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="px-4 py-2 text-sm font-medium bg-white text-black w-fit transition-all shadow-[3px_3px_0px_black] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px] border border-black flex items-center"
+      >
+        Get Started <FiArrowUpRight className="inline" />
+      </a>
+    </div>
+  </div>
+);
+
+const FreeCreditsContent = () => (
+  <div className="mx-auto grid max-w-6xl grid-cols-1 gap-8 px-4 pb-24 pt-12 md:grid-cols-12">
+    <h2 className="col-span-1 text-3xl font-bold md:col-span-4">
+      Start Creating Immediately
+    </h2>
+    <div className="col-span-1 md:col-span-8">
+      <p className="mb-4 text-lg text-neutral-600 md:text-xl">
+        Every new user receives 200 free credits upon sign up. No credit card
+        required. Start generating AI comments, viral posts, and automating your
+        content right away.
+      </p>
+      <p className="mb-8 text-lg text-neutral-600 md:text-xl">
+        When you need more, simply top up your account with additional credits
+        that remain valid for 30 days after purchase.
+      </p>
+      <a
+        href="/signup"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="px-4 py-2 text-sm font-medium bg-white text-black w-fit transition-all shadow-[3px_3px_0px_black] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px] border border-black flex items-center"
+      >
+        Sign Up Free <FiArrowUpRight className="inline" />
+      </a>
+    </div>
+  </div>
+);
+
+const CreditBreakdownContent = () => (
+  <div className="mx-auto grid max-w-6xl grid-cols-1 gap-8 px-4 pb-24 pt-12 md:grid-cols-12">
+    <h2 className="col-span-1 text-3xl font-bold md:col-span-4">
+      How Credits Work
+    </h2>
+    <div className="col-span-1 md:col-span-8">
+      <p className="mb-4 text-lg text-neutral-600 md:text-xl">
+        Different features consume different amounts of credits. AI Comments
+        cost 5 credits, Viral Posts cost 10 credits, and various automations
+        have their own credit requirements.
+      </p>
+      <p className="mb-8 text-lg text-neutral-600 md:text-xl">
+        All purchased credits expire 30 days after purchase, so you can use them
+        worry-free within that timeframe. Need more? Just top up whenever you
+        want.
+      </p>
+      <a
+        href="/signup"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="px-4 py-2 text-sm font-medium bg-white text-black w-fit transition-all shadow-[3px_3px_0px_black] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px] border border-black flex items-center"
+      >
+        View Full Breakdown <FiArrowUpRight className="inline" />
+      </a>
+    </div>
+  </div>
+);

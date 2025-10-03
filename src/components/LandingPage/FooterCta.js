@@ -1,49 +1,84 @@
 import * as React from 'react';
-import logo from '../../assets/images/EngageGPTLogo.png';
+import { useEffect } from 'react';
+import { FiArrowRight } from 'react-icons/fi';
+import { SiGooglechrome } from 'react-icons/si';
+import {
+  useMotionTemplate,
+  useMotionValue,
+  motion,
+  animate,
+} from 'framer-motion';
 
 function FooterCTA() {
-
   return (
     <div
-      id='footercta'
-      className='flex overflow-hidden relative flex-col justify-center items-center px-16 py-20 text-center fill-slate-50 min-h-[697px] max-md:px-5'
+      className="lg:mx-4 mx-2"
+      style={{
+        backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='2' height='40' fill='rgba(0,0,0,0.05)'/%3E%3Crect y='0' x='0' width='40' height='2' fill='rgba(0,0,0,0.05)'/%3E%3C/svg%3E")`,
+        backgroundSize: '40px 40px',
+      }}
     >
-      <img
-        alt='footer'
-        loading='lazy'
-        src='https://cdn.builder.io/api/v1/image/assets/TEMP/a5a163a55b06fe58ecb6719ccc945a065b29d705623d155d233aa1f2fa374e9d?'
-        className='object-cover absolute inset-0 size-full'
-      />
-      <div className='flex relative justify-center items-center flex-col max-w-full w-[701px] max-md:mt-10'>
-        <div className='flex items-center'>
-          <img src={logo} alt='Logo' className='m-3 h-16' />
-        </div>
-        <div className='mt-7 text-4xl font-bold tracking-tighter leading-normal text-black max-md:max-w-full'>
-          Free 100 credits per d<span className='text-gray-400'>y</span>ay<span className='text-gray-400'>yyyy</span>!
-        </div>
-        <div className='flex w-full flex-wrap mt-8 gap-5 justify-start sm:justify-start items-start self-start text-base font-medium tracking-normal leading-8'>
-          <div className='flex w-full flex-wrap gap-5 items-center justify-center text-base font-medium tracking-normal leading-8'>
-            <div className='p-0 pl-0 items-center flex-wrap rounded-full flex gap-4 lg:sm:xl:pl-0 sm:md:lg:xl:pr-5 text-sky-900'>
-              <a
-                target='_blank'
-                rel='noopener noreferrer'
-                href='https://chromewebstore.google.com/detail/engagegpt-ai-for-linkedin/ldhdipkofibjleihomflebfklhadikio?hl=en-GB&authuser=1'
-                className={`justify-center shadow-xl rounded-xl p-2 pl-5 pr-5 text-white bg-sky-900 max-md:px-5`}
-              >
-                Add to chrome for free
-              </a>
-            </div>
-          </div>
-        </div>
-        <div>
-          <p className='blinking mt-6 mb-4 font-medium p-2 border border-sky-200 self-start sm:self-center text-sky-950 rounded-full px-6'>
-            Your Network Is Your Net Worth
-          </p>
-        </div>
-      </div>
-      
+      <AuroraHero />
     </div>
   );
 }
 
+const COLORS_TOP = ['#1E67C6'];
+
+const AuroraHero = () => {
+  const color = useMotionValue(COLORS_TOP[0]);
+
+  useEffect(() => {
+    animate(color, COLORS_TOP, {
+      ease: 'easeInOut',
+      duration: 10,
+      repeat: Infinity,
+      repeatType: 'mirror',
+    });
+  }, []);
+
+  const backgroundImage = useMotionTemplate`radial-gradient(125% 125% at 50% 0%, #020617 50%, ${color})`;
+  const border = useMotionTemplate`1px solid ${color}`;
+  const boxShadow = useMotionTemplate`0px 4px 24px ${color}`;
+
+  return (
+    <motion.section
+      style={{
+        backgroundImage,
+      }}
+      className="rounded-2xl bg-gray-950 px-4 py-16 mx-auto text-gray-200"
+    >
+      <div className="flex flex-col items-center">
+        <span className="mb-1.5 inline-block rounded-full bg-gray-600/50 px-3 py-1.5 text-sm">
+          EngageGPT
+        </span>
+        <h1 className="max-w-3xl mb-8 bg-gradient-to-br from-white mt-4 to-gray-500 bg-clip-text text-center text-3xl font-medium leading-tight text-transparent sm:text-3xl sm:leading-tight md:text-5xl md:leading-tight">
+          Supercharge your LinkedIn engagement
+        </h1>
+        <motion.button
+          style={{
+            border,
+            boxShadow,
+          }}
+          whileHover={{
+            scale: 1.015,
+          }}
+          whileTap={{
+            scale: 0.985,
+          }}
+          className="group relative flex w-fit items-center gap-1.5 rounded-full bg-gray-950/10 px-4 py-2 text-gray-50 transition-colors hover:bg-gray-950/50"
+        >
+          <a
+            href="https://chromewebstore.google.com/detail/engagegpt-ai-for-linkedin/ldhdipkofibjleihomflebfklhadikio?hl=en-GB&authuser=1"
+            className="flex items-center gap-1.5 font-medium"
+          >
+            {' '}
+            <SiGooglechrome className="text-white" /> Add to Chrome - It's Free{' '}
+            <FiArrowRight className="transition-transform group-hover:-rotate-45 group-active:-rotate-12" />
+          </a>
+        </motion.button>
+      </div>
+    </motion.section>
+  );
+};
 export default FooterCTA;

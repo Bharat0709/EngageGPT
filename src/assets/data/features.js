@@ -47,14 +47,14 @@ export const features = [
     tagColor: 'bg-gradient-to-r from-blue-400 to-cyan-400',
   },
   {
-    icon: <Icons.LayerGroup className="w-6 h-6 text-green-500" />,
+    icon: <Icons.Mail className="w-6 h-6 text-green-500" />,
     gradient: 'bg-gradient-to-r from-yellow-200 to-green-200',
-    title: 'Carousel Generator',
+    title: 'Email Templates',
     description:
-      'Easily create engaging LinkedIn carousels with AI-driven content suggestions.',
-    learnMoreText: 'Coming Soon',
-    link: 'https://www.youtube.com/playlist?list=PLYHoCaYE8EoD6YBlcDrPoHSYTIvAjW3vI',
-    tag: 'Coming Soon',
+      'Easily create HTML/Text email with AI for outreach and follow-ups.',
+    learnMoreText: 'Learn More',
+    link: '/dashboard/saved-posts',
+    tag: 'Learn More',
     tagColor: 'bg-gradient-to-r from-yellow-300 to-green-300',
   },
   {
@@ -72,9 +72,9 @@ export const features = [
   {
     icon: <Icons.Bookmark className="w-6 h-6 text-blue-500" />,
     gradient: 'bg-gradient-to-r from-yellow-200 to-green-200',
-    title: 'Post Saving',
+    title: 'Leads Generation',
     description:
-      'Save posts automatically based on custom keywords for easy reference and inspiration.',
+      'Save Leads automatically based on custom keywords for easy reference and inspiration.',
     learnMoreText: 'Learn More',
     link: '/dashboard/saved-posts',
     tag: 'New',
@@ -92,7 +92,7 @@ export const features = [
     tagColor: 'bg-gradient-to-r from-blue-300 to-cyan-500',
   },
   {
-    icon: <Icons.CalendarPlus className="w-6 h-6 text-blue-500" />,
+    icon: <Icons.Calendar className="w-6 h-6 text-blue-500" />,
     gradient: 'bg-gradient-to-r from-yellow-200 to-green-200',
     title: 'Content Calendar',
     description:

@@ -11,7 +11,7 @@ function Footer() {
   };
 
   return (
-    <footer className="bg-[#004182] text-white m-4 py-10">
+    <footer className="bg-[#004182] text-white rounded-2xl lg:m-4 m-2 py-10">
       <div className="container mx-auto px-4 lg:px-16 flex flex-col lg:flex-row justify-between items-start">
         {/* Logo Section */}
         <div className="mb-6 lg:mb-0 flex flex-col items-start">
@@ -22,7 +22,7 @@ function Footer() {
             <img src={Logo} alt="EngageGPT Logo" className="h-14 mr-3" />
             <span className="text-2xl">EngageGPT</span>
           </div>
-          <p className="text-sm text-gray-300 max-w-xs">
+          <p className="text-sm text-gray-300 max-w-[300px]">
             Empowering LinkedIn networking with AI-driven engagement.
           </p>
         </div>

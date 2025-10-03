@@ -9,6 +9,8 @@ import Groq from '@assets/images/groq.svg';
 import Mistral from '@assets/images/Mistral-Ai.svg';
 import Gemini from '@assets/images/Gemini.svg';
 import Perplexity from '@assets/images/perplexity-text.svg';
+import BookDemo from './Support';
+import InfiniteLogoRibbon from './LogoRibbon';
 
 const HeroSection = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -50,22 +52,9 @@ const HeroSection = () => {
               <span className="px-3  py-1 bg-[#004182] text-white text-xs lg:text-sm font-medium rounded-full mr-2">
                 HEY!
               </span>
-              <span className="text-gray-700 text-xs lg:text-base font-medium">
+              <span className="text-gray-700 mr-2 text-xs lg:text-base font-medium">
                 Add to Chrome for Free!
               </span>
-              <svg
-                className="ml-2 w-4 h-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M14 5l7 7m0 0l-7 7m7-7H3"
-                />
-              </svg>
             </a>
           </div>
         )}
@@ -79,22 +68,9 @@ const HeroSection = () => {
           <span className="px-3  py-1 bg-[#004182] text-white text-xs lg:text-sm font-medium rounded-full mr-2">
             HEY!
           </span>
-          <span className="text-gray-700 text-xs lg:text-base font-medium">
+          <span className="text-gray-700 mr-2 flex items-center gap-2 text-xs lg:text-base font-medium">
             Add to Chrome for Free!
           </span>
-          <svg
-            className="ml-2 w-4 h-4"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M14 5l7 7m0 0l-7 7m7-7H3"
-            />
-          </svg>
         </a>
 
         <button onClick={handleViewDemo}>
@@ -111,11 +87,11 @@ const HeroSection = () => {
         </button>
       </div>
       {/* Main Hero Content */}
-      <div className="text-center max-w-6xl mx-auto mt-8 lg:mt-20 px-4 mb-6 lg:mb-0">
+      <div className="text-center max-w-5xl mx-auto mt-8 lg:mt-20 px-4 mb-6 lg:mb-0">
         <div className="grid place-content-center">
-          <h1 className="max-w-3xl text-black text-center text-[2.3rem] lg:text-6xl leading-[1.3] lg:leading-[1.5]">
+          <p className="max-w-3xl font-regular text-black text-center text-[2.3rem] lg:text-6xl leading-[1.3] lg:leading-[1.3]">
             Your{' '}
-            <span className="relative">
+            <span className="relative ">
               All-in-One
               <svg
                 viewBox="0 0 286 73"
@@ -137,9 +113,8 @@ const HeroSection = () => {
             </span>
             {'   '}
             LinkedIn Growth Assistant
-          </h1>
+          </p>
         </div>
-
         <p className="text-lg w-full lg:text-2xl text-gray-600 mt-6 max-w-5xl mb-6">
           Engage - Analyze - Automate
         </p>
@@ -152,19 +127,6 @@ const HeroSection = () => {
                 </div>
               </div>
             </button>
-
-            <a
-              href="https://calendly.com/engagegpt/30min"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mx-auto flex justify-center items-center"
-            >
-              <div className="bg-white lg:flex items-center  mt-1 justify-center">
-                <div className="px-6 py-2 lg:text-lg text-md font-medium border  border-gray-300 bg-white text-black w-fit">
-                  Book a Demo
-                </div>
-              </div>
-            </a>
           </div>
           <div className="animate-fade-in mt-3 inline-flex items-center px-4 py-2 rounded-full transition-colors">
             <span className="text-gray-700 flex gap-2 items-center text-sm font-medium">
@@ -214,37 +176,8 @@ const HeroSection = () => {
           </div>
         </div>
       </div>
-      {/* Browser Mockup */}
-      <div className="w-full max-w-6xl mx-auto rounded-lg shodow-lg px-2 lg:mt-10">
-        {/* Browser Content - Placeholder */}
-        <div className="bg-white  rounded-lg  w-full flex flex-col items-center justify-center p-4">
-          <div className="bg-gray-800 rounded-t-xl w-full px-4 py-3 flex items-center">
-            <div className="flex space-x-2 mr-4">
-              <div className="w-3 h-3 rounded-full bg-red-500"></div>
-              <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-              <div className="w-3 h-3 rounded-full bg-green-500"></div>
-            </div>
-            <div className="bg-gray-700 rounded px-3 py-1 text-gray-300  text-xs lg:min-w-[200px] lg:text-sm mx-auto w-full text-center">
-              EngageGPT Dashboard
-            </div>
-          </div>
-          <img
-            className="rounded-b-xl"
-            src="/dashboard.svg"
-            alt="engagegpt-dashboard"
-          />
-        </div>
-        <button
-          className="mx-auto flex justify-center items-center"
-          onClick={handleGetStarted}
-        >
-          <div className="bg-white mt-8 lg:flex hidden items-center justify-center">
-            <div className="px-6 py-2 text-lg font-medium bg-white text-black w-fit transition-all shadow-[5px_5px_0px_black] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]">
-              Get Started for Free
-            </div>
-          </div>
-        </button>
-      </div>
+      <BookDemo />
+      <InfiniteLogoRibbon />
     </section>
   );
 };
