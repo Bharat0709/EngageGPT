@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Icons } from '@utils/constantData/icons';
 import { login } from '@services/Auth';
 import useAuthCheck from '@hooks/useAuth';
@@ -12,11 +12,20 @@ const Login = () => {
   useAuthCheck();
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [lastLoginMethod, setLastLoginMethod] = useState(null);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
   const message = useNotifications();
+
+  // Load last login method on component mount
+  useEffect(() => {
+    const savedMethod = localStorage.getItem('lastLoginMethod');
+    if (savedMethod) {
+      setLastLoginMethod(savedMethod);
+    }
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -40,6 +49,8 @@ const Login = () => {
       setIsLoading(true);
       const loginResponse = await login(formData.email, formData.password);
       if (loginResponse.token) {
+        // Save login method to localStorage
+        localStorage.setItem('lastLoginMethod', 'email');
         goTo(`/dashboard?token=${loginResponse.token}`);
       }
       message.success('Login successful!');
@@ -55,7 +66,7 @@ const Login = () => {
       <div className="w-full flex items-center justify-center h-screen bg-sky-900">
         <div className="lg:w-1/2 w-full text-white px-8 py-4 bg-sky-900">
           <AuthHeader heading="Log In to your account" />
-          <GoogleAuth />
+          <GoogleAuth lastUsed={lastLoginMethod === 'google'} />
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label
@@ -112,6 +123,12 @@ const Login = () => {
               {isLoading ? 'Logging In...' : 'Login'}
             </button>
           </form>
+
+          {lastLoginMethod === 'email' && (
+            <p className="w-fit self-center mx-auto text-black text-xs font-normal bg-white px-3 py-1 rounded-full mt-2">
+              Last Used
+            </p>
+          )}
 
           <AuthFooter mode="login" email={formData.email} />
         </div>
