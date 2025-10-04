@@ -61,6 +61,7 @@ export const usePostHistory = (selectedProfile) => {
 };
 
 export const usePostActions = (setPostHistory, refreshPosts) => {
+  const message = useNotifications();
   const [isDeleting, setIsDeleting] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
@@ -100,7 +101,6 @@ export const usePostActions = (setPostHistory, refreshPosts) => {
         drafts: prev.drafts.filter((p) => p._id !== updatedPost._id),
       }));
       refreshPosts();
-      message.success('Post updated successfully!');
     } catch (error) {
       message.error(error.message);
     } finally {

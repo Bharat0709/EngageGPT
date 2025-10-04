@@ -209,7 +209,10 @@ export const People = () => {
                 </div>
                 <div className="flex items-center lg:flex-row flex-wrap gap-3 lg:w-max w-full">
                   <p className="text-xs font-semibold rounded-lg bg-gray-200 p-1 px-3 m-0 text-gray-600">
-                    {person?.totalCreditsUsed} credits used
+                    Total {person?.totalCreditsUsed} credits used
+                  </p>{' '}
+                  <p className="text-xs font-semibold rounded-lg bg-gray-200 p-1 px-3 m-0 text-gray-600">
+                    {person?.creditsUsedToday} credits used today
                   </p>{' '}
                   <p className="text-xs font-semibold rounded-lg bg-gray-200 p-1 px-3 m-0 text-gray-600">
                     {person?.daysActive} days active
@@ -239,6 +242,7 @@ export const People = () => {
                 <div className="copy-token text-xs bg-white pl-2 rounded-lg flex items-center">
                   Extension Connection Token
                   <Button
+                    title="Copy Connection token"
                     className="text-black hover:text-black"
                     icon={<Icons.Copy />}
                     onClick={() => handleCopy(person.connectionToken)}
@@ -247,6 +251,7 @@ export const People = () => {
                 </div>
                 {person?.isLinkedinConnected ? (
                   <button
+                    title="Disconnect Linkedin"
                     onClick={() => handleDisconnectLinkedIn(person._id)}
                     className={`rounded-lg text-black p-2 bg-white flex items-center gap-2 text-xs`}
                   >
@@ -271,6 +276,16 @@ export const People = () => {
                   <Icons.Settings size={16} />
                   Member Settings
                 </button>
+                {person?.lastActive && (
+                  <p className="text-sm font-semibold rounded-lg p-1 px-3 m-0 text-gray-600">
+                    Last Active:{' '}
+                    {new Intl.DateTimeFormat('en-IN', {
+                      dateStyle: 'medium',
+                      timeStyle: 'short',
+                      timeZone: person?.timeZone || 'Asia/Kolkata',
+                    }).format(new Date(person.lastActive))}
+                  </p>
+                )}
               </div>
             </div>
           ))

@@ -37,7 +37,7 @@ const PostConfirmationModal = ({
             onClick={onConfirm}
             theme="dark"
             buttonText={confirmButtonText}
-            className="px-6 !rounded-full bg-red-600 hover:bg-red-700"
+            className="px-6 !rounded-full bg-blue-900 hover:scale-105"
           />
         </div>
       </div>

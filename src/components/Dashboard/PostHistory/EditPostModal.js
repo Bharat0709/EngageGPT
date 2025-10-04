@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
   FiX,
-  FiCalendar,
-  FiClock,
-  FiGlobe,
   FiEdit3,
   FiImage,
   FiTrash2,
@@ -203,9 +200,10 @@ const EditPostModal = ({ isOpen, onClose, post, onSave, isEditing }) => {
         existingMediaUrls: postData.mediaUrls,
         newMediaFiles: postData.newMediaFiles.map((file) => file.file),
       });
+      message.success('Post Updated Successfully');
       onClose();
     } catch (error) {
-      message.error('Failed to update post. Please try again.');
+      message.error(error.message);
     } finally {
       setLoading(false);
     }

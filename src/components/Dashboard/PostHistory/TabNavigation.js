@@ -48,13 +48,6 @@ const TabNavigation = ({ activeTab, setActiveTab, postHistory }) => {
               className={activeTab === tab.key ? 'text-black' : 'text-gray-400'}
             />
             <span>{tab.label}</span>
-            <span
-              className={`text-sm ${
-                activeTab === tab.key ? 'text-gray-600' : 'text-gray-400'
-              }`}
-            >
-              ({tab.count})
-            </span>
           </button>
         );
       })}

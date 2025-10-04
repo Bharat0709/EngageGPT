@@ -64,7 +64,6 @@ const PostDrawer = ({
   onPreviewMedia,
   selectedProfile,
 }) => {
-  console.log('PostDrawer rendered with post:', post);
   if (!post) return null;
   const message = useNotifications();
   const getStatusConfig = (status) => {

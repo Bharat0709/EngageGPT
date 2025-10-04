@@ -142,6 +142,7 @@ export const getScheduledPosts = async (memberId) => {
 export const updateScheduledOrDraftPost = async (postId, postDetails) => {
   try {
     const formData = prepareUpdatedPostFormData(postDetails);
+    console.log(postDetails, postId);
     formData.append('postDate', postDetails.postDate);
     formData.append('postTime', postDetails.postTime);
     formData.append('timeZone', postDetails.timeZone);

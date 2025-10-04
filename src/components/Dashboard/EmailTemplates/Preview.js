@@ -106,7 +106,7 @@ const Preview = ({ selectedTemplate }) => {
                               key={index}
                               className="inline-block px-2 py-1 text-xs bg-white text-blue-800 rounded-full font-mono"
                             >
-                              {`{{${placeholder}}}`}
+                              {`${placeholder}`}
                             </span>
                           ),
                         )}

@@ -60,9 +60,14 @@ const PostHistoryDashboard = ({ activeTab, selectedProfile }) => {
 
   const onSavePost = async (postId, updatedPostData) => {
     if (!updatedPostData) return;
-    await updatePost(postId, updatedPostData);
-    setShowEditModal(false);
-    setSelectedPost(null);
+
+    try {
+      await updatePost(postId, updatedPostData);
+      setShowEditModal(false);
+      setSelectedPost(null);
+    } catch (error) {
+      console.error('Failed to save post:', error);
+    }
   };
 
   const openMediaModal = (media) => {
@@ -95,7 +100,6 @@ const PostHistoryDashboard = ({ activeTab, selectedProfile }) => {
       console.error('Error deleting posts:', error);
     }
   };
-
 
   // Get current posts for active tab
   const currentPosts = getCurrentPosts(postHistory, activeTab);
