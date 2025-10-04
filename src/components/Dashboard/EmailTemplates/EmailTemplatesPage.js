@@ -11,6 +11,7 @@ import {
   bulkDeleteTemplates,
   bulkUpdateTemplates,
 } from '@services/EmailTemplates';
+import NotFound from '@assets/images/PostNotFound.png';
 import TemplatesTable from './EmailListTable/TemplatesTable';
 import AddMembersModal from '../Global/AddPeopleModal';
 import CodeEditor from './Editor/Editor';
@@ -319,6 +320,23 @@ const EmailTemplateManager = () => {
     }
   };
 
+  // No member selected component
+  const NoMemberSelected = () => (
+    <div className="bg-white p-8 m-2  rounded-2xl flex flex-col justify-center gap-2 text-center">
+      <img src={NotFound} alt="Not Found" className="h-50 w-60 mx-auto" />
+      <h3 className="text-lg font-medium mb-2">No Member Selected</h3>
+      <p className="text-gray-600 mb-4">
+        Please select a member to view their saved email templates.
+      </p>
+      <button
+        onClick={() => setIsAddMemberModalOpen(true)}
+        className="btn-primary flex items-center gap-2 self-center mx-auto whitespace-nowrap px-6 py-2 text-sm font-medium bg-white border border-black text-black w-fit transition-all shadow-[3px_3px_0px_black] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]"
+      >
+        Add Member
+      </button>
+    </div>
+  );
+
   return (
     <div className="h-screen flex flex-col bg-gray-50">
       <EmailTemplateNavbar
@@ -330,43 +348,47 @@ const EmailTemplateManager = () => {
         setIsAddMemberModalOpen={setIsAddMemberModalOpen}
       />
 
-      <div className="flex-1 lg:overflow-hidden">
-        {activeTab === 'templates' && (
-          <div className="p-2 rounded-2xl">
-            <TemplatesTable
-              templates={templates}
-              onEdit={handleEditTemplate}
-              onView={handleViewTemplate}
-              onClone={handleCloneTemplate}
-              onSetDefault={handleSetDefaultTemplate}
+      {!selectedMemberId ? (
+        <NoMemberSelected />
+      ) : (
+        <div className="flex-1 lg:overflow-hidden">
+          {activeTab === 'templates' && (
+            <div className="p-2 rounded-2xl">
+              <TemplatesTable
+                templates={templates}
+                onEdit={handleEditTemplate}
+                onView={handleViewTemplate}
+                onClone={handleCloneTemplate}
+                onSetDefault={handleSetDefaultTemplate}
+                isUpdating={isUpdating}
+                loading={loading}
+                onCreateTemplate={handleCreateTemplate}
+                onBulkDelete={handleBulkDelete}
+                onBulkUpdateCategory={handleBulkUpdateCategory}
+                onBulkUpdateType={handleBulkUpdateType}
+              />
+            </div>
+          )}
+          {activeTab === 'editor' && (
+            <CodeEditor
+              selectedTemplate={selectedTemplate}
+              handleFormSubmit={handleFormSubmit}
+              formData={formData}
+              setFormData={setFormData}
+              resetForm={resetForm}
+              activeTab={activeTab}
+              setActiveTab={setActiveTab}
+              showCreateForm={showCreateForm}
+              setShowCreateForm={setShowCreateForm}
+              setSelectedTemplate={setSelectedTemplate}
               isUpdating={isUpdating}
-              loading={loading}
-              onCreateTemplate={handleCreateTemplate}
-              onBulkDelete={handleBulkDelete}
-              onBulkUpdateCategory={handleBulkUpdateCategory}
-              onBulkUpdateType={handleBulkUpdateType}
             />
-          </div>
-        )}
-        {activeTab === 'editor' && (
-          <CodeEditor
-            selectedTemplate={selectedTemplate}
-            handleFormSubmit={handleFormSubmit}
-            formData={formData}
-            setFormData={setFormData}
-            resetForm={resetForm}
-            activeTab={activeTab}
-            setActiveTab={setActiveTab}
-            showCreateForm={showCreateForm}
-            setShowCreateForm={setShowCreateForm}
-            setSelectedTemplate={setSelectedTemplate}
-            isUpdating={isUpdating}
-          />
-        )}
-        {activeTab === 'preview' && (
-          <Preview selectedTemplate={selectedTemplate} />
-        )}
-      </div>
+          )}
+          {activeTab === 'preview' && (
+            <Preview selectedTemplate={selectedTemplate} />
+          )}
+        </div>
+      )}
 
       <AddMembersModal
         isOpen={isAddMemberModalOpen}

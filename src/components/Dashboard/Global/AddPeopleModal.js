@@ -1,9 +1,10 @@
-import { message } from 'antd';
 import { useState, useEffect } from 'react';
 import { Icons } from '@utils/constantData/icons';
 import Button from '@components/Common/Button';
+import { useNotifications } from '@components/Common/Notification';
 
 const AddMembersModal = ({ isOpen, onClose, onSubmit }) => {
+  const message = useNotifications();
   const [members, setMembers] = useState([{ name: '', email: '' }]);
   const [isAdding, setIsAdding] = useState(false);
   const [errors, setErrors] = useState([]);
@@ -89,8 +90,8 @@ const AddMembersModal = ({ isOpen, onClose, onSubmit }) => {
     try {
       await onSubmit(members.filter((member) => member.name || member.email));
       handleClose();
-    } catch (error) {
-      message.error('Error adding members:', error);
+    } catch (err) {
+      message.error('Error adding member', err.message);
     } finally {
       setIsAdding(false);
     }

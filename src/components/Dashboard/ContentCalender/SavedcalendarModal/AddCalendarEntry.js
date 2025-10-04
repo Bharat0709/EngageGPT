@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Modal, message } from 'antd';
+import { Modal } from 'antd';
+import { useNotifications } from '@components/Common/Notification';
 import { FiPlus, FiTrash2, FiCalendar, FiClock, FiType } from 'react-icons/fi';
 import dayjs from 'dayjs';
 import DateTimeSelector from '@components/Common/DateTImePicker';
@@ -11,7 +12,7 @@ const AddCalendarEntryModal = ({
   isSavingNewEntries,
 }) => {
   const [entries, setEntries] = useState([{ Title: '', DateTime: null }]);
-
+  const message = useNotifications();
   const handleInputChange = (index, field, value) => {
     const updatedEntries = [...entries];
     updatedEntries[index][field] = value;

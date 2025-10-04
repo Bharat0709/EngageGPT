@@ -71,7 +71,7 @@ const OrganizationProfileSettings = () => {
           Transactions
         </button>
       </div>
-      {view === 'general' && <OrganizationCard userData={userData} />}
+      {view === 'general' && <OrganizationCard userData={userData}  setIsModalOpen={setIsModalOpen} />}
       {view === 'subscription' && <SubscriptionCard userData={userData} />}
 
       <EditOrgModal

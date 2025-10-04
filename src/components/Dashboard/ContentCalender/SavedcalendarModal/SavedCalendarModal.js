@@ -4,7 +4,7 @@ import SearchBar from './SearchBar';
 import CalendarGrid from './CalendarGrid';
 import ConfirmationModal from './ConfirmationModal';
 import AddCalendarDropdown from './AddCalendarEntry';
-import { message } from 'antd';
+import { useNotifications } from '@components/Common/Notification';
 
 const SavedCalendarModal = ({
   isOpen,
@@ -18,6 +18,7 @@ const SavedCalendarModal = ({
   handleAddNewCalendarEntries,
   isSavingNewEntries,
 }) => {
+  const message = useNotifications();
   const [searchTerm, setSearchTerm] = useState('');
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [itemToDelete, setItemToDelete] = useState(null);

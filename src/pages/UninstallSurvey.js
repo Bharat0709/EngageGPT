@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { fetchOrganizationData } from '@services/Organization';
 import { submitSurvey } from '@services/Members';
-import { message } from 'antd';
+import { useNotifications } from '@components/Common/Notification';
 import Crying from '@assets/images/Crying.png';
 import EngageGPTLogo from '@assets/images/EngageGPTLogo.png';
 
 const FeedbackSurvey = () => {
+  const message = useNotifications();
   const [formData, setFormData] = useState({
     usability: '',
     missingFeatures: '',

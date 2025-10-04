@@ -10,13 +10,13 @@ import ProfilesDropDown from '../Global/ProfilesDropDown';
 import Button from '@components/Common/Button';
 import { Icons } from '@utils/constantData/icons';
 import MembersProfileDropDown from '../Global/MembersDropDown';
-import useNotification from 'antd/es/notification/useNotification';
+import { useNotifications } from '@components/Common/Notification';
 import TabNavigation from './TabNavigation';
 import { usePostHistory } from './usePostHistory';
 
 const PostQueue = () => {
+  const message = useNotifications();
   const navigate = useNavigate();
-  const message = useNotification();
   const [activeTab, setActiveTab] = useState('scheduled');
   const [selectedProfile, setSelectedProfile] = useState(null);
   const [linkedInConnectedProfiles, setLinkedInConnectedProfiles] = useState(
@@ -60,7 +60,8 @@ const PostQueue = () => {
       setRefreshMembers(!refreshMembers);
       setIsAddMemberModalOpen(false);
     } catch (err) {
-      message.error(err.message);
+      console.log(err.message);
+      message.error(err.message || 'Failed to send invite');
     }
   };
 

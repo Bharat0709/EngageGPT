@@ -1,17 +1,18 @@
 import { useState, useEffect } from 'react';
-import { message } from 'antd';
+import { useNotifications } from '@components/Common/Notification';
 import { FiX } from 'react-icons/fi';
 import { sendHelpMail } from '@services/Organization';
 import { IoLogoWhatsapp } from 'react-icons/io';
 import EngageGPTLogo from '@assets/images/EngageGPTLogo.png';
 
 const handleWhatsAppContact = () => {
+  const message = useNotifications();
   const WHATSAPP_NUMBER = `${process.env.REACT_APP_CONTACT_NUMBER}`;
-  const message = encodeURIComponent('Hi, I need help with your service.');
+  const usermessage = encodeURIComponent('Hi, I need help with your service.');
   const phoneNumber = WHATSAPP_NUMBER.replace(/[^0-9]/g, '');
   const isMobile = /iPhone|Android/i.test(navigator.userAgent);
   const whatsappUrl = isMobile
-    ? `whatsapp://send?phone=${phoneNumber}&text=${message}`
+    ? `whatsapp://send?phone=${phoneNumber}&text=${usermessage}`
     : `https://web.whatsapp.com/send?phone=${phoneNumber}&text=${message}`;
   window.open(whatsappUrl, '_blank');
 };

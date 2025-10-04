@@ -4,9 +4,10 @@ import PostDrawer from './PostsDrawer';
 import PostFilters from './PostsFilter';
 import PostsDiv from './PostsDiv';
 import NoPostsFound from '@assets/images/PostNotFound.png';
-import { message } from 'antd';
+import { useNotifications } from '@components/Common/Notification';
 
 const PostDetails = ({ setStats, memberId }) => {
+  const message = useNotifications();
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedPostId, setSelectedPostId] = useState(null);

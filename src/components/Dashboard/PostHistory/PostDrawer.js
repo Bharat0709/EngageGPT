@@ -15,10 +15,11 @@ import {
 } from 'react-icons/fi';
 
 import React from 'react';
-import { message } from 'antd';
+import { useNotifications } from '@components/Common/Notification';
 
 // Custom Drawer Component
 const CustomDrawer = ({ isOpen, onClose, children, title }) => {
+  if (!isOpen) return null;
   return (
     <>
       <div
@@ -65,7 +66,7 @@ const PostDrawer = ({
 }) => {
   console.log('PostDrawer rendered with post:', post);
   if (!post) return null;
-
+  const message = useNotifications();
   const getStatusConfig = (status) => {
     const configs = {
       Scheduled: {

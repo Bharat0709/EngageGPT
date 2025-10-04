@@ -46,7 +46,7 @@ const HiringPostsPage = () => {
       setRefreshMembers(!refreshMembers);
       setIsAddMemberModalOpen(false);
     } catch (err) {
-      message.error('Failed to add member. Please try again.');
+      message.error(err.message);
     }
   };
 

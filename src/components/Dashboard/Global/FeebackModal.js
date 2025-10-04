@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { FiX } from 'react-icons/fi';
-import { message } from 'antd';
+import { useNotifications } from '@components/Common/Notification';
 import { sendFeeback } from '@services/Organization';
 import { IoLogoWhatsapp } from 'react-icons/io';
 import EngageGPTLogo from '@assets/images/EngageGPTLogo.png';
 
 const FeedbackModal = ({ isVisible, onClose }) => {
+  const message = useNotifications();
   const [rating, setRating] = useState(0);
   const [feedback, setFeedback] = useState('');
   const [loading, setLoading] = useState(false);

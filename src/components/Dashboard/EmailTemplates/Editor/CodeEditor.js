@@ -138,7 +138,6 @@ Best regards,
                 ) : (
                   <Icons.Moon className="w-3 h-3" />
                 )}
-                <span>{isDarkTheme ? 'Light' : 'Dark'}</span>
               </button>
 
               {/* Preview Toggle */}

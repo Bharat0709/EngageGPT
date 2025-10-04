@@ -10,7 +10,7 @@ import {
   FiCheckCircle,
   FiLoader,
 } from 'react-icons/fi';
-import { message } from 'antd';
+import { useNotifications } from '@components/Common/Notification';
 import { fetchSheetDetails } from '@services/Members';
 import dayjs from 'dayjs';
 
@@ -20,6 +20,7 @@ const ContentCalendarModal = ({
   onClose,
   onSave,
 }) => {
+  const message = useNotifications();
   const [calendarData, setCalendarData] = useState([]);
   const [googleSheetLink, setGoogleSheetLink] = useState('');
   const [loading, setLoading] = useState(false);

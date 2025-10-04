@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { fetchOrganizationData, getCreditsLeft } from '@services/Organization';
 import { generatePost } from '@services/GenerateContent';
 import { creditsModalContent } from '../Global/AddCreditsContent';
-import { message } from 'antd';
+import { useNotifications } from '@components/Common/Notification';
 import {
   FaLinkedin,
   FaUser,
@@ -26,6 +26,7 @@ import { Icons } from '@utils/constantData/icons';
 import InfoModal from '@components/Common/InfoModal';
 
 const LinkedInPostGenerator = () => {
+  const message = useNotifications();
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState('');
   const [loading, setLoading] = useState(false);

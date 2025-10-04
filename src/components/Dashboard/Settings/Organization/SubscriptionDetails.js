@@ -75,11 +75,11 @@ export const SubscriptionCard = ({ userData }) => {
   };
 
   return (
-    <div className="w-full max-w-7xl mx-auto space-y-4 sm:space-y-6">
+    <div className="w-full max-w-7xl mx-auto space-y-2 sm:space-y-2">
       {/* Credits Overview Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
         {/* Available Credits - Featured Card */}
-        <div className="sm:col-span-2 lg:col-span-1 bg-gradient-to-br from-purple-600 to-pink-600 rounded-xl p-4 text-white shadow-md hover:shadow-lg transition-shadow">
+        <div className="sm:col-span-2 lg:col-span-1 bg-gradient-to-br from-purple-600 to-pink-600 rounded-xl p-4 text-white  transition-shadow">
           <div className="flex items-start justify-between mb-3">
             <div className="bg-white/20 backdrop-blur-sm rounded-lg p-2">
               <Icons.Credits className="text-white" size={20} />
@@ -112,7 +112,7 @@ export const SubscriptionCard = ({ userData }) => {
         </div>
 
         {/* Total Used Card */}
-        <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+        <div className="bg-white rounded-xl p-4 border border-gray-200 hover: transition-shadow">
           <div className="flex items-center gap-2 mb-3">
             <div className="bg-red-50 rounded-lg p-2">
               <Icons.TrendingDown className="text-red-600" size={20} />
@@ -126,7 +126,7 @@ export const SubscriptionCard = ({ userData }) => {
         </div>
 
         {/* Total Transactions Card */}
-        <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+        <div className="bg-white rounded-xl p-4 border border-gray-200 hover: transition-shadow">
           <div className="flex items-center gap-2 mb-3">
             <div className="bg-blue-50 rounded-lg p-2">
               <Icons.List className="text-blue-600" size={20} />
@@ -143,7 +143,7 @@ export const SubscriptionCard = ({ userData }) => {
       </div>
 
       {/* Transaction & Payment History Tabs */}
-      <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+      <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
         {/* Tab Navigation */}
         <div className="border-b border-gray-200 bg-gray-50/50">
           <div className="flex overflow-x-auto no-scrollbar">
@@ -216,9 +216,9 @@ export const SubscriptionCard = ({ userData }) => {
                   {displayedTransactions.map((transaction, index) => (
                     <div
                       key={transaction.id || transaction._id || index}
-                      className="flex items-start gap-3 p-3 sm:p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-all hover:shadow-sm"
+                      className="flex items-start gap-3 p-3 sm:p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-all"
                     >
-                      <div className="flex-shrink-0 w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm">
+                      <div className="flex-shrink-0 w-10 h-10 rounded-full bg-white flex items-center justify-center">
                         {getTransactionIcon(transaction.type)}
                       </div>
                       <div className="flex-1 min-w-0">
@@ -290,7 +290,7 @@ export const SubscriptionCard = ({ userData }) => {
                   {payments.map((payment, index) => (
                     <div
                       key={payment.id || payment._id || index}
-                      className="flex flex-col sm:flex-row sm:items-center gap-3 p-3 sm:p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-all hover:shadow-sm"
+                      className="flex flex-col sm:flex-row sm:items-center gap-3 p-3 sm:p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-all hover"
                     >
                       <div className="flex items-start sm:items-center gap-3 flex-1">
                         <div className="flex-shrink-0 w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">

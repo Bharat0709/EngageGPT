@@ -10,7 +10,7 @@ import {
   FiUpload,
   FiAlertCircle,
 } from 'react-icons/fi';
-import { message } from 'antd';
+import { useNotifications } from '@components/Common/Notification';
 import TimezonePicker from '@components/Common/TimeZonePicker';
 import DateTimeSelector from '@components/Common/DateTImePicker';
 
@@ -95,6 +95,7 @@ export const formatDateTimeForAPI = (dateTime) => {
 };
 
 const EditPostModal = ({ isOpen, onClose, post, onSave, isEditing }) => {
+  const message = useNotifications();
   const [postData, setPostData] = useState({
     dateTime: null,
     timeZone: 'Asia/Kolkata',

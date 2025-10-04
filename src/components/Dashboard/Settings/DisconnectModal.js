@@ -1,6 +1,6 @@
 import React from 'react';
-import { message } from 'antd';
 import { disconnectLinkedIn } from '@services/LinkedIn';
+import { useNotifications } from '@components/Common/Notification';
 
 const DisconnectConfirmationModal = ({
   isVisible,
@@ -9,6 +9,7 @@ const DisconnectConfirmationModal = ({
   refreshPage,
 }) => {
   if (!isVisible) return null;
+  const message = useNotifications();
 
   const handleDisconnectLinkedIn = async () => {
     try {

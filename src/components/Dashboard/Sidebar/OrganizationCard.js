@@ -1,7 +1,7 @@
 import { Icons } from '@utils/constantData/icons';
 import { Link } from 'react-router-dom';
 import { MenuButton } from './MenuButton';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import UpgradeModal from '../../Common/UpgradeModal';
 
 const OrganizationCard = ({
@@ -32,6 +32,15 @@ const OrganizationCard = ({
       .toUpperCase()
       .slice(0, 2);
   };
+
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageError, setImageError] = useState(false);
+
+  // Reset states when profilePicture changes
+  useEffect(() => {
+    setImageLoaded(false);
+    setImageError(false);
+  }, [profilePicture]);
 
   return (
     <>
@@ -89,32 +98,13 @@ const OrganizationCard = ({
           {isOpen && (
             <button
               onClick={() => setShowUpgradeModal(true)}
-              className="relative mb-2 w-full group overflow-hidden rounded-lg p-[2px] transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-purple-500/50"
+              className="w-full flex items-center justify-center gap-2 px-8 py-2.5 text-xs font-semibold text-white bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-xl border-none overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/30 before:to-transparent before:w-full before:h-full before:translate-x-[-100%] hover:before:animate-[slide_1s_infinite] before:skew-x-12"
             >
-              {/* Animated gradient border */}
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 animate-gradient-xy"></div>
-
-              {/* Button content */}
-              <div className="relative flex items-center justify-center gap-2 rounded-lg bg-white px-4 py-2.5 transition-all duration-300 group-hover:bg-gradient-to-r group-hover:from-purple-50 group-hover:to-pink-50">
-                {/* Icon with animation */}
-                <div className="relative">
-                  <Icons.Credits
-                    size={16}
-                    className="relative z-10 text-purple-600 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12"
-                  />
-
-                  {/* Sparkle effect */}
-                  <div className="absolute -top-1 -right-1 h-2 w-2 rounded-full bg-yellow-400 opacity-0 group-hover:opacity-100 group-hover:animate-ping"></div>
-                </div>
-
-                {/* Text with gradient */}
-                <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 group-hover:from-purple-700 group-hover:via-pink-700 group-hover:to-blue-700 transition-all duration-300">
-                  Add More Credits
-                </span>
-
-                {/* Shine effect */}
-                <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
-              </div>
+              <Icons.Credits
+                size={16}
+                className="transition-transform duration-200 group-hover:rotate-12"
+              />
+              <span className="text-center">Add More Credits</span>
             </button>
           )}
 
@@ -147,17 +137,24 @@ const OrganizationCard = ({
                 isOpen ? 'mr-0' : 'mr-10'
               }`}
             >
-              {profilePicture ? (
-                <img
-                  src={profilePicture}
-                  alt="Profile Picture"
-                  className="min-h-10 min-w-10 rounded-full object-cover"
-                />
-              ) : (
-                <span className="text-white font-semibold text-xs">
-                  {getInitials(name)}
-                </span>
-              )}
+              <div className="relative bg-gradient-to-br from-purple-500 to-pink-500 min-h-10 min-w-10 rounded-full overflow-hidden  flex items-center justify-center">
+                {(!profilePicture || imageError || !imageLoaded) && (
+                  <span className="text-white font-semibold text-xs">
+                    {getInitials(name)}
+                  </span>
+                )}
+                {profilePicture && !imageError && (
+                  <img
+                    src={profilePicture}
+                    alt="Profile Picture"
+                    className={`absolute inset-0 w-full h-full bg-gradient-to-br from-purple-500 to-pink-500 object-cover transition-opacity duration-200 ${
+                      imageLoaded ? 'opacity-100' : 'opacity-0'
+                    }`}
+                    onLoad={() => setImageLoaded(true)}
+                    onError={() => setImageError(true)}
+                  />
+                )}
+              </div>
             </div>
 
             {isOpen && (

@@ -6,7 +6,7 @@ const ORGANIZATION_API_URL = '/organization';
 export const sendHelpMail = async (helpTextContent) => {
   try {
     const response = await axiosInstance.post(
-      `${ORGANIZATION_API_URL}/mail/help`,
+      `${ORGANIZATION_API_URL}/help`,
       {
         helpTextContent,
       },
@@ -21,7 +21,7 @@ export const sendHelpMail = async (helpTextContent) => {
 export const sendFeeback = async (feedbackContent, rating) => {
   try {
     const response = await axiosInstance.post(
-      `${ORGANIZATION_API_URL}/mail/feedback`,
+      `${ORGANIZATION_API_URL}/feedback`,
       {
         feedbackContent,
         rating,
@@ -62,8 +62,8 @@ export const updateProfile = async (name, profilePicture) => {
     if (name) formData.append('name', name);
     if (profilePicture) formData.append('profilePicture', profilePicture);
 
-    const response = await axiosInstance.put(
-      `${ORGANIZATION_API_URL}/profile/update`,
+    const response = await axiosInstance.patch(
+      `${ORGANIZATION_API_URL}/profile`,
       formData,
       {
         headers: {

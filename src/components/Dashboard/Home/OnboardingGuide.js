@@ -1,6 +1,6 @@
 import AddMembersModal from '../Global/AddPeopleModal';
 import { OnboardingSteps } from '@assets/data/onBoardingSteps';
-import { message } from 'antd';
+import { useNotifications } from '@components/Common/Notification';
 import { Icons } from '@utils/constantData/icons';
 import { Copy } from '@utils/copyText';
 import { connectLinkedIn } from '@utils/connectLinkedIn';
@@ -13,6 +13,7 @@ const OnboardingGuide = ({
   invitedProfiles = [],
   selectedProfile = null,
 }) => {
+  const message = useNotifications();
   const isProfileAdded = invitedProfiles.length > 0 || selectedProfile !== null;
 
   const isExtensionInstalled =

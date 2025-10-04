@@ -5,7 +5,7 @@ import LinkedInConnection from './LinkedInConnected';
 import MediaUploader from './MediaUploader';
 import PostPreviewSection from './LinkedInPostPreview';
 import PostActions from './PostActions';
-import { message } from 'antd';
+import { useNotifications } from '@components/Common/Notification';
 import { getContentCalendar } from '@services/Members';
 import {
   saveDraftLinkedInPost,
@@ -16,6 +16,7 @@ import { getAllMembers } from '@services/Members';
 import { fetchOrganizationData } from '@services/Organization';
 
 const PostScheduler = () => {
+  const message = useNotifications();
   const location = useLocation();
   const content = location?.state?.content;
   const postContents = location?.state?.postContents;

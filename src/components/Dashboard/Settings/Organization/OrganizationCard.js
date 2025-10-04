@@ -1,23 +1,48 @@
 import { Icons } from '@utils/constantData/icons';
+import { useState, useEffect } from 'react';
 
-export const OrganizationCard = ({ userData }) => {
+const getInitials = (name) => {
+  if (!name) return 'NA';
+  return name
+    .split(' ')
+    .map((word) => word[0])
+    .join('')
+    .toUpperCase()
+    .slice(0, 2);
+};
+
+export const OrganizationCard = ({ userData, setIsModalOpen }) => {
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageError, setImageError] = useState(false);
+
+  useEffect(() => {
+    setImageLoaded(false);
+    setImageError(false);
+  }, [userData?.profilePicture]);
+
   return (
-    <div className="mb-6 bg-[#f2f5f5]  rounded-xl p-2 pr-4 flex flex-col gap-3 justify-between">
+    <div className="mb-6 bg-[#f2f5f5] rounded-xl p-2 pr-4 flex flex-col gap-3 justify-between">
       <div className="p-2 pr-2 rounded-xl flex gap-6 items-start justify-between">
         <div className="flex justify-start items-center gap-4">
-          {userData?.profilePicture ? (
-            <img
-              src={userData?.profilePicture}
-              alt="Profile"
-              className="mt-1 w-16 h-16 rounded-full object-cover border"
-            />
-          ) : (
-            <img
-              src="https://firebasestorage.googleapis.com/v0/b/coldemail-2d11a.appspot.com/o/Avatar.png?alt=media&token=b07b4ca9-074c-465e-985b-7c6e562f2e7b"
-              alt="Profile"
-              className="mt-1 w-16 h-16 rounded-full object-cover border"
-            />
-          )}
+          <div className="relative mt-1 w-16 h-16 rounded-full overflow-hidden border bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
+            {(!userData?.profilePicture || imageError || !imageLoaded) && (
+              <span className="text-white font-bold text-xl">
+                {getInitials(userData?.name)}
+              </span>
+            )}
+            {userData?.profilePicture && !imageError && (
+              <img
+                src={userData.profilePicture}
+                alt="Profile"
+                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-200 ${
+                  imageLoaded ? 'opacity-100' : 'opacity-0'
+                }`}
+                onLoad={() => setImageLoaded(true)}
+                onError={() => setImageError(true)}
+              />
+            )}
+          </div>
+
           <div className="flex flex-col gap-1">
             <p className="text-lg p-0 m-0 text-gray-900">
               {userData?.name || 'N/A'}
@@ -51,18 +76,7 @@ export const OrganizationCard = ({ userData }) => {
                   {userData.oauthProvider === 'google' ? 'Google' : 'Password'}
                 </span>
               </p>
-              <p className="p-0 m-0">
-                Current Plan:{' '}
-                <span className="font-bold p-0 m-0">
-                  {userData?.subscription?.plan.toUpperCase()}
-                </span>
-              </p>
             </div>
-            {userData.oauthProvider !== 'google' && (
-              <button className="text-gray-800 text-left self-end text-sm p-0 m-0">
-                Reset Password
-              </button>
-            )}
           </div>
         </p>
       </div>

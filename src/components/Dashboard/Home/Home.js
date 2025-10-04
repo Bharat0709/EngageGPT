@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { message } from 'antd';
+import { useNotifications } from '@components/Common/Notification';
 import { Icons } from '@utils/constantData/icons';
 import { formatDate } from '@utils/formatDate';
 import { goTo } from '@utils/navigator';
@@ -49,6 +49,7 @@ const StatusBadge = ({ lastSyncedAt }) => {
 const Home = () => {
   const dispatch = useDispatch();
   const location = useLocation();
+  const message = useNotifications();
   const authToken = Cookies.get('engage-gpt');
   const [profiles, setProfiles] = useState([]);
   const [selectedProfile, setSelectedProfile] = useState(null);

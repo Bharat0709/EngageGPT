@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { message } from 'antd';
+import { useNotifications } from '@components/Common/Notification';
 import PostConfirmationModal from './PostConfirmationModal';
 import DateTimeSelector from '../../Common/DateTImePicker';
 import TimezonePicker from '@components/Common/TimeZonePicker';
@@ -17,6 +17,7 @@ const PostActions = ({
   isPosting = false,
   orgData,
 }) => {
+  const message = useNotifications();
   const [disabled, setIsDisabled] = useState(false);
   const [selectedDateTime, setSelectedDateTime] = useState(null);
   const [selectedTimeZone, setSelectedTimeZone] = useState('Asia/Kolkata');
@@ -230,7 +231,6 @@ const PostActions = ({
           </button>
         </div>
       </div>
-
 
       <PostConfirmationModal
         {...modalConfig}

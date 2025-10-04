@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
-import { message } from 'antd';
 import {
   deleteSchduledPost,
   getScheduledPosts,
   updateScheduledOrDraftPost,
 } from '../../../network/LinkedIn';
+import { useNotifications } from '@components/Common/Notification';
 
 export const usePostHistory = (selectedProfile) => {
+  const message = useNotifications();
   const [postHistory, setPostHistory] = useState({
     scheduled: [],
     posted: [],
