@@ -20,22 +20,22 @@ const AutomationNavbar = ({
       icon: Icons.Document,
     },
 
-    // {
-    //   id: 'pending_approvals',
-    //   label: 'Approvals',
-    //   icon: Icons.Clock,
-    //   badge: pendingApprovals,
-    // },
-    // {
-    //   id: 'analytics',
-    //   label: 'Analytics',
-    //   icon: Icons.BarChart,
-    // },
-    // {
-    //   id: 'settings',
-    //   label: 'Settings',
-    //   icon: Icons.Settings,
-    // },
+    {
+      id: 'pending_approvals',
+      label: 'Approvals',
+      icon: Icons.Clock,
+      badge: pendingApprovals,
+    },
+    {
+      id: 'analytics',
+      label: 'Analytics',
+      icon: Icons.BarChart,
+    },
+    {
+      id: 'settings',
+      label: 'Settings',
+      icon: Icons.Settings,
+    },
   ];
   console.log(memberProfiles, selectedProfile);
   return (

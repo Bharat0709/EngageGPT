@@ -1,0 +1,122 @@
+{
+  "name": "WhatsApp Expense Manager",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "whatsapp-expense",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "id": "1",
+      "name": "WhatsApp Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "operation": "chat",
+        "model": "gpt-4o-mini",
+        "text": "You are an expense extraction assistant. Given a WhatsApp message, extract structured expense details.\\n\\nMessage: {{$json[\"body\"]}}\\n\\nRespond strictly in JSON format with:\\n{\\n  \"amount\": <number>,\\n  \"category\": <string>,\\n  \"description\": <string>,\\n  \"date\": <YYYY-MM-DD>\\n}"
+      },
+      "id": "2",
+      "name": "AI Expense Parser",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 1,
+      "position": [600, 300],
+      "credentials": {
+        "openAIApi": {
+          "id": "REPLACE_WITH_YOUR_OPENAI_CREDENTIAL_ID",
+          "name": "OpenAI Account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "sheetId": "REPLACE_WITH_YOUR_GOOGLE_SHEET_ID",
+        "range": "Expenses!A:E",
+        "options": {
+          "valueInputMode": "RAW"
+        },
+        "fields": {
+          "values": [
+            "={{$json[\"date\"]}}",
+            "={{$json[\"from\"]}}",
+            "={{$json[\"amount\"]}}",
+            "={{$json[\"category\"]}}",
+            "={{$json[\"description\"]}}"
+          ]
+        }
+      },
+      "id": "3",
+      "name": "Google Sheets Append Row",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 2,
+      "position": [950, 300],
+      "credentials": {
+        "googleApi": {
+          "id": "REPLACE_WITH_YOUR_GOOGLE_CREDENTIAL_ID",
+          "name": "Google Sheets Account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\"status\":\"success\",\"message\":\"✅ Added ₹{{$json[\\\"amount\\\"]}} under {{$json[\\\"category\\\"]}} for {{$json[\\\"description\\\"]}}.\"}"
+      },
+      "id": "4",
+      "name": "Send WhatsApp Confirmation",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [1250, 300]
+    }
+  ],
+  "connections": {
+    "WhatsApp Webhook": {
+      "main": [
+        [
+          {
+            "node": "AI Expense Parser",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Expense Parser": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets Append Row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Append Row": {
+      "main": [
+        [
+          {
+            "node": "Send WhatsApp Confirmation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "tags": [
+    "whatsapp",
+    "expenses",
+    "ai",
+    "google-sheets"
+  ]
+}

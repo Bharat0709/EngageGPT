@@ -13,6 +13,5 @@ module.exports = function override(config, env) {
     // Add exclude property to ignore react-datepicker
     sourceMapLoaderRule.exclude = /node_modules\/react-datepicker/;
   }
-
   return config;
 };

@@ -177,19 +177,19 @@ const NotificationItem = ({ notification, onRemove, position }) => {
 
           {/* Content */}
           <div className="flex-1 min-w-0 pr-2">
-            {notification.title && (
-              <h4 className="text-sm font-semibold text-white mb-1 leading-tight">
+            {/* {notification.title && (
+              <h4 className="text-base font-semibold text-white leading-tight">
                 {notification.title}
               </h4>
-            )}
-            <p className="text-sm text-white leading-relaxed break-words">
+            )} */}
+            <p className="text-base text-white m-0 p-0 leading-relaxed break-words">
               {notification.message}
             </p>
-            {notification.description && (
+            {/* {notification.description && (
               <p className="text-xs text-white mt-1 leading-relaxed break-words">
                 {notification.description}
               </p>
-            )}
+            )} */}
           </div>
 
           {/* Close Button */}
@@ -204,7 +204,7 @@ const NotificationItem = ({ notification, onRemove, position }) => {
         </div>
 
         {/* Action Buttons */}
-        {notification.actions && notification.actions.length > 0 && (
+        {/* {notification.actions && notification.actions.length > 0 && (
           <div className="mt-3 pt-2 border-t border-white/20">
             <div className="flex space-x-2 justify-end">
               {notification.actions.map((action, index) => (
@@ -228,10 +228,10 @@ const NotificationItem = ({ notification, onRemove, position }) => {
               ))}
             </div>
           </div>
-        )}
+        )} */}
 
         {/* Progress Bar - Dynamic Island Style */}
-        {notification.duration && notification.duration > 0 && (
+        {/* {notification.duration && notification.duration > 0 && (
           <div
             className="absolute bottom-2 left-4 right-4 h-1 rounded-full backdrop-blur-md 
             bg-white/20 border border-white/30 overflow-hidden shadow-inner"
@@ -246,7 +246,7 @@ const NotificationItem = ({ notification, onRemove, position }) => {
               }}
             />
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );
@@ -304,7 +304,7 @@ export const NotificationProvider = ({
       const id = Date.now() + Math.random();
       const newNotification = {
         id,
-        duration: 5000,
+        duration: 3000,
         closable: true,
         ...notification,
       };
@@ -353,7 +353,7 @@ export const NotificationProvider = ({
       return addNotification({
         type: NOTIFICATION_TYPES.ERROR,
         message,
-        duration: 8000,
+        duration: 3000,
         ...options,
       });
     },

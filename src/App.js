@@ -23,6 +23,8 @@ const NotFound = lazy(() => import('@pages/NotFound'));
 const PasswordSetReset = lazy(() => import('@pages/ResetPasword'));
 const FeedbackSurvey = lazy(() => import('@pages/UninstallSurvey'));
 const UpdateInfoScreen = lazy(() => import('@pages/UpdatesInfo'));
+const GoogleLoginRedirect = lazy(() => import('@pages/LoggingInPage'));
+
 
 const AppRoutes = () => {
   const navigate = useNavigate();
@@ -43,9 +45,17 @@ const AppRoutes = () => {
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/dashboard/*" element={<Dashboard />} />
         <Route path="/verify-email" element={<EmailVerification />} />
         <Route path="/reset-password/:token" element={<PasswordSetReset />} />
+        <Route path="/auth/google/callback" element={<GoogleLoginRedirect />} />
+        <Route
+          path="/dashboard/*"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/survey"
           element={
@@ -65,7 +75,7 @@ const App = () => {
   return (
     <Router>
       <div className="App">
-        <NotificationProvider position="top-center" maxNotifications={5}>
+        <NotificationProvider position="bottom-right" maxNotifications={5}>
           <AppRoutes />
         </NotificationProvider>
       </div>

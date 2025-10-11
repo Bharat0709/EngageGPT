@@ -118,7 +118,7 @@ const UpgradeModal = ({ isOpen, onClose }) => {
               </button>
             </div>
             <div className="flex items-center gap-4 justify-between w-full ">
-              <div className="flex justify-center">
+              <div className="flex justify-between w-full items-center">
                 <div className="bg-gray-100 rounded-lg flex p-1">
                   {['INR', 'USD'].map((cur) => (
                     <motion.button
@@ -144,6 +144,7 @@ const UpgradeModal = ({ isOpen, onClose }) => {
                     </motion.button>
                   ))}
                 </div>
+                <div><p className='text-sm lg:hidden flex'>View how credits are consumed </p></div>
               </div>
               <button
                 className="text-gray-400 lg:flex hidden hover:text-gray-600 p-2 rounded-lg hover:bg-gray-100 transition-all"

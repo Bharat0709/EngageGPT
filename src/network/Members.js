@@ -244,3 +244,15 @@ export const deleteMemberAccount = async (memberId) => {
     throw new Error(errorMsg);
   }
 };
+
+export const resetMemberCredits = async (memberId) => {
+  try {
+    const response = await axiosInstance.post(
+      `${MEMBER_API_URL}/reset-credits/${memberId}`
+    );
+    return response.data.data;
+  } catch (error) {
+    const errorMsg = getErrorMessage(error);
+    throw new Error(errorMsg);
+  }
+};

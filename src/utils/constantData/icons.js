@@ -58,6 +58,8 @@ import {
   FiTrendingDown,
   FiList,
   FiCreditCard,
+  FiCommand,
+  FiSearch,
 } from 'react-icons/fi';
 
 import {
@@ -214,7 +216,7 @@ export const Icons = {
   FaHeart: FaHeart,
   Linkedin: FaLinkedin,
   Envelope: FaEnvelope,
-  Search: FaSearch,
+  Search: FiSearch,
   RegComments: FaRegComments,
   Download: FiDownload,
   Repeat: FiRepeat,
@@ -228,5 +230,6 @@ export const Icons = {
   Gift : FaCoins,
   TrendingDown: FiTrendingDown,
   List: FiList,
-  CreditCard: FiCreditCard
+  CreditCard: FiCreditCard,
+  Command: FiCommand
 };

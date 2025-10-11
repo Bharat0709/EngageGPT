@@ -5,7 +5,7 @@ const InfoModal = ({ isOpen, onClose, title, content }) => {
 
   return (
     <div className="fixed inset-0 w-full z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm transition-opacity">
-      <div className="bg-white flex flex-col lg:max-w-lg w-11/12 h-3/4 overflow-y-scroll scrollbar-hide p-0 rounded-3xl shadow-xl transform transition-all duration-300 ease-in-out">
+      <div className="bg-white flex flex-col lg:max-w-lg w-11/12 h-fit overflow-y-scroll scrollbar-hide p-0 rounded-3xl shadow-xl transform transition-all duration-300 ease-in-out">
         {/* Header */}
         <div className="bg-indigo-50 rounded-t-3xl p-6">
           <div className="flex justify-between items-center">
@@ -27,7 +27,7 @@ const InfoModal = ({ isOpen, onClose, title, content }) => {
         </div>
 
         {/* Content */}
-        <div className="p-6">
+        <div className="p-4">
           <div className="text-gray-700 leading-relaxed">{content}</div>
 
           {/* Footer Button */}

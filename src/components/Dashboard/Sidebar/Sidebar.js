@@ -112,19 +112,23 @@ const Sidebar = () => {
           {isLoading ? (
             <SidebarSkeletonLoader isOpen={isOpen} />
           ) : (
-            <OrganizationCard
-              userData={userData}
-              isOpen={isOpen}
-              isCardOpen={isCardOpen}
-              setShowCreditsModal={setShowCreditsModal}
-              isLogoutModalOpen={isLogoutModalOpen}
-              setIsLogoutModalOpen={setIsLogoutModalOpen}
-              email={userData?.email}
-              onToggleCard={handleToggleCard}
-              onSettingsClick={handleProfileNavigate}
-              setIsFeedbackModalOpen={setIsFeedbackModalOpen}
-              setIsHelpModalOpen={setIsHelpModalOpen}
-            />
+            <>
+              
+              <OrganizationCard
+                userData={userData}
+                isOpen={isOpen}
+                isCardOpen={isCardOpen}
+                setShowCreditsModal={setShowCreditsModal}
+                isLogoutModalOpen={isLogoutModalOpen}
+                setIsLogoutModalOpen={setIsLogoutModalOpen}
+                email={userData?.email}
+                onToggleCard={handleToggleCard}
+                onSettingsClick={handleProfileNavigate}
+                setIsFeedbackModalOpen={setIsFeedbackModalOpen}
+                setIsHelpModalOpen={setIsHelpModalOpen}
+                setIsLogoutModalVisible = {setIsLogoutModalOpen}
+              />
+            </>
           )}
         </nav>
       </div>
@@ -142,7 +146,6 @@ const Sidebar = () => {
         onClose={() => setIsLogoutModalOpen(false)}
         onConfirm={handleLogout}
       />
-
       <InfoModal
         isOpen={showCreditsModal}
         onClose={() => setShowCreditsModal(false)}

@@ -213,7 +213,7 @@ const AutomationManager = ({ memberId, organizationId, onProfileChange }) => {
     try {
       setIsLoading(true);
       // API call to bulk retry
-      // await bulkRetryAutomations(automationIds);
+      await bulkRetryAutomations(automationIds);
 
       message.success(
         `${automationIds.length} automations retried successfully`,

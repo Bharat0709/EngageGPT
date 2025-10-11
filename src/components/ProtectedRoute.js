@@ -1,18 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import Cookies from 'js-cookie';
 import { useNotifications } from './Common/Notification';
 
 const ProtectedRoute = ({ children }) => {
-  const encodedToken = Cookies.get('engage-gpt');
   const token = useSelector((state) => state.auth.token);
   const message = useNotifications();
 
-  if (!token || !encodedToken) {
-    message.info('Please log in to get started');
+  useEffect(() => {
+    if (!token) {
+      message.info('Please log in to get started');
+    }
+  }, []);
+
+  if (!token) {
     return <Navigate to="/login" replace />;
   }
+
   return children;
 };
 

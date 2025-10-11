@@ -2,6 +2,39 @@
 <html lang="en">
   <head>
     <!-- Google Tag Manager -->
+    <script type="text/javascript">
+      window.helploomSettings = { clientId: 'hl-t2nFvmB3-g9lq6F9uKc7q' };
+      (function () {
+        var w = window;
+        var hl = w.Helploom;
+        if (typeof hl === 'function') {
+          hl('update', w.helploomSettings);
+        } else {
+          var q = function () {
+            q.c(arguments);
+          };
+          q.q = [];
+          q.c = function (args) {
+            q.q.push(args);
+          };
+          w.Helploom = q;
+          var l = function () {
+            var s = document.createElement('script');
+            s.type = 'text/javascript';
+            s.async = true;
+            s.src = 'https://helploom.com/widget.js';
+            var x = document.getElementsByTagName('script')[0];
+            x.parentNode.insertBefore(s, x);
+          };
+          if (window.attachEvent) {
+            window.attachEvent('onload', l);
+          } else {
+            window.addEventListener('load', l, false);
+          }
+        }
+      })();
+    </script>
+
     <script>
       (function (w, d, s, l, i) {
         w[l] = w[l] || [];
@@ -118,6 +151,11 @@
     </script>
 
     <script type="text/javascript">
+      window.Helploom('identify', {
+        uniqueId: string, // Optional: Your unique identifier for the user (e.g. userId).
+        name: string, // Optional
+        email: string, // Optional
+      });
       (function (c, l, a, r, i, t, y) {
         c[a] =
           c[a] ||
@@ -133,7 +171,7 @@
     </script>
 
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-
+  
     <title>EngageGPT: AI for LinkedIn</title>
   </head>
   <body>

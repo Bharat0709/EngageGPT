@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { MenuButton } from './MenuButton';
 import { useEffect, useState } from 'react';
 import UpgradeModal from '../../Common/UpgradeModal';
+import CommandPalette from '../Global/CommandPalette';
 
 const OrganizationCard = ({
   userData,
@@ -22,6 +23,9 @@ const OrganizationCard = ({
   } = userData || {};
 
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageError, setImageError] = useState(false);
+  const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
 
   // Get user initials for avatar fallback
   const getInitials = (name) => {
@@ -33,17 +37,74 @@ const OrganizationCard = ({
       .slice(0, 2);
   };
 
-  const [imageLoaded, setImageLoaded] = useState(false);
-  const [imageError, setImageError] = useState(false);
-
   // Reset states when profilePicture changes
   useEffect(() => {
     setImageLoaded(false);
     setImageError(false);
   }, [profilePicture]);
 
+  // Listen for Command Palette action events
+  useEffect(() => {
+    const handleHelpModal = () => setIsHelpModalOpen(true);
+    const handleFeedbackModal = () => setIsFeedbackModalOpen(true);
+    const handleLogoutModal = () => setIsLogoutModalOpen(true);
+
+    window.addEventListener('openHelpModal', handleHelpModal);
+    window.addEventListener('openFeedbackModal', handleFeedbackModal);
+    window.addEventListener('openLogoutModal', handleLogoutModal);
+
+    return () => {
+      window.removeEventListener('openHelpModal', handleHelpModal);
+      window.removeEventListener('openFeedbackModal', handleFeedbackModal);
+      window.removeEventListener('openLogoutModal', handleLogoutModal);
+    };
+  }, [setIsHelpModalOpen, setIsFeedbackModalOpen, setIsLogoutModalOpen]);
+
+  // Global keyboard shortcut for Command Palette
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      // Check for Cmd+K (Mac) or Ctrl+K (Windows/Linux)
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        setIsCommandPaletteOpen(true);
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
   return (
-    <>
+    <div className="flex flex-col items-center justify-center">
+      {/* Command Palette Trigger Button */}
+      {isOpen && (
+        <button
+          onClick={() => setIsCommandPaletteOpen(true)}
+          className="mb-3 w-full px-4 py-2 flex items-center justify-between gap-2 rounded-lg hover:bg-white/20 transition-all duration-200 group"
+        >
+          <div className="flex items-center gap-2">
+            <Icons.Command className="h-4 w-4 text-gray-700 group-hover:text-gray-900 transition-colors" />
+            <span className="text-sm text-gray-700 group-hover:text-gray-900 transition-colors">
+              Quick Actions
+            </span>
+          </div>
+          <kbd className="px-2 py-1 text-xs text-gray-600 bg-white/50 border border-gray-300 rounded group-hover:border-gray-400 transition-colors">
+            ⌘K
+          </kbd>
+        </button>
+      )}
+
+      {/* Compact Command Palette Button for Collapsed Sidebar */}
+      {!isOpen && (
+        <button
+          onClick={() => setIsCommandPaletteOpen(true)}
+          className="mb-3 w-14 h-14 flex items-center justify-center rounded-lg hover:bg-white/20 transition-all duration-200 group"
+          title="Quick Actions (⌘K)"
+        >
+          <Icons.Command className="h-5 w-5 text-gray-700 group-hover:text-gray-900 transition-colors" />
+        </button>
+      )}
+
       <div
         className="bg-gradient-to-br from-slate-200 via-gray-100 to-indigo-100 rounded-2xl p-2 text-black transition-all duration-300 ease-in-out overflow-hidden"
         style={{ width: isOpen ? '230px' : '70px' }}
@@ -98,7 +159,7 @@ const OrganizationCard = ({
           {isOpen && (
             <button
               onClick={() => setShowUpgradeModal(true)}
-              className="w-full flex items-center justify-center gap-2 px-8 py-2.5 text-xs font-semibold text-white bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-xl border-none overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/30 before:to-transparent before:w-full before:h-full before:translate-x-[-100%] hover:before:animate-[slide_1s_infinite] before:skew-x-12"
+              className="w-full flex items-center justify-center gap-2 px-8 py-2.5 text-xs font-semibold text-white bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-xl border-none overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/30 before:to-transparent before:w-full before:h-full before:translate-x-[-100%] hover:before:animate-[slide_1s_infinite] before:skew-x-12 mb-3"
             >
               <Icons.Credits
                 size={16}
@@ -107,25 +168,6 @@ const OrganizationCard = ({
               <span className="text-center">Add More Credits</span>
             </button>
           )}
-
-          {/* Add these custom animations to your global CSS or Tailwind config */}
-          <style jsx>{`
-            @keyframes gradient-xy {
-              0%,
-              100% {
-                background-position: 0% 50%;
-                background-size: 400% 400%;
-              }
-              50% {
-                background-position: 100% 50%;
-                background-size: 400% 400%;
-              }
-            }
-
-            .animate-gradient-xy {
-              animation: gradient-xy 3s ease infinite;
-            }
-          `}</style>
 
           <button
             onClick={onToggleCard}
@@ -137,7 +179,7 @@ const OrganizationCard = ({
                 isOpen ? 'mr-0' : 'mr-10'
               }`}
             >
-              <div className="relative bg-gradient-to-br from-purple-500 to-pink-500 min-h-10 min-w-10 rounded-full overflow-hidden  flex items-center justify-center">
+              <div className="relative bg-gradient-to-br from-purple-500 to-pink-500 min-h-10 min-w-10 rounded-full overflow-hidden flex items-center justify-center">
                 {(!profilePicture || imageError || !imageLoaded) && (
                   <span className="text-white font-semibold text-xs">
                     {getInitials(name)}
@@ -206,7 +248,13 @@ const OrganizationCard = ({
         isOpen={showUpgradeModal}
         onClose={() => setShowUpgradeModal(false)}
       />
-    </>
+
+      {/* Command Palette - Renders at root level with z-[9999] */}
+      <CommandPalette
+        isOpen={isCommandPaletteOpen}
+        onClose={() => setIsCommandPaletteOpen(false)}
+      />
+    </div>
   );
 };
 

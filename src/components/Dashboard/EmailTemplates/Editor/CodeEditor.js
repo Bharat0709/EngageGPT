@@ -212,7 +212,7 @@ Best regards,
                         : 'bg-gray-100 text-gray-600'
                     }`}
                   >
-                    {formData.templateBody?.length || 0}/5000
+                    {formData.templateBody?.length || 0}/20000
                   </span>
                 </div>
 
@@ -220,7 +220,7 @@ Best regards,
                 <textarea
                   value={formData.templateBody || ''}
                   onChange={handleCodeChange}
-                  maxLength={5000}
+                  maxLength={20000}
                   placeholder={htmlPlaceholder}
                   className={`w-full h-full pl-4 pr-20 overflow-y-scroll scrollbar-hide py-4 resize-none outline-none border-0 font-mono text-sm leading-6 ${
                     isDarkTheme
@@ -258,15 +258,15 @@ Best regards,
                   <div className="absolute bottom-2 left-2 right-2">
                     <p
                       className={`text-xs px-2 py-1 rounded ${
-                        (formData.templateBody?.length || 0) > 5000
+                        (formData.templateBody?.length || 0) > 20000
                           ? 'bg-red-100 text-red-700'
                           : 'bg-yellow-100 text-yellow-700'
                       }`}
                     >
-                      {(formData.templateBody?.length || 0) > 5000
+                      {(formData.templateBody?.length || 0) > 20000
                         ? 'Character limit exceeded. Content will be truncated.'
                         : `Approaching character limit (${
-                            5000 - (formData.templateBody?.length || 0)
+                            20000 - (formData.templateBody?.length || 0)
                           } remaining)`}
                     </p>
                   </div>

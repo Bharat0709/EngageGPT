@@ -47,10 +47,7 @@ const StatusBadge = ({ lastSyncedAt }) => {
 };
 
 const Home = () => {
-  const dispatch = useDispatch();
-  const location = useLocation();
   const message = useNotifications();
-  const authToken = Cookies.get('engage-gpt');
   const [profiles, setProfiles] = useState([]);
   const [selectedProfile, setSelectedProfile] = useState(null);
   const [isAddMemberModalOpen, setIsAddMemberModalOpen] = useState(false);
@@ -59,28 +56,6 @@ const Home = () => {
   const [refreshMembers, setRefreshMembers] = useState(false);
   const [stats, setStats] = useState([]);
   const [onboardingComplete, setOnboardingComplete] = useState(false);
-
-  useEffect(() => {
-    const token = new URLSearchParams(location.search).get('token');
-
-    if (!token && !authToken) {
-      message.info('Session expired, Please log in.');
-      goTo('/login');
-      return;
-    }
-
-    if (token && !authToken) {
-      const encodedToken = encodeToken(token);
-
-      Cookies.set('engage-gpt', encodedToken, {
-        expires: 3,
-        secure: true,
-        sameSite: 'strict',
-      });
-
-      dispatch(setAuthTokenAction(token));
-    }
-  }, [location.search, authToken, dispatch, goTo]);
 
   useEffect(() => {
     const fetchAndSetUserData = async () => {
@@ -105,7 +80,7 @@ const Home = () => {
         setOnboardingComplete(hasProfiles && hasConnected && isProfileSynced);
       } catch (err) {
         setIsLoading(false);
-        message.error('Failed to load member data');
+        // message.error('Failed to load member data');
       }
     };
 

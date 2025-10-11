@@ -18,7 +18,7 @@ const PostConfirmationModal = ({
       onClick={onClose}
     >
       <div
-        className="bg-white lg:w-1/3 w-11/12 flex flex-col p-4 rounded-2xl relative"
+        className="bg-white lg:w-1/3 w-11/12 flex flex-col p-4 rounded-3xl relative"
         onClick={(e) => e.stopPropagation()}
       >
         <h2 className="text-xl mt-2 text-center mb-4">{title}</h2>

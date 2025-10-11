@@ -2,14 +2,21 @@ import React, { useState, useEffect } from 'react';
 import { Icons } from '@utils/constantData/icons';
 import { login } from '@services/Auth';
 import useAuthCheck from '@hooks/useAuth';
+import { useDispatch } from 'react-redux';
 import { AuthFooter } from '@components/Auth/Footer';
 import { GoogleAuth } from '@components/Auth/GoogleAuth';
 import { AuthHeader } from '@components/Auth/Header';
 import { goTo } from '@utils/navigator';
 import { useNotifications } from '@components/Common/Notification';
+import { setAuthTokenAction } from '@redux/auth/authActions';
+import { useLocation } from 'react-router-dom';
 
 const Login = () => {
   useAuthCheck();
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const message = useNotifications();
+
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [lastLoginMethod, setLastLoginMethod] = useState(null);
@@ -17,26 +24,40 @@ const Login = () => {
     email: '',
     password: '',
   });
-  const message = useNotifications();
 
-  // Load last login method on component mount
+  // Load last login method on mount
   useEffect(() => {
     const savedMethod = localStorage.getItem('lastLoginMethod');
     if (savedMethod) {
       setLastLoginMethod(savedMethod);
     }
+
+    // Check for login errors from redirect
+    const queryParams = new URLSearchParams(location.search);
+    const errorParam = queryParams.get('error');
+    if (errorParam) {
+      let errorMessage = '';
+      switch (errorParam) {
+        case 'auth_failed':
+          errorMessage = 'Google authentication failed. Please try again.';
+          break;
+        case 'token_failed':
+          errorMessage = 'Authentication failed. Please login again.';
+          break;
+        default:
+          errorMessage = 'Login failed. Please try again.';
+      }
+      message.error(errorMessage);
+    }
   }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
+    setShowPassword((prev) => !prev);
   };
 
   const handleSubmit = async (e) => {
@@ -48,14 +69,16 @@ const Login = () => {
     try {
       setIsLoading(true);
       const loginResponse = await login(formData.email, formData.password);
+
       if (loginResponse.token) {
-        // Save login method to localStorage
         localStorage.setItem('lastLoginMethod', 'email');
-        goTo(`/dashboard?token=${loginResponse.token}`);
+        dispatch(setAuthTokenAction(loginResponse.token));
+        goTo(`/dashboard`);
       }
+
       message.success('Login successful!');
     } catch (error) {
-      message.error(error.message);
+      message.error(error.message || 'Login failed.');
     } finally {
       setIsLoading(false);
     }
@@ -75,14 +98,13 @@ const Login = () => {
               >
                 Email Address
               </label>
-
               <input
                 type="email"
                 name="email"
                 id="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="mt-2 block w-full p-3 border border-sky-700 rounded-full  bg-sky-900 focus:bg-sky-900 focus:outline-none [&::-webkit-autofill]:bg-sky-900 [&::-webkit-autofill]:text-white"
+                className="mt-2 block w-full p-3 border border-sky-700 rounded-full bg-sky-900 focus:bg-sky-900 focus:outline-none [&::-webkit-autofill]:bg-sky-900 [&::-webkit-autofill]:text-white"
                 placeholder="you@example.com"
                 required
               />
@@ -95,7 +117,6 @@ const Login = () => {
               >
                 Password
               </label>
-
               <div className="relative">
                 <input
                   type={showPassword ? 'text' : 'password'}
@@ -103,7 +124,7 @@ const Login = () => {
                   id="password"
                   value={formData.password}
                   onChange={handleChange}
-                  className="mt-1 block w-full p-3 border rounded-full  bg-sky-900 border-sky-700 focus:outline-none [&::-webkit-autofill]:bg-sky-800"
+                  className="mt-1 block w-full p-3 border rounded-full bg-sky-900 border-sky-700 focus:outline-none [&::-webkit-autofill]:bg-sky-800"
                   placeholder="••••••••"
                   required
                 />
@@ -118,7 +139,7 @@ const Login = () => {
 
             <button
               type="submit"
-              className=" w-full flex items-center justify-center rounded-full bg-white text-sky-900 py-2 px-10"
+              className="w-full flex items-center justify-center rounded-full bg-white text-sky-900 py-2 px-10"
             >
               {isLoading ? 'Logging In...' : 'Login'}
             </button>

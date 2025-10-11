@@ -2,10 +2,16 @@ import { useState, useEffect } from 'react';
 import { Icons } from '@utils/constantData/icons';
 import { goTo } from '@utils/navigator';
 import { BiUnlink } from 'react-icons/bi';
-import { Button, Skeleton } from 'antd';
+import { Skeleton } from 'antd';
+import Button from '@components/Common/Button';
 import AddPeopleModal from '../Global/AddPeopleModal';
 import DisconnectConfirmationModal from './DisconnectModal';
-import { getAllMembers, addNewMember } from '@services/Members';
+import {
+  getAllMembers,
+  addNewMember,
+  resetMemberCredits,
+} from '@services/Members';
+import ResetCreditsModal from './ResetCreditsModal';
 import 'antd/dist/reset.css';
 import { useNotifications } from '@components/Common/Notification';
 
@@ -16,6 +22,10 @@ export const People = () => {
   const [disconnectModalVisible, setDisconnectModalVisible] = useState(false);
   const [selectedPersonId, setSelectedPersonId] = useState(null);
   const [selectedFilter, setSelectedFilter] = useState('All');
+  const [resetCreditsModalVisible, setResetCreditsModalVisible] =
+    useState(false);
+  const [selectedPersonForReset, setSelectedPersonForReset] = useState(null);
+  const [isResetting, setIsResetting] = useState(false);
   const [refreshPeoplePage, setRefreshPeoplePage] = useState(false);
   const message = useNotifications();
 
@@ -56,6 +66,35 @@ export const People = () => {
   const handleDisconnectLinkedIn = (personId) => {
     setSelectedPersonId(personId);
     setDisconnectModalVisible(true);
+  };
+  const handleResetCredits = (person) => {
+    setSelectedPersonForReset(person);
+    setResetCreditsModalVisible(true);
+  };
+
+  const handleConfirmResetCredits = async () => {
+    if (!selectedPersonForReset) return;
+
+    setIsResetting(true);
+    try {
+      const response = await resetMemberCredits(selectedPersonForReset._id);
+
+      // Show success message (you can use toast or notification)
+      console.log('Credits reset successfully');
+
+      // Refresh the people list
+      setRefreshPeoplePage((prev) => !prev);
+
+      // Close modal
+      setResetCreditsModalVisible(false);
+      setSelectedPersonForReset(null);
+    } catch (error) {
+      console.error('Error resetting credits:', error);
+      message.error(error.message);
+      // Handle error (you can show error toast here)
+    } finally {
+      setIsResetting(false);
+    }
   };
 
   const handleConnectLinkedIn = () => {
@@ -192,7 +231,7 @@ export const People = () => {
               className="person-card w-full bg-[#f6f6f6] p-4 gap-4 rounded-xl lg:flex-row flex-col flex-wrap flex justify-between items-center"
             >
               <div className="flex lg:w-fit w-full lg:flex-row flex-col gap-4 items-center">
-                <div className="flex lg:w-fit w-full items-center gap-4 justify-start">
+                <div className="flex lg:w-fit w-full items-center gap-3 justify-start">
                   <img
                     src={person?.profilePicture}
                     alt={`${person?.name}'s profile`}
@@ -206,14 +245,29 @@ export const People = () => {
                       {person?.email}
                     </p>
                   </div>
-                </div>
-                <div className="flex items-center lg:flex-row flex-wrap gap-3 lg:w-max w-full">
+                </div>{' '}
+                <div className="flex items-center lg:flex-row flex-wrap gap-2 lg:w-max w-full">
                   <p className="text-xs font-semibold rounded-lg bg-gray-200 p-1 px-3 m-0 text-gray-600">
                     Total {person?.totalCreditsUsed} credits used
                   </p>{' '}
-                  <p className="text-xs font-semibold rounded-lg bg-gray-200 p-1 px-3 m-0 text-gray-600">
-                    {person?.creditsUsedToday} credits used today
+                  <p
+                    className={`${
+                      person.creditsUsedToday === person.creditLimitperDay
+                        ? 'bg-red-600 text-white'
+                        : 'bg-gray-200 text-black'
+                    } text-xs font-semibold rounded-lg bg-gray-200 p-1 px-3 m-0 text-gray-600`}
+                  >
+                    {person?.creditsUsedToday}/{person.creditLimitperDay}{' '}
+                    credits used today
                   </p>{' '}
+                  {person.creditsUsedToday !== 0 && (
+                    <Button
+                      theme="dark"
+                      buttonText={'Reset Credits Used'}
+                      className="text-xs !p-1 !rounded-lg !px-3"
+                      onClick={() => handleResetCredits(person)}
+                    />
+                  )}
                   <p className="text-xs font-semibold rounded-lg bg-gray-200 p-1 px-3 m-0 text-gray-600">
                     {person?.daysActive} days active
                   </p>
@@ -222,7 +276,7 @@ export const People = () => {
                   </p>
                   <div className="flex w-max rounded-full text-green-600 items-center">
                     <p
-                      className={`text-sm p-0 m-0 font-medium ${
+                      className={`text-xs ml-2 p-0 m-0 font-medium ${
                         person.isConnected === 'connected'
                           ? 'text-green-700'
                           : 'text-red-600'
@@ -237,17 +291,16 @@ export const People = () => {
                     </p>
                   </div>
                 </div>
+                
               </div>
               <div className="flex flex-wrap gap-2 lg:w-fit w-full justify-between lg:mt-0 mt-2 items-center">
-                <div className="copy-token text-xs bg-white pl-2 rounded-lg flex items-center">
-                  Extension Connection Token
+                <div className="copy-token text-xs rounded-lg flex items-center">
                   <Button
-                    title="Copy Connection token"
-                    className="text-black hover:text-black"
+                    buttonText={'Copy Connection token'}
+                    className="text-black hover:text-black text-xs"
                     icon={<Icons.Copy />}
                     onClick={() => handleCopy(person.connectionToken)}
-                    type="link"
-                  ></Button>
+                  />
                 </div>
                 {person?.isLinkedinConnected ? (
                   <button
@@ -267,7 +320,6 @@ export const People = () => {
                     <Icons.LinkedIn className="text-sky-800" size={16} />
                   </button>
                 )}
-
                 <button
                   onClick={() => handleNavigateToSettings(person._id)}
                   className="rounded-lg text-black bg-white p-2 px-2 flex items-center gap-2 text-xs"
@@ -301,6 +353,16 @@ export const People = () => {
         onClose={() => setDisconnectModalVisible(false)}
         memberId={selectedPersonId}
         refreshPage={setRefreshPeoplePage}
+      />
+      <ResetCreditsModal
+        isVisible={resetCreditsModalVisible}
+        onClose={() => {
+          setResetCreditsModalVisible(false);
+          setSelectedPersonForReset(null);
+        }}
+        onConfirm={handleConfirmResetCredits}
+        personName={selectedPersonForReset?.name || ''}
+        isResetting={isResetting}
       />
     </div>
   );
