@@ -8,7 +8,6 @@ const CustomMultiSelect = ({
   onChange,
   placeholder = 'Select options...',
   className = '',
-  
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
