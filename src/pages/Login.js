@@ -122,6 +122,7 @@ const Login = () => {
                   type={showPassword ? 'text' : 'password'}
                   name="password"
                   id="password"
+                  autoComplete='current_password'
                   value={formData.password}
                   onChange={handleChange}
                   className="mt-1 block w-full p-3 border rounded-full bg-sky-900 border-sky-700 focus:outline-none [&::-webkit-autofill]:bg-sky-800"
@@ -150,8 +151,7 @@ const Login = () => {
               Last Used
             </p>
           )}
-
-          <AuthFooter mode="login" email={formData.email} />
+          <AuthFooter mode="login" email={formData?.email} />
         </div>
       </div>
     </div>

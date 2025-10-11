@@ -6,18 +6,18 @@ import { IoLogoWhatsapp } from 'react-icons/io';
 import EngageGPTLogo from '@assets/images/EngageGPTLogo.png';
 
 const handleWhatsAppContact = () => {
-  const message = useNotifications();
   const WHATSAPP_NUMBER = `${process.env.REACT_APP_CONTACT_NUMBER}`;
   const usermessage = encodeURIComponent('Hi, I need help with your service.');
   const phoneNumber = WHATSAPP_NUMBER.replace(/[^0-9]/g, '');
   const isMobile = /iPhone|Android/i.test(navigator.userAgent);
   const whatsappUrl = isMobile
     ? `whatsapp://send?phone=${phoneNumber}&text=${usermessage}`
-    : `https://web.whatsapp.com/send?phone=${phoneNumber}&text=${message}`;
+    : `https://web.whatsapp.com/send?phone=${phoneNumber}&text=${usermessage}`;
   window.open(whatsappUrl, '_blank');
 };
 
 const HelpModal = ({ isVisible, onClose }) => {
+  const message = useNotifications();
   const [helpQuery, setHelpQuery] = useState('');
   const [loading, setLoading] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);

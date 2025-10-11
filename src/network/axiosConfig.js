@@ -9,13 +9,13 @@ const axiosInstance = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-  withCredentials: true, // ✅ allow sending cookies automatically
+  withCredentials: true,
 });
 
 axiosInstance.interceptors.request.use(
   (config) => {
     const encodedToken = Cookies.get('engage-gpt');
-
+    console.log('FROM COOKIES', encodedToken);
     if (encodedToken) {
       // Optional: verify token validity before sending
       const token = decodeToken(encodedToken);
@@ -39,7 +39,7 @@ axiosInstance.interceptors.request.use(
     // The cookie will be automatically sent via withCredentials
     return config;
   },
-  (error) => Promise.reject(error)
+  (error) => Promise.reject(error),
 );
 
 axiosInstance.interceptors.response.use(
@@ -49,7 +49,7 @@ axiosInstance.interceptors.response.use(
       store.dispatch(logoutAction());
     }
     return Promise.reject(error);
-  }
+  },
 );
 
 export default axiosInstance;
