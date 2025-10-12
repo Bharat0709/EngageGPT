@@ -24,6 +24,7 @@ import GeneratePostSkeletonLoading from '../SkeletonLoaders/GeneratePostSkeleton
 import { goTo } from '@utils/navigator';
 import { Icons } from '@utils/constantData/icons';
 import InfoModal from '@components/Common/InfoModal';
+import { CustomSingleSelect } from '@components/Common/CustomSelect';
 
 const LinkedInPostGenerator = () => {
   const message = useNotifications();
@@ -269,14 +270,14 @@ const LinkedInPostGenerator = () => {
               </div>
             </div>
             <div className="flex items-center space-x-2 sm:space-x-4">
-              <button
+              {/* <button
                 onClick={handleRefresh}
                 className="p-2 text-gray-400 flex gap-3 bg-white rounded-xl hover:text-gray-600 hover:bg-white transition-all hover:"
                 title="Refresh data"
               >
                 <Icons.Refresh className="w-4 h-4" />
                 Refresh Credits
-              </button>
+              </button> */}
               {selectedProfile && (
                 <div className="hidden sm:flex items-center space-x-2 text-sm text-gray-600">
                   <div className="w-8 h-8 bg-[#0c4a6e] rounded-full flex items-center justify-center text-white font-semibold text-xs">
@@ -312,60 +313,6 @@ const LinkedInPostGenerator = () => {
               showPreview ? 'hidden lg:flex' : 'flex'
             }`}
           >
-            {/* Tone Selection */}
-            <div className="p-3 sm:p-4 border-b bg-gray-50 flex-shrink-0">
-              <div className="flex items-center space-x-2 mb-3">
-                <FaStar className="text-lg text-yellow-500" />
-                <span className="text-sm font-semibold text-gray-700">
-                  Select Tone:
-                </span>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {tones.map((tone) => (
-                  <button
-                    key={tone}
-                    onClick={() => setSelectedTone(tone)}
-                    className={`px-3 sm:px-4 py-2 rounded-full text-xs font-medium transition-all duration-200 ${
-                      selectedTone === tone
-                        ? 'bg-[#0c4a6e] text-white transform scale-105'
-                        : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200 hover:border-[#0c4a6e]'
-                    }`}
-                  >
-                    {tone}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* AI Model Selection */}
-            <div className="p-3 sm:p-4 flex flex-wrap border-b bg-gray-50 justify-between items-center">
-              <div className="flex items-center space-x-2 mb-3">
-                <FaRobot className="text-lg text-blue-500" />
-                <span className="text-sm font-semibold text-gray-700">
-                  Select AI Model:
-                </span>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {availableAIOptions.map((aiOption) => (
-                  <button
-                    key={aiOption.id}
-                    onClick={() => setSelectedAIOption(aiOption)}
-                    disabled={loading}
-                    className={`px-3 sm:px-4 py-2 rounded-full text-xs font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed ${
-                      selectedAIOption === aiOption
-                        ? 'bg-[#0c4a6e] text-white transform scale-105'
-                        : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200 hover:border-[#0c4a6e]'
-                    }`}
-                  >
-                    <div className="flex items-center space-x-1">
-                      <span>{aiOption}</span>
-                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                    </div>
-                  </button>
-                ))}
-              </div>
-            </div>
-
             {/* Messages */}
             <div
               ref={chatContainerRef}
@@ -459,37 +406,94 @@ const LinkedInPostGenerator = () => {
               <div ref={messagesEndRef} />
             </div>
 
-            {/* Input */}
-            <div className="p-4 border-t bg-white flex-shrink-0">
-              <div className="flex space-x-3">
-                <input
-                  type="text"
-                  value={inputValue}
-                  onChange={(e) => setInputValue(e.target.value)}
-                  onKeyPress={handleKeyPress}
-                  placeholder="What would you like to write about?"
-                  className="flex-1 p-3 border border-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0c4a6e] focus:border-transparent transition-all duration-200 text-sm sm:text-base"
-                  disabled={loading}
-                />
+            {/* Input Section */}
+            <div className="border-t border-gray-100 bg-white px-4 py-4">
+              {/* Model & Tone Selection - Custom Compact Row */}
+              <div className="mb-3 flex flex-wrap items-center justify-between gap-3 text-xs sm:text-sm">
+                <div className="flex items-center flex-wrap gap-4">
+                  <div className="w-36 sm:w-40">
+                    <div className="w-36 sm:w-40">
+                      <CustomSingleSelect
+                        label="Model"
+                        options={availableAIOptions.map((option) => ({
+                          label: option,
+                          value: option,
+                        }))}
+                        selectedValue={selectedAIOption}
+                        onChange={(val) => setSelectedAIOption(val)}
+                        placeholder="Select Model"
+                        dropdownPosition="top" // 👈 will appear above
+                      />
+                    </div>
+                  </div>
+
+                  <div className="w-36 sm:w-40">
+                    <CustomSingleSelect
+                      label="Tone"
+                      options={tones.map((tone) => ({
+                        label: tone,
+                        value: tone,
+                      }))}
+                      selectedValue={selectedTone}
+                      onChange={(val) => setSelectedTone(val)}
+                      placeholder="Select Tone"
+                      dropdownPosition='top'
+                    />
+                  </div>
+                </div>
+
+                {creditsLeft <= 10 && creditsLeft > 0 && (
+                  <div className="flex items-center space-x-1 text-orange-600 font-medium">
+                    <FaExclamationTriangle className="text-xs" />
+                    <span>{creditsLeft} credits left</span>
+                  </div>
+                )}
+              </div>
+
+              {/* Message Input Area */}
+              <div className="flex items-end space-x-3 relative">
+                <div className="flex-1 relative">
+                  <textarea
+                    value={inputValue}
+                    onChange={(e) => {
+                      if (e.target.value.length <= 2000)
+                        setInputValue(e.target.value);
+                    }}
+                    onKeyPress={(e) => {
+                      if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        handleSendMessage();
+                      }
+                    }}
+                    placeholder="What would you like to write about? Be specific about your topic, audience, and style..."
+                    className="w-full resize-none rounded-2xl border border-gray-200 px-4 py-3 pr-12 text-sm focus:outline-none focus:ring-2 focus:ring-[#0c4a6e] focus:border-transparent placeholder-gray-400 bg-gray-50 shadow-sm transition-all"
+                    rows="2"
+                    disabled={loading}
+                    style={{ maxHeight: '150px' }}
+                  />
+
+                  {/* Character Counter */}
+                  <div className="absolute bottom-1.5 right-4 text-[11px] text-gray-400">
+                    {inputValue.length} / 2000
+                  </div>
+                </div>
+
+                {/* Send Button */}
                 <button
                   onClick={handleSendMessage}
                   disabled={!inputValue.trim() || loading || creditsLeft <= 0}
-                  className="p-3 bg-[#0c4a6e] text-white rounded-xl hover:bg-blue-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center min-w-[50px]"
+                  className="flex-shrink-0 w-10 h-10 bg-[#0c4a6e] text-white rounded-full hover:bg-[#093958] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center shadow-sm"
                 >
-                  <FaArrowRight />
+                  <FaArrowRight className="text-sm" />
                 </button>
               </div>
-              <p className="text-xs lg:hidden flex mb-0 text-gray-500 mt-2">
-                {' '}
-                Click on the hamburger icon on top right corner to view the
-                generated post!
+
+              <p className="text-[11px] sm:text-xs text-gray-400 mt-2 text-center">
+                Press <span className="font-medium text-gray-600">Enter</span>{' '}
+                to send,{' '}
+                <span className="font-medium text-gray-600">Shift + Enter</span>{' '}
+                for new line
               </p>
-              {creditsLeft <= 10 && creditsLeft > 0 && (
-                <p className="text-xs text-orange-600 mt-2 mb-0 flex items-center space-x-1">
-                  <FaExclamationTriangle />
-                  <span>Low credits remaining: {creditsLeft}</span>
-                </p>
-              )}
             </div>
           </div>
 

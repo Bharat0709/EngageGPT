@@ -42,7 +42,7 @@ export const features = [
     description:
       'Track your active days on LinkedIn and optimize your engagement strategy.',
     learnMoreText: 'Watch Video',
-    link: 'https://www.youtube.com/watch?v=Vja1vuIcons.1U4',
+    link: 'https://youtu.be/Vja1vuFa1U4?si=XFzKKjw3DyWdHEfC',
     tag: 'Most Used',
     tagColor: 'bg-gradient-to-r from-blue-400 to-cyan-400',
   },
@@ -53,7 +53,7 @@ export const features = [
     description:
       'Easily create HTML/Text email with AI for outreach and follow-ups.',
     learnMoreText: 'Learn More',
-    link: '/dashboard/saved-posts',
+    link: '/dashboard',
     tag: 'Learn More',
     tagColor: 'bg-gradient-to-r from-yellow-300 to-green-300',
   },
@@ -76,7 +76,7 @@ export const features = [
     description:
       'Save Leads automatically based on custom keywords for easy reference and inspiration.',
     learnMoreText: 'Learn More',
-    link: '/dashboard/saved-posts',
+    link: '/dashboard/saved-leads',
     tag: 'New',
     tagColor: 'bg-gradient-to-r from-yellow-300 to-green-300',
   },
@@ -87,19 +87,19 @@ export const features = [
     description:
       'Filter your feed by hiding posts containing specific keywords you want to avoid.',
     learnMoreText: 'Learn More',
-    link: '/dashboard/saved-posts',
+    link: '/dashboard/saved-leads',
     tag: 'Popular',
     tagColor: 'bg-gradient-to-r from-blue-300 to-cyan-500',
   },
   {
-    icon: <Icons.Calendar className="w-6 h-6 text-blue-500" />,
+    icon: <Icons.Message className="w-6 h-6 text-blue-500" />,
     gradient: 'bg-gradient-to-r from-yellow-200 to-green-200',
-    title: 'Content Calendar',
+    title: 'Message Replies',
     description:
-      'Manage your posts efficiently with an intuitive content calendar',
+      'Reply to messages using AI within LinkedIn Platform',
     learnMoreText: 'Learn More',
-    link: '/dashboard/content-calendar',
-    tag: 'Hot',
+    link: '/dashboard/',
+    tag: 'New',
     tagColor: 'bg-gradient-to-r from-yellow-300 to-green-300',
   },
 ];

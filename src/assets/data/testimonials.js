@@ -26,4 +26,19 @@ export const testimonials = [
     designation: 'Analyst Trainee @PoleStar Solutions',
     color: 'bg-rose-500',
   },
+    {
+    review:
+      'This is very useful and amazing AI it really helped me a lot highly recommended',
+    name: 'Yashita',
+    designation: '',
+    color: 'bg-yellow-500',
+  },
+      {
+    review:
+      "Great poduct, very useful for content creation and posting. Hint: please make it run in a total autonomous workflow, so I don't have to decide each step. Regardless all that, it's great!",
+    name: 'Marcio R Fuzzato',
+    designation: '',
+    color: 'bg-green-500',
+  },
+  
 ];

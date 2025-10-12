@@ -69,9 +69,14 @@ const Testimonials = () => {
           </motion.p>
         </div>
 
-        <div className="border  w-fit mb-12 border-gray-700 mx-auto p-2 backdrop-blur-lg rounded-full flex items-center justify-center">
+        <div className="border  w-fit mb-4 border-gray-700 mx-auto p-2 backdrop-blur-lg rounded-full flex items-center justify-center">
           <span className="text-gray-700 font-bold text-xs px-4 lg:text-base ">
             Rated 4.6 ⭐on Chrome Web Store
+          </span>
+        </div>
+         <div className="border  w-fit mb-12 border-gray-700 mx-auto p-2 backdrop-blur-lg rounded-full flex items-center justify-center">
+          <span className="text-gray-700 font-bold text-xs px-4 lg:text-base ">
+            1000+ Users
           </span>
         </div>
 

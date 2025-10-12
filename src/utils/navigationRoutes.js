@@ -18,10 +18,20 @@ import {
   MdLock,
   MdInfo
 } from 'react-icons/md';
-import { FaLinkedin } from 'react-icons/fa';
+import { Icons } from './constantData/icons';
+import { isAction } from 'redux';
 
 export const navigationRoutes = [
   // ===== MAIN DASHBOARD =====
+  {
+    title : "Add More Credits",
+    description : "Add more credits to your account",
+    icon : <Icons.Credits size={20} className="text-gray-700" />,
+    keywords: ['upgarde' , 'top-up'],
+    category : "Main",
+    isAction : true,
+    path: "#upgrade",
+  },
   {
     title: 'Dashboard',
     description: 'View your main dashboard and overview',

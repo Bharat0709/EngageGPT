@@ -8,6 +8,7 @@ const CustomSingleSelect = ({
   onChange,
   placeholder = 'Select option...',
   className = '',
+  dropdownPosition = 'bottom', // 👈 new prop
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -43,13 +44,15 @@ const CustomSingleSelect = ({
         <button
           type="button"
           onClick={() => setIsOpen(!isOpen)}
-          className="w-full px-4 py-2 text-sm border border-gray-300 rounded-full focus:outline-none bg-white/70 backdrop-blur-sm hover:bg-white flex items-center justify-between"
+          className="w-full px-4 py-2 text-sm border border-gray-300 rounded-full 
+                     focus:outline-none bg-white/70 backdrop-blur-sm hover:bg-white 
+                     flex items-center justify-between transition-colors duration-150"
         >
           <span className={selectedValue ? 'text-gray-900' : 'text-gray-500'}>
             {selectedOption ? selectedOption.label : placeholder}
           </span>
           <Icons.Down
-            className={`w-4 h-4 text-gray-500 transition-transform ${
+            className={`w-4 h-4 text-gray-500 transition-transform duration-200 ${
               isOpen ? 'rotate-180' : ''
             }`}
           />
@@ -57,16 +60,25 @@ const CustomSingleSelect = ({
 
         {/* Dropdown Menu */}
         {isOpen && (
-          <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg max-h-70 overflow-y-auto">
+          <div
+            className={`absolute z-50 w-full bg-white border border-gray-200 rounded-lg 
+                       max-h-60 overflow-y-auto transition-all duration-150
+                       ${
+                         dropdownPosition === 'top'
+                           ? 'bottom-full mb-2'
+                           : 'mt-2 top-full'
+                       }`}
+          >
             {options.map((option) => (
               <div
                 key={option.value}
                 onClick={() => handleOptionClick(option.value)}
-                className={`px-4 py-2 hover:bg-gray-50 cursor-pointer text-sm ${
-                  selectedValue === option.value
-                    ? 'bg-gray-50 text-black'
-                    : 'text-gray-900'
-                }`}
+                className={`px-4 py-2 hover:bg-gray-50 cursor-pointer text-sm transition-colors
+                  ${
+                    selectedValue === option.value
+                      ? 'bg-gray-100 text-[#0c4a6e] font-medium'
+                      : 'text-gray-900'
+                  }`}
               >
                 {option.label}
               </div>

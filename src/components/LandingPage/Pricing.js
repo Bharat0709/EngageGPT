@@ -24,6 +24,7 @@ export default Pricing;
 export const TextParallaxContentExample = () => {
   return (
     <div
+    id='pricing'
       style={{
         backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='2' height='40' fill='rgba(0,0,0,0.05)'/%3E%3Crect y='0' x='0' width='40' height='2' fill='rgba(0,0,0,0.05)'/%3E%3C/svg%3E")`,
         backgroundSize: '40px 40px',
@@ -49,13 +50,13 @@ export const TextParallaxContentExample = () => {
       >
         <FreeCreditsContent />
       </TextParallaxContent>
-      <TextParallaxContent
+      {/* <TextParallaxContent
         imgUrl="https://images.unsplash.com/photo-1504610926078-a1611febcad3?q=80&w=2416&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
         subheading="Transparent"
         heading="Know What You're Paying For"
       >
         <CreditBreakdownContent />
-      </TextParallaxContent>
+      </TextParallaxContent> */}
     </div>
   );
 };

@@ -48,12 +48,15 @@ const OrganizationCard = ({
     const handleHelpModal = () => setIsHelpModalOpen(true);
     const handleFeedbackModal = () => setIsFeedbackModalOpen(true);
     const handleLogoutModal = () => setIsLogoutModalOpen(true);
+    const handleUpgradeModalOpen = () => setShowUpgradeModal(true);
 
     window.addEventListener('openHelpModal', handleHelpModal);
     window.addEventListener('openFeedbackModal', handleFeedbackModal);
     window.addEventListener('openLogoutModal', handleLogoutModal);
+    window.addEventListener('openUpgradeModal' , handleUpgradeModalOpen)
 
     return () => {
+      window.removeEventListener('openUpgradeMOdal' , handleUpgradeModalOpen);
       window.removeEventListener('openHelpModal', handleHelpModal);
       window.removeEventListener('openFeedbackModal', handleFeedbackModal);
       window.removeEventListener('openLogoutModal', handleLogoutModal);

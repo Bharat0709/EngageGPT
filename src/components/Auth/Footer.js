@@ -14,7 +14,7 @@ export const AuthFooter = ({ mode, email }) => {
 
       await forgotPassword(email);
       message.success(
-        'Password reset email sent successfully! (Check spam folder as well)',
+        'Password reset email sent successfully!',
       );
     } catch (err) {
       message.error(err.message);

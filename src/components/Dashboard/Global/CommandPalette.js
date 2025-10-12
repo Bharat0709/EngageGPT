@@ -69,7 +69,7 @@ const CommandPalette = ({ isOpen, onClose }) => {
     // Handle special actions that don't navigate
     if (route.isAction) {
       onClose();
-      
+
       // Trigger appropriate action based on path
       switch (route.path) {
         case '#help':
@@ -84,6 +84,8 @@ const CommandPalette = ({ isOpen, onClose }) => {
           // Trigger logout modal
           window.dispatchEvent(new CustomEvent('openLogoutModal'));
           break;
+        case '#upgrade':
+          window.dispatchEvent(new CustomEvent('openUpgradeModal'));
         default:
           break;
       }
@@ -102,7 +104,7 @@ const CommandPalette = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   const modalContent = (
-    <div 
+    <div
       className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-start justify-center z-[9999] pt-32"
       onClick={handleBackdropClick}
     >

@@ -103,40 +103,35 @@ const StatCard = ({ stat, index }) => {
 
 const Stats = ({ isLoading, selectedProfile, stats }) => {
   const statistics = [
-    {
-      title: 'Followers',
-      value: selectedProfile?.followersCount?.toLocaleString('hi-IN') || '0',
-      icon: <Icons.Users />,
-    },
-    {
-      title: 'Following',
-      value: selectedProfile?.followingCount?.toLocaleString('hi-IN') || '0',
-      icon: <Icons.AiUser />,
-    },
-    {
-      title: 'Connections',
-      value: selectedProfile?.connectionsCount?.toLocaleString('hi-IN') || '0',
-      icon: <Icons.Plus />,
-    },
-    {
-      title: 'Profile Views',
-      value: selectedProfile?.profileViews?.toLocaleString('hi-IN') || '0',
-      icon: <Icons.AiEye />,
-    },
-    {
-      title: 'Search Appearances',
-      value: selectedProfile?.searchAppearances?.toLocaleString('hi-IN') || '0',
-      icon: <Icons.AiSearch />,
-    },
+    // {
+    //   title: 'Followers',
+    //   value: selectedProfile?.followersCount?.toLocaleString('hi-IN') || '0',
+    //   icon: <Icons.Users />,
+    // },
+    // {
+    //   title: 'Following',
+    //   value: selectedProfile?.followingCount?.toLocaleString('hi-IN') || '0',
+    //   icon: <Icons.AiUser />,
+    // },
+    // {
+    //   title: 'Connections',
+    //   value: selectedProfile?.connectionsCount?.toLocaleString('hi-IN') || '0',
+    //   icon: <Icons.Plus />,
+    // },
+    // {
+    //   title: 'Profile Views',
+    //   value: selectedProfile?.profileViews?.toLocaleString('hi-IN') || '0',
+    //   icon: <Icons.AiEye />,
+    // },
+    // {
+    //   title: 'Search Appearances',
+    //   value: selectedProfile?.searchAppearances?.toLocaleString('hi-IN') || '0',
+    //   icon: <Icons.AiSearch />,
+    // },
     {
       title: 'Total Likes',
       value: stats?.totalLikes?.toLocaleString('hi-IN') || '0',
       icon: <Icons.Heart />,
-    },
-    {
-      title: 'Total Shares',
-      value: stats?.totalShares?.toLocaleString('hi-IN') || '0',
-      icon: <Icons.Share />,
     },
     {
       title: 'Total Views',
@@ -152,17 +147,7 @@ const Stats = ({ isLoading, selectedProfile, stats }) => {
       title: 'Total Comments',
       value: stats?.totalComments?.toLocaleString('hi-IN') || '0',
       icon: <Icons.AiMessage />,
-    },
-    {
-      title: 'Credits Left (Today)',
-      value: selectedProfile?.credits?.toLocaleString('hi-IN') || '0',
-      icon: <Icons.AiCreditCard />,
-    },
-    {
-      title: 'Total Credits Used',
-      value: selectedProfile?.totalCreditsUsed?.toLocaleString('hi-IN') || '0',
-      icon: <Icons.AiRobot />,
-    },
+    }
   ];
 
   return (

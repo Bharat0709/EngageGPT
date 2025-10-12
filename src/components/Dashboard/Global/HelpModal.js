@@ -9,6 +9,7 @@ const handleWhatsAppContact = () => {
   const WHATSAPP_NUMBER = `${process.env.REACT_APP_CONTACT_NUMBER}`;
   const usermessage = encodeURIComponent('Hi, I need help with your service.');
   const phoneNumber = WHATSAPP_NUMBER.replace(/[^0-9]/g, '');
+
   const isMobile = /iPhone|Android/i.test(navigator.userAgent);
   const whatsappUrl = isMobile
     ? `whatsapp://send?phone=${phoneNumber}&text=${usermessage}`
@@ -21,7 +22,7 @@ const HelpModal = ({ isVisible, onClose }) => {
   const [helpQuery, setHelpQuery] = useState('');
   const [loading, setLoading] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
-
+  const bookingURL = 'https://calendly.com/engagegpt/30min';
   useEffect(() => {
     if (isVisible) {
       setIsAnimating(true);
@@ -116,8 +117,14 @@ const HelpModal = ({ isVisible, onClose }) => {
           onClick={handleWhatsAppContact}
         >
           <IoLogoWhatsapp size={20} />
-          Contact Founder
+          Contact Founder (Text Only)
         </button>
+        <a
+          href={bookingURL}
+          className="w-full px-4 py-2 bg-blue-700 text-white rounded-full hover:bg-green-600 transition-colors flex items-center justify-center gap-2"
+        >
+          Book a Demo
+        </a>
         <p className="text-xs text-center text-gray-500 mt-2">
           You can also reach us on WhatsApp for immediate assistance.
         </p>

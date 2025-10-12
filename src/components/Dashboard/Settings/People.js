@@ -56,7 +56,6 @@ export const People = () => {
         }
       }
       message.success('Invite sent successfully!');
-      message.info('Check spam folder as well ');
       setIsAddPeopleModalOpen(false);
     } catch (err) {
       message.error(err.message);
