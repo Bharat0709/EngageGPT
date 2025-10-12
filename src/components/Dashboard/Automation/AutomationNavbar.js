@@ -37,7 +37,6 @@ const AutomationNavbar = ({
       icon: Icons.Settings,
     },
   ];
-  console.log(memberProfiles, selectedProfile);
   return (
     <div>
       {/* Main Header */}

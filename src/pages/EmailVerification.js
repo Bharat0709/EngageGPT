@@ -14,7 +14,6 @@ const EmailVerification = () => {
   const token = searchParams.get('token');
   const email = searchParams.get('email') || '';
   const decodedEmail = decodeURIComponent(email);
-  console.log(token, decodedEmail);
 
   useEffect(() => {
     if (token && decodedEmail) {
@@ -26,7 +25,6 @@ const EmailVerification = () => {
     try {
       setVerificationStatus('loading');
       const response = await verifyMail(decodedEmail, token);
-      console.log(response);
       if (response.success) {
         message.success(response.message);
         setTimeout(() => {

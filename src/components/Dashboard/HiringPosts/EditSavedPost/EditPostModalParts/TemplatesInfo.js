@@ -9,8 +9,6 @@ const TemplatesForm = ({ postData, setPostData, errors = {} }) => {
 
   const handleInputChange = (field, value) => {
     setPostData({ ...postData, [field]: value });
-    console.log('Updating field:', field, 'with value:', value);
-    console.log(postData);
   };
 
   return (

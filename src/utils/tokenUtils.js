@@ -15,7 +15,6 @@ export const decodeToken = (encodedToken) => {
         .join(''),
     );
   } catch (error) {
-    console.error('Invalid Base64 token:', error);
     return null;
   }
 };

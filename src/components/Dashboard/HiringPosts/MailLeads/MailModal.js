@@ -74,7 +74,6 @@ const EmailSendModal = ({ memberId, postData, onSend, onClose }) => {
         templateId: selectedTemplate?.id || selectedTemplate?._id,
         memberId: memberId,
       };
-      console.log(emailPayload);
       // await onSend?.(emailPayload);
     } catch (error) {
       message.error(error.message);

@@ -17,7 +17,6 @@ const GoogleLoginRedirect = () => {
       try {
         const params = new URLSearchParams(location.search);
         const tokenFromQuery = params.get('token');
-        console.log(params);
 
         if (!tokenFromQuery) {
           message.error('Google login failed or session expired.');
@@ -34,7 +33,6 @@ const GoogleLoginRedirect = () => {
         message.success('Login successful! Redirecting...');
         navigate('/dashboard');
       } catch (error) {
-        console.error(error);
         message.error('Something went wrong with Google login.');
         navigate('/login');
       } finally {

@@ -58,8 +58,6 @@ const BulkActionModal = ({
         ? bulkFormData
         : {}),
     };
-
-    console.log(automationData);
     handleBulkAction(automationData);
   };
 

@@ -26,7 +26,6 @@ const EditHiringPostModal = ({ isOpen, onClose, post, onSave, isEditing }) => {
   const [emailInput, setEmailInput] = useState('');
   const [formLinkInput, setFormLinkInput] = useState('');
   const [validationErrors, setValidationErrors] = useState({});
-  console.log('EditHiringPostModal postData:', postData);
   // const [validationSummary, setValidationSummary] = useState(null);
 
   // const validateForm = useCallback(() => {
@@ -37,7 +36,6 @@ const EditHiringPostModal = ({ isOpen, onClose, post, onSave, isEditing }) => {
   //     setValidationErrors(errors);
   //     setValidationSummary(getValidationSummary(errors));
   //   } catch (error) {
-  //     console.error('Validation error:', error);
   //     setValidationErrors({});
   //     setValidationSummary(null);
   //   }
@@ -85,10 +83,8 @@ const EditHiringPostModal = ({ isOpen, onClose, post, onSave, isEditing }) => {
           ? postData.nextAutomationDate.toDate()
           : null,
       };
-      console.log(saveData);
       await onSave(post._id, saveData);
     } catch (error) {
-      console.error('Failed to update post');
     } finally {
       setLoading(false);
     }

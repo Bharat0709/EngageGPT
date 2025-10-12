@@ -50,7 +50,6 @@ const EmailTemplateManager = () => {
         setSelectedMemberId(data[0]?._id || null);
         setIsLoading(false);
       } catch (err) {
-        console.error('Unable to fetch member details:', err);
         setIsLoading(false);
       }
     };
@@ -71,7 +70,6 @@ const EmailTemplateManager = () => {
       const templatesData = await getMemberTemplates(selectedMemberId);
       setTemplates(templatesData.templates || []);
     } catch (error) {
-      console.error('Error fetching templates:', error);
       setTemplates([]);
     } finally {
       setLoading(false);
@@ -314,7 +312,6 @@ const EmailTemplateManager = () => {
       setSelectedTemplate(null);
       setActiveTab('templates');
     } catch (error) {
-      console.error('Error submitting form:', error);
       message.error('Failed to save template. Please try again.');
     } finally {
       setIsUpdating(false);

@@ -80,7 +80,6 @@ const PostActions = ({
           }
         }
       } catch (error) {
-        console.error('Error parsing selectedPostTopic:', error);
         setSelectedDateTime(null);
       }
     } else {
@@ -95,7 +94,6 @@ const PostActions = ({
 
   // Handle DateTime change from picker
   const handleDateTimeChange = (dateTime) => {
-    console.log('Selected DateTime:', dateTime);
     setSelectedDateTime(dateTime);
   };
 

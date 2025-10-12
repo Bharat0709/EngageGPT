@@ -14,8 +14,10 @@ import OrganizationCard from './OrganizationCard';
 import LogoutModal from '../Global/LogoutModal';
 import { creditsModalContent } from '../Global/AddCreditsContent';
 import InfoModal from '@components/Common/InfoModal';
+import { useNotifications } from '@components/Common/Notification';
 
 const Sidebar = () => {
+  const message = useNotifications();
   const [isOpen, setIsOpen] = useState(true);
   const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
   const [showCreditsModal, setShowCreditsModal] = useState(false);
@@ -32,11 +34,10 @@ const Sidebar = () => {
       setIsLoading(true);
       try {
         const data = await fetchOrganizationData();
-        console.log(data);
         setUserData(data);
         setIsLoading(false);
       } catch (err) {
-        console.error('Error fetching organization details:', err);
+        message.error('Error fetching organization details');
       }
     };
     fetchAndSetUserData();

@@ -9,7 +9,6 @@ export const generatePost = async (
   aiOption,
 ) => {
   try {
-    console.log(tone, topic, language, template, aiOption);
     if (aiOption === 'gemini') {
       const response = await axiosInstance.post(
         `/ai/generate/post-content/gemini`,
@@ -46,7 +45,6 @@ export const generateEmailTemplate = async (
   prompt,
   aiOption,
 ) => {
-  console.log(format, templateType, prompt, aiOption);
   try {
     if (aiOption === 'gemini') {
       const response = await axiosInstance.post(
@@ -57,7 +55,6 @@ export const generateEmailTemplate = async (
           prompt,
         },
       );
-      console.log('Response from API:', response);
       return response.data;
     } else {
       const response = await axiosInstance.post(

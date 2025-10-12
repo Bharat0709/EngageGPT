@@ -99,9 +99,6 @@ const EditCalendarItemModal = ({
   };
 
   const showMessage = (type, text) => {
-    // You can replace this with your preferred notification system
-    console.log(`${type}: ${text}`);
-    // If you have a toast/notification system, use it here
   };
 
   const handleSave = async (e) => {
@@ -137,8 +134,6 @@ const EditCalendarItemModal = ({
         time: convertTo24Hour(formattedTime),
         status: formData.status,
       };
-      console.log(updatedItem);
-
       // Call the onSave callback with updated data
       await onSave(updatedItem);
       handleClose();

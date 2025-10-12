@@ -42,7 +42,6 @@ const HiringPostsDashboard = ({ memberId, activeTab, setActiveTab , setCurrentLe
       }
 
       const data = await getSavedPosts(params);
-      console.log(data.data);
       setAllSavedPosts(data.data);
       setIsLoading(false);
     } catch (error) {
@@ -133,7 +132,6 @@ const HiringPostsDashboard = ({ memberId, activeTab, setActiveTab , setCurrentLe
       return;
     }
     try {
-      console.log('Bulk automation update:', postIds, automationData);
       await bulkUpdateAutomation(postIds, automationData);
       setIsUpdating(false);
       setRefresh(!refresh);
@@ -160,7 +158,6 @@ const HiringPostsDashboard = ({ memberId, activeTab, setActiveTab , setCurrentLe
     if (!updatedPostData) return;
     try {
       const updatedPost = await updateSavedPost(postId, updatedPostData);
-      console.log(updatedPost);
       setIsEditing(false);
       setRefresh(!refresh);
       message.success('Post updated successfully!');
@@ -192,7 +189,7 @@ const HiringPostsDashboard = ({ memberId, activeTab, setActiveTab , setCurrentLe
             onBulkUpdateAutomation={(leadIds, automationData) =>
               onConfirmBulkAutomationUpdate(leadIds, automationData)
             }
-            onBulkCopy={(leadIds) => console.log('Copy:', leadIds)}
+            onBulkCopy={(leadIds) => console.log('Copy:')}
             onEdit={onEdit}
             activeTab={activeTab}
             setActiveTab={setActiveTab}

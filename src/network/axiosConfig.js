@@ -15,7 +15,6 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   (config) => {
     const encodedToken = Cookies.get('engage-gpt');
-    console.log('FROM COOKIES', encodedToken);
     if (encodedToken) {
       // Optional: verify token validity before sending
       const token = decodeToken(encodedToken);
@@ -25,18 +24,14 @@ axiosInstance.interceptors.request.use(
           const isExpired = decodedPayload.exp * 1000 < Date.now();
 
           if (isExpired) {
-            console.warn('JWT expired. Logging out...');
             store.dispatch(logoutAction());
             return Promise.reject(new Error('Token expired'));
           }
         } catch (err) {
-          console.error('Error decoding JWT:', err);
+          console.warn('Error decoding JWT:');
         }
       }
     }
-
-    // ❌ No need to attach Authorization header
-    // The cookie will be automatically sent via withCredentials
     return config;
   },
   (error) => Promise.reject(error),

@@ -64,8 +64,6 @@ const LinkedInPostGenerator = () => {
         );
 
         setAvailableAIOptions(enabledAIServices);
-        console.log(enabledAIServices);
-
         // Set the first available AI option as default
         if (enabledAIServices.length > 0) {
           setSelectedAIOption(enabledAIServices[0]);
@@ -239,12 +237,9 @@ const LinkedInPostGenerator = () => {
     message.info('Refreshing Credits');
     try {
       const NewcreditsLeft = await getCreditsLeft();
-      // console.log(New)
       setCreditsLeft(NewcreditsLeft);
-      console.log(NewcreditsLeft);
       message.success('Credits Updated');
     } catch (err) {
-      console.log(err);
       message.error(err.message || 'Failed to send invite');
     }
   };

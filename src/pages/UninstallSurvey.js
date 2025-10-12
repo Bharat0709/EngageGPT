@@ -45,10 +45,8 @@ const FeedbackSurvey = () => {
       setIsLoading(true);
       await submitSurvey(formData);
       message.success('Thank you for your feedback!');
-      console.log('Feedback submitted:', formData);
     } catch (error) {
       message.error(error.message);
-      console.error('Error submitting feedback:', error);
     } finally {
       setIsLoading(false);
     }

@@ -159,7 +159,6 @@ const TemplatesTable = ({
       const allIds = new Set(
         filteredAndSortedTemplates.map((template) => template._id),
       );
-      console.log(allIds);
       setSelectedTemplates(allIds);
     } else {
       setSelectedTemplates(new Set());

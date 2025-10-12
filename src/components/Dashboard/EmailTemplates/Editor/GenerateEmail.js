@@ -24,7 +24,6 @@ const GenerateEmail = ({ isOpen, onClose, onGenerate }) => {
       return;
     }
     setIsGenerating(true);
-    console.log(generateFormat, templateType, generatePrompt);
     try {
       const result = await generateEmailTemplate(
         generateFormat,
@@ -32,8 +31,6 @@ const GenerateEmail = ({ isOpen, onClose, onGenerate }) => {
         generatePrompt,
         'gemini',
       );
-      console.log('Generated Email:', result);
-
       onGenerate?.(result.data.generatedEmailTemplate);
       onClose();
     } catch (error) {

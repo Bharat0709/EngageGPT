@@ -12,7 +12,6 @@ const ProtectedRoute = ({ children }) => {
       message.info('Please log in to get started');
     }
   }, []);
-  console.log(token)
 
   if (!token) {
     return <Navigate to="/login" replace />;

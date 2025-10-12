@@ -50,7 +50,6 @@ const UpgradeModal = ({ isOpen, onClose }) => {
 
       setPlans(formattedPlans);
     } catch (error) {
-      console.error('Error fetching products:', error);
       setError('Failed to load plans. Please try again.');
     } finally {
       setIsLoading(false);
@@ -64,7 +63,6 @@ const UpgradeModal = ({ isOpen, onClose }) => {
       const checkoutUrl = checkoutSession.session.checkout_url;
       window.location.href = checkoutUrl;
     } catch (error) {
-      console.error('Error creating checkout session:', error);
       alert('Failed to create checkout session. Please try again.');
       setIsProcessing(false);
     }

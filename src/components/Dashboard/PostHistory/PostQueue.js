@@ -43,7 +43,7 @@ const PostQueue = () => {
         setInvitedProfiles(invited);
         setSelectedProfile(linkedInConnected[0] || null);
       } catch (err) {
-        console.error('Error getting profile details!');
+        message.error('Error getting profile details!');
       }
     };
 
@@ -59,7 +59,6 @@ const PostQueue = () => {
       setRefreshMembers(!refreshMembers);
       setIsAddMemberModalOpen(false);
     } catch (err) {
-      console.log(err.message);
       message.error(err.message || 'Failed to send invite');
     }
   };
@@ -70,7 +69,6 @@ const PostQueue = () => {
   };
 
   const handleProfileChange = (profile) => {
-    console.log(profile);
     linkedInConnectedProfiles.forEach((p) => {
       if (p._id === profile) {
         setSelectedProfile(p);

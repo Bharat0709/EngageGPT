@@ -8,7 +8,5 @@ export const setNavigate = (navigate) => {
 export const goTo = (path, options = {}) => {
   if (navigateFunction) {
     navigateFunction(path, options);
-  } else {
-    console.error('Navigation function not set!');
-  }
+  } 
 };

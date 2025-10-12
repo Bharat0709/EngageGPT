@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import OrganizationProfileSkeleton from '@components/Dashboard/SkeletonLoaders/OrganizationSettings';
 import { fetchOrganizationData } from '@services/Organization';
-import { forgotPassword } from '@services/Auth';
 import { useNotifications } from '@components/Common/Notification';
 import EditOrgModal from './EditOrgModal';
 import { People } from './People';

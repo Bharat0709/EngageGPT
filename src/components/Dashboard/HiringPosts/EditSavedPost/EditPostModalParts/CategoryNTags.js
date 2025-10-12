@@ -17,8 +17,6 @@ const CategoryTagsForm = ({
 
   const handleInputChange = (field, value) => {
     setPostData({ ...postData, [field]: value });
-    console.log('Updating field:', field, 'with value:', value);
-    console.log(postData);
   };
 
   const handleAddTag = () => {

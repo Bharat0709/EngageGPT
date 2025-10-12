@@ -54,7 +54,6 @@ export const getAutomation = async (memberId, automationId) => {
 // Update automation
 export const updateAutomation = async (memberId, automationId, updatedData) => {
   try {
-    console.log('Updating automation with ID:', automationId, 'and data:', updatedData);
     const response = await axiosInstance.patch(
       `${AUTOMATION_API_URL}/${memberId}/${automationId}`,
       updatedData
@@ -169,7 +168,6 @@ export const deleteAutomation = async (memberId, automationId) => {
     const response = await axiosInstance.delete(
       `${AUTOMATION_API_URL}/${memberId}/${automationId}`
     );
-    console.log(response.data);
     return response.data;
   } catch (error) {
     const errorMsg = getErrorMessage(error);
@@ -256,7 +254,6 @@ export const getRecurringAutomations = async (memberId, params = {}) => {
 // Bulk approve automations
 export const bulkApproveAutomations = async (automationIds) => {
   try {
-    console.log('Bulk approving automations:', automationIds);
     const response = await axiosInstance.patch(
       `${AUTOMATION_API_URL}/bulk-approve`,
       { automationIds }
@@ -271,7 +268,6 @@ export const bulkApproveAutomations = async (automationIds) => {
 // Bulk reject automations
 export const bulkRejectAutomations = async (automationIds, reason = '') => {
   try {
-    console.log('Bulk rejecting automations:', automationIds);
     const response = await axiosInstance.patch(
       `${AUTOMATION_API_URL}/bulk-reject`,
       { automationIds, reason }
@@ -286,7 +282,6 @@ export const bulkRejectAutomations = async (automationIds, reason = '') => {
 // Bulk cancel automations
 export const bulkCancelAutomations = async (automationIds) => {
   try {
-    console.log('Bulk canceling automations:', automationIds);
     const response = await axiosInstance.patch(
       `${AUTOMATION_API_URL}/bulk-cancel`,
       { automationIds }
@@ -301,7 +296,6 @@ export const bulkCancelAutomations = async (automationIds) => {
 // Bulk retry failed automations
 export const bulkRetryAutomations = async (automationIds) => {
   try {
-    console.log('Bulk retrying automations:', automationIds);
     const response = await axiosInstance.patch(
       `${AUTOMATION_API_URL}/bulk-retry`,
       { automationIds }

@@ -165,7 +165,6 @@ const LeadsTable = ({
         onBulkUpdatePriority?.(leadIds, actionData.priority);
         break;
       case 'automation':
-        console.log('actionData:', actionData);
         onBulkUpdateAutomation?.(leadIds, actionData);
         break;
     }

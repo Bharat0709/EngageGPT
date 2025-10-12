@@ -40,7 +40,6 @@ const AutomationManager = ({ memberId, organizationId, onProfileChange }) => {
         setSelectedProfile(data[0]?._id || null);
         setIsLoading(false);
       } catch (err) {
-        console.error('Unable to fetch member details:', err);
         setIsLoading(false);
       }
     };
@@ -76,7 +75,6 @@ const AutomationManager = ({ memberId, organizationId, onProfileChange }) => {
       });
       setPendingApprovals(response.data || []);
     } catch (error) {
-      console.error('Failed to load pending approvals:', error);
       message.error('Failed to load pending approvals: ' + error.message);
       // Fallback to empty array
       setPendingApprovals([]);
@@ -95,7 +93,6 @@ const AutomationManager = ({ memberId, organizationId, onProfileChange }) => {
       });
       setAutomationHistory(response.data || []);
     } catch (error) {
-      console.error('Failed to load automation history:', error);
       message.error('Failed to load automation history: ' + error.message);
       // Fallback to empty array
       setAutomationHistory([]);
@@ -121,7 +118,6 @@ const AutomationManager = ({ memberId, organizationId, onProfileChange }) => {
       // Reload history to show the approved item
       await loadAutomationHistory();
     } catch (error) {
-      console.error('Failed to approve automation:', error);
       message.error('Failed to approve automation: ' + error.message);
     } finally {
       setIsLoading(false);
@@ -145,7 +141,6 @@ const AutomationManager = ({ memberId, organizationId, onProfileChange }) => {
       // Reload history to show the rejected item
       await loadAutomationHistory();
     } catch (error) {
-      console.error('Failed to reject automation:', error);
       message.error('Failed to reject automation: ' + error.message);
     } finally {
       setIsLoading(false);
@@ -158,8 +153,6 @@ const AutomationManager = ({ memberId, organizationId, onProfileChange }) => {
   };
 
   const handleViewHistory = (automation) => {
-    // Open history detail modal or navigate to detail view
-    console.log('View history details:', automation);
   };
 
   const handleRetry = async (automation) => {

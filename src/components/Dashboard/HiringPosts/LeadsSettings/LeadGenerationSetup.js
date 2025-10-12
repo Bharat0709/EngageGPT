@@ -111,13 +111,10 @@ const LeadGenerationSetup = ({ memberId, onComplete }) => {
   const loadExistingData = async () => {
     try {
       setIsLoading(true);
-      console.log('=== LOADING EXISTING DATA ===');
 
       // First, check localStorage for saved data
       const savedData = localStorage.getItem(`leadGeneration_${memberId}`);
-      console.log(savedData);
       if (savedData) {
-        console.log('✅ Found saved data in localStorage');
         const parsedData = JSON.parse(savedData);
 
         // Handle both old and new localStorage structures
@@ -140,13 +137,10 @@ const LeadGenerationSetup = ({ memberId, onComplete }) => {
         }
 
         setIsFirstTimeSetup(false);
-        console.log('✅ Loaded data from localStorage');
       } else {
-        console.log('⏳ No localStorage data found, fetching from API...');
 
         // Load existing member data from API
         const existingMemberData = await getMemberDetails(memberId);
-        console.log('API response:', existingMemberData);
 
         if (existingMemberData && hasExistingSetup(existingMemberData)) {
           // Map API data to form structure
@@ -177,19 +171,14 @@ const LeadGenerationSetup = ({ memberId, onComplete }) => {
           );
 
           setIsFirstTimeSetup(false);
-          console.log('✅ Loaded and mapped data from API');
-          console.log('Step completion:', completion);
-
           message.info(
             'Existing setup data loaded. You can edit and update your preferences.',
           );
         } else {
-          console.log('⚠️ No existing member data found - first time setup');
           setIsFirstTimeSetup(true);
         }
       }
     } catch (error) {
-      console.error('❌ Error loading existing data:', error);
       message.error('Failed to load existing data');
     } finally {
       setIsLoading(false);
@@ -211,9 +200,8 @@ const LeadGenerationSetup = ({ memberId, onComplete }) => {
         JSON.stringify(dataToSave),
       );
       setHasUnsavedChanges(false);
-      console.log('✅ Auto-saved data to localStorage');
     } catch (error) {
-      console.error('❌ Auto-save failed:', error);
+      message.error(error.message);
     }
   };
 
@@ -372,7 +360,6 @@ const LeadGenerationSetup = ({ memberId, onComplete }) => {
         message.success('Form reset to saved data');
       }
     } catch (error) {
-      console.error('Error resetting to API data:', error);
       message.error('Failed to reset form data');
     } finally {
       setIsLoading(false);
@@ -383,7 +370,6 @@ const LeadGenerationSetup = ({ memberId, onComplete }) => {
   const handleComplete = async () => {
     try {
       setIsLoading(true);
-      console.log('=== STARTING COMPLETION PROCESS ===');
 
       // Validate all steps are complete
       const allStepsComplete = Object.values(stepCompletion).every(
@@ -394,18 +380,13 @@ const LeadGenerationSetup = ({ memberId, onComplete }) => {
         return;
       }
 
-      console.log('✅ All steps validated');
-      console.log('Form Data to Submit:', JSON.stringify(formData, null, 2));
-
       // Save all data to backend using the mapping function
       const memberData = mapFormDataToMemberSchema(formData, memberId);
-      console.log('MAPPED MEMBER DATA:', memberData);
 
       await updateMemberSummary(memberId, memberData);
 
       // Clear localStorage
       localStorage.removeItem(`leadGeneration_${memberId}`);
-      console.log('✅ localStorage cleared');
 
       message.success('Lead generation setup completed successfully!');
 
@@ -418,7 +399,6 @@ const LeadGenerationSetup = ({ memberId, onComplete }) => {
         });
       }
     } catch (error) {
-      console.error('❌ Error saving lead generation setup:', error);
       message.error('Failed to save setup. Please try again.');
     } finally {
       setIsLoading(false);

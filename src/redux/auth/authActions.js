@@ -31,7 +31,6 @@ export const handleSignup = (email, password) => async (dispatch) => {
     return token;
   } catch (error) {
     const errorMessage = error.message;
-    console.error('Signup Error:', errorMessage);
     throw new Error(errorMessage);
   }
 };
@@ -50,7 +49,6 @@ export const handleLogin = (email, password) => async (dispatch) => {
     return token;
   } catch (error) {
     const errorMessage = error.message;
-    console.error('Login Error:', errorMessage);
     throw new Error(errorMessage);
   }
 };

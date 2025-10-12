@@ -8,8 +8,6 @@ const DateManagementForm = ({ postData, setPostData, errors = {} }) => {
 
   const handleDateChange = (field, date) => {
     setPostData({ ...postData, [field]: date });
-    console.log('Updating field:', field, 'with value:', date);
-    console.log(postData);
   };
 
   return (

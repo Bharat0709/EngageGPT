@@ -175,7 +175,7 @@ const Signup = () => {
         }
       }
     } catch (error) {
-      console.error('Verification check failed:', error);
+      message.error('Verification check failed');
     }
   };
 

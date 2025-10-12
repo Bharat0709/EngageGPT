@@ -83,7 +83,6 @@ export const updateProfile = async (name, profilePicture) => {
 export const fetchDodoProducts = async () => {
   try {
     const response = await axiosInstance.get('/payments/dodo-products');
-    console.log(response.data.data.products.items);
     return response.data.data.products.items;
   } catch (error) {
     const errorMsg = getErrorMessage(error);

@@ -65,7 +65,6 @@ export const updateSavedPostStatus = async (postId, status) => {
 
 export const updateSavedPost = async (postId, updatedData) => {
   try {
-    console.log('Updating post with ID:', postId, 'and data:', updatedData);
     const response = await axiosInstance.patch(
       `${HIRING_POSTS_API_URL}/${postId}`,
       { updateData: updatedData },
@@ -111,7 +110,6 @@ export const deleteSavedPost = async (postId) => {
     const response = await axiosInstance.delete(
       `${HIRING_POSTS_API_URL}/${postId}`,
     );
-    console.log(response.data);
     return response.data;
   } catch (error) {
     const errorMsg = getErrorMessage(error);
@@ -166,7 +164,6 @@ export const getMemberSavedPosts = async (memberId, params = {}) => {
 
 export const bulkUpdateStatus = async (postIds, status) => {
   try {
-    console.log('Bulk updating status for posts:', postIds, 'to', status);
     const response = await axiosInstance.patch(
       `${HIRING_POSTS_API_URL}/bulk-status`,
       { postIds, status },
@@ -181,7 +178,6 @@ export const bulkUpdateStatus = async (postIds, status) => {
 // Bulk update priority for multiple posts
 export const bulkUpdatePriority = async (postIds, priority) => {
   try {
-    console.log('Bulk updating priority for posts:', postIds, 'to', priority);
     const response = await axiosInstance.patch(
       `${HIRING_POSTS_API_URL}/bulk-priority`,
       { postIds, priority },
@@ -196,7 +192,6 @@ export const bulkUpdatePriority = async (postIds, priority) => {
 // Bulk update priority for multiple posts
 export const bulkUpdateAutomation = async (postIds, automationData) => {
   try {
-    console.log('Bulk updating for posts:', postIds, automationData);
     const response = await axiosInstance.patch(
       `${HIRING_POSTS_API_URL}/bulk-automation`,
       { postIds, automationData },
@@ -210,7 +205,6 @@ export const bulkUpdateAutomation = async (postIds, automationData) => {
 
 // Bulk delete multiple posts
 export const bulkDeletePosts = async (postIds) => {
-  console.log('Bulk deleting posts:', postIds);
   if (!Array.isArray(postIds) || postIds.length === 0) {
     throw new Error('postIds must be a non-empty array');
   }
@@ -221,7 +215,6 @@ export const bulkDeletePosts = async (postIds) => {
         data: { postIds },
       },
     );
-    console.log('Bulk delete response:', response.data);
     return response.data;
   } catch (error) {
     const errorMsg = getErrorMessage(error);

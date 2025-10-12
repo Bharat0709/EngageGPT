@@ -1,15 +1,9 @@
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import { useNotifications } from '@components/Common/Notification';
 import { Icons } from '@utils/constantData/icons';
 import { formatDate } from '@utils/formatDate';
-import { goTo } from '@utils/navigator';
 import { Copy } from '@utils/copyText';
-import { encodeToken } from '@utils/tokenUtils';
-import { setAuthTokenAction } from '@redux/auth/authActions';
 import { getAllMembers, addNewMember } from '@services/Members';
-import Cookies from 'js-cookie';
 import AddMembersModal from '../Global/AddPeopleModal';
 import PostDetails from './PostsAnalytics';
 import Stats from './Stats';

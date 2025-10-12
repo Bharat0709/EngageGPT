@@ -66,7 +66,7 @@ const PostHistoryDashboard = ({ activeTab, selectedProfile }) => {
       setShowEditModal(false);
       setSelectedPost(null);
     } catch (error) {
-      console.error('Failed to save post:', error);
+      message.error('Failed to save post:');
     }
   };
 
@@ -97,7 +97,7 @@ const PostHistoryDashboard = ({ activeTab, selectedProfile }) => {
       setShowBulkDeleteModal(false);
       setSelectedPostIds([]);
     } catch (error) {
-      console.error('Error deleting posts:', error);
+      message.error('Error deleting posts');
     }
   };
 

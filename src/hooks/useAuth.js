@@ -20,7 +20,6 @@ const useAuthCheck = () => {
           dispatch(setAuthTokenAction(decodedToken));
           navigate('/dashboard');
         } catch (error) {
-          console.error('Token decoding failed:', error);
           Cookies.remove('engage-gpt');
         }
       }

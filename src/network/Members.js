@@ -141,12 +141,10 @@ export const updateContentCalendar = async (
   updatedData,
 ) => {
   try {
-    console.log('DATAT', contentId, memberId, updatedData);
     const response = await axiosInstance.put(
       `/calendar/${memberId}/${contentId}`,
       updatedData,
     );
-    console.log(response);
     return response.data.data;
   } catch (error) {
     const errorMsg = getErrorMessage(error);
@@ -199,7 +197,6 @@ export const getFeedFilterSettings = async (memberId) => {
 
 export const updateMemberSummary = async (memberId, summaryData) => {
   try {
-    console.log('Updating member summary:', memberId, summaryData);
     const response = await axiosInstance.put(
       `${MEMBER_API_URL}/summary/${memberId}`,
       {
@@ -233,7 +230,6 @@ export const updateLeadGenerationGoals = async (
 };
 
 export const deleteMemberAccount = async (memberId) => {
-  console.log(memberId);
   try {
     const response = await axiosInstance.delete(
       `${MEMBER_API_URL}/deleteAccount/${memberId}`,

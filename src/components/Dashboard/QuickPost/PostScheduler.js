@@ -60,7 +60,6 @@ const PostScheduler = () => {
         const orgData = await fetchOrganizationData();
         const connected = data.filter((member) => member.isLinkedinConnected);
         const invited = data.filter((member) => !member.isLinkedinConnected);
-        console.log(orgData);
         setInvitedProfiles(invited);
         setOrgData({ ...orgData });
         setConnectedProfiles(connected);
@@ -86,7 +85,7 @@ const PostScheduler = () => {
             setCalendarData([]);
           }
         } catch (error) {
-          console.error('Error fetching content calendar:', error);
+          message.error('Error fetching content calendar');
         }
       };
 

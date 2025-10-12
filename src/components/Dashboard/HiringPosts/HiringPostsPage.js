@@ -78,7 +78,7 @@ const HiringPostsPage = () => {
         return selectedMemberId ? (
           <LeadGenerationSetup
             memberId={selectedMemberId}
-            onComplete={(data) => console.log('Setup complete:', data)}
+            onComplete={(data) => console.log('Setup complete')}
             onCancel={() => navigate('/dashboard')}
           />
         ) : (

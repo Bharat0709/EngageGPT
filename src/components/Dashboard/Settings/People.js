@@ -78,8 +78,6 @@ export const People = () => {
     try {
       const response = await resetMemberCredits(selectedPersonForReset._id);
 
-      // Show success message (you can use toast or notification)
-      console.log('Credits reset successfully');
 
       // Refresh the people list
       setRefreshPeoplePage((prev) => !prev);
@@ -88,7 +86,6 @@ export const People = () => {
       setResetCreditsModalVisible(false);
       setSelectedPersonForReset(null);
     } catch (error) {
-      console.error('Error resetting credits:', error);
       message.error(error.message);
       // Handle error (you can show error toast here)
     } finally {

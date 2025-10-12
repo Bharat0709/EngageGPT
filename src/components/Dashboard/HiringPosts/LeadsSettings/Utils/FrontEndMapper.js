@@ -1,6 +1,4 @@
 const mapExistingMemberDataToForm = (memberData) => {
-  console.log('=== MAPPING EXISTING MEMBER DATA ===');
-  console.log('Raw member data:', JSON.stringify(memberData, null, 2));
 
   const mappedFormData = {
     // Step 1: Lead Saving Settings
@@ -84,8 +82,6 @@ const mapExistingMemberDataToForm = (memberData) => {
         memberData.leadGenerationGoals?.automation?.maxOutreachPerDay || 10,
     },
   };
-
-  console.log('✅ Mapped form data:', JSON.stringify(mappedFormData, null, 2));
   return mappedFormData;
 };
 
@@ -125,13 +121,11 @@ const calculateStepCompletion = (formData) => {
 const loadExistingData = async () => {
   try {
     setIsLoading(true);
-    console.log('=== LOADING EXISTING DATA ===');
 
     // First, check localStorage for saved data
     const savedData = localStorage.getItem(`leadGeneration_${memberId}`);
 
     if (savedData) {
-      console.log('✅ Found saved data in localStorage');
       const parsedData = JSON.parse(savedData);
 
       setFormData((prev) => ({
@@ -144,15 +138,10 @@ const loadExistingData = async () => {
         parsedData.formData || parsedData,
       );
       setStepCompletion(completion);
-
-      console.log('✅ Loaded data from localStorage');
     } else {
-      console.log('⏳ No localStorage data found, fetching from API...');
 
       // Load existing member data from API
       const existingMemberData = await getMemberDetails(memberId);
-      console.log('API response:', existingMemberData);
-
       if (existingMemberData) {
         // Map API data to form structure
         const mappedData = mapExistingMemberDataToForm(existingMemberData);
@@ -180,15 +169,9 @@ const loadExistingData = async () => {
           `leadGeneration_${memberId}`,
           JSON.stringify(dataToSave),
         );
-
-        console.log('✅ Loaded and mapped data from API');
-        console.log('Step completion:', completion);
-      } else {
-        console.log('⚠️ No existing member data found');
-      }
+      } 
     }
   } catch (error) {
-    console.error('❌ Error loading existing data:', error);
     message.error('Failed to load existing data');
   } finally {
     setIsLoading(false);
@@ -258,10 +241,9 @@ const autoSaveData = async () => {
       JSON.stringify(dataToSave),
     );
 
-    console.log('✅ Auto-saved data to localStorage');
     setHasUnsavedChanges(false);
   } catch (error) {
-    console.error('❌ Error auto-saving data:', error);
+    message.error('Error auto-saving data:');
   }
 };
 
@@ -286,7 +268,6 @@ const resetToApiData = async () => {
       message.success('Form reset to saved data');
     }
   } catch (error) {
-    console.error('Error resetting to API data:', error);
     message.error('Failed to reset form data');
   } finally {
     setIsLoading(false);

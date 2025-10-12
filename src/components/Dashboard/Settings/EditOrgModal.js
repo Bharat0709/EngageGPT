@@ -32,7 +32,6 @@ const EditOrgModal = ({ isOpen, onClose, userData, onSave }) => {
       message.success('Profile updated successfully!');
       onClose();
     } catch (error) {
-      console.error('Error updating profile:', error.message);
       message.error(
         error.message || 'Failed to update profile. Please try again.',
       );

@@ -8,7 +8,6 @@ const CustomRequirementsStep = ({ onNext, onBack, initialData = {} }) => {
   const [formData, setFormData] = useState({
     customRequirements: initialData.customRequirements || '',
   });
-  console.log('INITIAL DATA ___________', initialData);
   const [errors, setErrors] = useState({});
 
   const validateForm = () => {

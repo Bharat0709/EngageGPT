@@ -37,7 +37,6 @@ const TimezonePicker = ({
 
   // Update selected timezone when value prop changes
   useEffect(() => {
-    console.log('TimezonePicker: value prop changed to:', value);
     setSelectedTimezone(value);
   }, [value]);
 
@@ -55,7 +54,6 @@ const TimezonePicker = ({
   }, []);
 
   const handleTimezoneSelect = (timezone) => {
-    console.log('TimezonePicker: Timezone selected:', timezone);
     // Use tzCode as the value since timezones-list uses tzCode instead of value
     const timezoneValue = timezone.tzCode || timezone.value;
     setSelectedTimezone(timezoneValue);
@@ -88,7 +86,6 @@ const TimezonePicker = ({
 
   const handleDropdownToggle = () => {
     if (!disabled) {
-      console.log('TimezonePicker: Toggling dropdown, current state:', isOpen);
       setIsOpen(!isOpen);
     }
   };
