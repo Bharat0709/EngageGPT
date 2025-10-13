@@ -6,7 +6,6 @@ import UpgradeModal from '../../Common/UpgradeModal';
 import CommandPalette from '../Global/CommandPalette';
 import CreditsConsumptionModal from '../Global/CreditsConsumptionModal';
 
-
 const OrganizationCard = ({
   userData,
   isOpen,
