@@ -4,6 +4,7 @@ import { MenuButton } from './MenuButton';
 import { useEffect, useState } from 'react';
 import UpgradeModal from '../../Common/UpgradeModal';
 import CommandPalette from '../Global/CommandPalette';
+import CreditsConsumptionModal from '../Global/CreditsConsumptionModal';
 
 const OrganizationCard = ({
   userData,
@@ -25,6 +26,7 @@ const OrganizationCard = ({
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
+  const [isCreditsModalOpen, setIsCreditsModalOpen] = useState(false);
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
 
   // Get user initials for avatar fallback
@@ -49,14 +51,17 @@ const OrganizationCard = ({
     const handleFeedbackModal = () => setIsFeedbackModalOpen(true);
     const handleLogoutModal = () => setIsLogoutModalOpen(true);
     const handleUpgradeModalOpen = () => setShowUpgradeModal(true);
+    const handleCreditUsageOpen = () => setIsCreditsModalOpen(true)
 
     window.addEventListener('openHelpModal', handleHelpModal);
     window.addEventListener('openFeedbackModal', handleFeedbackModal);
     window.addEventListener('openLogoutModal', handleLogoutModal);
-    window.addEventListener('openUpgradeModal' , handleUpgradeModalOpen)
+    window.addEventListener('openUpgradeModal', handleUpgradeModalOpen);
+    window.addEventListener('openCreditUsage', handleCreditUsageOpen);
 
     return () => {
-      window.removeEventListener('openUpgradeMOdal' , handleUpgradeModalOpen);
+      window.removeEventListener('openCreditUsage', handleCreditUsageOpen);
+      window.removeEventListener('openUpgradeModal', handleUpgradeModalOpen);
       window.removeEventListener('openHelpModal', handleHelpModal);
       window.removeEventListener('openFeedbackModal', handleFeedbackModal);
       window.removeEventListener('openLogoutModal', handleLogoutModal);
@@ -138,6 +143,12 @@ const OrganizationCard = ({
               icon={<Icons.Help size={16} />}
               text="Get help"
             />
+            <MenuButton
+              onClick={() => setIsCreditsModalOpen(true)}
+              icon={<Icons.CreditCard size={16} />}
+              text="Credits & Usage"
+            />
+            <div className="text-gray-500 h-[0.2px] bg-gray-300"></div>
             <MenuButton
               onClick={() => setIsFeedbackModalOpen(true)}
               icon={<Icons.Message size={16} />}
@@ -256,6 +267,10 @@ const OrganizationCard = ({
       <CommandPalette
         isOpen={isCommandPaletteOpen}
         onClose={() => setIsCommandPaletteOpen(false)}
+      />
+      <CreditsConsumptionModal
+        isOpen={isCreditsModalOpen}
+        onClose={() => setIsCreditsModalOpen(false)}
       />
     </div>
   );

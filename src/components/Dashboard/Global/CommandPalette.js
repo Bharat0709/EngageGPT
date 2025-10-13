@@ -86,6 +86,10 @@ const CommandPalette = ({ isOpen, onClose }) => {
           break;
         case '#upgrade':
           window.dispatchEvent(new CustomEvent('openUpgradeModal'));
+          break;
+        case '#usage':
+          window.dispatchEvent(new CustomEvent('openCreditUsage'));
+          break;
         default:
           break;
       }

@@ -73,7 +73,7 @@ const UpgradeModal = ({ isOpen, onClose }) => {
     if (currencyView === 'INR') {
       return `₹${inrPrice.toLocaleString('en-IN')}`;
     }
-    const approxUsd = inrPrice / 87; // rough conversion
+    const approxUsd = inrPrice / 89; // rough conversion
     return `≈ $${approxUsd.toFixed(2)} USD`;
   };
 
@@ -142,7 +142,7 @@ const UpgradeModal = ({ isOpen, onClose }) => {
                     </motion.button>
                   ))}
                 </div>
-                <div><p className='text-sm lg:hidden flex'>View how credits are consumed </p></div>
+                <div><p className='text-sm lg:hidden flex'>Limited time Offer!</p></div>
               </div>
               <button
                 className="text-gray-400 lg:flex hidden hover:text-gray-600 p-2 rounded-lg hover:bg-gray-100 transition-all"

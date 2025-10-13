@@ -32,6 +32,16 @@ export const navigationRoutes = [
     isAction : true,
     path: "#upgrade",
   },
+
+    {
+    title : "Credits & Usage",
+    description : "Know how your credits are being spent by various features",
+    icon : <Icons.TrendingUp size={20} className="text-gray-700" />,
+    keywords: ['credits' , 'spent'],
+    category : "Main",
+    isAction : true,
+    path: "#usage",
+  },
   {
     title: 'Dashboard',
     description: 'View your main dashboard and overview',
