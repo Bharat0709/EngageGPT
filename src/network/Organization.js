@@ -101,3 +101,14 @@ export const createCheckoutSession = async (productId) => {
     throw new Error(errorMsg);
   }
 };
+export const fetchMasterData = async () => {
+  try {
+    const response = await axiosInstance.get(`/master-data`);
+    console.log(response)
+    return response.data.masterData || response.data;
+  } catch (error) {
+    const errorMsg = getErrorMessage(error);
+    throw new Error(errorMsg);
+  }
+};
+

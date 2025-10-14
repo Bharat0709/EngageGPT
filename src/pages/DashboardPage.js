@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route , useLocation} from 'react-router-dom';
 import Home from '@components/Dashboard/Home/Home';
 import Sidebar from '@components/Dashboard/Sidebar/Sidebar';
 import Settings from '@components/Dashboard/Settings/Settings';
@@ -11,8 +11,10 @@ import MemberSettings from '@components/Dashboard/Settings/MemberSettings/Member
 import ContentCalendarPage from '@components/Dashboard/ContentCalender/ContentCalender';
 import EmailTemplateManager from '@components/Dashboard/EmailTemplates/EmailTemplatesPage';
 import AutomationManager from '@components/Dashboard/Automation/AutomationManager';
+import FeatureUpdatesModal from '@components/Dashboard/Global/FeatureUpdatesModal';
 
 function Dashboard() {
+  const location = useLocation();
   return (
     <div className="flex lg:flex-row scrollbar-hide p-0 flex-col h-screen">
       <Sidebar />
@@ -93,6 +95,7 @@ function Dashboard() {
             }
           />
         </Routes>
+        {location.pathname === '/dashboard' && <FeatureUpdatesModal />}
       </div>
     </div>
   );

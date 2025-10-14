@@ -17,43 +17,89 @@ const CreditsConsumptionModal = ({ isOpen, onClose }) => {
 
   const features = [
     {
-      name: 'AI Post Generation',
-      description: 'Generate tailored LinkedIn posts using advanced AI models.',
+      name: 'AI Post Generation (Extension)',
+      description: 'Generate tailored LinkedIn posts using Gemini',
       credits: 10,
       icon: FiZap,
       color: 'from-purple-500 to-pink-500',
     },
     {
-      name: 'Smart Replies',
-      description: 'Craft engaging replies to comments and messages instantly.',
+      name: 'AI Content Generation (Website)',
+      description:
+        'Generate tailored LinkedIn posts using ChatGPT, Gemini, Grok, Perplexity',
+      credits: 10,
+      icon: FiZap,
+      color: 'from-purple-500 to-pink-500',
+    },
+    {
+      name: 'Smart Replies (Extension)',
+      description: 'Craft engaging replies to messages instantly.',
       credits: 5,
       icon: FiMessageCircle,
       color: 'from-blue-500 to-indigo-500',
     },
     {
-      name: 'Profile Analyzer',
-      description: 'Analyze LinkedIn profiles and suggest engagement insights.',
-      credits: 15,
+      name: 'New Conversation Message (Extension)',
+      description: 'Craft engaging messages lie referral requests etc.',
+      credits: 5,
+      icon: FiMessageCircle,
+      color: 'from-blue-500 to-indigo-500',
+    },
+    {
+      name: 'AI Comments (Extension)',
+      description: 'Generate Engagging Comments using 4 different AI options',
+      credits: 5,
       icon: FiTarget,
       color: 'from-green-500 to-emerald-500',
     },
-    {
-      name: 'Lead Generation Emails',
-      description: 'AI-personalized email drafts for reaching potential leads.',
+      {
+      name: 'HTML/Text Mailing feature (Coming Soon)',
+      description: 'Send tailored emails to each lead',
+      credits: 5,
+      icon: FiZap,
+      color: 'from-purple-500 to-pink-500',
+    },
+     {
+      name: 'Leads Automation + Automated Email (Coming Soon)',
+      description: 'Generates & Sends automated tailored emails to each lead',
       credits: 20,
-      icon: FiMail,
-      color: 'from-orange-500 to-yellow-500',
+      icon: FiZap,
+      color: 'from-purple-500 to-pink-500',
     },
   ];
 
   const freeFeatures = [
+    {
+      name: 'Multi Profile Support',
+      description: 'Add and Manage Multiple LinkedIn Profiles',
+    },
     {
       name: 'Dashboard Access',
       description: 'Track credits and usage insights in one place.',
     },
     {
       name: 'Basic Analytics',
-      description: 'View basic engagement stats and post performance.',
+      description: 'View engagement stats and post performance.',
+    },
+    {
+      name: 'Post Scheduling and Management',
+      description: 'Schedule, Post Or Save Draft LinkedIn Posts ',
+    },
+    {
+      name: 'Email Templates Managememt',
+      description: 'Create, Save and Manage Leads related mails',
+    },
+    {
+      name: 'Automated Leads Saving',
+      description: 'Auto Saves leads while you scroll on linkedin',
+    },
+    {
+      name: 'AI Email Generator',
+      description: 'Create mail templates for you using Gemini',
+    },
+    {
+      name: 'Custom Connection Note (Extension)',
+      description: 'Custom notes for connection request',
     },
   ];
 
@@ -102,10 +148,10 @@ const CreditsConsumptionModal = ({ isOpen, onClose }) => {
                   key={idx}
                   className="border border-gray-200 rounded-lg p-4 bg-gray-50 hover:bg-gray-100 transition-all"
                 >
-                  <p className="text-gray-900 font-medium text-sm">
+                  <p className="text-gray-900 m-0 p-0 font-medium text-base">
                     {feature.name}
                   </p>
-                  <p className="text-xs text-gray-500 mt-1">
+                  <p className="text-sm m-0 p-0 text-gray-500 mt-1">
                     {feature.description}
                   </p>
                 </div>
@@ -146,44 +192,16 @@ const CreditsConsumptionModal = ({ isOpen, onClose }) => {
                     </div>
 
                     <div className="text-right">
-                      <p className="text-lg font-bold text-gray-900">
+                      <p className="text-lg font-bold m-0 p-0 text-gray-900">
                         {feature.credits} credits
                       </p>
-                      <p className="text-xs text-gray-500 mt-0.5">
+                      <p className="text-xs m-0 p-0  text-gray-500 mt-0.5">
                         per use
                       </p>
                     </div>
                   </div>
                 );
               })}
-            </div>
-          </div>
-
-          {/* CTA Section */}
-          <div className="mt-8 text-center border-t border-gray-100 pt-6">
-            <p className="text-sm text-gray-600 mb-4">
-              Want to unlock more features or need help with credits?
-            </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <button
-                onClick={() => {
-                  window.location.href = '/dashboard#upgrade';
-                }}
-                className="px-6 py-2.5 rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 text-white font-medium hover:from-purple-700 hover:to-pink-700 transition-all shadow-md hover:shadow-lg"
-              >
-                Buy More Credits
-              </button>
-              <button
-                onClick={() => {
-                  window.location.href = 'mailto:support@engagegpt.in';
-                }}
-                className="px-6 py-2.5 rounded-lg border border-gray-300 text-gray-700 font-medium hover:bg-gray-100 transition-all"
-              >
-                <div className="flex items-center justify-center gap-2">
-                  <FiHelpCircle size={16} />
-                  Contact Support
-                </div>
-              </button>
             </div>
           </div>
         </div>
@@ -203,7 +221,7 @@ const CreditsConsumptionModal = ({ isOpen, onClose }) => {
 
   return createPortal(
     <AnimatePresence mode="wait">{modalContent}</AnimatePresence>,
-    document.body
+    document.body,
   );
 };
 

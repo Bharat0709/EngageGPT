@@ -26,16 +26,16 @@ const AutomationNavbar = ({
       icon: Icons.Clock,
       badge: pendingApprovals,
     },
-    {
-      id: 'analytics',
-      label: 'Analytics',
-      icon: Icons.BarChart,
-    },
-    {
-      id: 'settings',
-      label: 'Settings',
-      icon: Icons.Settings,
-    },
+    // {
+    //   id: 'analytics',
+    //   label: 'Analytics',
+    //   icon: Icons.BarChart,
+    // },
+    // {
+    //   id: 'settings',
+    //   label: 'Settings',
+    //   icon: Icons.Settings,
+    // },
   ];
   return (
     <div>
