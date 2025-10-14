@@ -69,14 +69,15 @@ const Login = () => {
     try {
       setIsLoading(true);
       const loginResponse = await login(formData.email, formData.password);
-
+      console.log(loginResponse);
       if (loginResponse.token) {
+        console.log(loginResponse);
         localStorage.setItem('lastLoginMethod', 'email');
         dispatch(setAuthTokenAction(loginResponse.token));
         goTo(`/dashboard`);
+        message.success('Login successful!');
       }
 
-      message.success('Login successful!');
     } catch (error) {
       message.error(error.message || 'Login failed.');
     } finally {
@@ -122,7 +123,7 @@ const Login = () => {
                   type={showPassword ? 'text' : 'password'}
                   name="password"
                   id="password"
-                  autoComplete='current_password'
+                  autoComplete="current_password"
                   value={formData.password}
                   onChange={handleChange}
                   className="mt-1 block w-full p-3 border rounded-full bg-sky-900 border-sky-700 focus:outline-none [&::-webkit-autofill]:bg-sky-800"
