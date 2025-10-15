@@ -69,9 +69,7 @@ const Login = () => {
     try {
       setIsLoading(true);
       const loginResponse = await login(formData.email, formData.password);
-      console.log(loginResponse);
       if (loginResponse.token) {
-        console.log(loginResponse);
         localStorage.setItem('lastLoginMethod', 'email');
         dispatch(setAuthTokenAction(loginResponse.token));
         goTo(`/dashboard`);

@@ -236,7 +236,7 @@ const FeatureUpdatesModal = () => {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
             onClick={handleOpen}
-            className="fixed bottom-6 right-20 z-[9998] w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 shadow-lg flex items-center justify-center text-white hover:shadow-xl transition-all"
+            className="fixed  lg:bottom-6 right-20 z-[9998] w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 shadow-lg flex items-center justify-center text-white hover:shadow-xl transition-all"
             title="View Updates"
           >
             <FiInfo size={24} />

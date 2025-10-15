@@ -28,7 +28,7 @@ axiosInstance.interceptors.request.use(
             return Promise.reject(new Error('Token expired'));
           }
         } catch (err) {
-          console.warn('Error decoding JWT:');
+          console.warn('Error');
         }
       }
     }
