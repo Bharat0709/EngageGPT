@@ -1,8 +1,6 @@
 import axios from 'axios';
 import { store } from '../redux/store';
 import { logoutAction } from '../redux/auth/authActions';
-import Cookies from 'js-cookie';
-import { decodeToken } from '../utils/tokenUtils';
 
 const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_API_BASE_URL,
@@ -11,32 +9,6 @@ const axiosInstance = axios.create({
   },
   withCredentials: true,
 });
-
-axiosInstance.interceptors.request.use(
-  (config) => {
-    const encodedToken = Cookies.get('engage-gpt');
-    if (encodedToken) {
-      // Optional: verify token validity before sending
-      const token = decodeToken(encodedToken);
-      if (token) {
-        try {
-          const decodedPayload = JSON.parse(atob(token.split('.')[1]));
-          const isExpired = decodedPayload.exp * 1000 < Date.now();
-
-          if (isExpired) {
-            store.dispatch(logoutAction());
-            return Promise.reject(new Error('Token expired'));
-          }
-           config.headers.Authorization = `Bearer ${token}`;
-        } catch (err) {
-          console.warn('Error');
-        }
-      }
-    }
-    return config;
-  },
-  (error) => Promise.reject(error),
-);
 
 axiosInstance.interceptors.response.use(
   (response) => response,
