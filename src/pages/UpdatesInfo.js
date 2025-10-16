@@ -10,18 +10,40 @@ import {
   FaComments,
   FaChartLine,
 } from 'react-icons/fa';
-import { FiCalendar, FiArrowRight } from 'react-icons/fi';
+import {
+  FiCalendar,
+  FiArrowRight,
+  FiLink,
+  FiMail,
+  FiSettings,
+  FiDollarSign,
+  FiZap,
+  FiMessageCircle,
+} from 'react-icons/fi';
 
 const updates = [
+  {
+    version: '2.4.0',
+    date: '17th October, 2025',
+    highlights: [
+      '🪔 Diwali Special: New organization-wide credits-based system with detailed transaction history',
+      '🪔 Payment Gateway Integration with UPI and international payment options',
+      '🪔 Credit Transaction Analytics for complete visibility into credit usage',
+      '🪔 Email Template Manager to create and manage reusable email templates',
+      '🪔 Message Reply Templates are back with support for replies and new messages',
+      '🪔 Complete UI refresh with modern design patterns and better navigation',
+    ],
+  },
   {
     version: '2.3.0',
     date: '13-14th July, 2025',
     highlights: [
-      'New AI Options have been added i.e ChatGPT , Grok , Mistral and Gemini for both Comments and Posts',
+      'Multi-AI Post Generation with ChatGPT, Gemini, Perplexity, Mistral, and Groq',
+      'AI Comment Generator with 4 different AI models for engaging comments',
+      'Smart Reply System with AI-powered reply suggestions',
       'Comments Option may take 2 seconds to appear',
       'No need to double tap now to enable comments options',
-      'Mistrql is added for blazing fast performance',
-      'Added a new option to get free 500 credits',
+      'Mistral added for blazing fast performance',
     ],
   },
   {
@@ -39,6 +61,7 @@ const updates = [
     date: '22th May, 2025',
     highlights: [
       'Added fully automated post saving based on keywords',
+      'Automated Lead Saving while scrolling through LinkedIn',
       'New prospect mailing feature for direct outreach to saved contacts',
       'Enhanced post filtering capabilities',
       'UI improvements and performance optimizations',
@@ -58,11 +81,12 @@ const updates = [
     version: '2.0.0',
     date: 'January, 2025',
     highlights: [
-      'Launched a full-fledged dashboard to view your LinkedIn analytics.',
-      'Integrated with LinkedIn to post content directly from EngageGPT.',
-      'Introduced a post calendar feature to enhance your productivity and consistency on LinkedIn.',
-      'Added an AI Post Generator to quickly generate posts using AI.',
-      'New authentication method using Connection Token instead of OTP.',
+      'Launched a full-fledged dashboard to view your LinkedIn analytics',
+      'Multi-Profile Dashboard to manage multiple LinkedIn profiles from single dashboard',
+      'Integrated with LinkedIn to post content directly from EngageGPT',
+      'Introduced a post calendar feature to enhance your productivity and consistency on LinkedIn',
+      'Added an AI Post Generator to quickly generate posts using AI',
+      'New authentication method using Connection Token instead of OTP',
     ],
   },
   {
@@ -76,45 +100,91 @@ const updates = [
 
 const comingSoon = [
   {
-    feature: 'DeepSeek AI Integration',
+    feature: 'Content Calendar Enhancement',
     description:
-      'Advanced AI model for more contextual and engaging LinkedIn content generation.',
-    icon: <FaComments className="w-6 h-6" />,
-    color: 'from-purple-500 to-pink-500',
+      'Advanced content planning with drag-and-drop scheduling, visual timeline, bulk scheduling, and optimal posting time suggestions.',
+    icon: <FiCalendar className="w-6 h-6" />,
+    color: 'from-indigo-500 to-purple-500',
+    estimatedRelease: 'November 2025',
   },
   {
-    feature: 'Claude AI for Comment Generation',
+    feature: 'Zapier Integration',
     description:
-      'Leverage Claude AI to write thoughtful, relevant comments on LinkedIn posts.',
-    icon: <FaComments className="w-6 h-6" />,
+      'Export leads directly to your favorite CRM tools. Seamless integration with 5000+ apps through Zapier for automated workflows.',
+    icon: <FiLink className="w-6 h-6" />,
     color: 'from-blue-500 to-cyan-500',
+    estimatedRelease: 'November 2025',
   },
   {
-    feature: 'Enhanced Analytics Dashboard',
+    feature: 'Advanced Transaction Analytics',
     description:
-      'More detailed insights and metrics to track your LinkedIn growth and engagement.',
+      'Deep dive into credit usage patterns. ROI tracking, team performance metrics, and detailed expense reports for better decision making.',
     icon: <FaChartLine className="w-6 h-6" />,
-    color: 'from-green-500 to-emerald-500',
+    color: 'from-purple-500 to-pink-500',
+    estimatedRelease: 'November 2025',
+  },
+  {
+    feature: 'HTML/Text Mailing Feature',
+    description:
+      'Send tailored HTML or text emails to each lead directly from the platform. Personalize outreach at scale with AI-generated content.',
+    icon: <FiMail className="w-6 h-6" />,
+    color: 'from-gray-500 to-slate-500',
+    estimatedRelease: 'December 2025',
+  },
+  {
+    feature: 'Leads Automation + Auto Email',
+    description:
+      'Fully automated lead generation and email outreach. Generate leads and send personalized emails automatically with 20 credits per automation.',
+    icon: <FiSettings className="w-6 h-6" />,
+    color: 'from-gray-500 to-slate-500',
+    estimatedRelease: 'December 2025',
   },
 ];
 
 const featuredCapabilities = [
+  {
+    title: 'Credits-Based System',
+    description:
+      'Organization-wide credit tracking with detailed transaction history for transparent usage',
+    icon: <FiDollarSign className="w-7 h-7" />,
+    gradient: 'from-orange-500 to-cyan-500',
+    badge: 'New',
+    badgeColor: 'bg-orange-500',
+  },
+  {
+    title: 'Multi-AI Content Generation',
+    description:
+      'Generate posts and comments using ChatGPT, Gemini, Perplexity, Mistral, and Groq',
+    icon: <FiZap className="w-7 h-7" />,
+    gradient: 'from-purple-500 to-pink-500',
+    badge: 'Hot',
+    badgeColor: 'bg-purple-500',
+  },
   {
     title: 'Smart Post Saving',
     description:
       'Automatically save posts based on custom keywords with ALT + S shortcut',
     icon: <FaBookmark className="w-7 h-7" />,
     gradient: 'from-blue-500 to-cyan-500',
-    badge: 'New',
+    badge: 'Popular',
     badgeColor: 'bg-blue-500',
   },
   {
-    title: 'Intelligent Feed Filtering',
+    title: 'Email Template Manager',
     description:
-      'Hide posts containing specific keywords to curate your perfect feed',
-    icon: <FaEye className="w-7 h-7" />,
+      'Create, save, and manage reusable email templates for streamlined lead outreach',
+    icon: <FiMail className="w-7 h-7" />,
+    gradient: 'from-pink-500 to-rose-500',
+    badge: 'New',
+    badgeColor: 'bg-pink-500',
+  },
+  {
+    title: 'Message Reply Templates',
+    description:
+      'Pre-written responses for common scenarios to save time on LinkedIn messaging',
+    icon: <FiMessageCircle className="w-7 h-7" />,
     gradient: 'from-emerald-500 to-teal-500',
-    badge: 'Popular',
+    badge: 'New',
     badgeColor: 'bg-emerald-500',
   },
   {
@@ -122,9 +192,9 @@ const featuredCapabilities = [
     description:
       'Plan and schedule your LinkedIn posts with our intuitive calendar',
     icon: <FiCalendar className="w-7 h-7" />,
-    gradient: 'from-purple-500 to-pink-500',
-    badge: 'Hot',
-    badgeColor: 'bg-purple-500',
+    gradient: 'from-indigo-500 to-purple-500',
+    badge: 'Featured',
+    badgeColor: 'bg-indigo-500',
   },
 ];
 
@@ -183,7 +253,41 @@ const UpdateInfoScreen = () => {
         <div className="bg-white rounded-3xl shadow-2xl border border-gray-100 p-10 mb-10 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-green-500/10 to-emerald-500/10 rounded-full -translate-y-20 translate-x-20"></div>
           <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-blue-500/10 to-cyan-500/10 rounded-full translate-y-16 -translate-x-16"></div>
-
+          <div className="bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 border border-indigo-200 rounded-xl p-6 mb-6">
+            <div className="flex items-start space-x-4">
+              <div className="flex-shrink-0">
+                <div className="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center">
+                  <svg
+                    className="h-7 w-7 text-indigo-600"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"
+                    />
+                  </svg>
+                </div>
+              </div>
+              <div className="flex-1">
+                <h3 className="text-lg font-bold text-indigo-900 mb-2 flex items-center">
+                  <span>📦 Data Migration Underway</span>
+                </h3>
+                <p className="text-sm text-indigo-700 leading-relaxed">
+                  We're currently migrating your data to our enhanced system as
+                  part of the Diwali Special Release.
+                  <span className="font-semibold">
+                    {' '}
+                    Your data will be available within the next few days.
+                  </span>{' '}
+                  We appreciate your patience during this upgrade!
+                </p>
+              </div>
+            </div>
+          </div>
           <div className="relative">
             <div className="flex items-center justify-between mb-8">
               <div className="flex items-center">

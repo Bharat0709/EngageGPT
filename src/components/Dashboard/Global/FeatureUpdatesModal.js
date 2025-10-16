@@ -35,7 +35,6 @@ const FeatureUpdatesModal = () => {
       
       setLoading(false);
     } catch (error) {
-      console.error('Error fetching updates:', error);
       setUpdates([]);
       setLoading(false);
     }

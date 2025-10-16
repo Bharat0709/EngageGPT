@@ -79,7 +79,6 @@ const TimezonePicker = ({
         minute: '2-digit',
       });
     } catch (error) {
-      console.warn('Error getting time for timezone:', tzCode, error);
       return '';
     }
   };
