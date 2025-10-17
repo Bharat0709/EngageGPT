@@ -1,6 +1,7 @@
 import './App.css';
 import '@assets/styles/GlobalCSS.css';
-
+import { Analytics } from '@vercel/analytics/react';
+ 
 import {
   BrowserRouter as Router,
   Routes,
@@ -78,6 +79,7 @@ const App = () => {
         <NotificationProvider position="bottom-right" maxNotifications={5}>
           <AppRoutes />
         </NotificationProvider>
+          <Analytics />
       </div>
     </Router>
   );
