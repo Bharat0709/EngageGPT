@@ -4,6 +4,7 @@ import { useNotifications } from '@components/Common/Notification';
 import { Icons } from '@utils/constantData/icons';
 import { Copy } from '@utils/copyText';
 import { connectLinkedIn } from '@utils/connectLinkedIn';
+import UpdateBanner from '../Global/Banner';
 
 const OnboardingGuide = ({
   onAddProfile,
@@ -42,6 +43,7 @@ const OnboardingGuide = ({
 
   return (
     <div className="container mx-auto px-4 lg:py-4 py-2 max-w-7xl animate-fade-in">
+            <UpdateBanner/>
       <div className="text-center mb-2 border border-gray-600">
         <img
           src="/banner.svg"

@@ -24,7 +24,7 @@ export default function UpdateBanner() {
   if (!isVisible) return null;
 
   return (
-    <div className="relative overflow-hidden bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 shadow-lg">
+    <div className="relative mb-2 overflow-hidden bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 shadow-lg">
       <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
         <div className="flex items-start justify-between gap-4">
           <div className="flex items-start gap-3 flex-1">
