@@ -10,12 +10,14 @@ import {
   getAllMembers,
   addNewMember,
   resetMemberCredits,
+  disconnectGmailAccount,
 } from '@services/Members';
 
 import axios from 'axios';
 import ResetCreditsModal from './ResetCreditsModal';
 import 'antd/dist/reset.css';
 import { useNotifications } from '@components/Common/Notification';
+import { disconnectLinkedIn } from '@services/LinkedIn';
 
 export const People = () => {
   const [people, setPeople] = useState([]);
@@ -29,6 +31,8 @@ export const People = () => {
   const [selectedPersonForReset, setSelectedPersonForReset] = useState(null);
   const [isResetting, setIsResetting] = useState(false);
   const [refreshPeoplePage, setRefreshPeoplePage] = useState(false);
+  const [disconnectAccountType, setDisconnectAccountType] =
+    useState('LinkedIn');
   const message = useNotifications();
 
   useEffect(() => {
@@ -39,6 +43,7 @@ export const People = () => {
         if (members.length > 0) {
           setPeople(members);
         }
+        console.log(members);
         setTimeout(() => {
           setIsLoading(false);
         }, 1000);
@@ -64,32 +69,49 @@ export const People = () => {
     }
   };
 
-
-const handleGmailConnect = async (person) => {
-  try {
-    console.log(process.env.REACT_APP_GOOGLE_GMAIL_CONNECT_URL)
-    const response = await axios.get(
-      process.env.REACT_APP_GOOGLE_GMAIL_CONNECT_URL,
-      { params: { userId: person._id } }
-    );
-
-
-    const { url } = response.data;
-
-    if (url) {
-      window.location.href = url;
-    } else {
-      console.error('No OAuth URL received from backend');
+  const handleGmailConnect = async (person) => {
+    try {
+      const response = await axios.get(
+        process.env.REACT_APP_GOOGLE_GMAIL_CONNECT_URL,
+        { params: { userId: person._id } },
+      );
+      const { url } = response.data;
+      if (url) {
+        window.location.href = url;
+      } else {
+        console.error('No OAuth URL received from backend');
+      }
+    } catch (error) {
+      console.error(
+        'Gmail connect error:',
+        error?.response?.data || error.message,
+      );
+      alert('Failed to connect Gmail. Please try again.');
     }
-  } catch (error) {
-    console.error('Gmail connect error:', error?.response?.data || error.message);
-    alert('Failed to connect Gmail. Please try again.');
-  }
-};
+  };
+
   const handleDisconnectLinkedIn = (personId) => {
     setSelectedPersonId(personId);
+    setDisconnectAccountType('LinkedIn');
     setDisconnectModalVisible(true);
   };
+
+  // Open modal for Gmail
+  const handleDisconnectGmailModal = (personId) => {
+    setSelectedPersonId(personId);
+    setDisconnectAccountType('Gmail');
+    setDisconnectModalVisible(true);
+  };
+
+  const handleConfirmDisconnect = async (memberId) => {
+    if (disconnectAccountType === 'LinkedIn') {
+      await disconnectLinkedIn(memberId);
+    } else if (disconnectAccountType === 'Gmail') {
+      await disconnectGmailAccount(memberId);
+    }
+    setRefreshPeoplePage((prev) => !prev);
+  };
+
   const handleResetCredits = (person) => {
     setSelectedPersonForReset(person);
     setResetCreditsModalVisible(true);
@@ -324,18 +346,38 @@ const handleGmailConnect = async (person) => {
                   <button
                     title="Disconnect Linkedin"
                     onClick={() => handleDisconnectLinkedIn(person._id)}
-                    className={`rounded-lg text-black p-2 bg-white flex items-center gap-2 text-xs`}
+                    className="rounded-lg text-black p-2 bg-white flex items-center gap-2 text-xs"
                   >
                     <BiUnlink size={16} />
+                    Disconnect LinkedIn
                   </button>
                 ) : (
                   <button
                     onClick={handleConnectLinkedIn}
                     disabled={false}
-                    className={`rounded-lg text-black bg-white p-2 px-2 flex items-center gap-2 text-xs`}
+                    className="rounded-lg text-black bg-white p-2 px-2 flex items-center gap-2 text-xs"
                   >
                     Connect
                     <Icons.LinkedIn className="text-sky-800" size={16} />
+                  </button>
+                )}
+
+                {person?.gmailTokens ? (
+                  <button
+                    title="Disconnect Gmail"
+                    onClick={() => handleDisconnectGmailModal(person._id)}
+                    className="rounded-lg text-black p-2 bg-white flex items-center gap-2 text-xs"
+                  >
+                    <BiUnlink size={16} />
+                    Disconnect Gmail
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => handleGmailConnect(person)}
+                    className="rounded-lg text-black bg-white p-2 px-2 flex items-center gap-2 text-xs"
+                  >
+                    <Icons.Google size={16} />
+                    Connect Gmail
                   </button>
                 )}
                 <button
@@ -346,13 +388,7 @@ const handleGmailConnect = async (person) => {
                   <Icons.Settings size={16} />
                   Member Settings
                 </button>
-                {/* <button
-                  onClick={() =>handleGmailConnect(person)}
-                  className="rounded-lg text-black bg-white p-2 px-2 flex items-center gap-2 text-xs"
-                >
-                  <Icons.Google size={16} />
-                  Connect Gmail
-                </button> */}
+
                 {person?.lastActive && (
                   <p className="text-sm font-semibold rounded-lg p-1 px-3 m-0 text-gray-600">
                     Last Active:{' '}
@@ -377,7 +413,8 @@ const handleGmailConnect = async (person) => {
         isVisible={disconnectModalVisible}
         onClose={() => setDisconnectModalVisible(false)}
         memberId={selectedPersonId}
-        refreshPage={setRefreshPeoplePage}
+        accountType={disconnectAccountType}
+        onConfirmDisconnect={handleConfirmDisconnect}
       />
       <ResetCreditsModal
         isVisible={resetCreditsModalVisible}

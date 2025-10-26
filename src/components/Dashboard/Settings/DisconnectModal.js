@@ -1,26 +1,28 @@
 import React from 'react';
-import { disconnectLinkedIn } from '@services/LinkedIn';
+import { BiUnlink } from 'react-icons/bi';
 import { useNotifications } from '@components/Common/Notification';
 
 const DisconnectConfirmationModal = ({
   isVisible,
   onClose,
   memberId,
-  refreshPage,
+  accountType = 'LinkedIn', // default
+  onConfirmDisconnect, // callback for disconnect
+  loading = false,
 }) => {
-  if (!isVisible) return null;
   const message = useNotifications();
 
-  const handleDisconnectLinkedIn = async () => {
+  const handleDisconnect = async () => {
     try {
-      await disconnectLinkedIn(memberId);
-      refreshPage(true);
-      message.success('Account disconnected successfully!');
+      await onConfirmDisconnect(memberId);
+      message.success(`${accountType} disconnected successfully!`);
       onClose();
     } catch (err) {
-      message.error(err.message);
+      message.error(err.message || `Failed to disconnect ${accountType}`);
     }
   };
+
+  if (!isVisible) return null;
 
   return (
     <div
@@ -32,7 +34,7 @@ const DisconnectConfirmationModal = ({
         onClick={(e) => e.stopPropagation()}
       >
         <h2 className="text-lg mt-2 text-center mb-6">
-          Are you sure you want to disconnect your LinkedIn Account?
+          Are you sure you want to disconnect your {accountType} Account?
         </h2>
         <div className="flex justify-end gap-4">
           <button
@@ -44,8 +46,9 @@ const DisconnectConfirmationModal = ({
           </button>
           <button
             type="button"
-            onClick={handleDisconnectLinkedIn}
+            onClick={handleDisconnect}
             className="global-button-primary rounded-full px-6 bg-red-600"
+            disabled={loading}
           >
             Disconnect
           </button>

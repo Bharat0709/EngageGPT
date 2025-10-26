@@ -253,9 +253,7 @@ export const resetMemberCredits = async (memberId) => {
   }
 };
 
-
 export const sendEmailViaGmail = async (userId, mailData) => {
-  console.log(userId , mailData)
   try {
     const response = await axiosInstance.post(
       `${MEMBER_API_URL}/mail/send/${userId}`,
@@ -263,7 +261,18 @@ export const sendEmailViaGmail = async (userId, mailData) => {
         ...mailData, 
       }
     );
-    console.log(response);
+    return response.data;
+  } catch (error) {
+    const errorMsg = getErrorMessage(error);
+    throw new Error(errorMsg);
+  }
+};
+
+export const disconnectGmailAccount = async (memberId) => {
+  try {
+    const response = await axiosInstance.delete(
+      `${MEMBER_API_URL}/mail/disconnect/${memberId}`
+    );
     return response.data;
   } catch (error) {
     const errorMsg = getErrorMessage(error);
