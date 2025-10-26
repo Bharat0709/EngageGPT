@@ -176,10 +176,10 @@ const OrganizationCard = ({
               className="w-full flex items-center justify-center gap-2 px-8 py-2.5 text-xs font-semibold text-white bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-xl border-none overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/30 before:to-transparent before:w-full before:h-full before:translate-x-[-100%] hover:before:animate-[slide_1s_infinite] before:skew-x-12 mb-3"
             >
               <Icons.Credits
-                size={16}
+                size={18}
                 className="transition-transform duration-200 group-hover:rotate-12"
               />
-              <span className="text-center">Add More Credits</span>
+              <span className="text-center text-sm">Add More Credits</span>
             </button>
           )}
 
