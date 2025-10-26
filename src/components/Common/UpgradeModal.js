@@ -216,9 +216,16 @@ const UpgradeModal = ({ isOpen, onClose }) => {
                         <p className="text-md font-semibold text-gray-900 m-0">
                           {plan.name}
                         </p>
-                        <p className="text-sm lg:text-lg text-gray-500 m-0 mt-0.5 flex items-center gap-1">
-                          {plan.credits} credits
-                        </p>
+                        <motion.span
+                            key={currencyView + plan.product_id}
+                            initial={{ opacity: 0, y: 5 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -5 }}
+                            transition={{ duration: 0.2 }}
+                            className="text-md mt-2 block"
+                          >
+                            {formatPrice(plan.price)}
+                          </motion.span>
                       </div>
                     </div>
 
@@ -226,16 +233,10 @@ const UpgradeModal = ({ isOpen, onClose }) => {
                       {/* Price */}
                       <div className="text-right">
                         <AnimatePresence mode="wait">
-                          <motion.span
-                            key={currencyView + plan.product_id}
-                            initial={{ opacity: 0, y: 5 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -5 }}
-                            transition={{ duration: 0.2 }}
-                            className="text-lg font-bold text-gray-900 block"
-                          >
-                            {formatPrice(plan.price)}
-                          </motion.span>
+                        
+                           <p className="text-sm font-bold lg:text-lg text-gray-500 m-0 mt-0.5 flex items-center gap-1">
+                          {plan.credits} credits
+                        </p>
                         </AnimatePresence>
                       </div>
 

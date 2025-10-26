@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import {
   FiX,
@@ -15,6 +15,7 @@ const FeatureUpdatesModal = () => {
   const [hasSeenUpdates, setHasSeenUpdates] = useState(false);
   const [updates, setUpdates] = useState([]);
   const [loading, setLoading] = useState(true);
+  const modalRef = useRef(null);
 
   // Fetch updates from backend
   const fetchUpdates = async () => {
@@ -56,6 +57,23 @@ const FeatureUpdatesModal = () => {
     }
   }, []);
 
+  // Handle click outside to close
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        handleClose();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen]);
+
   const handleClose = () => {
     setIsOpen(false);
     if (!hasSeenUpdates) {
@@ -84,141 +102,154 @@ const FeatureUpdatesModal = () => {
   const modalContent = (
     <AnimatePresence mode="wait">
       {isOpen && (
-        <motion.div
-          initial={{ opacity: 0, x: 400, y: 100 }}
-          animate={{ opacity: 1, x: 0, y: 0 }}
-          exit={{ opacity: 0, x: 400, y: 100 }}
-          transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-          className="fixed bottom-6 right-6 z-[9999] w-[420px] max-h-[600px] bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden"
-          style={{ maxWidth: 'calc(100vw - 48px)' }}
-        >
-          {/* Header */}
-          <div className="relative border-b border-gray-100 p-5 bg-gradient-to-r from-purple-50 to-pink-50">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow-lg">
-                  <FiBell className="text-white" size={18} />
-                </div>
-                <div>
-                  <h2 className="text-lg font-semibold text-gray-900 m-0">
-                    What's New
-                  </h2>
-                  <p className="text-xs text-gray-500 mt-0.5 m-0">
-                    Latest features & tutorials
-                  </p>
-                </div>
-              </div>
-              <button
-                className="text-gray-400 hover:text-gray-600 p-2 rounded-lg hover:bg-white/50 transition-all"
-                onClick={handleClose}
-              >
-                <FiX size={18} />
-              </button>
-            </div>
-          </div>
+        <>
+          {/* Backdrop with blur */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 bg-black/20 backdrop-blur-sm z-[9998]"
+          />
 
-          {/* Content */}
-          <div className="overflow-y-auto max-h-[480px] scrollbar-hide">
-            {loading ? (
-              <div className="p-6 text-center">
-                <div className="inline-block w-8 h-8 border-4 border-gray-200 border-t-purple-500 rounded-full animate-spin"></div>
-                <p className="text-sm text-gray-500 mt-3 m-0">Loading updates...</p>
-              </div>
-            ) : !updates || updates.length === 0 ? (
-              <div className="p-6 text-center">
-                <FiInfo className="mx-auto text-gray-300 mb-3" size={40} />
-                <p className="text-sm text-gray-500 m-0">No updates available</p>
-              </div>
-            ) : (
-              <div className="p-4 space-y-3">
-                {updates.map((update) => (
-                  <motion.div
-                    key={update.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="border border-gray-200 rounded-xl p-4 hover:border-purple-300 hover:shadow-md transition-all bg-white group"
-                  >
-                    {/* Badge */}
-                    <div className="flex items-start justify-between mb-2">
-                      <div
-                        className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold text-white bg-gradient-to-r ${update.badgeColor || 'from-purple-500 to-pink-500'}`}
-                      >
-                        {update.badge || 'Update'}
-                      </div>
-                      <span className="text-xs text-gray-400">
-                        {formatDate(update.date)}
-                      </span>
-                    </div>
-
-                    {/* Title & Description */}
-                    <h3 className="text-base font-semibold text-gray-900 mb-1.5 m-0">
-                      {update.title}
-                    </h3>
-                    <p className="text-sm text-gray-600 mb-3 m-0 leading-relaxed">
-                      {update.description}
+          {/* Modal */}
+          <motion.div
+            ref={modalRef}
+            initial={{ opacity: 0, x: 400, y: 100 }}
+            animate={{ opacity: 1, x: 0, y: 0 }}
+            exit={{ opacity: 0, x: 400, y: 100 }}
+            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+            className="fixed bottom-6 right-6 z-[9999] w-[420px] max-h-[600px] bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden"
+            style={{ maxWidth: 'calc(100vw - 48px)' }}
+          >
+            {/* Header */}
+            <div className="relative border-b border-gray-100 p-5 bg-gradient-to-r from-purple-50 to-pink-50">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow-lg">
+                    <FiBell className="text-white" size={18} />
+                  </div>
+                  <div>
+                    <h2 className="text-lg font-semibold text-gray-900 m-0">
+                      What's New
+                    </h2>
+                    <p className="text-xs text-gray-500 mt-0.5 m-0">
+                      Latest features & tutorials
                     </p>
+                  </div>
+                </div>
+                <button
+                  className="text-gray-400 hover:text-gray-600 p-2 rounded-lg hover:bg-white/50 transition-all"
+                  onClick={handleClose}
+                >
+                  <FiX size={18} />
+                </button>
+              </div>
+            </div>
 
-                    {/* Coming Soon Badge */}
-                    {update.type === 'comingsoon' && update.estimatedRelease && (
-                      <div className="mb-3">
-                        <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-600">
-                          Expected: {update.estimatedRelease}
+            {/* Content */}
+            <div className="overflow-y-auto max-h-[480px] scrollbar-hide">
+              {loading ? (
+                <div className="p-6 text-center">
+                  <div className="inline-block w-8 h-8 border-4 border-gray-200 border-t-purple-500 rounded-full animate-spin"></div>
+                  <p className="text-sm text-gray-500 mt-3 m-0">Loading updates...</p>
+                </div>
+              ) : !updates || updates.length === 0 ? (
+                <div className="p-6 text-center">
+                  <FiInfo className="mx-auto text-gray-300 mb-3" size={40} />
+                  <p className="text-sm text-gray-500 m-0">No updates available</p>
+                </div>
+              ) : (
+                <div className="p-4 space-y-3">
+                  {updates.map((update) => (
+                    <motion.div
+                      key={update.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="border border-gray-200 rounded-xl p-4 hover:border-purple-300 hover:shadow-md transition-all bg-white group"
+                    >
+                      {/* Badge */}
+                      <div className="flex items-start justify-between mb-2">
+                        <div
+                          className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold text-white bg-gradient-to-r ${update.badgeColor || 'from-purple-500 to-pink-500'}`}
+                        >
+                          {update.badge || 'Update'}
+                        </div>
+                        <span className="text-xs text-gray-400">
+                          {formatDate(update.date)}
                         </span>
                       </div>
-                    )}
 
-                    {/* Actions */}
-                    <div className="flex items-center gap-2 flex-wrap">
-                      {update.videoUrl && (
-                        <a
-                          href={update.videoUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-1.5 px-3 py-1.5 bg-purple-50 hover:bg-purple-100 text-purple-600 rounded-lg text-xs font-medium transition-all"
-                        >
-                          <FiVideo size={14} />
-                          Watch Video
-                        </a>
-                      )}
-                      {update.guideUrl && (
-                        <a
-                          href={update.guideUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-600 rounded-lg text-xs font-medium transition-all"
-                        >
-                          <FiBook size={14} />
-                          Read Guide
-                        </a>
-                      )}
-                    </div>
+                      {/* Title & Description */}
+                      <h3 className="text-base font-semibold text-gray-900 mb-1.5 m-0">
+                        {update.title}
+                      </h3>
+                      <p className="text-sm text-gray-600 mb-3 m-0 leading-relaxed">
+                        {update.description}
+                      </p>
 
-                    {/* Tags */}
-                    {update.tags && update.tags.length > 0 && (
-                      <div className="flex items-center gap-1.5 mt-3 flex-wrap">
-                        {update.tags.slice(0, 3).map((tag, index) => (
-                          <span
-                            key={index}
-                            className="px-2 py-0.5 bg-gray-100 text-gray-600 rounded text-xs"
-                          >
-                            {tag}
+                      {/* Coming Soon Badge */}
+                      {update.type === 'comingsoon' && update.estimatedRelease && (
+                        <div className="mb-3">
+                          <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-600">
+                            Expected: {update.estimatedRelease}
                           </span>
-                        ))}
-                      </div>
-                    )}
-                  </motion.div>
-                ))}
-              </div>
-            )}
-          </div>
+                        </div>
+                      )}
 
-          {/* Footer */}
-          <div className="border-t border-gray-100 px-5 py-3 bg-gray-50">
-            <p className="text-xs text-gray-500 text-center m-0">
-              Stay updated with the latest features and improvements
-            </p>
-          </div>
-        </motion.div>
+                      {/* Actions */}
+                      <div className="flex items-center gap-2 flex-wrap">
+                        {update.videoUrl && (
+                          <a
+                            href={update.videoUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-1.5 px-3 py-1.5 bg-purple-50 hover:bg-purple-100 text-purple-600 rounded-lg text-xs font-medium transition-all"
+                          >
+                            <FiVideo size={14} />
+                            Watch Video
+                          </a>
+                        )}
+                        {update.guideUrl && (
+                          <a
+                            href={update.guideUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-600 rounded-lg text-xs font-medium transition-all"
+                          >
+                            <FiBook size={14} />
+                            Read Guide
+                          </a>
+                        )}
+                      </div>
+
+                      {/* Tags */}
+                      {update.tags && update.tags.length > 0 && (
+                        <div className="flex items-center gap-1.5 mt-3 flex-wrap">
+                          {update.tags.slice(0, 3).map((tag, index) => (
+                            <span
+                              key={index}
+                              className="px-2 py-0.5 bg-gray-100 text-gray-600 rounded text-xs"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    </motion.div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Footer */}
+            <div className="border-t border-gray-100 px-5 py-3 bg-gray-50">
+              <p className="text-xs text-gray-500 text-center m-0">
+                Stay updated with the latest features and improvements
+              </p>
+            </div>
+          </motion.div>
+        </>
       )}
     </AnimatePresence>
   );
@@ -235,7 +266,7 @@ const FeatureUpdatesModal = () => {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
             onClick={handleOpen}
-            className="fixed  lg:bottom-6 right-20 z-[9998] w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 shadow-lg flex items-center justify-center text-white hover:shadow-xl transition-all"
+            className="fixed lg:bottom-6 right-20 z-[9998] w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 shadow-lg flex items-center justify-center text-white hover:shadow-xl transition-all"
             title="View Updates"
           >
             <FiInfo size={24} />

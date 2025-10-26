@@ -1,5 +1,3 @@
-import { message } from 'antd';
-export const Copy = (text, copyMessage) => {
+export const Copy = (text) => {
   navigator.clipboard.writeText(text);
-  message.success(`${copyMessage}`);
 };

@@ -9,8 +9,9 @@ import TemplatePreviewModal from './MailPreview';
 import EmailMediaUploader from './EmailMediaUploader';
 import { useNotifications } from '@components/Common/Notification';
 import CustomToggle from '@components/Common/CustomToggle';
+import { sendEmailViaGmail } from '@services/Members';
 
-const EmailSendModal = ({ memberId, postData, onSend, onClose }) => {
+const EmailSendModal = ({ memberId, postData, onClose }) => {
   const message = useNotifications();
   const [emailData, setEmailData] = useState({
     to: '',
@@ -74,7 +75,7 @@ const EmailSendModal = ({ memberId, postData, onSend, onClose }) => {
         templateId: selectedTemplate?.id || selectedTemplate?._id,
         memberId: memberId,
       };
-      // await onSend?.(emailPayload);
+      await sendEmailViaGmail( memberId , emailPayload);
     } catch (error) {
       message.error(error.message);
     } finally {

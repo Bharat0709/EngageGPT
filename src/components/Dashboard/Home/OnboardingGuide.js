@@ -4,7 +4,6 @@ import { useNotifications } from '@components/Common/Notification';
 import { Icons } from '@utils/constantData/icons';
 import { Copy } from '@utils/copyText';
 import { connectLinkedIn } from '@utils/connectLinkedIn';
-import UpdateBanner from '../Global/Banner';
 
 const OnboardingGuide = ({
   onAddProfile,
@@ -34,6 +33,10 @@ const OnboardingGuide = ({
     'Sync your LinkedIn Profile': isProfileSynced,
   };
 
+  const handleCopyToken = (token) =>{
+    Copy(token);
+    message.success("Connection token copied")
+  }
   const stepsUnlocked = {
     'Add Profile': true, // First step is always unlocked
     'Install Chrome Extension and Connect your profile using conection token':
@@ -43,14 +46,14 @@ const OnboardingGuide = ({
 
   return (
     <div className="container mx-auto px-4 lg:py-4 py-2 max-w-7xl animate-fade-in">
-            <UpdateBanner/>
-      <div className="text-center mb-2 border border-gray-600">
+            {/* <UpdateBanner/> */}
+      {/* <div className="text-center mb-2 border border-gray-600">
         <img
           src="/banner.svg"
           alt="Banner-EngageGPT"
           className="mx-auto  max-h-1/2"
         />
-      </div>
+      </div> */}
       <div className="bg-white lg:hidden flex flex-col mb-2 shadow-sm border border-gray-600 p-6">
         <h3 className="text-lg font-semibold text-slate-800 mb-4">
           Why EngageGPT?
@@ -297,24 +300,14 @@ const OnboardingGuide = ({
                   </div>
                 </div>
                 <div className="flex flex-col md:flex-row gap-3">
-                  <div className="copy-token items-center font-semibold flex py-1 bg-blue-50  pl-3 pr-2 text-gray-800 text-sm">
-                    Connection Token
+                  <div className="copy-token flex items-center  items-center font-semibold w-full min-w-98 flex py-1 bg-blue-50  pl-3 pr-2 text-gray-800 text-lg">
+                   <p className='m-0 w-full min-w-44 p-0'>Connection Token:</p> 
                     <button
-                      onClick={() => message.info(profile.connectionToken)}
-                      className="ml-2 text-gray-800 hover:text-black"
-                    >
-                      <Icons.Eye size={16} />
-                    </button>
-                    <button
-                      className="ml-2 text-gray-800 hover:text-black"
-                      onClick={() =>
-                        Copy(
-                          profile?.connectionToken,
-                          'Connection Token Copied',
-                        )
-                      }
-                    >
-                      <Icons.Copy size={16} />
+                      className="flex  gap-2 items-center w-full text-gray-700  hover:text-black"
+                      onClick = {()=> handleCopyToken(profile.connectionTokenß)}
+                    > 
+                      <Icons.Copy size={20} />
+                      Copy
                     </button>
                   </div>
                   <button

@@ -252,3 +252,21 @@ export const resetMemberCredits = async (memberId) => {
     throw new Error(errorMsg);
   }
 };
+
+
+export const sendEmailViaGmail = async (userId, mailData) => {
+  console.log(userId , mailData)
+  try {
+    const response = await axiosInstance.post(
+      `${MEMBER_API_URL}/mail/send/${userId}`,
+      {
+        ...mailData, 
+      }
+    );
+    console.log(response);
+    return response.data;
+  } catch (error) {
+    const errorMsg = getErrorMessage(error);
+    throw new Error(errorMsg);
+  }
+};

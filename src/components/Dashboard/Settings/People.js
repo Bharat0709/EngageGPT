@@ -11,6 +11,8 @@ import {
   addNewMember,
   resetMemberCredits,
 } from '@services/Members';
+
+import axios from 'axios';
 import ResetCreditsModal from './ResetCreditsModal';
 import 'antd/dist/reset.css';
 import { useNotifications } from '@components/Common/Notification';
@@ -62,6 +64,28 @@ export const People = () => {
     }
   };
 
+
+const handleGmailConnect = async (person) => {
+  try {
+    console.log(process.env.REACT_APP_GOOGLE_GMAIL_CONNECT_URL)
+    const response = await axios.get(
+      process.env.REACT_APP_GOOGLE_GMAIL_CONNECT_URL,
+      { params: { userId: person._id } }
+    );
+
+
+    const { url } = response.data;
+
+    if (url) {
+      window.location.href = url;
+    } else {
+      console.error('No OAuth URL received from backend');
+    }
+  } catch (error) {
+    console.error('Gmail connect error:', error?.response?.data || error.message);
+    alert('Failed to connect Gmail. Please try again.');
+  }
+};
   const handleDisconnectLinkedIn = (personId) => {
     setSelectedPersonId(personId);
     setDisconnectModalVisible(true);
@@ -77,7 +101,6 @@ export const People = () => {
     setIsResetting(true);
     try {
       const response = await resetMemberCredits(selectedPersonForReset._id);
-
 
       // Refresh the people list
       setRefreshPeoplePage((prev) => !prev);
@@ -287,7 +310,6 @@ export const People = () => {
                     </p>
                   </div>
                 </div>
-                
               </div>
               <div className="flex flex-wrap gap-2 lg:w-fit w-full justify-between lg:mt-0 mt-2 items-center">
                 <div className="copy-token text-xs rounded-lg flex items-center">
@@ -324,6 +346,13 @@ export const People = () => {
                   <Icons.Settings size={16} />
                   Member Settings
                 </button>
+                {/* <button
+                  onClick={() =>handleGmailConnect(person)}
+                  className="rounded-lg text-black bg-white p-2 px-2 flex items-center gap-2 text-xs"
+                >
+                  <Icons.Google size={16} />
+                  Connect Gmail
+                </button> */}
                 {person?.lastActive && (
                   <p className="text-sm font-semibold rounded-lg p-1 px-3 m-0 text-gray-600">
                     Last Active:{' '}
