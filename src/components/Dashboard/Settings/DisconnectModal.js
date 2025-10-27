@@ -11,7 +11,6 @@ const DisconnectConfirmationModal = ({
   loading = false,
 }) => {
   const message = useNotifications();
-
   const handleDisconnect = async () => {
     try {
       await onConfirmDisconnect(memberId);

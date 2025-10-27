@@ -46,7 +46,6 @@ const EmailSendModal = ({ memberId, postData, onClose }) => {
         setIsLoadingMember(true);
         const data = await getMemberDetails(memberId);
         setMemberDetails(data);
-
         if (data?.gmailTokens?.email) {
           setEmailData((prev) => ({ ...prev, from: data.gmailTokens.email }));
           setIsGmailConnected(true);

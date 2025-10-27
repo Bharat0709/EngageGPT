@@ -47,13 +47,13 @@ const OnboardingGuide = ({
   return (
     <div className="container mx-auto px-4 lg:py-4 py-2 max-w-7xl animate-fade-in">
             {/* <UpdateBanner/> */}
-      {/* <div className="text-center mb-2 border border-gray-600">
+      <div className="text-center mb-2 border border-gray-600">
         <img
           src="/banner.svg"
           alt="Banner-EngageGPT"
           className="mx-auto  max-h-1/2"
         />
-      </div> */}
+      </div>
       <div className="bg-white lg:hidden flex flex-col mb-2 shadow-sm border border-gray-600 p-6">
         <h3 className="text-lg font-semibold text-slate-800 mb-4">
           Why EngageGPT?
