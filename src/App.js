@@ -25,6 +25,7 @@ const PasswordSetReset = lazy(() => import('@pages/ResetPasword'));
 const FeedbackSurvey = lazy(() => import('@pages/UninstallSurvey'));
 const UpdateInfoScreen = lazy(() => import('@pages/UpdatesInfo'));
 const GoogleLoginRedirect = lazy(() => import('@pages/LoggingInPage'));
+const Upgrade = lazy(() => import('@pages/Upgrade'));
 
 
 const AppRoutes = () => {
@@ -46,6 +47,7 @@ const AppRoutes = () => {
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/upgrade" element={<Upgrade/>} />
         <Route path="/verify-email" element={<EmailVerification />} />
         <Route path="/reset-password/:token" element={<PasswordSetReset />} />
         <Route path="/auth/google/callback" element={<GoogleLoginRedirect />} />

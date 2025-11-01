@@ -6,6 +6,7 @@ import EditOrgModal from './EditOrgModal';
 import { People } from './People';
 import { OrganizationCard } from './Organization/OrganizationCard';
 import { SubscriptionCard } from './Organization/SubscriptionDetails';
+import UpgradeModal from '@components/Common/UpgradeModal';
 
 const OrganizationProfileSettings = () => {
   const [userData, setUserData] = useState(null);
@@ -31,6 +32,9 @@ const OrganizationProfileSettings = () => {
     fetchAndSetUserData();
   }, []);
 
+  const handleViewUpgrade = (viewType) => {
+    setView(viewType);
+  };
   const handleViewToggle = (viewType) => {
     setView(viewType);
   };
@@ -69,10 +73,20 @@ const OrganizationProfileSettings = () => {
         >
           Transactions
         </button>
+            <button
+          onClick={() => handleViewUpgrade('upgrade')}
+          className={`${
+            view === 'subscription'
+              ? 'text-black font-semibold'
+              : 'text-gray-600'
+          }`}
+        >
+          Add More Credits
+        </button>
       </div>
       {view === 'general' && <OrganizationCard userData={userData}  setIsModalOpen={setIsModalOpen} />}
       {view === 'subscription' && <SubscriptionCard userData={userData} />}
-
+      {view === 'upgrade' && <UpgradeModal isOpen={true} onClose={() => {setView('general')}} />}
       <EditOrgModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

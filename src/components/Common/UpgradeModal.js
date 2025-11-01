@@ -17,7 +17,7 @@ const UpgradeModal = ({ isOpen, onClose }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [plans, setPlans] = useState([]);
   const [error, setError] = useState(null);
-  const [currencyView, setCurrencyView] = useState('INR'); // "USD" or "INR"
+  const [currencyView, setCurrencyView] = useState('USD'); // "USD" or "INR"
 
   useEffect(() => {
     if (isOpen) {
@@ -74,7 +74,7 @@ const UpgradeModal = ({ isOpen, onClose }) => {
       return `₹${inrPrice.toLocaleString('en-IN')}`;
     }
     const approxUsd = inrPrice / 89; // rough conversion
-    return `≈ $${approxUsd.toFixed(2)} USD`;
+    return `$${approxUsd.toFixed(2)} USD`;
   };
 
   const getPlanIcon = (index) => {

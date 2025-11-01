@@ -25,6 +25,8 @@ import { goTo } from '@utils/navigator';
 import { Icons } from '@utils/constantData/icons';
 import InfoModal from '@components/Common/InfoModal';
 import { CustomSingleSelect } from '@components/Common/CustomSelect';
+import Button from '@components/Common/Button';
+import UpgradeModal from '@components/Common/UpgradeModal';
 
 const LinkedInPostGenerator = () => {
   const message = useNotifications();
@@ -32,6 +34,7 @@ const LinkedInPostGenerator = () => {
   const [inputValue, setInputValue] = useState('');
   const [loading, setLoading] = useState(false);
   const [generatedPost, setGeneratedPost] = useState('');
+  const [viewUpgradeModal, setViewUpgradeModal] = useState(false);
   const [selectedAIOption, setSelectedAIOption] = useState('Gemini');
   const [availableAIOptions, setAvailableAIOptions] = useState([]);
   const [showCreditsModal, setShowCreditsModal] = useState(false);
@@ -243,6 +246,11 @@ const LinkedInPostGenerator = () => {
       message.error(err.message || 'Failed to send invite');
     }
   };
+
+  const handleViewUpgrade = () => {
+    setViewUpgradeModal(true);
+  };
+
   // Show loading state while initializing
   if (!isInitialized) {
     return <GeneratePostSkeletonLoading />;
@@ -273,6 +281,13 @@ const LinkedInPostGenerator = () => {
                 <Icons.Refresh className="w-4 h-4" />
                 Refresh Credits
               </button> */}
+              <Button
+                buttonText="Add More Credits"
+                theme="dark"
+                onClick={() => handleViewUpgrade('upgrade')}
+                className={'text-black font-semibold'}
+              />
+
               {selectedProfile && (
                 <div className="hidden sm:flex items-center space-x-2 text-sm text-gray-600">
                   <div className="w-8 h-8 bg-[#0c4a6e] rounded-full flex items-center justify-center text-white font-semibold text-xs">
@@ -432,7 +447,7 @@ const LinkedInPostGenerator = () => {
                       selectedValue={selectedTone}
                       onChange={(val) => setSelectedTone(val)}
                       placeholder="Select Tone"
-                      dropdownPosition='top'
+                      dropdownPosition="top"
                     />
                   </div>
                 </div>
@@ -604,6 +619,7 @@ const LinkedInPostGenerator = () => {
         title="How to Get 500 FREE Credits"
         content={creditsModalContent}
       />
+      <UpgradeModal isOpen={viewUpgradeModal} onClose={() => {setViewUpgradeModal(false)}} />
     </div>
   );
 };
