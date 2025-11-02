@@ -189,7 +189,7 @@ const Upgrade = () => {
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -5 }}
                             transition={{ duration: 0.2 }}
-                            className="text-lg mt-1 block text-gray-800"
+                            className="text-lg mt-1 block tracking-widest text-gray-800"
                           >
                             {formatPrice(plan.price)}
                           </motion.span>

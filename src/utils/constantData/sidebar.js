@@ -65,4 +65,12 @@ export const menuItems = [
     hoverClass: 'hover:bg-gray-50 hover:text-black',
     tag: { text: 'NEW', color: 'bg-blue-500' },
   },
+  //   {
+  //   to: '/dashboard/send-emails',
+  //   icon: <Icons.Send size={18} />,
+  //   label: 'Send Emails',
+  //   activeClass: 'global-sidebar-button-primary !bg-slate-100',
+  //   hoverClass: 'hover:bg-gray-50 hover:text-black',
+  //   tag: { text: 'NEW', color: 'bg-blue-500' },
+  // },
 ];

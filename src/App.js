@@ -47,10 +47,17 @@ const AppRoutes = () => {
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/upgrade" element={<Upgrade/>} />
         <Route path="/verify-email" element={<EmailVerification />} />
         <Route path="/reset-password/:token" element={<PasswordSetReset />} />
         <Route path="/auth/google/callback" element={<GoogleLoginRedirect />} />
+        <Route
+          path="/upgrade"
+          element={
+            <ProtectedRoute>
+              <Upgrade/>
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/dashboard/*"
           element={
