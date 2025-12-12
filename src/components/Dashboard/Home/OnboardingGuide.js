@@ -304,7 +304,7 @@ const OnboardingGuide = ({
                    <p className='m-0 w-full min-w-44 p-0'>Connection Token:</p> 
                     <button
                       className="flex  gap-2 items-center w-full text-gray-700  hover:text-black"
-                      onClick = {()=> handleCopyToken(profile.connectionTokenß)}
+                      onClick = {()=> handleCopyToken(profile.connectionToken)}
                     > 
                       <Icons.Copy size={20} />
                       Copy
