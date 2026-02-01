@@ -90,34 +90,6 @@ function MemberProfile({ memberData, view, handleViewToggle } = props) {
         </div>
       </div>
 
-      <div className="flex p-2 bg-gray-100 flex-wrap items-center m-0 gap-2 rounded-xl">
-        <p className="p-1 px-3 m-0 rounded-md text-xs bg-white">
-          {memberData?.plan} Plan
-        </p>
-        <p className="p-1 px-3 m-0 rounded-md text-xs bg-white">
-          {memberData?.credits} Credits Available
-        </p>
-        <p className="p-1 px-3 m-0 rounded-md text-xs bg-white">
-          {memberData?.totalCreditsUsed} Credits Used
-        </p>
-      </div>
-
-      <div className="flex bg-gray-50 rounded-xl p-3 text-sm justify-start gap-4 items-center mt-2 mb-2">
-        {tabs.map((tab) => (
-          <div key={tab.id} className="flex items-center gap-2">
-            <button
-              onClick={() => handleViewToggle(tab.id)}
-              className={`${
-                view === tab.id ? 'text-black font-semibold' : 'text-gray-400'
-              }`}
-            >
-              {tab.label}
-            </button>
-            <InfoButton feature={tab.id} />
-          </div>
-        ))}
-      </div>
-
       {isAccountSettingsOpen && (
         <AccountSettings
           onClose={() => setIsAccountSettingsOpen(false)}

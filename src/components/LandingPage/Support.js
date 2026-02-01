@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import { getCalApi } from '@calcom/embed-react';
 
 const BookDemo = () => {
+  useEffect(() => {
+    (async function () {
+      const cal = await getCalApi({ namespace: '30min' });
+      cal('ui', { hideEventTypeDetails: false, layout: 'month_view' });
+    })();
+  }, []);
   return (
     <div className="w-full bg-white max-w-2xl lg:mb-0 mb-4  rounded-2xl flex flex-col items-center justify-center  mt-4 mx-auto p-4 space-y-6">
       <div>
@@ -24,18 +31,18 @@ const BookDemo = () => {
         />
         <hr className="border-neutral-300" />
       </div>
-      <a
-        href="https://calendly.com/engagegpt/30min"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="mx-auto flex justify-center items-center"
-      >
-        <div className="bg-white lg:flex items-center  mt-1 justify-center">
-          <div className="px-6 py-2 lg:text-lg text-md font-medium border  border-gray-300 bg-white text-black w-fit">
+
+      <div className="bg-white lg:flex items-center  mt-1 justify-center">
+        <div className="px-6 cursor-pointer py-2 lg:text-lg text-md font-medium border  border-gray-300 bg-white text-black w-fit">
+          <button
+            data-cal-namespace="30min"
+            data-cal-link="engagegpt-pbr2vh/30min"
+            data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+          >
             Book a Demo
-          </div>
+          </button>
         </div>
-      </a>
+      </div>
     </div>
   );
 };

@@ -7,14 +7,6 @@ import { Icons } from '@utils/constantData/icons';
 
 const PostDrawer = ({ post, handleDrawerClose, isOpen }) => {
   const drawerRef = useRef(null);
-  const handleRewriteWithAI = () => {
-    goTo('/dashboard/create-post', {
-      state: {
-        initialTemplate: post?.textContent,
-        description: 'Rewrite the following post',
-      },
-    });
-  };
 
   return (
     <div className="bg-white rounded-lg flex flex-col gap-2 py-3">
@@ -54,12 +46,6 @@ const PostDrawer = ({ post, handleDrawerClose, isOpen }) => {
                 </a>
               </Tooltip>
             </div>
-            <button
-              onClick={handleRewriteWithAI}
-              className="global-button-primary text-xs rounded-lg"
-            >
-              Rewrite with AI
-            </button>
           </div>
           <div className="flex justify-between bg-gray-50 px-3 py-2 rounded-lg text-md items-center text-black">
             {/* Likes */}

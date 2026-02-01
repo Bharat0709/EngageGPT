@@ -3,10 +3,6 @@ import { useParams } from 'react-router-dom';
 import { getMemberDetails, getFeedFilterSettings } from '@services/Members';
 import SkeletonLoadingMember from '../../SkeletonLoaders/SkeletonLoadingMember';
 import MemberProfile from './MemberProfile';
-import PostSavingSettings from './PostSavingSettings';
-import FeedFilter from './FeedFilter';
-import MemberSummary from './MemberSummary';
-import LeadGeneration from './LeadGeneration';
 import AccountSettings from './MemberAccountSettings';
 import { useNotifications } from '@components/Common/Notification';
 
@@ -138,40 +134,6 @@ const MemberSettings = () => {
           view={view}
           showAccountOption={true}
         />
-
-        <div className="bg-white rounded-xl p-4">
-          {view === 'postsaving' && (
-            <PostSavingSettings
-              memberId={memberId}
-              postSettings={postSettings}
-              setPostSettings={setPostSettings}
-            />
-          )}
-
-          {view === 'feedfilters' && (
-            <FeedFilter
-              feedFilterSettings={feedFilterSettings}
-              setFeedFilterSettings={setFeedFilterSettings}
-              memberId={memberId}
-            />
-          )}
-
-          {view === 'summary' && (
-            <MemberSummary
-              professionalProfile={professionalProfile}
-              setProfessionalProfile={setProfessionalProfile}
-              memberId={memberId}
-            />
-          )}
-
-          {view === 'leadgeneration' && (
-            <LeadGeneration
-              leadGenerationGoals={leadGenerationGoals}
-              setLeadGenerationGoals={setLeadGenerationGoals}
-              memberId={memberId}
-            />
-          )}
-        </div>
       </div>
 
       {/* Account Settings Panel */}

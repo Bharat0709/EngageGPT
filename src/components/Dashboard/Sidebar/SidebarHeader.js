@@ -5,7 +5,7 @@ import { Icons } from '@utils/constantData/icons';
 export const Sidebarheader = ({ isOpen, toggleSidebar, isMobile }) => {
   return (
     <div
-      className={`flex items-center scrollbar-hide justify-between pt-2 pb-4 ${
+      className={`flex items-center scrollbar-hide justify-between pt-2 ${
         isOpen ? 'pl-6 pr-2' : 'pr-2 pl-4'
       } border-b lg:border-b-0`}
     >

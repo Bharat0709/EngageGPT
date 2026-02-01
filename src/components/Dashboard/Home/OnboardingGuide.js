@@ -4,6 +4,8 @@ import { useNotifications } from '@components/Common/Notification';
 import { Icons } from '@utils/constantData/icons';
 import { Copy } from '@utils/copyText';
 import { connectLinkedIn } from '@utils/connectLinkedIn';
+import { useEffect } from 'react';
+import { getCalApi } from '@calcom/embed-react';
 
 const OnboardingGuide = ({
   onAddProfile,
@@ -13,6 +15,12 @@ const OnboardingGuide = ({
   invitedProfiles = [],
   selectedProfile = null,
 }) => {
+  useEffect(() => {
+    (async function () {
+      const cal = await getCalApi({ namespace: '30min' });
+      cal('ui', { hideEventTypeDetails: false, layout: 'month_view' });
+    })();
+  }, []);
   const message = useNotifications();
   const isProfileAdded = invitedProfiles.length > 0 || selectedProfile !== null;
 
@@ -33,10 +41,10 @@ const OnboardingGuide = ({
     'Sync your LinkedIn Profile': isProfileSynced,
   };
 
-  const handleCopyToken = (token) =>{
+  const handleCopyToken = (token) => {
     Copy(token);
-    message.success("Connection token copied")
-  }
+    message.success('Connection token copied');
+  };
   const stepsUnlocked = {
     'Add Profile': true, // First step is always unlocked
     'Install Chrome Extension and Connect your profile using conection token':
@@ -45,13 +53,13 @@ const OnboardingGuide = ({
   };
 
   return (
-    <div className="container mx-auto px-4 lg:py-4 py-2 max-w-7xl animate-fade-in">
-            {/* <UpdateBanner/> */}
+    <div className="container  px-4 lg:py-4 py-2 max-w-8xl animate-fade-in">
+      {/* <UpdateBanner/> */}
       <div className="text-center mb-2 border border-gray-600">
         <img
           src="/banner.svg"
           alt="Banner-EngageGPT"
-          className="mx-auto  max-h-1/2"
+          className="mx-auto w-full max-h-1/2"
         />
       </div>
       <div className="bg-white lg:hidden flex flex-col mb-2 shadow-sm border border-gray-600 p-6">
@@ -100,32 +108,29 @@ const OnboardingGuide = ({
           <div className="flex-1">
             <div className="flex flex-col lg:flex-row justify-between items-start">
               <div className=" flex flex-col items-start mb-6">
-                <h2 className="text-2xl font-semibold text-gray-800 mb-2">
+                <h2 className="text-2xl ovo-regular font-semibold text-gray-800 mb-2">
                   Get Started in Minutes
                 </h2>
-                <p className="text-gray-600 lg:text-lg text-xs max-w-[40rem] mb-6">
+                <p className="text-gray-600 geist lg:text-md text-sm max-w-[40rem] mb-6">
                   Follow these simple steps to set up your account and start
                   maximizing your LinkedIn engagement.
                 </p>
-                <p className="font-bold m-0">
+                <p className="m-0 bg-yellow-200">
                   Refresh the page once each step is complete
                   {isProfileAdded && (
                     <span> | SCROLL DOWN FOR CONNECTION TOKEN</span>
                   )}
                 </p>
               </div>
-              <a
-                href="https://calendly.com/engagegpt/30min"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="lg:mx-auto mx-0 mb-4 flex justify-center items-center"
-              >
-                <div className="bg-white lg:flex items-center justify-center">
-                  <div className="lg:px-6 px-4 py-2 text-xs lg:text-sm font-medium bg-white text-black w-fit transition-all border border-gray-300 shadow-[3px_3px_0px_black] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]">
-                    Book a Demo
-                  </div>
-                </div>
-              </a>
+              <div className="px-6 cursor-pointer py-2 lg:text-md text-md font-medium border  border-gray-300 bg-white text-black w-fit">
+                <button
+                  data-cal-namespace="30min"
+                  data-cal-link="engagegpt-pbr2vh/30min"
+                  data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+                >
+                  Book a Demo
+                </button>
+              </div>
             </div>
 
             <div className="space-y-6">
@@ -139,40 +144,37 @@ const OnboardingGuide = ({
                       stepsCompletion[step.title]
                         ? 'bg-green-100'
                         : stepsUnlocked[step.title]
-                        ? 'bg-linkedin/10'
-                        : 'bg-gray-200'
-                    } rounded-full bg-green-100 h-10 w-10 flex items-center justify-center flex-shrink-0`}
+                          ? 'bg-linkedin/10'
+                          : 'bg-gray-200'
+                    } rounded-full  h-10 w-10 flex items-center justify-center flex-shrink-0`}
                   >
                     <step.icon
                       className={
                         stepsCompletion[step.title]
                           ? 'text-green-600'
                           : stepsUnlocked[step.title]
-                          ? 'text-linkedin'
-                          : 'text-gray-400'
+                            ? 'text-linkedin'
+                            : 'text-gray-400 '
                       }
                       size={20}
                     />
                   </div>
                   <div className="flex-1">
                     <h3
-                      className={`font-medium mt-2 lg:mt-0 ${
+                      className={`font-medium  ovo-regular mt-2 lg:mt-0 ${
                         stepsUnlocked[step.title]
                           ? 'text-gray-800'
                           : 'text-gray-400'
-                      }`}
+                      } ${stepsCompletion[step.title] && 'line-through'}`}
                     >
                       {step.title}{' '}
-                      {stepsCompletion[step.title] && (
-                        <span className="text-green-600">✓</span>
-                      )}
                     </h3>
                     <p
                       className={`${
                         stepsUnlocked[step.title]
                           ? 'text-gray-600'
                           : 'text-gray-400'
-                      } lg:flex hidden text-sm mt-1`}
+                      } ${stepsCompletion[step.title] && 'line-through'} lg:flex hidden text-sm mt-1`}
                     >
                       {step.description}
                     </p>
@@ -217,8 +219,8 @@ const OnboardingGuide = ({
                         stepsCompletion[step.title]
                           ? 'bg-green-600'
                           : stepsUnlocked[step.title]
-                          ? 'bg-[#004182]'
-                          : 'bg-gray-400 cursor-not-allowed'
+                            ? 'bg-[#004182]'
+                            : 'bg-gray-400 cursor-not-allowed'
                       } text-white w-fit transition-all ${
                         stepsUnlocked[step.title]
                           ? 'shadow-[3px_3px_0px_black] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]'
@@ -228,8 +230,8 @@ const OnboardingGuide = ({
                       {stepsCompletion[step.title]
                         ? 'Completed'
                         : stepsUnlocked[step.title]
-                        ? step.action
-                        : 'Locked'}
+                          ? step.action
+                          : 'Locked'}
                     </a>
                   )}
                 </div>
@@ -301,11 +303,11 @@ const OnboardingGuide = ({
                 </div>
                 <div className="flex flex-col md:flex-row gap-3">
                   <div className="copy-token flex items-center  items-center font-semibold w-full min-w-98 flex py-1 bg-blue-50  pl-3 pr-2 text-gray-800 text-lg">
-                   <p className='m-0 w-full min-w-44 p-0'>Connection Token:</p> 
+                    <p className="m-0 w-full min-w-44 p-0">Connection Token:</p>
                     <button
                       className="flex  gap-2 items-center w-full text-gray-700  hover:text-black"
-                      onClick = {()=> handleCopyToken(profile.connectionTokenß)}
-                    > 
+                      onClick={() => handleCopyToken(profile.connectionToken)}
+                    >
                       <Icons.Copy size={20} />
                       Copy
                     </button>

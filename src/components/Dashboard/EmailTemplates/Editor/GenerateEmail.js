@@ -29,9 +29,9 @@ const GenerateEmail = ({ isOpen, onClose, onGenerate }) => {
         generateFormat,
         templateType,
         generatePrompt,
-        'gemini',
+        'chatgpt',
       );
-      onGenerate?.(result.data.generatedEmailTemplate);
+      onGenerate?.(result.data.generatedEmailContent);
       onClose();
     } catch (error) {
       message.error(
@@ -66,7 +66,7 @@ const GenerateEmail = ({ isOpen, onClose, onGenerate }) => {
               </h3>
               <span className="px-4 text-center text-xs py-2 border border-black rounded-full ">
                 {' '}
-                Free Forever - No Credits Deducted
+                10 Credits/Generation
               </span>
             </div>
           </div>

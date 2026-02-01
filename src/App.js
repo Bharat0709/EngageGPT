@@ -1,7 +1,7 @@
 import './App.css';
 import '@assets/styles/GlobalCSS.css';
 import { Analytics } from '@vercel/analytics/react';
- 
+
 import {
   BrowserRouter as Router,
   Routes,
@@ -26,7 +26,6 @@ const FeedbackSurvey = lazy(() => import('@pages/UninstallSurvey'));
 const UpdateInfoScreen = lazy(() => import('@pages/UpdatesInfo'));
 const GoogleLoginRedirect = lazy(() => import('@pages/LoggingInPage'));
 const Upgrade = lazy(() => import('@pages/Upgrade'));
-
 
 const AppRoutes = () => {
   const navigate = useNavigate();
@@ -54,7 +53,7 @@ const AppRoutes = () => {
           path="/upgrade"
           element={
             <ProtectedRoute>
-              <Upgrade/>
+              <Upgrade />
             </ProtectedRoute>
           }
         />
@@ -88,7 +87,7 @@ const App = () => {
         <NotificationProvider position="bottom-right" maxNotifications={5}>
           <AppRoutes />
         </NotificationProvider>
-          <Analytics />
+        <Analytics />
       </div>
     </Router>
   );

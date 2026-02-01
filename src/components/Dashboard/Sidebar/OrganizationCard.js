@@ -51,7 +51,7 @@ const OrganizationCard = ({
     const handleFeedbackModal = () => setIsFeedbackModalOpen(true);
     const handleLogoutModal = () => setIsLogoutModalOpen(true);
     const handleUpgradeModalOpen = () => setShowUpgradeModal(true);
-    const handleCreditUsageOpen = () => setIsCreditsModalOpen(true)
+    const handleCreditUsageOpen = () => setIsCreditsModalOpen(true);
 
     window.addEventListener('openHelpModal', handleHelpModal);
     window.addEventListener('openFeedbackModal', handleFeedbackModal);
@@ -85,33 +85,6 @@ const OrganizationCard = ({
   return (
     <div className="flex flex-col items-center justify-center">
       {/* Command Palette Trigger Button */}
-      {isOpen && (
-        <button
-          onClick={() => setIsCommandPaletteOpen(true)}
-          className="mb-3 w-full px-4 py-2 flex items-center justify-between gap-2 rounded-lg hover:bg-white/20 transition-all duration-200 group"
-        >
-          <div className="flex items-center gap-2">
-            <Icons.Command className="h-4 w-4 text-gray-700 group-hover:text-gray-900 transition-colors" />
-            <span className="text-sm text-gray-700 group-hover:text-gray-900 transition-colors">
-              Quick Actions
-            </span>
-          </div>
-          <kbd className="px-2 py-1 text-xs text-gray-600 bg-white/50 border border-gray-300 rounded group-hover:border-gray-400 transition-colors">
-            ⌘K
-          </kbd>
-        </button>
-      )}
-
-      {/* Compact Command Palette Button for Collapsed Sidebar */}
-      {!isOpen && (
-        <button
-          onClick={() => setIsCommandPaletteOpen(true)}
-          className="mb-3 w-14 h-14 flex items-center justify-center rounded-lg hover:bg-white/20 transition-all duration-200 group"
-          title="Quick Actions (⌘K)"
-        >
-          <Icons.Command className="h-5 w-5 text-gray-700 group-hover:text-gray-900 transition-colors" />
-        </button>
-      )}
 
       <div
         className="bg-gradient-to-br from-slate-200 via-gray-100 to-indigo-100 rounded-2xl p-2 text-black transition-all duration-300 ease-in-out overflow-hidden"
@@ -163,6 +136,33 @@ const OrganizationCard = ({
             />
           </div>
         </div>
+        {isOpen && (
+          <button
+            onClick={() => setIsCommandPaletteOpen(true)}
+            className="mb-3 w-full px-4 pt-2 flex items-center justify-between gap-2 rounded-lg hover:bg-white/20 transition-all duration-200 group"
+          >
+            <div className="flex items-center gap-2">
+              <Icons.Command className="h-4 w-4 text-gray-700 group-hover:text-gray-900 transition-colors" />
+              <span className="text-sm text-gray-700 group-hover:text-gray-900 transition-colors">
+                Quick Actions
+              </span>
+            </div>
+            <kbd className="px-2 py-1 text-xs text-gray-600 bg-white/50 border border-gray-300 rounded group-hover:border-gray-400 transition-colors">
+              ⌘K
+            </kbd>
+          </button>
+        )}
+
+        {/* Compact Command Palette Button for Collapsed Sidebar */}
+        {!isOpen && (
+          <button
+            onClick={() => setIsCommandPaletteOpen(true)}
+            className="mb-3 w-14 h-14 flex items-center justify-center rounded-lg hover:bg-white/20 transition-all duration-200 group"
+            title="Quick Actions (⌘K)"
+          >
+            <Icons.Command className="h-5 w-5 text-gray-700 group-hover:text-gray-900 transition-colors" />
+          </button>
+        )}
 
         {/* User profile section */}
         <div
@@ -173,7 +173,7 @@ const OrganizationCard = ({
           {isOpen && (
             <button
               onClick={() => setShowUpgradeModal(true)}
-              className="w-full flex items-center justify-center gap-2 px-8 py-2.5 text-xs font-semibold text-white bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-xl border-none overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/30 before:to-transparent before:w-full before:h-full before:translate-x-[-100%] hover:before:animate-[slide_1s_infinite] before:skew-x-12 mb-3"
+              className="w-full flex items-center justify-center gap-2 px-8 py-2.5 text-xs font-semibold text-white bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-xl border-none overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/30 before:to-transparent before:w-full before:h-full before:translate-x-[-100%] before:skew-x-12 before:animate-[slide_1s_infinite] my-2"
             >
               <Icons.Credits
                 size={18}
@@ -244,11 +244,11 @@ const OrganizationCard = ({
                   }`}
                 >
                   <div
-                    className={`text-gray-400 transform transition-transform duration-300 ease-in-out ${
+                    className={`text-gray-400 bg-white rounded-full p-1 transform transition-transform duration-300 ease-in-out ${
                       isCardOpen ? 'rotate-180' : 'rotate-0'
                     }`}
                   >
-                    <Icons.Up size={16} />
+                    <Icons.Up className="text-black" size={16} />
                   </div>
                 </div>
               </div>

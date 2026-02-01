@@ -9,11 +9,17 @@ import Groq from '@assets/images/groq.svg';
 import Mistral from '@assets/images/Mistral-Ai.svg';
 import Gemini from '@assets/images/Gemini.svg';
 import Perplexity from '@assets/images/perplexity-text.svg';
-import BookDemo from './Support';
 import InfiniteLogoRibbon from './LogoRibbon';
+import { getCalApi } from '@calcom/embed-react';
 
 const HeroSection = () => {
   const [isVisible, setIsVisible] = useState(false);
+  useEffect(() => {
+    (async function () {
+      const cal = await getCalApi({ namespace: '30min' });
+      cal('ui', { hideEventTypeDetails: false, layout: 'month_view' });
+    })();
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -122,11 +128,20 @@ const HeroSection = () => {
           <div className="flex items-center gap-4 justify-center">
             <button onClick={handleGetStarted}>
               <div className="bg-white gap-4 flex flex-col items-center justify-center">
-                <div className="px-6 py-2  lg:text-lg text-md font-medium bg-[#004182] text-white w-fit transition-all translate-x-[3px] translate-y-[3px]">
+                <div className="px-6 py-2 lg:text-lg text-md font-medium bg-[#004182] text-white w-fit">
                   Get Started
                 </div>
               </div>
             </button>
+            <div className="px-6 cursor-pointer py-2 lg:text-lg text-md font-medium border  border-gray-300 bg-white text-black w-fit">
+              <button
+                data-cal-namespace="30min"
+                data-cal-link="engagegpt-pbr2vh/30min"
+                data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+              >
+                Book a Demo
+              </button>
+            </div>
           </div>
           <div className="animate-fade-in mt-3 inline-flex items-center px-4 py-2 rounded-full transition-colors">
             <span className="text-gray-700 flex gap-2 items-center text-sm font-medium">
@@ -137,7 +152,7 @@ const HeroSection = () => {
           <div className="animate-fade-in mb-4 inline-flex items-center px-4 py-1 rounded-full transition-colors">
             <span className="text-gray-700 flex gap-2 items-center text-sm font-medium">
               <FaCheck className="text-green-500 mr-1" />
-               200 Credits on Sign Up
+              200 Credits on Sign Up
             </span>
           </div>
           <p className="text-xl lg:text-xl text-gray-700 flex gap-2 items-center  font-medium">
@@ -176,7 +191,7 @@ const HeroSection = () => {
           </div>
         </div>
       </div>
-      <BookDemo />
+      {/* <BookDemo /> */}
       <InfiniteLogoRibbon />
     </section>
   );

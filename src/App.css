@@ -2,6 +2,20 @@
   animation: slide 20s linear infinite;
 }
 
+.ovo-regular {
+  font-family: "Ovo", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.geist {
+  font-family: "Geist Mono", monospace;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
 @keyframes slide {
   0% {
     transform: translateX(0%);
@@ -144,4 +158,9 @@
 
 .blinking {
   animation: blink 2s linear infinite;
+}
+#cal-floating-button {
+    padding: 4px 10px !important; /* Adjust these values */
+    line-height: 1 !important;
+    height: auto !important;
 }

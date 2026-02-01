@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Icons } from '@utils/constantData/icons';
+import userProfile from '@assets/images/userProfile.png';
 import Button from '@components/Common/Button';
 import { useNotifications } from '@components/Common/Notification';
+import FullLengthButton from '@components/Common/FullLengthButton';
 
 const AddMembersModal = ({ isOpen, onClose, onSubmit }) => {
   const message = useNotifications();
@@ -105,26 +107,22 @@ const AddMembersModal = ({ isOpen, onClose, onSubmit }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 w-full z-50 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm transition-opacity">
-      <div className="bg-white flex flex-col lg:max-h-2xl h-fit overflow-y-scroll scrollbar-hide  lg:w-2/5 w-11/12 p-0 rounded-3xl shadow-xl transform transition-all duration-300 ease-in-out">
+    <div className="fixed inset-0 w-full geist z-50 flex  items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm transition-opacity">
+      <div className="bg-white flex flex-col max-w-md  border border-white lg:max-h-2xl h-fit overflow-y-scroll scrollbar-hide w-11/12 p-0 rounded-3xl shadow-xl transform transition-all duration-300 ease-in-out">
         {/* Header */}
-        <div className="bg-indigo-50 rounded-t-2xl p-4">
+        <div className="bg-sky-50 border-b border-sky-200 rounded-t-2xl p-4">
           <div className="flex justify-between items-center">
-            <div className="flex items-center gap-3">
-              <Icons.FaLinkedin className="text-indigo-800" size={20} />
-              <h2 className="text-md lg:text-xl mb-0 p-0 font-bold text-indigo-800">
+            <div className="flex flex-col justify-center w-full items-center gap-3">
+              <img className="h-16 w-16" src={userProfile} alt="userProfile " />
+              <h2 className="text-md ovo-regular lg:text-xl mb-0 p-0 font-bold text-indigo-900">
                 Add LinkedIn Profile
               </h2>
             </div>
-            <button
-              className="text-gray-500 hover:text-gray-800 hover:bg-indigo-100 p-2 rounded-full transition-colors"
-              onClick={handleClose}
-            >
-              <Icons.Cross size={20} />
-            </button>
           </div>
-          <p className="m-0 pt-2 text-gray-600 "></p>
-          <strong>Email must be associated with a LinkedIn account.</strong>
+          <p className="m-0 text-center lg:text-md text-xs  w-full pt-2 text-black ">
+            {' '}
+            Email must be associated with a LinkedIn account
+          </p>
         </div>
 
         {/* Form */}
@@ -139,9 +137,9 @@ const AddMembersModal = ({ isOpen, onClose, onSubmit }) => {
                   <div>
                     <label
                       htmlFor={`name-${index}`}
-                      className="block text-xs font-medium text-gray-500 mb-1"
+                      className="block text-xs font-medium text-gray-900 mb-2"
                     >
-                      Full Name
+                      Full Name *
                     </label>
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -155,8 +153,7 @@ const AddMembersModal = ({ isOpen, onClose, onSubmit }) => {
                           handleChange(index, 'name', e.target.value)
                         }
                         required
-                        placeholder="John Doe"
-                        className={`pl-10 pr-3 py-2 block w-full border border-gray-300  rounded-full`}
+                        className={`pl-10 pr-3 py-2 text-sm  block w-full bg-gray-100 rounded-full`}
                       />
                     </div>
                     {getError(index, 'name') && (
@@ -169,9 +166,9 @@ const AddMembersModal = ({ isOpen, onClose, onSubmit }) => {
                   <div>
                     <label
                       htmlFor={`email-${index}`}
-                      className="block text-xs font-medium text-gray-500 mb-1"
+                      className="block text-xs font-medium text-gray-900 mb-2"
                     >
-                      Email Address
+                      Email Address *
                     </label>
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -185,8 +182,7 @@ const AddMembersModal = ({ isOpen, onClose, onSubmit }) => {
                         onChange={(e) =>
                           handleChange(index, 'email', e.target.value)
                         }
-                        placeholder="john@example.com"
-                        className={`pl-10 pr-3 py-2 block w-full border border-gray-300 rounded-full`}
+                        className={`pl-10 pr-3 text-sm py-2 block w-full  bg-gray-100  rounded-full`}
                       />
                     </div>
                     {getError(index, 'email') && (
@@ -201,11 +197,17 @@ const AddMembersModal = ({ isOpen, onClose, onSubmit }) => {
           </div>
 
           {/* Footer Buttons */}
-          <div className="flex justify-end gap-3 mb-3 mr-3">
-            <Button
+          <div className="flex items-center ">
+            <FullLengthButton
+              onClick={handleClose}
+              buttonText="Go Back"
+              className="px-6 border-t  border-gray-200"
+              theme="light"
+            />
+            <FullLengthButton
               onClick={handleSubmit}
               buttonText="Add Profile"
-              className="bg-sky-900 !rounded-full px-6 "
+              className="px-6 "
               loadingText="Adding..."
               isLoading={isAdding}
               disabled={isAdding}

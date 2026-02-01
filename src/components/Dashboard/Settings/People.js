@@ -289,7 +289,7 @@ export const People = () => {
                 </div>{' '}
                 <div className="flex items-center lg:flex-row flex-wrap gap-2 lg:w-max w-full">
                   <p className="text-xs font-semibold rounded-lg bg-gray-200 p-1 px-3 m-0 text-gray-600">
-                    Total {person?.totalCreditsUsed} credits used
+                    {person?.totalCreditsUsed} credits used
                   </p>{' '}
                   <p
                     className={`${

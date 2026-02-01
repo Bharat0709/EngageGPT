@@ -20,6 +20,13 @@ code {
   font-variation-settings: 'wdth' 100;
 }
 
+.ovo-regular {
+  font-family: "Ovo", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
 .instrument {
   font-family: 'Instrument Serif', serif;
   font-weight: 400;
