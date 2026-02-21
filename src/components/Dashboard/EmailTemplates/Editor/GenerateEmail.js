@@ -61,7 +61,7 @@ const GenerateEmail = ({ isOpen, onClose, onGenerate }) => {
               <Icons.Sparkles className="h-6 w-6 text-purple-600" />
             </div>
             <div className="flex flex-col items-center gap-2">
-              <h3 className="text-lg m-0 text-center font-semibold text-gray-900">
+              <h3 className="text-md m-0 ovo-regular  text-center font-semibold text-gray-900">
                 Generate Email with AI{' '}
               </h3>
               <span className="px-4 text-center text-xs py-2 border border-black rounded-full ">
@@ -88,7 +88,7 @@ const GenerateEmail = ({ isOpen, onClose, onGenerate }) => {
                   }`}
                 >
                   <span
-                    className={`text-sm font-medium ${
+                    className={`text-xs font-medium ${
                       generateFormat === option.value
                         ? 'text-purple-700'
                         : 'text-gray-700'
@@ -112,9 +112,9 @@ const GenerateEmail = ({ isOpen, onClose, onGenerate }) => {
                   <button
                     type="button"
                     onClick={() => setTemplateType('html')}
-                    className={`flex items-center justify-center space-x-2 py-2 px-6 rounded-full text-sm font-semibold transition-all duration-300 ${
+                    className={`flex items-center text-xs justify-center space-x-2 py-2 px-6 rounded-full text-sm font-semibold transition-all duration-300 ${
                       templateType === 'html'
-                        ? 'bg-white text-green-700 transform scale-105'
+                        ? 'bg-white  text-green-700 transform scale-105'
                         : 'text-gray-600 hover:text-gray-900'
                     }`}
                   >
@@ -124,7 +124,7 @@ const GenerateEmail = ({ isOpen, onClose, onGenerate }) => {
                   <button
                     type="button"
                     onClick={() => setTemplateType('text')}
-                    className={`flex items-center justify-center space-x-2 py-2 px-6 rounded-full text-sm font-semibold transition-all duration-300 ${
+                    className={`flex text-xs items-center justify-center space-x-2 py-2 px-6 rounded-full text-sm font-semibold transition-all duration-300 ${
                       templateType === 'text'
                         ? 'bg-white text-green-700 transform scale-105'
                         : 'text-gray-600 hover:text-gray-900'
@@ -152,7 +152,7 @@ const GenerateEmail = ({ isOpen, onClose, onGenerate }) => {
                 onChange={(e) => setGeneratePrompt(e.target.value)}
                 placeholder="e.g., Focus on collaboration opportunities, mention our SaaS product, keep it under 150 words, include a call-to-action..."
                 className="w-full scrollbar-hide px-4 py-3 border-2 border-gray-200 rounded-2xl focus:outline-none focus:border-purple-400 resize-none transition-all duration-200 bg-white/80 backdrop-blur-sm text-sm"
-                rows="4"
+                rows="2"
                 maxLength={500}
               />
               <div className="absolute bottom-3 right-3 text-xs text-gray-400">

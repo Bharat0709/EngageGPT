@@ -112,7 +112,7 @@ const PostHistoryDashboard = ({ activeTab, selectedProfile }) => {
   return (
     <div className="overflow-y-auto">
       {selectedProfile && (
-        <div className="rounded-lg">
+        <div className="rounded-lg mx-2">
           {/* Posts Table */}
           <PostHistoryTable
             posts={currentPosts}

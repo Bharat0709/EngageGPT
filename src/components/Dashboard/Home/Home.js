@@ -10,7 +10,7 @@ import Stats from './Stats';
 import OnboardingGuide from './OnboardingGuide';
 import MembersProfileDropDown from '../Global/MembersDropDown';
 import { ModernSkeleton } from '../SkeletonLoaders/SkeletonLoadingDashboard';
-import UpdateBanner from '../Global/Banner';
+import ConnectionInfoModal from './ConnectionInfoModal';
 
 // Status Badge Component
 const StatusBadge = ({ lastSyncedAt }) => {
@@ -51,6 +51,7 @@ const Home = () => {
   const [refreshMembers, setRefreshMembers] = useState(false);
   const [stats, setStats] = useState([]);
   const [onboardingComplete, setOnboardingComplete] = useState(false);
+  const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchAndSetUserData = async () => {
@@ -88,6 +89,7 @@ const Home = () => {
         await addNewMember(person);
       }
       message.success('Invite sent successfully!');
+      setIsInfoModalOpen(true);
       setRefreshMembers(!refreshMembers);
       setIsAddMemberModalOpen(false);
     } catch (err) {
@@ -108,90 +110,96 @@ const Home = () => {
     return <ModernSkeleton />;
   }
 
-  if (!onboardingComplete) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
-        <div className="w-full min-h-screen flex justify-start gap-8 flex-col items-center pb-4">
-          <OnboardingGuide
-            onAddProfile={() => setIsAddMemberModalOpen(true)}
-            isModalOpen={isAddMemberModalOpen}
-            onCloseModal={() => setIsAddMemberModalOpen(false)}
-            onSubmitModal={handleAddMembers}
-            invitedProfiles={invitedProfiles}
-            selectedProfile={selectedProfile}
-          />
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <section>
-      <div className="min-h-screen bg-white">
-        <div className="max-w-7xl mx-auto p-4">
-          <div className="flex flex-col lg:flex-row justify-between w-full items-start lg:items-center gap-6 mb-6">
-            <div className="space-y-3 w-full">
-              <div className="flex mx-auto w-full lg:flex-row flex-col lg:justify-start justify-center items-center gap-3">
-                <h1 className="text-2xl  p-0 m-0 font-semibold text-gray-900 tracking-tight">
-                  Dashboard
-                </h1>
-                <StatusBadge
-                  className="text-black"
-                  lastSyncedAt={selectedProfile?.lastSyncedAt}
+    <div className="min-h-screen bg-[#fafafa]">
+      {!onboardingComplete ? (
+        <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+          <div className="w-full min-h-screen flex justify-start gap-8 flex-col items-center pb-4">
+            <OnboardingGuide
+              onAddProfile={() => setIsAddMemberModalOpen(true)}
+              isModalOpen={isAddMemberModalOpen}
+              onCloseModal={() => setIsAddMemberModalOpen(false)}
+              onSubmitModal={handleAddMembers}
+              invitedProfiles={invitedProfiles}
+              selectedProfile={selectedProfile}
+            />
+          </div>
+        </div>
+      ) : (
+        <section>
+          <div className="mx-auto p-4">
+            <div className="flex flex-col lg:flex-row justify-between w-full items-start lg:items-center gap-6 mb-6">
+              <div className="space-y-3 w-full">
+                <div className="flex mx-auto w-full lg:flex-row flex-col lg:justify-start justify-center items-center gap-3">
+                  <h1 className="text-2xl ovo-regular p-0 m-0 font-semibold text-gray-900 tracking-tight">
+                    Dashboard
+                  </h1>
+                  <StatusBadge
+                    className="text-black"
+                    lastSyncedAt={selectedProfile?.lastSyncedAt}
+                  />
+                  <button
+                    onClick={handleRefresh}
+                    className="p-2 text-gray-400 bg-white rounded-xl hover:text-gray-600 hover:bg-white transition-all"
+                    title="Refresh data"
+                  >
+                    <Icons.Refresh className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-end w-full gap-4">
+                <MembersProfileDropDown
+                  selectedProfileId={selectedProfile._id}
+                  profiles={profiles}
+                  onProfileChange={handleProfileChange}
+                  onCopy={() =>
+                    Copy(
+                      selectedProfile.connectionToken,
+                      'Connection Token Copied',
+                    )
+                  }
                 />
+
                 <button
-                  onClick={handleRefresh}
-                  className="p-2 text-gray-400 bg-white rounded-xl hover:text-gray-600 hover:bg-white transition-all hover:"
-                  title="Refresh data"
+                  onClick={() => setIsAddMemberModalOpen(true)}
+                  className="flex items-center gap-2 rounded-full bg-[#0c4a6e] text-sm text-white px-4 py-2"
                 >
-                  <Icons.Refresh className="w-4 h-4" />
+                  <Icons.Plus className="w-4 h-4" />
+                  Add Profile
                 </button>
               </div>
             </div>
 
-            <div className="flex items-center justify-end w-full gap-4">
-              <MembersProfileDropDown
-                selectedProfileId={selectedProfile._id}
-                profiles={profiles}
-                onProfileChange={handleProfileChange}
-                onCopy={() =>
-                  Copy(
-                    selectedProfile.connectionToken,
-                    'Connection Token Copied',
-                  )
-                }
+            <div className="mb-8">
+              <Stats
+                isLoading={isLoading}
+                selectedProfile={selectedProfile}
+                stats={stats}
               />
-
-              <button
-                onClick={() => setIsAddMemberModalOpen(true)}
-                className="flex items-center gap-2 rounded-full bg-[#0c4a6e] text-sm text-white px-4 py-2 "
-              >
-                <Icons.Plus className="w-4 h-4" />
-                Add Profile
-              </button>
             </div>
-          </div>
 
-          <div className="mb-8">
-            <Stats
-              isLoading={isLoading}
-              selectedProfile={selectedProfile}
-              stats={stats}
+            <div>
+              <PostDetails
+                setStats={setStats}
+                memberId={selectedProfile?._id}
+              />
+            </div>
+
+            <AddMembersModal
+              isOpen={isAddMemberModalOpen}
+              onClose={() => setIsAddMemberModalOpen(false)}
+              onSubmit={handleAddMembers}
             />
           </div>
+        </section>
+      )}
 
-          <div>
-            <PostDetails setStats={setStats} memberId={selectedProfile?._id} />
-          </div>
-
-          <AddMembersModal
-            isOpen={isAddMemberModalOpen}
-            onClose={() => setIsAddMemberModalOpen(false)}
-            onSubmit={handleAddMembers}
-          />
-        </div>
-      </div>
-    </section>
+      <ConnectionInfoModal
+        isOpen={isInfoModalOpen}
+        onClose={() => setIsInfoModalOpen(false)}
+      />
+    </div>
   );
 };
 

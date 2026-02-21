@@ -52,7 +52,7 @@ const AuroraHero = () => {
         <span className="mb-1.5 inline-block rounded-full bg-gray-600/50 px-3 py-1.5 text-sm">
           EngageGPT
         </span>
-        <h1 className="max-w-3xl mb-8 bg-gradient-to-br from-white mt-4 to-gray-500 bg-clip-text text-center text-3xl font-medium leading-tight text-transparent sm:text-3xl sm:leading-tight md:text-5xl md:leading-tight">
+        <h1 className="max-w-3xl mb-8 ovo-regular bg-gradient-to-br from-white mt-4 to-gray-500 bg-clip-text text-center text-3xl font-medium leading-tight text-transparent sm:text-3xl sm:leading-tight md:text-5xl md:leading-tight">
           Supercharge your LinkedIn engagement
         </h1>
         <motion.button

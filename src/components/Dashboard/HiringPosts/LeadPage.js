@@ -18,7 +18,6 @@ import {
   FiAlertCircle,
   FiPlay,
   FiPause,
-  FiBuilding,
   FiUser,
   FiGlobe,
 } from 'react-icons/fi';

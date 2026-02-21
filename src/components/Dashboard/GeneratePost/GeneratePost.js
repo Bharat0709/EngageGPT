@@ -257,17 +257,17 @@ const LinkedInPostGenerator = () => {
   }
 
   return (
-    <div className="bg-[#ededed] h-[98vh] p-2 lg:p-0 sm:p-4">
-      <div className="mx-auto h-full bg-white  overflow-hidden flex flex-col">
+    <div className="bg-[#fafafa] h-[98vh] p-2 lg:p-0 sm:p-4">
+      <div className="mx-auto h-full overflow-hidden flex flex-col">
         {/* Header */}
         <div className="px-2 py-2 sm:px-6 border-b border-gray-200 flex-shrink-0">
           <div className="flex lg:flex-row flex-wrap gap-2 items-center justify-between">
             <div className="flex items-center space-x-3">
-              <div className="p-2 bg-[#0c4a6e] rounded-lg text-white text-lg sm:text-xl">
+              {/* <div className="p-2 bg-[#0c4a6e] rounded-lg text-white text-lg sm:text-xl">
                 <FaLinkedin />
-              </div>
+              </div> */}
               <div>
-                <h2 className="text-base m-0 p-0 sm:text-xl text-gray-800">
+                <h2 className="text-base  texr-2xl ovo-regular m-0 p-0 sm:text-xl text-gray-800">
                   LinkedIn Post Generator
                 </h2>
               </div>
@@ -283,9 +283,11 @@ const LinkedInPostGenerator = () => {
               </button> */}
               <Button
                 buttonText="Add More Credits"
-                theme="dark"
+                theme="light"
                 onClick={() => handleViewUpgrade('upgrade')}
-                className={'text-black font-semibold'}
+                className={
+                  'text-black text-xs geist !border-none font-semibold'
+                }
               />
 
               {selectedProfile && (
@@ -329,6 +331,34 @@ const LinkedInPostGenerator = () => {
               className="flex-1 overflow-y-scroll scrollbar-hide p-4 sm:p-6 space-y-4"
               style={{ scrollBehavior: 'smooth' }}
             >
+              {/* MCP Promotion Banner */}
+              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100 rounded-2xl p-4 mb-6 animate-in slide-in-from-top-2 duration-500">
+                <div className="flex items-start gap-4">
+                  <div className="p-3 bg-white rounded-xl">
+                    <Icons.Sparkles
+                      className="text-blue-600 animate-pulse"
+                      size={20}
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="text-sm font-bold text-blue-900 geist m-0">
+                      Generate Posts for FREE with EngageGPT MCP
+                    </h4>
+                    <p className="text-xs text-blue-700 mt-1 leading-relaxed geist">
+                      Connect your Claude Desktop to match your{' '}
+                      <strong>exact writing style</strong> based on your
+                      top-performing posts. No credits required.
+                    </p>
+                    <button
+                      onClick={() => goTo('/dashboard/mcp')}
+                      className="mt-3 text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg transition-all  flex items-center gap-2 w-fit"
+                    >
+                      Setup MCP Server
+                      <Icons.ChevronRight size={14} />
+                    </button>
+                  </div>
+                </div>
+              </div>
               {messages.map((message) => (
                 <div
                   key={message.id}
@@ -347,7 +377,7 @@ const LinkedInPostGenerator = () => {
                       className={`p-2 rounded-full flex-shrink-0 ${
                         message.type === 'user'
                           ? 'bg-[#eff9ff] text-[#0c4a6e]'
-                          : 'bg-gray-200 text-gray-600'
+                          : 'bg-gray-00 text-gray-600'
                       }`}
                     >
                       {message.type === 'user' ? (
@@ -360,14 +390,14 @@ const LinkedInPostGenerator = () => {
                       className={`rounded-2xl p-3 sm:p-4 ${
                         message.type === 'user'
                           ? 'bg-[#0c4a6e] text-white rounded-br-md'
-                          : 'bg-gray-100 text-gray-800 rounded-bl-md'
+                          : 'bg-white text-gray-800 rounded-bl-md'
                       }`}
                     >
                       <p
                         className={`text-sm mb-0 leading-relaxed whitespace-pre-wrap ${
                           message.type === 'user'
                             ? 'bg-[#0c4a6e] text-white rounded-br-md'
-                            : 'bg-gray-100 text-gray-800 rounded-bl-md '
+                            : 'bg-white-100 text-gray-800 rounded-bl-md '
                         }`}
                       >
                         {message.content}
@@ -417,7 +447,7 @@ const LinkedInPostGenerator = () => {
             </div>
 
             {/* Input Section */}
-            <div className="border-t border-gray-100 bg-white px-4 py-4">
+            <div className="border-t border-gray-100 px-4 py-4">
               {/* Model & Tone Selection - Custom Compact Row */}
               <div className="mb-3 flex flex-wrap items-center justify-between gap-3 text-xs sm:text-sm">
                 <div className="flex items-center flex-wrap gap-4">
@@ -476,7 +506,7 @@ const LinkedInPostGenerator = () => {
                       }
                     }}
                     placeholder="What would you like to write about? Be specific about your topic, audience, and style..."
-                    className="w-full resize-none rounded-2xl border border-gray-200 px-4 py-3 pr-12 text-sm focus:outline-none focus:ring-2 focus:ring-[#0c4a6e] focus:border-transparent placeholder-gray-400 bg-gray-50 shadow-sm transition-all"
+                    className="w-full resize-none rounded-2xl border border-gray-200 px-4 py-3 pr-12 text-sm focus:outline-none focus:ring-2 focus:ring-[#0c4a6e] focus:border-transparent placeholder-gray-400 bg-gray-50 transition-all"
                     rows="2"
                     disabled={loading}
                     style={{ maxHeight: '150px' }}
@@ -492,7 +522,7 @@ const LinkedInPostGenerator = () => {
                 <button
                   onClick={handleSendMessage}
                   disabled={!inputValue.trim() || loading || creditsLeft <= 0}
-                  className="flex-shrink-0 w-10 h-10 bg-[#0c4a6e] text-white rounded-full hover:bg-[#093958] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center shadow-sm"
+                  className="flex-shrink-0 w-10 h-10 bg-[#0c4a6e] text-white rounded-full hover:bg-[#093958] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center"
                 >
                   <FaArrowRight className="text-sm" />
                 </button>
@@ -619,7 +649,12 @@ const LinkedInPostGenerator = () => {
         title="How to Get 500 FREE Credits"
         content={creditsModalContent}
       />
-      <UpgradeModal isOpen={viewUpgradeModal} onClose={() => {setViewUpgradeModal(false)}} />
+      <UpgradeModal
+        isOpen={viewUpgradeModal}
+        onClose={() => {
+          setViewUpgradeModal(false);
+        }}
+      />
     </div>
   );
 };

@@ -51,7 +51,7 @@ const Testimonials = () => {
       <div className="max-w-[74rem] mx-auto px-4 lg:px-0">
         <div className="text-center mb-6">
           <motion.h2
-            className="lg:text-3xl lg:mt-1 mt-6 text-xl font-bold text-center mb-8 border-4 border-black shadow-[5px_5px_0px_black] py-2 px-6 max-w-md mx-auto bg-white relative inline-block"
+            className="lg:text-3xl geist lg:mt-1 mt-6 text-xl font-bold text-center mb-8 border-4 border-black shadow-[5px_5px_0px_black] py-2 px-6 max-w-md mx-auto bg-white relative inline-block"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -59,7 +59,7 @@ const Testimonials = () => {
             What Our Users Say
           </motion.h2>
           <motion.p
-            className="text-gray-600 mt-4 max-w-xl mx-auto"
+            className="text-gray-600 mt-4 geist max-w-xl mx-auto"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.4 }}
@@ -70,12 +70,12 @@ const Testimonials = () => {
         </div>
 
         <div className="border  w-fit mb-4 border-gray-700 mx-auto p-2 backdrop-blur-lg rounded-full flex items-center justify-center">
-          <span className="text-gray-700 font-bold text-xs px-4 lg:text-base ">
+          <span className="text-gray-700 geist !font-bold text-xs px-4 lg:text-base ">
             Rated 4.6 ⭐on Chrome Web Store
           </span>
         </div>
-         <div className="border  w-fit mb-12 border-gray-700 mx-auto p-2 backdrop-blur-lg rounded-full flex items-center justify-center">
-          <span className="text-gray-700 font-bold text-xs px-4 lg:text-base ">
+        <div className="border  w-fit mb-12 border-gray-700 mx-auto p-2 backdrop-blur-lg rounded-full flex items-center justify-center">
+          <span className="text-gray-700 geist !font-bold text-xs px-4 lg:text-base ">
             1000+ Users
           </span>
         </div>
@@ -150,7 +150,7 @@ const Testimonials = () => {
         >
           <button onClick={handleGetStarted}>
             <div className="bg-white  flex items-center justify-center">
-              <div className="px-6 py-2 text-lg font-medium bg-[#004182] text-white w-fit transition-all shadow-[5px_5px_0px_black] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]">
+              <div className="px-6 py-2 geist text-lg font-medium bg-[#004182] text-white w-fit transition-all shadow-[5px_5px_0px_black] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]">
                 Join us!
               </div>
             </div>

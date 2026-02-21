@@ -122,15 +122,15 @@ const OnboardingGuide = ({
                   )}
                 </p>
               </div>
-              <div className="px-6 cursor-pointer py-2 lg:text-md text-md font-medium border  border-gray-300 bg-white text-black w-fit">
-                <button
-                  data-cal-namespace="30min"
-                  data-cal-link="engagegpt-pbr2vh/30min"
-                  data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
-                >
-                  Book a Demo
-                </button>
-              </div>
+
+              <button
+                data-cal-namespace="30min"
+                data-cal-link="engagegpt-pbr2vh/30min"
+                data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+                className="px-6 cursor-pointer py-2 lg:text-md text-md font-medium border  border-gray-300 bg-white text-black w-fit"
+              >
+                Book a Demo
+              </button>
             </div>
 
             <div className="space-y-6">
@@ -265,7 +265,7 @@ const OnboardingGuide = ({
 
       {invitedProfiles.length > 0 && (
         <div className="bg-white border border-gray-600  p-6 mt-2">
-          <h3 className="font-semibold text-gray-800 text-lg mb-4">
+          <h3 className="font-semibold ovo-regular text-gray-800 text-lg mb-4">
             Generated Connection Token(s) & Invited Profiles
           </h3>
           <div className="space-y-4">
@@ -302,35 +302,19 @@ const OnboardingGuide = ({
                   </div>
                 </div>
                 <div className="flex flex-col md:flex-row gap-3">
-                  <div className="copy-token flex items-center  items-center font-semibold w-full min-w-98 flex py-1 bg-blue-50  pl-3 pr-2 text-gray-800 text-lg">
-                    <p className="m-0 w-full min-w-44 p-0">Connection Token:</p>
+                  <div className="copy-token flex items-center items-center font-semibold w-full min-w-98 flex py-1   pl-3 pr-2 text-gray-800 text-md">
+                    <p className="m-0 w-full mr-1 p-0">Connection Token: </p>
                     <button
-                      className="flex  gap-2 items-center w-full text-gray-700  hover:text-black"
+                      className="flex gap-2 items-center w-full text-gray-700  hover:text-black"
                       onClick={() => handleCopyToken(profile.connectionToken)}
                     >
-                      <Icons.Copy size={20} />
+                      <span className="text-[#004182] bg-blue-100/50 px-2 py-0.5 rounded text-xs font-mono">
+                        {profile.connectionToken?.substring(0, 8)}*****
+                      </span>
+                      <Icons.Copy size={16} />
                       Copy
                     </button>
                   </div>
-                  <button
-                    onClick={connectLinkedIn}
-                    disabled={profile.isLinkedinConnected}
-                    className={`text-sm border-gray-400 text-center px-3 justify-center text-black flex items-center gap-2 p-2 ${
-                      profile.isLinkedinConnected
-                        ? 'bg-green-400 text-white font-semibold cursor-not-allowed'
-                        : 'bg-gray-100'
-                    }`}
-                  >
-                    {profile.isLinkedinConnected ? (
-                      <Icons.LinkedIn className="text-white" size={20} />
-                    ) : (
-                      <Icons.LinkedIn
-                        className={`${'text-sky-900'}`}
-                        size={20}
-                      />
-                    )}
-                    {profile.isLinkedinConnected ? 'Connected' : 'Connect'}
-                  </button>
                 </div>
               </div>
             ))}

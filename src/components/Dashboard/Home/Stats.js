@@ -71,7 +71,7 @@ const StatCard = ({ stat, index }) => {
 
         {/* Content */}
         <div className="space-y-2">
-          <div className="text-3xl font-bold text-white group-hover:text-gray-100 transition-colors duration-300">
+          <div className="text-3xl font-bold ovo-regular  text-white group-hover:text-gray-100 transition-colors duration-300">
             {stat.value}
             {stat.suffix && (
               <span className="text-xl ml-1 text-white group-hover:text-gray-300">
@@ -79,7 +79,7 @@ const StatCard = ({ stat, index }) => {
               </span>
             )}
           </div>
-          <div className="text-sm font-medium text-white group-hover:text-gray-200 transition-colors duration-300">
+          <div className="text-sm ovo-regular font-medium text-white group-hover:text-gray-200 transition-colors duration-300">
             {stat.title}
           </div>
         </div>
@@ -147,7 +147,7 @@ const Stats = ({ isLoading, selectedProfile, stats }) => {
       title: 'Total Comments',
       value: stats?.totalComments?.toLocaleString('hi-IN') || '0',
       icon: <Icons.AiMessage />,
-    }
+    },
   ];
 
   return (

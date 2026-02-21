@@ -43,7 +43,6 @@ export const People = () => {
         if (members.length > 0) {
           setPeople(members);
         }
-        console.log(members);
         setTimeout(() => {
           setIsLoading(false);
         }, 1000);
@@ -171,8 +170,10 @@ export const People = () => {
 
   return (
     <div>
-      <div className="h-full mt-4 flex justify-between items-center mb-4">
-        <h1 className="text-xl text-semibold text-gray-800">People</h1>
+      <div className="h-full  flex justify-between items-center ">
+        <h1 className="text-xl ovo-regular text-semibold text-gray-800">
+          People
+        </h1>
 
         <div className="actions flex items-center gap-4">
           <button
@@ -187,7 +188,7 @@ export const People = () => {
       </div>
 
       {/* Toggle Section */}
-      <div className="toggles bg-gray-50 p-3 lg:flex hidden rounded-xl  justify-between items-center mb-2">
+      <div className="toggles geist  bg-gray-50 pt-3 lg:flex hidden rounded-xl  justify-between items-center mb-2">
         {isLoading ? (
           <div className="flex items-center gap-4">
             <Skeleton.Input
@@ -209,12 +210,14 @@ export const People = () => {
           </div>
         ) : (
           <>
-            <div className="toggle-buttons bg-gray-50 flex gap-4">
+            <div className="toggle-buttons text-sm mb-4 geist bg-gray-50 flex gap-4">
               {['All', 'Profiles', 'Invites', 'Disconnected'].map((filter) => (
                 <p
                   key={filter}
-                  className={`text-sm p-0 m-0 cursor-pointer font-semibold ${
-                    selectedFilter === filter ? 'text-black' : 'text-gray-500'
+                  className={`text-md p-0 m-0 cursor-pointer ${
+                    selectedFilter === filter
+                      ? 'text-blue-600  pb-3 border-b border-blue-600  !font-semibold geist '
+                      : 'text-gray-500'
                   }`}
                   onClick={() => setSelectedFilter(filter)}
                 >
@@ -230,12 +233,12 @@ export const People = () => {
       </div>
 
       {/* People List */}
-      <div className="people-list flex flex-col gap-2">
+      <div className="people-list flex flex-col gap-4">
         {isLoading ? (
           Array.from({ length: 5 }).map((_, index) => (
             <div
               key={index}
-              className="person-card w-full bg-gray-50 p-4 rounded-xl flex justify-between items-center"
+              className="person-card w-full bg-white p-4 rounded-xl flex justify-between items-center"
             >
               <Skeleton.Avatar active size="large" />
               <div className="flex-grow items-center mt-1 gap-4">
@@ -269,17 +272,27 @@ export const People = () => {
           filteredPeople.map((person) => (
             <div
               key={person?._id}
-              className="person-card w-full bg-[#f6f6f6] p-4 gap-4 rounded-xl lg:flex-row flex-col flex-wrap flex justify-between items-center"
+              className="person-card w-full bg-white p-4 gap-4 rounded-xl lg:flex-row flex-col flex-wrap flex justify-between items-center"
             >
               <div className="flex lg:w-fit w-full lg:flex-row flex-col gap-4 items-center">
                 <div className="flex lg:w-fit w-full items-center gap-3 justify-start">
                   <img
-                    src={person?.profilePicture}
+                    src={
+                      person?.profilePicture ||
+                      `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                        person?.name || 'User',
+                      )}&background=6366f1&color=fff&size=40`
+                    }
                     alt={`${person?.name}'s profile`}
                     className="w-12 h-12 rounded-full border border-gray-300"
+                    onError={(e) => {
+                      e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                        person?.name || 'User',
+                      )}&background=6366f1&color=fff&size=40`;
+                    }}
                   />
                   <div className="flex flex-col items-start lg:gap-1 gap-1">
-                    <h3 className="text-sm p-0 m-0 font-semibold text-gray-800">
+                    <h3 className="text-md p-0 m-0 font-semibold text-gray-800">
                       {person?.name}
                     </h3>
                     <p className="text-sm rounded-lg p-0 m-0 text-gray-600">
@@ -288,7 +301,7 @@ export const People = () => {
                   </div>
                 </div>{' '}
                 <div className="flex items-center lg:flex-row flex-wrap gap-2 lg:w-max w-full">
-                  <p className="text-xs font-semibold rounded-lg bg-gray-200 p-1 px-3 m-0 text-gray-600">
+                  <p className="text-xs font-semibold rounded-lg bg-blue-50 p-1 px-3 m-0 text-gray-600">
                     {person?.totalCreditsUsed} credits used
                   </p>{' '}
                   <p
@@ -296,7 +309,7 @@ export const People = () => {
                       person.creditsUsedToday === person.creditLimitperDay
                         ? 'bg-red-600 text-white'
                         : 'bg-gray-200 text-black'
-                    } text-xs font-semibold rounded-lg bg-gray-200 p-1 px-3 m-0 text-gray-600`}
+                    } text-xs font-semibold rounded-lg bg-orange-100 p-1 px-3 m-0 text-gray-600`}
                   >
                     {person?.creditsUsedToday}/{person.creditLimitperDay}{' '}
                     credits used today
@@ -309,15 +322,15 @@ export const People = () => {
                       onClick={() => handleResetCredits(person)}
                     />
                   )}
-                  <p className="text-xs font-semibold rounded-lg bg-gray-200 p-1 px-3 m-0 text-gray-600">
+                  <p className="text-xs font-semibold rounded-lg bg-purple-100 p-1 px-3 m-0 text-gray-600">
                     {person?.daysActive} days active
                   </p>
-                  <p className="text-xs font-semibold rounded-lg bg-gray-200 p-1 px-3 m-0 text-gray-600">
+                  <p className="text-xs font-semibold rounded-lg bg-slate-50  p-1 px-3 m-0 text-gray-600">
                     {person?.timeZone || 'Asia/Kolkata'}
                   </p>
                   <div className="flex w-max rounded-full text-green-600 items-center">
                     <p
-                      className={`text-xs ml-2 p-0 m-0 font-medium ${
+                      className={`text-sm ml-2 p-0 m-0 font-medium ${
                         person.isConnected === 'connected'
                           ? 'text-green-700'
                           : 'text-red-600'
@@ -327,17 +340,17 @@ export const People = () => {
                       {person.isConnected === 'connected'
                         ? 'Analytics Connected'
                         : person.isConnected === 'invited'
-                        ? 'Invited'
-                        : 'Disconnected'}
+                          ? 'Invited'
+                          : 'Disconnected'}
                     </p>
                   </div>
                 </div>
               </div>
-              <div className="flex flex-wrap gap-2 lg:w-fit w-full justify-between lg:mt-0 mt-2 items-center">
+              <div className="flex flex-wrap gap-2 lg:w-fit w-full justify-start lg:mt-0 mt-2 items-center">
                 <div className="copy-token text-xs rounded-lg flex items-center">
                   <Button
-                    buttonText={'Copy Connection token'}
-                    className="text-black hover:text-black text-xs"
+                    buttonText={'Copy connection token'}
+                    className="text-black border-none !bg-slate-50  !rounded-lg hover:text-black text-sm"
                     icon={<Icons.Copy />}
                     onClick={() => handleCopy(person.connectionToken)}
                   />
@@ -346,7 +359,7 @@ export const People = () => {
                   <button
                     title="Disconnect Linkedin"
                     onClick={() => handleDisconnectLinkedIn(person._id)}
-                    className="rounded-lg text-black p-2 bg-white flex items-center gap-2 text-xs"
+                    className="rounded-lg border-none !bg-slate-50  text-black p-2 px-4 bg-white flex items-center gap-2 text-sm"
                   >
                     <BiUnlink size={16} />
                     Disconnect LinkedIn
@@ -355,10 +368,10 @@ export const People = () => {
                   <button
                     onClick={handleConnectLinkedIn}
                     disabled={false}
-                    className="rounded-lg text-black bg-white p-2 px-2 flex items-center gap-2 text-xs"
+                    className="rounded-lg border-none !bg-slate-50  text-black bg-white p-2 px-4 flex items-center gap-2 text-sm"
                   >
+                    <Icons.LinkedIn className="text-sky-800" size={18} />
                     Connect
-                    <Icons.LinkedIn className="text-sky-800" size={16} />
                   </button>
                 )}
 
@@ -366,7 +379,7 @@ export const People = () => {
                   <button
                     title="Disconnect Gmail"
                     onClick={() => handleDisconnectGmailModal(person._id)}
-                    className="rounded-lg text-black p-2 bg-white flex items-center gap-2 text-xs"
+                    className="rounded-lg border-none !bg-gray-100 text-black p-2 px-4 bg-white flex items-center gap-2 text-sm"
                   >
                     <BiUnlink size={16} />
                     Disconnect Gmail
@@ -374,23 +387,23 @@ export const People = () => {
                 ) : (
                   <button
                     onClick={() => handleGmailConnect(person)}
-                    className="rounded-lg text-black bg-white p-2 px-2 flex items-center gap-2 text-xs"
+                    className="rounded-lg border-none !bg-slate-50  text-black bg-white p-2 px-4 flex items-center gap-2 text-sm"
                   >
-                    <Icons.Google size={16} />
+                    <Icons.Google size={18} />
                     Connect Gmail
                   </button>
                 )}
                 <button
                   onClick={() => handleNavigateToSettings(person._id)}
-                  className="rounded-lg text-black bg-white p-2 px-2 flex items-center gap-2 text-xs"
+                  className="rounded-lg text-black border-none !bg-slate-50    p-2 px-4 flex items-center gap-2 text-sm"
                 >
                   {' '}
-                  <Icons.Settings size={16} />
+                  <Icons.Settings size={18} />
                   Member Settings
                 </button>
 
                 {person?.lastActive && (
-                  <p className="text-sm font-semibold rounded-lg p-1 px-3 m-0 text-gray-600">
+                  <p className="text-sm font-semibold rounded-lg p-1 m-0 text-gray-600">
                     Last Active:{' '}
                     {new Intl.DateTimeFormat('en-IN', {
                       dateStyle: 'medium',

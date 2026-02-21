@@ -173,7 +173,7 @@ const HiringPostsDashboard = ({ memberId, activeTab, setActiveTab , setCurrentLe
   }
 
   return (
-    <div className="overflow-y-auto p-2">
+    <div className="overflow-y-auto mx-2 p-2">
       {allSavedPosts && (
         <div className="flex w-full flex-col gap-4">
           <LeadsTable

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Icons } from '@utils/constantData/icons';
 import { message } from 'antd';
 import { updateProfile } from '@services/Organization';
+import FullLengthButton from '@components/Common/FullLengthButton';
 
 const EditOrgModal = ({ isOpen, onClose, userData, onSave }) => {
   const [name, setName] = useState('');
@@ -48,26 +49,28 @@ const EditOrgModal = ({ isOpen, onClose, userData, onSave }) => {
       onClick={onClose}
     >
       <div
-        className="bg-white flex flex-col p-6 rounded-3xl lg:w-1/2 w-11/12 relative"
+        className="bg-white flex flex-col rounded-3xl lg:w-1/4 w-11/12 relative"
         onClick={(e) => e.stopPropagation()}
       >
-        <button
-          className="text-gray-500 text-xl  self-end hover:text-gray-800"
-          onClick={onClose}
-        >
-          <Icons.Cross />
-        </button>
-        <div className="flex mb-4 justify-between items-center">
-          <h2 className="lg:text-2xl text-xl text-center w-full font-bold">
+        <div className="flex bg-gray-50  rounded-t-3xl w-full  pt-4 p-3 justify-between items-center">
+          <h2 className="lg:text-lg m-0 p-0 ovo-regular text-xl text-left w-full font-bold">
             Edit Profile
           </h2>
+          <button
+            className="text-gray-500 text-xl mb-1 self-end hover:text-gray-800"
+            onClick={onClose}
+          >
+            <Icons.Cross />
+          </button>
         </div>
-        <div className="mb-4">
+
+        <div className="mb-2 mt-4 px-3">
           <label className="block text-sm font-medium text-gray-700">
             Name
           </label>
           <div className="mb-4">
             <input
+              required
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)} // Update the state on change
@@ -75,7 +78,7 @@ const EditOrgModal = ({ isOpen, onClose, userData, onSave }) => {
             />
           </div>
         </div>
-        <div className="mb-6">
+        <div className="mb-2 px-3">
           <label className="block text-sm font-medium text-gray-700">
             Profile Picture
           </label>
@@ -100,16 +103,18 @@ const EditOrgModal = ({ isOpen, onClose, userData, onSave }) => {
           </div>
         </div>
         <div className="flex justify-end gap-2">
-          <button
+          <FullLengthButton
+            theme="dark"
             type="submit"
+            buttonText="Save"
+            isLoading={loading}
             onClick={handleSave}
+            loadingText="Saving..."
             disabled={loading}
-            className={`global-button-primary  rounded-full px-6 ${
+            className={`rounded-b-3xl px-6 ${
               loading ? 'cursor-not-allowed opacity-50' : ''
             }`}
-          >
-            {loading ? 'Saving...' : 'Save'}
-          </button>
+          />
         </div>
       </div>
     </div>

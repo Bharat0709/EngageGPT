@@ -245,10 +245,10 @@ const PostHistoryTable = ({
               alt="No posts found"
               className="mx-auto mb-4 w-56 h-48"
             />
-            <h3 className="text-lg font-medium text-gray-900 mb-2">
+            <h3 className="text-lg  ovo-regular font-medium text-gray-900 mb-2">
               No posts in {activeTab}
             </h3>
-            <p className="text-gray-500 mb-4">
+            <p className="text-gray-500 geist mb-4">
               Posts will appear here once you schedule them
             </p>
           </div>

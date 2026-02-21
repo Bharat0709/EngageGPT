@@ -28,10 +28,12 @@ function Footer() {
         </div>
 
         {/* Footer Links */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 w-full lg:w-auto">
+        <div className="grid grid-cols-1x md:grid-cols-3 gap-10 w-full lg:w-auto">
           {footerSections.map((section, index) => (
             <div key={index}>
-              <h3 className="text-lg font-semibold mb-3">{section.title}</h3>
+              <h3 className="text-lg ovo-regular font-semibold mb-3">
+                {section.title}
+              </h3>
               <ul className="space-y-2">
                 {section.links.map((link, idx) => (
                   <li key={idx}>
@@ -40,14 +42,14 @@ function Footer() {
                         href={link.href}
                         target={link.target || '_self'}
                         rel={link.rel || undefined}
-                        className="flex items-center text-gray-300 hover:text-white transition"
+                        className="flex items-center  ovo-reglar text-gray-300 hover:text-white transition"
                       >
                         {link.label}
                       </a>
                     ) : link.section ? (
                       <p
                         onClick={() => scrollToSection(link.section)}
-                        className="cursor-pointer text-gray-300 hover:text-white transition"
+                        className="cursor-pointer ovo-regular  text-gray-300 hover:text-white transition"
                       >
                         {link.label}
                       </p>
@@ -56,7 +58,7 @@ function Footer() {
                         href={link.href}
                         target={link.target || '_self'}
                         rel={link.rel || undefined}
-                        className="text-gray-300 hover:text-white transition"
+                        className="text-gray-300 ovo-regular  hover:text-white transition"
                       >
                         {link.label}
                       </a>
@@ -76,7 +78,7 @@ function Footer() {
 
       {/* Bottom Footer */}
       <div className="border-t text-white  border-gray-500 mt-8 pt-6 text-center text-2xl">
-        <p className="text-white">Made with ❤️ in India</p>
+        <p className="text-white ovo-regular ">Made with ❤️ in India</p>
       </div>
     </footer>
   );

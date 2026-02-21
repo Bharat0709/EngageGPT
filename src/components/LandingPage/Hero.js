@@ -48,7 +48,7 @@ const HeroSection = () => {
       <div className="mb-8 flex lg:justify-between justify-center w-full items-center gap-4 flex-wrap animate-fade-in">
         <img className="h-12" src={EngageGPTLogo} alt="EngageGPT Logo" />
         {isVisible && (
-          <div className="fixed lg:left-[40vw] top-2 p-2 backdrop-blur-lg rounded-full z-[100] flex items-center justify-center">
+          <div className="fixed lg:left-[40vw] ml-4 top-2 p-2 backdrop-blur-lg rounded-full z-[100] flex items-center justify-center">
             <a
               href="https://chromewebstore.google.com/detail/engagegpt-ai-for-linkedin/ldhdipkofibjleihomflebfklhadikio?hl=en-GB&authuser=1"
               target="_blank"
@@ -58,7 +58,7 @@ const HeroSection = () => {
               <span className="px-3  py-1 bg-[#004182] text-white text-xs lg:text-sm font-medium rounded-full mr-2">
                 HEY!
               </span>
-              <span className="text-gray-700 mr-2 text-xs lg:text-base font-medium">
+              <span className="text-gray-700  geist mr-2 text-xs lg:text-base font-medium">
                 Add to Chrome for Free!
               </span>
             </a>
@@ -69,12 +69,12 @@ const HeroSection = () => {
           target="_blank"
           rel="noopener noreferrer"
           href="https://chromewebstore.google.com/detail/engagegpt-ai-for-linkedin/ldhdipkofibjleihomflebfklhadikio?hl=en-GB&authuser=1"
-          className="inline-flex lg:ml-0 ml-4 items-center pr-4 pl-3 py-2 bg-white rounded-full border border-gray-500 hover:border-gray-300 transition-colors"
+          className="inline-flex lg:ml-2 ml-4 items-center pr-4 pl-3 py-2 bg-white rounded-full border border-gray-500 hover:border-gray-300 transition-colors"
         >
           <span className="px-3  py-1 bg-[#004182] text-white text-xs lg:text-sm font-medium rounded-full mr-2">
             HEY!
           </span>
-          <span className="text-gray-700 mr-2 flex items-center gap-2 text-xs lg:text-base font-medium">
+          <span className="text-gray-700  geist mr-2 flex items-center gap-2 text-xs lg:text-base font-medium">
             Add to Chrome for Free!
           </span>
         </a>
@@ -85,7 +85,7 @@ const HeroSection = () => {
               href="https://www.youtube.com/playlist?list=PLYHoCaYE8EoD6YBlcDrPoHSYTIvAjW3vI"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-6 py-2 text-sm font-medium bg-white text-black w-fit transition-all shadow-[5px_5px_0px_black] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]"
+              className="px-6 py-2  geist text-sm font-medium bg-white text-black w-fit transition-all shadow-[5px_5px_0px_black] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]"
             >
               View Demo
             </a>
@@ -93,9 +93,9 @@ const HeroSection = () => {
         </button>
       </div>
       {/* Main Hero Content */}
-      <div className="text-center max-w-5xl mx-auto mt-8 lg:mt-20 px-4 mb-6 lg:mb-0">
+      <div className="text-center max-w-8xl mx-auto mt-8 lg:mt-20 px-4 mb-6 lg:mb-0">
         <div className="grid place-content-center">
-          <p className="max-w-3xl font-regular text-black text-center text-[2.3rem] lg:text-6xl leading-[1.3] lg:leading-[1.3]">
+          <p className="max-w-3xl font-regular ovo-regular  text-black text-center text-[2.3rem] lg:text-6xl leading-[1.3] lg:leading-[1.3]">
             Your{' '}
             <span className="relative ">
               All-in-One
@@ -121,27 +121,27 @@ const HeroSection = () => {
             LinkedIn Growth Assistant
           </p>
         </div>
-        <p className="text-lg w-full lg:text-2xl text-gray-600 mt-6 max-w-5xl mb-6">
+        <p className="text-lg w-full text-center ml-8 ovo-regular  lg:text-2xl text-gray-600 mt-6 max-w-5xl mb-6">
           Engage - Analyze - Automate
         </p>
         <div className="flex flex-col w-full gap-3 items-center justify-center">
           <div className="flex items-center gap-4 justify-center">
             <button onClick={handleGetStarted}>
               <div className="bg-white gap-4 flex flex-col items-center justify-center">
-                <div className="px-6 py-2 lg:text-lg text-md font-medium bg-[#004182] text-white w-fit">
+                <div className="px-6 py-2 ovo-regular  lg:text-lg text-md font-medium bg-[#004182] text-white w-fit">
                   Get Started
                 </div>
               </div>
             </button>
-            <div className="px-6 cursor-pointer py-2 lg:text-lg text-md font-medium border  border-gray-300 bg-white text-black w-fit">
-              <button
-                data-cal-namespace="30min"
-                data-cal-link="engagegpt-pbr2vh/30min"
-                data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
-              >
-                Book a Demo
-              </button>
-            </div>
+
+            <button
+              data-cal-namespace="30min"
+              data-cal-link="engagegpt-pbr2vh/30min"
+              data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+              className='className="px-6 cursor-pointer ovo-regular  py-2 px-4 lg:text-lg text-md font-medium border  border-gray-300 bg-white text-black w-fit'
+            >
+              Book a Demo
+            </button>
           </div>
           <div className="animate-fade-in mt-3 inline-flex items-center px-4 py-2 rounded-full transition-colors">
             <span className="text-gray-700 flex gap-2 items-center text-sm font-medium">
@@ -155,44 +155,46 @@ const HeroSection = () => {
               200 Credits on Sign Up
             </span>
           </div>
-          <p className="text-xl lg:text-xl text-gray-700 flex gap-2 items-center  font-medium">
-            Powered By
-          </p>
-          <div className="flex p-4 w-full lg:flex-nowrap flex-wrap lg:gap-14 gap-10 justify-center items-center">
-            <img
-              className="lg:h-16 h-12 hover:scale-110 transition-all duration-100"
-              src={OpenAI}
-              alt="Powered by Groq for fast inference."
-            />
+          <div>
+            <p className="text-xl text-center  w-full  lg:text-xl geist text-gray-700 gap-2 items-center  font-medium">
+              Powered By
+            </p>
+            <div className="flex p-4 w-full lg:flex-nowrap flex-wrap lg:gap-14 gap-10 justify-center items-center">
+              <img
+                className="lg:h-16 h-12 hover:scale-110 transition-all duration-100"
+                src={OpenAI}
+                alt="Powered by Groq for fast inference."
+              />
 
-            <img
-              className="lg:h-16 h-12 hover:scale-110 transition-all duration-100"
-              src={Groq}
-              alt="Powered by Groq for fast inference."
-            />
+              <img
+                className="lg:h-16 h-12 hover:scale-110 transition-all duration-100"
+                src={Groq}
+                alt="Powered by Groq for fast inference."
+              />
 
-            <img
-              className="lg:h-16 h-12 hover:scale-110 transition-all duration-100"
-              src={Mistral}
-              alt="Powered by Groq for fast inference."
-            />
+              <img
+                className="lg:h-16 h-12 hover:scale-110 transition-all duration-100"
+                src={Mistral}
+                alt="Powered by Groq for fast inference."
+              />
 
-            <img
-              className="lg:h-16 h-12 hover:scale-110 transition-all duration-100"
-              src={Gemini}
-              alt="Powered by Groq for fast inference."
-            />
+              <img
+                className="lg:h-16 h-12 hover:scale-110 transition-all duration-100"
+                src={Gemini}
+                alt="Powered by Groq for fast inference."
+              />
 
-            <img
-              className="lg:h-12 h-12 hover:scale-110 transition-all duration-100"
-              src={Perplexity}
-              alt="Perplexity"
-            />
+              <img
+                className="lg:h-12 h-12 hover:scale-110 transition-all duration-100"
+                src={Perplexity}
+                alt="Perplexity"
+              />
+            </div>
           </div>
         </div>
       </div>
-      {/* <BookDemo /> */}
       <InfiniteLogoRibbon />
+      {/* <BookDemo /> */}
     </section>
   );
 };

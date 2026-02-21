@@ -95,7 +95,7 @@ const FeedbackModal = ({ isVisible, onClose }) => {
           alt="EngageGPT Logo"
           className="w-30 h-12 mx-auto mb-4"
         />
-        <h1 className="lg:text-2xl text-center text-lg mb-2">
+        <h1 className="lg:text-2xl  ovo-regular text-center text-lg mb-2">
           We value your feedback
         </h1>
         <div className="flex justify-center space-x-2 mb-4">

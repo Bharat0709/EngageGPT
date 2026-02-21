@@ -138,7 +138,6 @@ const LeadGenerationSetup = ({ memberId, onComplete }) => {
 
         setIsFirstTimeSetup(false);
       } else {
-
         // Load existing member data from API
         const existingMemberData = await getMemberDetails(memberId);
 
@@ -471,7 +470,7 @@ const LeadGenerationSetup = ({ memberId, onComplete }) => {
 
   return (
     <>
-      <div className="bg-gray-50 p-2">
+      <div className="bg-gray-50  mx-2 p-2">
         <LeadGenerationHeader
           currentStep={currentStep}
           totalSteps={5}

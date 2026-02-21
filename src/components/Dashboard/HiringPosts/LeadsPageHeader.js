@@ -11,7 +11,6 @@ const LeadsPageHeader = ({
   memberProfiles,
   handleProfileChange,
   handleRefresh,
-  setIsAddMemberModalOpen,
 }) => {
   const message = useNotifications();
 
@@ -25,26 +24,28 @@ const LeadsPageHeader = ({
   return (
     <div className="">
       {/* Main Header */}
-      <div className="flex lg:flex-row flex-col gap-3 bg-white items-center justify-between px-4 pt-2">
+      <div className="flex lg:flex-row flex-col gap-3 items-center justify-between px-4 pt-2">
         {/* Left Section - Brand/Title */}
         <div className="flex items-center space-x-2 mb-2">
-          <div className="flex items-center justify-center w-8 h-8 bg-black rounded-lg">
+          {/* <div className="flex items-center justify-center w-8 h-8 bg-black rounded-lg">
             <Icons.Users className="w-4 h-4 text-white" />
-          </div>
-          <span className="leading-30 text-xl">Saved Leads</span>
+          </div> */}
+          <span className="leading-30 ovo-regular text-lg lg:text-xl">
+            Saved Leads
+          </span>
         </div>
 
         {/* Center Section - Navigation Tabs */}
-        <div className="flex bg-white items-center justify-between pr-6 pl-2 pt-2">
-          <div className="flex items-center space-x-1">
+        <div className="flex items-center justify-between pr-6 pl-2 pt-2">
+          <div className="flex  items-center space-x-1">
             {navigationTabs.map((tab) => {
               return (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center space-x-2 px-4 pt-2 pb-4 text-sm font-medium transition-colors ${
+                  className={`flex items-center geist space-x-2 px-4 pt-2 pb-4 text-sm font-medium transition-colors ${
                     activeTab === tab.id
-                      ? 'border-b-2 border-b-black text-black'
+                      ? 'border-b-2 border-b-blue-600 text-blue-600'
                       : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
                   }`}
                 >
@@ -74,13 +75,6 @@ const LeadsPageHeader = ({
                 />
               )}
             </div>
-            <Button
-              theme="dark"
-              icon={<Icons.Plus size={14} />}
-              buttonText="Add Member"
-              onClick={() => setIsAddMemberModalOpen(true)}
-              className="border !border-gray-300 !rounded-full flex items-center text-xs gap-1 !py-2 !px-3"
-            />
           </div>
         </div>
       </div>

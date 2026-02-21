@@ -8,7 +8,7 @@ const Preview = ({ selectedTemplate }) => {
     return (
       <div className="w-full h-full bg-gray-50">
         <div className="flex items-center justify-center h-full w-full">
-          <div className="text-center bg-white/60 backdrop-blur-lg rounded-3xl p-12  border border-white/20">
+          <div className="text-center  backdrop-blur-lg rounded-3xl p-6  border border-white/20">
             <img
               className="h-60 w-60 mx-auto mb-4"
               src={PreviewIcon}
@@ -35,7 +35,7 @@ const Preview = ({ selectedTemplate }) => {
   return (
     <div className="w-full h-full overflow-y-scroll scrollbar-hide bg-gray-50">
       {/* Main Content */}
-      <div className="w-full h-full overflow-y-scroll scrollbar-hide pt-4 px-2 lg:px-6 pb-8">
+      <div className="w-full h-full overflow-y-scroll scrollbar-hide pt-2 px-2 lg:px-4 pb-4">
         {/* Email Preview */}
         <div className="w-full h-full">
           <div className="bg-white/80 backdrop-blur-lg rounded-3xl scrollbar-hide border border-white/20 overflow-hidden">

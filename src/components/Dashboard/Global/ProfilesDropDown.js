@@ -41,7 +41,7 @@ const ProfilesDropDown = ({
 
   return (
     <div className="relative group" onMouseEnter={handleMouseEnter}>
-      <div className="flex items-center space-x-3 py-2 px-4 bg-white hover:bg-gray-50 rounded-xl  border border-gray-200 hover:border-gray-300 transition-all duration-200 cursor-pointer">
+      <div className="flex items-center space-x-3 py-2 px-4 bg-white hover:bg-gray-50 rounded-xl transition-all duration-200 cursor-pointer">
         <div className="flex items-center gap-3">
           <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-2 rounded-lg">
             <Icons.Users className="w-4 h-4 text-blue-600" />

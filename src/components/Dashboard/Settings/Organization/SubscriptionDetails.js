@@ -75,266 +75,282 @@ export const SubscriptionCard = ({ userData }) => {
   };
 
   return (
-    <div className="w-full max-w-7xl mx-auto space-y-2 sm:space-y-2">
+    <div className="w-full mb-4 mt-4 max-w-8xl mr-auto space-y-4">
       {/* Credits Overview Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {/* Available Credits - Featured Card */}
-        <div className="sm:col-span-2 lg:col-span-1 bg-gradient-to-br from-purple-600 to-pink-600 rounded-xl p-4 text-white  transition-shadow">
-          <div className="flex items-start justify-between mb-3">
-            <div className="bg-white/20 backdrop-blur-sm rounded-lg p-2">
-              <Icons.Credits className="text-white" size={20} />
-            </div>
-            {userData?.credits?.expiresAt && (
-              <div className="bg-white/20 backdrop-blur-sm rounded-md px-2 py-0.5">
-                <p className="text-xs font-medium m-0">
-                  {isExpired()
-                    ? '❌ Expired'
-                    : isExpiringSoon()
-                    ? '⚠️ Expiring Soon'
-                    : '✓ Active'}
-                </p>
+        <div className="sm:col-span-2 lg:col-span-1 bg-[#0A0A0A] border border-white/10 rounded-2xl p-6 text-white relative overflow-hidden group">
+          <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          <div className="relative z-10">
+            <div className="flex items-start justify-between mb-4">
+              <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-2.5">
+                <Icons.Credits className="text-white/90" size={20} />
               </div>
-            )}
-          </div>
-          <p className="text-3xl sm:text-4xl font-bold mb-1">
-            {userData?.credits?.balance || 0}
-          </p>
-          <p className="text-white/80 text-xs mb-1">Available Credits</p>
-          {userData?.credits?.expiresAt && (
-            <p className="text-white/60 text-xs">
-              {isExpired()
-                ? 'Credits have expired'
-                : `Expires on ${
-                    formatDate(userData.credits.expiresAt).split(',')[0]
+              {userData?.credits?.expiresAt && (
+                <div
+                  className={`px-3 py-1 rounded-full text-[10px] font-medium tracking-wider uppercase border ${
+                    isExpired()
+                      ? 'bg-red-500/10 border-red-500/20 text-red-400'
+                      : isExpiringSoon()
+                        ? 'bg-orange-500/10 border-orange-500/20 text-orange-400'
+                        : 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'
                   }`}
+                >
+                  {isExpired()
+                    ? 'Expired'
+                    : isExpiringSoon()
+                      ? 'Expiring Soon'
+                      : 'Active'}
+                </div>
+              )}
+            </div>
+            <p className="text-4xl instrument font-medium mb-2 tracking-tight">
+              {userData?.credits?.balance || 0}
             </p>
-          )}
+            <div className="flex flex-col gap-1">
+              <p className="text-white/80 flex  justify-between gap-6 items-end m-0 p-0 text-sm font-medium tracking-wide m-0 uppercase">
+                Available Credits{' '}
+                {userData?.credits?.expiresAt && (
+                  <p className="text-white/70 text-xs p-0 mb-[0.5] m-0">
+                    {isExpired()
+                      ? 'Credits have expired'
+                      : `Valid until ${formatDate(userData.credits.expiresAt).split(',')[0]}`}
+                  </p>
+                )}
+              </p>
+            </div>
+          </div>
         </div>
 
         {/* Total Used Card */}
-        <div className="bg-white rounded-xl p-4 border border-gray-200 hover: transition-shadow">
-          <div className="flex items-center gap-2 mb-3">
-            <div className="bg-red-50 rounded-lg p-2">
-              <Icons.TrendingDown className="text-red-600" size={20} />
+        <div className="bg-[#0A0A0A] border border-white/10 text-white rounded-2xl p-6 group hover:border-white/20 transition-colors">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="bg-white/5 rounded-xl p-2.5">
+              <Icons.TrendingDown className="text-white/70" size={20} />
             </div>
-            <p className="text-xs text-gray-600 font-medium m-0">Total Used</p>
+            <p className="text-xs text-white/70 font-medium tracking-wide m-0 uppercase">
+              Total Consumed
+            </p>
           </div>
-          <p className="text-2xl font-bold text-gray-900 mb-1">
+          <p className="text-4xl instrument font-medium mb-2">
             {userData?.credits?.totalUsed || 0}
           </p>
-          <p className="text-xs text-gray-500 m-0">Credits consumed</p>
+          <p className="text-white/70 text-sm tracking-wide m-0 uppercase">
+            Lifetime Usage
+          </p>
         </div>
 
-        {/* Total Transactions Card */}
-        <div className="bg-white rounded-xl p-4 border border-gray-200 hover: transition-shadow">
-          <div className="flex items-center gap-2 mb-3">
-            <div className="bg-blue-50 rounded-lg p-2">
-              <Icons.List className="text-blue-600" size={20} />
+        {/* Total Activity Card */}
+        <div className="bg-[#0A0A0A]  text-white rounded-2xl p-6 group hover:border-white/20 transition-colors">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="bg-white/5 rounded-xl p-2.5">
+              <Icons.List className="text-white/70" size={20} />
             </div>
-            <p className="text-xs text-gray-600 font-medium m-0">
+            <p className="text-xs text-white/70 font-medium tracking-wide m-0 uppercase">
               All Activity
             </p>
           </div>
-          <p className="text-2xl font-bold text-gray-900 mb-1">
+          <p className="text-4xl instrument font-medium mb-2">
             {transactions.length}
           </p>
-          <p className="text-xs text-gray-500 m-0">Total transactions</p>
+          <p className="text-white/70 text-sm tracking-wide m-0 uppercase">
+            Total Events Logged
+          </p>
         </div>
       </div>
 
-      {/* Transaction & Payment History Tabs */}
-      <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
+      {/* History Sections */}
+      <div className="bg-white rounded-3xl overflow-hidden">
         {/* Tab Navigation */}
-        <div className="border-b border-gray-200 bg-gray-50/50">
-          <div className="flex overflow-x-auto no-scrollbar">
+        <div className="px-6 pt-6 border-b border-gray-50">
+          <div className="flex gap-8">
             <button
               onClick={() => setActiveTab('transactions')}
-              className={`flex-1 min-w-fit px-6 py-4 text-sm font-medium transition-colors ${
+              className={`pb-4 text-xs font-semibold tracking-widest uppercase transition-all relative ${
                 activeTab === 'transactions'
-                  ? 'text-purple-600 border-b-2 border-purple-600 bg-white'
-                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                  ? 'text-black'
+                  : 'text-gray-400 hover:text-gray-600'
               }`}
             >
-              <span className="flex items-center justify-center gap-2">
-                <Icons.List size={18} />
-                Transactions ({transactions.length})
-              </span>
+              Transactions
+              {activeTab === 'transactions' && (
+                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-black rounded-full" />
+              )}
             </button>
             {payments.length > 0 && (
               <button
                 onClick={() => setActiveTab('payments')}
-                className={`flex-1 min-w-fit px-6 py-4 text-sm font-medium transition-colors ${
+                className={`pb-4 text-xs font-semibold tracking-widest uppercase transition-all relative ${
                   activeTab === 'payments'
-                    ? 'text-purple-600 border-b-2 border-purple-600 bg-white'
-                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                    ? 'text-black'
+                    : 'text-gray-400 hover:text-gray-600'
                 }`}
               >
-                <span className="flex items-center justify-center gap-2">
-                  <Icons.CreditCard size={18} />
-                  Payments ({payments.length})
-                </span>
+                Payments
+                {activeTab === 'payments' && (
+                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-black rounded-full" />
+                )}
               </button>
             )}
           </div>
         </div>
 
         {/* Tab Content */}
-        <div className="p-4 sm:p-6">
-          {/* Transactions Tab */}
+        <div className="p-0">
           {activeTab === 'transactions' && (
-            <>
-              <div className="flex items-center justify-between mb-4">
-                <h4 className="font-semibold text-gray-900 text-base sm:text-lg m-0">
-                  Transaction History
-                </h4>
-                {transactions.length > 5 && (
-                  <button
-                    onClick={() => setShowAllTransactions(!showAllTransactions)}
-                    className="text-xs sm:text-sm text-purple-600 hover:text-purple-700 font-medium px-3 py-1.5 rounded-lg hover:bg-purple-50 transition-colors"
-                  >
-                    {showAllTransactions
-                      ? 'Show Less'
-                      : `View All (${transactions.length})`}
-                  </button>
-                )}
-              </div>
-
+            <div className="divide-y divide-gray-50">
               {transactions.length === 0 ? (
-                <div className="text-center py-12 sm:py-16">
-                  <div className="mx-auto mb-4 w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center">
-                    <Icons.List size={28} className="text-gray-400" />
-                  </div>
-                  <p className="text-gray-900 font-medium mb-1">
-                    No transactions yet
-                  </p>
-                  <p className="text-sm text-gray-500 m-0">
-                    Your transaction history will appear here
+                <div className="text-center py-24">
+                  <Icons.List
+                    size={32}
+                    className="mx-auto mb-4 text-gray-200"
+                  />
+                  <p className="text-sm font-medium text-gray-900 m-0">
+                    No transaction history
                   </p>
                 </div>
               ) : (
-                <div className="space-y-2 sm:space-y-3 max-h-[500px] overflow-y-auto">
+                <>
                   {displayedTransactions.map((transaction, index) => (
                     <div
                       key={transaction.id || transaction._id || index}
-                      className="flex items-start gap-3 p-3 sm:p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-all"
+                      className="group flex flex-col sm:flex-row sm:items-center justify-between px-6 py-5 hover:bg-gray-50/50 transition-colors"
                     >
-                      <div className="flex-shrink-0 w-10 h-10 rounded-full bg-white flex items-center justify-center">
-                        {getTransactionIcon(transaction.type)}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-gray-900 m-0 truncate">
-                          {transaction.description}
-                        </p>
-                        <p className="text-xs text-gray-500 m-0 mt-1">
-                          {formatDate(transaction.createdAt)}
-                        </p>
-                        {transaction.expiresAt && (
-                          <div className="flex items-center gap-1 mt-1">
-                            <Icons.Clock
-                              size={12}
-                              className="text-orange-600"
-                            />
-                            <p className="text-xs text-orange-600 m-0">
-                              Expires{' '}
-                              {formatDate(transaction.expiresAt).split(',')[0]}
-                            </p>
-                          </div>
-                        )}
-                      </div>
-                      <div className="text-right flex-shrink-0">
-                        <p
-                          className={`text-base sm:text-lg font-bold m-0 ${getTransactionColor(
-                            transaction.type,
-                          )}`}
+                      <div className="flex items-center gap-4 flex-1">
+                        <div
+                          className={`flex-shrink-0 w-8 h-8 rounded-lg border flex items-center justify-center transition-colors ${
+                            transaction.type === 'purchase' ||
+                            transaction.type === 'bonus'
+                              ? 'bg-emerald-50 border-emerald-100/50 text-emerald-600'
+                              : 'bg-gray-50 border-gray-100 text-gray-400'
+                          }`}
                         >
-                          {transaction.type === 'usage' ||
-                          transaction.type === 'expiry'
-                            ? '-'
-                            : '+'}
-                          {Math.abs(transaction.amount)}
-                        </p>
-                        <p className="text-xs text-gray-500 m-0 mt-1">
-                          Bal: {transaction.balance}
-                        </p>
+                          {getTransactionIcon(transaction.type)}
+                        </div>
+                        <div className="min-w-0">
+                          <p className="text-sm font-medium text-gray-900 m-0 flex items-center gap-2">
+                            {transaction.description}
+                            {transaction.expiresAt && !isExpired() && (
+                              <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[9px] font-medium bg-orange-50 text-orange-600 border border-orange-100/50">
+                                Expires{' '}
+                                {
+                                  formatDate(transaction.expiresAt).split(
+                                    ',',
+                                  )[0]
+                                }
+                              </span>
+                            )}
+                          </p>
+                          <p className="text-[11px] text-gray-400 font-medium tracking-tight m-0 mt-1 uppercase">
+                            {formatDate(transaction.createdAt)}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-8 mt-4 sm:mt-0">
+                        <div className="text-right">
+                          <p
+                            className={`text-sm geist-mono font-medium m-0 ${
+                              transaction.type === 'usage' ||
+                              transaction.type === 'expiry'
+                                ? 'text-gray-400'
+                                : 'text-emerald-600'
+                            }`}
+                          >
+                            {transaction.type === 'usage' ||
+                            transaction.type === 'expiry'
+                              ? '−'
+                              : '+'}
+                            {Math.abs(transaction.amount).toLocaleString()}
+                          </p>
+                          <p className="text-[10px] text-gray-400 font-medium m-0 tracking-wide uppercase">
+                            Credits
+                          </p>
+                        </div>
+                        <div className="text-right w-24">
+                          <p className="text-sm text-gray-900 geist-mono font-medium m-0">
+                            {transaction.balance?.toLocaleString()}
+                          </p>
+                          <p className="text-[10px] text-gray-400 font-medium m-0 tracking-wide uppercase">
+                            Balance
+                          </p>
+                        </div>
                       </div>
                     </div>
                   ))}
-                </div>
+                  {transactions.length > 5 && (
+                    <button
+                      onClick={() =>
+                        setShowAllTransactions(!showAllTransactions)
+                      }
+                      className="w-full py-4 text-[11px] font-bold tracking-widest text-gray-400 uppercase hover:text-black transition-colors bg-gray-50/30"
+                    >
+                      {showAllTransactions
+                        ? 'Show fewer activities'
+                        : `View all ${transactions.length} activities`}
+                    </button>
+                  )}
+                </>
               )}
-            </>
+            </div>
           )}
 
-          {/* Payments Tab */}
           {activeTab === 'payments' && (
-            <>
-              <div className="mb-4">
-                <h4 className="font-semibold text-gray-900 text-base sm:text-lg m-0">
-                  Payment History
-                </h4>
-              </div>
-
+            <div className="divide-y divide-gray-50">
               {payments.length === 0 ? (
-                <div className="text-center py-12 sm:py-16">
-                  <div className="mx-auto mb-4 w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center">
-                    <Icons.CreditCard size={28} className="text-gray-400" />
-                  </div>
-                  <p className="text-gray-900 font-medium mb-1">
-                    No payments yet
-                  </p>
-                  <p className="text-sm text-gray-500 m-0">
-                    Your payment history will appear here
+                <div className="text-center py-24">
+                  <Icons.CreditCard
+                    size={32}
+                    className="mx-auto mb-4 text-gray-200"
+                  />
+                  <p className="text-sm font-medium text-gray-900 m-0">
+                    No payment history
                   </p>
                 </div>
               ) : (
-                <div className="space-y-2 sm:space-y-3 max-h-[500px] overflow-y-auto">
-                  {payments.map((payment, index) => (
-                    <div
-                      key={payment.id || payment._id || index}
-                      className="flex flex-col sm:flex-row sm:items-center gap-3 p-3 sm:p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-all hover"
-                    >
-                      <div className="flex items-start sm:items-center gap-3 flex-1">
-                        <div className="flex-shrink-0 w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
-                          <Icons.CreditCard
-                            className="text-green-600"
-                            size={20}
-                          />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-gray-900 m-0">
-                            +{payment.creditsAdded} Credits Added
-                          </p>
-                          <p className="text-xs text-gray-500 m-0 mt-1">
-                            {formatDate(payment.createdAt)}
-                          </p>
-                          <p className="text-xs text-gray-400 m-0 mt-1 truncate">
-                            {payment.paymentMethod?.toUpperCase()} • ID:{' '}
-                            {payment.paymentId?.slice(0, 15)}...
-                          </p>
-                        </div>
+                payments.map((payment, index) => (
+                  <div
+                    key={payment.id || payment._id || index}
+                    className="group flex flex-col sm:flex-row sm:items-center justify-between px-6 py-5 hover:bg-gray-50/50 transition-colors"
+                  >
+                    <div className="flex items-center gap-4 flex-1">
+                      <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-100/50 flex items-center justify-center text-emerald-600">
+                        <Icons.CreditCard size={16} />
                       </div>
-                      <div className="flex items-center justify-between sm:flex-col sm:items-end gap-2 sm:gap-1 flex-shrink-0">
-                        <p className="text-base sm:text-lg font-bold text-gray-900 m-0">
-                          ₹{(payment.amount / 100).toFixed(2)}
+                      <div className="min-w-0">
+                        <p className="text-sm font-medium text-gray-900 m-0">
+                          {payment.creditsAdded.toLocaleString()} Credits Added
+                        </p>
+                        <p className="text-[11px] text-gray-400 font-medium tracking-tight m-0 mt-1 uppercase">
+                          {formatDate(payment.createdAt)} •{' '}
+                          {payment.paymentMethod || 'Stripe'}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-8 mt-4 sm:mt-0">
+                      <div className="text-right">
+                        <p className="text-sm text-gray-900 geist-mono font-medium m-0">
+                          ₹
+                          {(payment.amount / 100).toLocaleString(undefined, {
+                            minimumFractionDigits: 2,
+                          })}
                         </p>
                         <span
-                          className={`inline-block text-xs px-3 py-1 rounded-full font-medium ${
+                          className={`inline-block text-[9px] font-bold tracking-widest uppercase mt-1 px-2 py-0.5 rounded border ${
                             payment.status === 'succeeded'
-                              ? 'bg-green-100 text-green-700'
-                              : payment.status === 'pending'
-                              ? 'bg-yellow-100 text-yellow-700'
-                              : payment.status === 'failed'
-                              ? 'bg-red-100 text-red-700'
-                              : 'bg-gray-100 text-gray-700'
+                              ? 'bg-emerald-50 border-emerald-100 text-emerald-600'
+                              : 'bg-gray-50 border-gray-100 text-gray-400'
                           }`}
                         >
                           {payment.status}
                         </span>
                       </div>
                     </div>
-                  ))}
-                </div>
+                  </div>
+                ))
               )}
-            </>
+            </div>
           )}
         </div>
       </div>

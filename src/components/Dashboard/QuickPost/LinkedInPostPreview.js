@@ -102,6 +102,11 @@ const LinkedInPostPreview = ({
               }
               alt="Profile"
               className="w-14 h-14 rounded-full object-cover border"
+              onError={(e) => {
+                e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                  selectedProfileDetails?.name || 'User',
+                )}&background=6366f1&color=fff&size=40`;
+              }}
             />
             <div className="flex flex-col  gap-1">
               <p className="font-bold m-0 p-0">

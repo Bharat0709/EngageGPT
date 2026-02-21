@@ -20,7 +20,7 @@ function FAQ() {
     >
       <div className="container mx-auto px-4">
         <div className="text-center mb-10">
-          <h2 className="lg:text-3xl lg:mt-1 mt-6 text-xl font-bold text-center mb-8 border-4 border-black shadow-[5px_5px_0px_black] py-2 px-6 max-w-md mx-auto bg-white">
+          <h2 className="lg:text-3xl geist lg:mt-1 mt-6 text-xl font-bold text-center mb-8 border-4 border-black shadow-[5px_5px_0px_black] py-2 px-6 max-w-md mx-auto bg-white">
             FAQs
           </h2>
         </div>
@@ -34,7 +34,7 @@ function FAQ() {
                 className="flex items-center justify-between py-4 px-6 w-full text-left focus:outline-none"
                 onClick={() => toggleFAQ(index)}
               >
-                <span className="lg:text-lg text-sm font-semibold">
+                <span className="lg:text-lg ovo-regular text-sm font-semibold">
                   {faq.question}
                 </span>
                 <ChevronDownIcon
@@ -50,7 +50,7 @@ function FAQ() {
                     : 'max-h-0 opacity-0'
                 }`}
               >
-                <p className="text-gray-700">{faq.answer}</p>
+                <p className="text-gray-700 geist">{faq.answer}</p>
               </div>
             </div>
           ))}

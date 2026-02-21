@@ -19,11 +19,11 @@ const ResetCreditsModal = ({
             <Icons.Refresh className="h-6 w-6 text-blue-600" />
           </div>
           
-          <h3 className="text-lg font-medium text-gray-900 mb-2">
+          <h3 className="text-lg ovo-regular font-medium text-gray-900 mb-2">
             Reset Credits for {personName}?
           </h3>
           
-          <p className="text-sm text-gray-500 mb-4">
+          <p className="text-sm  geist text-gray-500 mb-4">
             This will reset today's credit usage to zero for this member.
           </p>
           

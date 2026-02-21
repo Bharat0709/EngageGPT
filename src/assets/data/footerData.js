@@ -6,15 +6,8 @@ export const footerSections = [
     links: [
       {
         icon: MailIcon,
-        label: 'engagegpt@gmail.com',
-        href: 'mailto:engagegpt@gmail.com',
-      },
-      {
-        icon: GlobeIcon,
-        label: 'engagegpt.in',
-        href: 'https://www.engagegpt.in',
-        target: '_blank',
-        rel: 'noopener noreferrer',
+        label: 'info@engagegpt.in',
+        href: 'mailto:info@engagegpt.in',
       },
     ],
   },

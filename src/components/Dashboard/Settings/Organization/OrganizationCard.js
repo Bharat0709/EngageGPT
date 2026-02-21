@@ -21,7 +21,7 @@ export const OrganizationCard = ({ userData, setIsModalOpen }) => {
   }, [userData?.profilePicture]);
 
   return (
-    <div className="mb-6 bg-[#f2f5f5] rounded-xl p-2 pr-4 flex flex-col gap-3 justify-between">
+    <div className="mb-4 bg-white mt-4 rounded-xl p-2 pr-4 flex flex-col gap-3 justify-between">
       <div className="p-2 pr-2 rounded-xl flex gap-6 items-start justify-between">
         <div className="flex justify-start items-center gap-4">
           <div className="relative mt-1 w-16 h-16 rounded-full overflow-hidden border bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
@@ -65,21 +65,18 @@ export const OrganizationCard = ({ userData, setIsModalOpen }) => {
           <Icons.Edit className="text-xl h-6 lg:mt-0 mt-2" />
         </button>
       </div>
-
-      <div className="flex w-full justify-between items-center">
-        <p className="w-full text-sm px-2 text-left text-gray-500">
-          <div className="flex lg:flex-row flex-col justify-between w-full lg:items-center items-start lg:gap-2 gap-4">
-            <div className="flex lg:flex-row flex-col gap-2 lg:gap-4">
-              <p className="p-0 m-0">
-                Logged in via:{' '}
-                <span className="font-bold p-0 m-0">
-                  {userData.oauthProvider === 'google' ? 'Google' : 'Password'}
-                </span>
-              </p>
-            </div>
+      <p className="w-full text-sm px-2 text-left text-gray-500">
+        <div className="flex lg:flex-row flex-col justify-between w-full lg:items-center items-start lg:gap-2 gap-4">
+          <div className="flex lg:flex-row flex-col gap-2 lg:gap-4">
+            <p className="p-0 m-0">
+              Logged in via:{' '}
+              <span className="font-bold p-0 m-0">
+                {userData.oauthProvider === 'google' ? 'Google' : 'Password'}
+              </span>
+            </p>
           </div>
-        </p>
-      </div>
+        </div>
+      </p>
     </div>
   );
 };

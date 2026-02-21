@@ -17,8 +17,8 @@ const FullLengthButton = ({
       type="button"
       onClick={onClick}
       disabled={isDisabled}
-      className={`flex w-full items-center text-md justify-center gap-2 px-4 py-3 mt-3  ${className} transition-all
-        ${theme === 'dark' ? 'bg-[#004182] text-white' : 'bg-sky-50 hover:bg-gray-50   text-black'}
+      className={`flex w-full cursor-pointer items-center text-md justify-center gap-2 px-4 py-3 mt-3  ${className} transition-all
+        ${theme === 'dark' ? 'bg-[#004182] text-white' : 'bg-gray-50 hover:bg-gray-50   text-black'}
         ${isDisabled ? 'cursor-not-allowed opacity-50' : 'hover:opacity-90'}
       `}
     >

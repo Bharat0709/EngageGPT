@@ -98,10 +98,7 @@ const PostDetails = ({ setStats, memberId }) => {
     <div className="flex flex-col lg:p-0 p-0">
       {posts.length > 0 ? (
         <div>
-          <p className="p-2 w-full border rounded-xl bg-gray-50 text-sm">
-            {' '}
-            Top Posts{' '}
-          </p>
+          <p className="w-full rounded-xl bg-gray-50 text-sm"> Top Posts </p>
           <PostsDiv
             handlePostClick={handlePostClick}
             posts={topPosts}

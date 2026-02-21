@@ -48,16 +48,18 @@ const OrganizationProfileSettings = () => {
   }
 
   return (
-    <div className="w-full h-full scrollbar-hide overflow-auto overflow-y-scroll mx-auto lg:p-6 p-4 bg-[#ededed] shadow-md">
-      <h2 className="text-2xl p-0 mt-0 text-semibold mb-4">
+    <div className="w-full h-full scrollbar-hide overflow-auto overflow-y-scroll mx-auto lg:p-4 p-4 bg-[#fafafa] shadow-md">
+      <h2 className="text-xl ovo-regular p-0 mt-0 text-semibold mb-2">
         Organization Settings
       </h2>
 
-      <div className="flex bg-gray-50 rounded-xl p-3 text-sm justify-start gap-4 items-center mb-2">
+      <div className="flex geist pt-3 pr-3 text-sm lg:text-md justify-start gap-4 items-center mb-2">
         <button
           onClick={() => handleViewToggle('general')}
           className={`${
-            view === 'general' ? 'text-black font-semibold' : 'text-gray-600'
+            view === 'general'
+              ? 'text-blue-600  pb-3 border-b border-blue-600  !font-semibold geist '
+              : 'rounded-xl pb-3  text-gray-500'
           }`}
         >
           General
@@ -67,26 +69,35 @@ const OrganizationProfileSettings = () => {
           onClick={() => handleViewToggle('subscription')}
           className={`${
             view === 'subscription'
-              ? 'text-black font-semibold'
-              : 'text-gray-600'
+              ? 'text-blue-600  pb-3 border-b border-blue-600  !font-semibold geist '
+              : 'text-gray-500  pb-3 '
           }`}
         >
           Transactions
         </button>
-            <button
+        <button
           onClick={() => handleViewUpgrade('upgrade')}
           className={`${
-            view === 'subscription'
-              ? 'text-black font-semibold'
-              : 'text-gray-600'
+            view === 'upgrade'
+              ? 'text-blue-600  pb-3 border-b border-blue-600  !font-semibold geist '
+              : 'text-gray-500 pb-3 '
           }`}
         >
           Add More Credits
         </button>
       </div>
-      {view === 'general' && <OrganizationCard userData={userData}  setIsModalOpen={setIsModalOpen} />}
+      {view === 'general' && (
+        <OrganizationCard userData={userData} setIsModalOpen={setIsModalOpen} />
+      )}
       {view === 'subscription' && <SubscriptionCard userData={userData} />}
-      {view === 'upgrade' && <UpgradeModal isOpen={true} onClose={() => {setView('general')}} />}
+      {view === 'upgrade' && (
+        <UpgradeModal
+          isOpen={true}
+          onClose={() => {
+            setView('general');
+          }}
+        />
+      )}
       <EditOrgModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

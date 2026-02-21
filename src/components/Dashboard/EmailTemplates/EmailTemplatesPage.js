@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import EmailTemplateNavbar from './Navigation';
-import { addNewMember, getAllMembers } from '@services/Members';
+import { getAllMembers } from '@services/Members';
 import { useNotifications } from '@components/Common/Notification';
 import {
   createEmailTemplate,
@@ -13,7 +13,6 @@ import {
 } from '@services/EmailTemplates';
 import NotFound from '@assets/images/PostNotFound.png';
 import TemplatesTable from './EmailListTable/TemplatesTable';
-import AddMembersModal from '../Global/AddPeopleModal';
 import CodeEditor from './Editor/Editor';
 import Preview from './Preview';
 import SavedPostsSkeleton from '../SkeletonLoaders/SavedPostsSkeletonLoading';
@@ -22,8 +21,6 @@ const EmailTemplateManager = () => {
   const [selectedMemberId, setSelectedMemberId] = useState(null);
   const [memberProfiles, setMemberProfiles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [refreshMembers, setRefreshMembers] = useState(false);
-  const [isAddMemberModalOpen, setIsAddMemberModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('templates');
   const [templates, setTemplates] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -55,7 +52,7 @@ const EmailTemplateManager = () => {
     };
 
     fetchAndSetMemberData();
-  }, [refreshMembers]);
+  }, []);
 
   useEffect(() => {
     if (selectedMemberId) {
@@ -73,18 +70,6 @@ const EmailTemplateManager = () => {
       setTemplates([]);
     } finally {
       setLoading(false);
-    }
-  };
-
-  const handleAddMembers = async (newPersons) => {
-    try {
-      for (const person of newPersons) {
-        await addNewMember(person);
-      }
-      setRefreshMembers(!refreshMembers);
-      setIsAddMemberModalOpen(false);
-    } catch (err) {
-      message.error(err.message || 'Failed to add member. Please try again.');
     }
   };
 
@@ -320,38 +305,31 @@ const EmailTemplateManager = () => {
 
   // No member selected component
   const NoMemberSelected = () => (
-    <div className="bg-white p-8 m-2  rounded-2xl flex flex-col justify-center gap-2 text-center">
+    <div className="p-8 m-2 mx-4  rounded-2xl flex flex-col justify-center gap-2 text-center">
       <img src={NotFound} alt="Not Found" className="h-50 w-60 mx-auto" />
-      <h3 className="text-lg font-medium mb-2">No Member Selected</h3>
-      <p className="text-gray-600 mb-4">
-        Please select a member to view their saved email templates.
+      <h3 className="text-lg  geist font-medium mb-2">No Profile Added</h3>
+      <p className="text-gray-600 geist  mb-4">
+        Please add a profile from settings page.
       </p>
-      <button
-        onClick={() => setIsAddMemberModalOpen(true)}
-        className="btn-primary flex items-center gap-2 self-center mx-auto whitespace-nowrap px-6 py-2 text-sm font-medium bg-white border border-black text-black w-fit transition-all shadow-[3px_3px_0px_black] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]"
-      >
-        Add Member
-      </button>
     </div>
   );
 
   return (
     <>
       {isLoading && <SavedPostsSkeleton />}
-      <div className="h-screen flex flex-col bg-gray-50">
+      <div className="h-screen flex flex-col bg-[#fafafa]">
         <EmailTemplateNavbar
           selectedProfile={selectedMemberId}
           handleProfileChange={handleProfileChange}
           memberProfiles={memberProfiles}
           activeTab={activeTab}
           setActiveTab={setActiveTab}
-          setIsAddMemberModalOpen={setIsAddMemberModalOpen}
         />
 
         {!selectedMemberId ? (
           <NoMemberSelected />
         ) : (
-          <div className="flex-1 lg:overflow-hidden">
+          <div className="flex-1 mx-2 lg:overflow-hidden">
             {activeTab === 'templates' && (
               <div className="p-2 rounded-2xl">
                 <TemplatesTable
@@ -389,12 +367,6 @@ const EmailTemplateManager = () => {
             )}
           </div>
         )}
-
-        <AddMembersModal
-          isOpen={isAddMemberModalOpen}
-          onClose={() => setIsAddMemberModalOpen(false)}
-          onSubmit={handleAddMembers}
-        />
       </div>
     </>
   );

@@ -9,7 +9,6 @@ import PostContent from './PostContent';
 import TemplatesDrawer from './MailTemplates';
 import PlaceholderDrawer from './PlaceholderManagement';
 import TemplatePreviewModal from './MailPreview';
-import EmailMediaUploader from './EmailMediaUploader';
 import { useNotifications } from '@components/Common/Notification';
 import CustomToggle from '@components/Common/CustomToggle';
 import axios from 'axios';
@@ -56,7 +55,11 @@ const EmailSendModal = ({ memberId, postData, onClose }) => {
         setIsLoadingMember(false);
       }
     };
-    fetchMember();
+    if (memberId) {
+      fetchMember();
+    } else {
+      setIsLoadingMember(false);
+    }
   }, [memberId]);
 
   /** ✅ Fetch Templates */
@@ -72,7 +75,9 @@ const EmailSendModal = ({ memberId, postData, onClose }) => {
         setIsLoadingTemplates(false);
       }
     };
-    loadTemplates();
+    if (memberId) {
+      loadTemplates();
+    }
   }, [memberId]);
 
   /** ✅ If postData has prefilled email content, load it */
@@ -104,7 +109,7 @@ const EmailSendModal = ({ memberId, postData, onClose }) => {
         'Gmail connect error:',
         error?.response?.data || error.message,
       );
-      message.error("Failed to connect gmail.")
+      message.error('Failed to connect gmail.');
     }
   };
 
@@ -136,7 +141,7 @@ const EmailSendModal = ({ memberId, postData, onClose }) => {
   };
 
   return (
-    <div className="p-2">
+    <div className="p-2 mx-2">
       <div className="bg-white rounded-2xl max-h-[95vh] overflow-y-scroll scrollbar-hide">
         {/* ✅ Header */}
         <div
@@ -148,10 +153,10 @@ const EmailSendModal = ({ memberId, postData, onClose }) => {
               <Icons.Mail className="h-5 w-5 text-blue-600" />
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-gray-900">
+              <h3 className="text-lg m-0 p-0 ovo-regular  font-semibold text-gray-900">
                 Send Email
               </h3>
-              <p className="text-sm text-gray-500">
+              <p className="text-sm m-0 p-0  text-gray-500">
                 Compose and send email to lead
               </p>
             </div>
@@ -183,7 +188,8 @@ const EmailSendModal = ({ memberId, postData, onClose }) => {
               value={
                 isLoadingMember
                   ? 'Loading...'
-                  : emailData.from || 'Gmail not connected , Connect Gmail to send mails'
+                  : emailData.from ||
+                    'Gmail not connected , Connect Gmail to send mails'
               }
               className={`w-full px-4 py-3 rounded-lg border
               ${
@@ -197,7 +203,7 @@ const EmailSendModal = ({ memberId, postData, onClose }) => {
                 className="mt-2"
                 theme="light"
                 buttonText="Connect Gmail"
-                icon={<Icons.Google/>}
+                icon={<Icons.Google />}
                 onClick={() => handleGmailConnect(memberId)}
               />
             )}
@@ -268,7 +274,7 @@ const EmailSendModal = ({ memberId, postData, onClose }) => {
 
           {/* ✅ Footer Buttons */}
           <div className="flex justify-end gap-3 pt-4 border-t">
-             <Button
+            <Button
               onClick={() => {
                 // Convert emailData to template format
                 const emailTemplate = {

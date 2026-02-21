@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
 import { Icons } from '@utils/constantData/icons';
-import userProfile from '@assets/images/userProfile.png';
-import Button from '@components/Common/Button';
 import { useNotifications } from '@components/Common/Notification';
 import FullLengthButton from '@components/Common/FullLengthButton';
 
@@ -108,18 +106,17 @@ const AddMembersModal = ({ isOpen, onClose, onSubmit }) => {
 
   return (
     <div className="fixed inset-0 w-full geist z-50 flex  items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm transition-opacity">
-      <div className="bg-white flex flex-col max-w-md  border border-white lg:max-h-2xl h-fit overflow-y-scroll scrollbar-hide w-11/12 p-0 rounded-3xl shadow-xl transform transition-all duration-300 ease-in-out">
+      <div className="bg-white flex flex-col max-w-md  lg:max-h-2xl h-fit overflow-y-scroll scrollbar-hide w-11/12 p-0 rounded-3xl shadow-xl transform transition-all duration-300 ease-in-out">
         {/* Header */}
-        <div className="bg-sky-50 border-b border-sky-200 rounded-t-2xl p-4">
+        <div className="bg-[#fafafa] border-b border-gray-200 rounded-t-2xl p-4">
           <div className="flex justify-between items-center">
             <div className="flex flex-col justify-center w-full items-center gap-3">
-              <img className="h-16 w-16" src={userProfile} alt="userProfile " />
-              <h2 className="text-md ovo-regular lg:text-xl mb-0 p-0 font-bold text-indigo-900">
-                Add LinkedIn Profile
+              <h2 className="lg:text-2xl ovo-regular mt-3 mb-0 p-0 font-bold text-indigo-900">
+                Add Profile
               </h2>
             </div>
           </div>
-          <p className="m-0 text-center lg:text-md text-xs  w-full pt-2 text-black ">
+          <p className="m-0 text-center lg:text-md text-sm  w-full pt-2 text-black ">
             {' '}
             Email must be associated with a LinkedIn account
           </p>
@@ -201,7 +198,7 @@ const AddMembersModal = ({ isOpen, onClose, onSubmit }) => {
             <FullLengthButton
               onClick={handleClose}
               buttonText="Go Back"
-              className="px-6 border-t  border-gray-200"
+              className="px-6"
               theme="light"
             />
             <FullLengthButton

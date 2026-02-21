@@ -77,7 +77,7 @@ const PostCard = ({ post, handlePostClick }) => {
 
   return (
     <div
-      className="group relative rounded-xl overflow-hidden border  bg-white border-gray-300 lg:p-6 p-4  transition-all duration-300 ease-out cursor-pointer"
+      className="group relative rounded-xl overflow-hidden bg-white  lg:p-6 p-4  transition-all duration-300 ease-out cursor-pointer"
       onClick={() => handlePostClick(post._id)}
     >
       {/* Background gradient on hover */}

@@ -28,8 +28,18 @@ const PostDrawer = ({ post, handleDrawerClose, isOpen }) => {
             <div className="flex items-center gap-4">
               <img
                 className="h-10 w-10 rounded-full"
-                src={post?.author.profilePicture}
+                src={
+                  post?.author.profilePicture ||
+                  `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                    post?.author.name || 'User',
+                  )}&background=6366f1&color=fff&size=40`
+                }
                 alt={post?.author.name}
+                onError={(e) => {
+                  e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                    post?.author.name || 'User',
+                  )}&background=6366f1&color=fff&size=40`;
+                }}
               />
               <span className="text-gray-700 text-sm">{post?.author.name}</span>
               <span className="text-gray-700 text-sm">

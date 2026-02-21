@@ -12,10 +12,10 @@ const StepHeader = ({
         {imageSrc && (
           <img src={imageSrc} alt={imageAlt} className="h-20 w-30 mr-1" />
         )}
-        <div className="text-left">
-          <h2 className="text-xl font-bold text-gray-900 mb-2">{title}</h2>
+        <div className="text-left ">
+          <h2 className="text-xl ovo-regular text-gray-900 mb-2">{title}</h2>
           {description && (
-            <div className="flex  text-gray-600 items-start text-sm max-w-2xl space-x-2">
+            <div className="flex  geist text-gray-600 items-start text-sm max-w-2xl space-x-2">
               <div>{description}</div>
             </div>
           )}

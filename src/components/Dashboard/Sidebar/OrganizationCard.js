@@ -173,13 +173,15 @@ const OrganizationCard = ({
           {isOpen && (
             <button
               onClick={() => setShowUpgradeModal(true)}
-              className="w-full flex items-center justify-center gap-2 px-8 py-2.5 text-xs font-semibold text-white bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-xl border-none overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/30 before:to-transparent before:w-full before:h-full before:translate-x-[-100%] before:skew-x-12 before:animate-[slide_1s_infinite] my-2"
+              className="w-full flex items-center ovo-regular justify-center gap-2 px-8 py-2.5 text-xs font-semibold text-white bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-xl border-none overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/30 before:to-transparent before:w-full before:h-full before:translate-x-[-100%] before:skew-x-12 before:animate-[slide_1s_infinite] my-2"
             >
               <Icons.Credits
                 size={18}
                 className="transition-transform duration-200 group-hover:rotate-12"
               />
-              <span className="text-center text-sm">Add More Credits</span>
+              <span className="text-center  font-bold text-sm">
+                Add More Credits
+              </span>
             </button>
           )}
 

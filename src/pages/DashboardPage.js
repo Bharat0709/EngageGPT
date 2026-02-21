@@ -1,4 +1,4 @@
-import { Routes, Route , useLocation} from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Home from '@components/Dashboard/Home/Home';
 import Sidebar from '@components/Dashboard/Sidebar/Sidebar';
 import Settings from '@components/Dashboard/Settings/Settings';
@@ -12,13 +12,14 @@ import ContentCalendarPage from '@components/Dashboard/ContentCalender/ContentCa
 import EmailTemplateManager from '@components/Dashboard/EmailTemplates/EmailTemplatesPage';
 import AutomationManager from '@components/Dashboard/Automation/AutomationManager';
 import FeatureUpdatesModal from '@components/Dashboard/Global/FeatureUpdatesModal';
+import EngageGPTMCP from '@components/Dashboard/EngageGPTMCP/EngageGPTMCP';
 
 function Dashboard() {
   const location = useLocation();
   return (
     <div className="flex lg:flex-row scrollbar-hide p-0 flex-col h-screen">
       <Sidebar />
-      <div className="flex-1 scrollbar-hide h-[100vh] overflow-auto">
+      <div className="flex-1 scrollbar-hide h-[100vh] m-1 rounded-3xl overflow-auto">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route
@@ -91,6 +92,14 @@ function Dashboard() {
             element={
               <ProtectedRoute>
                 <EmailTemplateManager />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/mcp"
+            element={
+              <ProtectedRoute>
+                <EngageGPTMCP />
               </ProtectedRoute>
             }
           />

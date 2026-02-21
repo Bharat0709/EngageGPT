@@ -34,7 +34,7 @@ const CustomRequirementsStep = ({ onNext, onBack, initialData = {} }) => {
   };
 
   return (
-    <div className="bg-gray-50 px-2">
+    <div className="bg-gray-50 mx-2 px-2">
       <div className="mx-auto">
         <div className="bg-white rounded-2xl overflow-y-auto">
           <StepHeader

@@ -6,7 +6,7 @@ const SkeletonCardsPostHistory = () => {
       {placeholders.map((_, index) => (
         <div
           key={index}
-          className="p-4 bg-white rounded-2xl border lg:mt-2 border-gray-200 animate-pulse mb-4"
+          className="p-4 mx-4 bg-white rounded-2xl lg:mt-2 border-gray-200 animate-pulse mb-4"
         >
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">

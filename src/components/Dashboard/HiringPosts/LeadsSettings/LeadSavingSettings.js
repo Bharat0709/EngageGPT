@@ -11,7 +11,7 @@ const LeadSavingSettings = ({ onNext, initialData = {} }) => {
     keywords: initialData.keywords || ['hiring', 'apply now', 'job opening'],
     excludeKeywords: initialData.excludeKeywords || [],
     saveAllPosts: initialData.saveAllPosts || false,
-    minCharCount: initialData.minCharCount || 50
+    minCharCount: initialData.minCharCount || 50,
   });
 
   const [inputs, setInputs] = useState({
@@ -97,7 +97,7 @@ const LeadSavingSettings = ({ onNext, initialData = {} }) => {
   };
 
   return (
-    <div className="bg-gray-50 px-2">
+    <div className="bg-gray-50 mx-2 px-2">
       <div className="mx-auto">
         <div className="bg-white rounded-3xl overflow-y-auto">
           <StepHeader
@@ -110,7 +110,7 @@ const LeadSavingSettings = ({ onNext, initialData = {} }) => {
           />
 
           {/* Form Content */}
-          <div className="px-8 pb-8 space-y-8">
+          <div className="px-8 pb-8 rounded-b-3xl space-y-8">
             {/* Master Toggle */}
             <div className="bg-gray-50 rounded-2xl p-6 border border-blue-200">
               <div className="flex items-center justify-between">
@@ -176,8 +176,6 @@ const LeadSavingSettings = ({ onNext, initialData = {} }) => {
                         Only save posts with at least this many characters
                       </p>
                     </div>
-
-                 
                   </div>
                 </div>
 

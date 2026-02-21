@@ -90,7 +90,7 @@ const UpgradeModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   const modalContent = (
-    <div className="fixed inset-0 z-[9999] scrollbar-hide flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+    <div className="fixed inset-0 z-[9999] scrollbar-hide flex items-center justify-center bg-black bg-opacity-60  backdrop-blur-sm p-4">
       <div className="bg-white w-full scrollbar-hide max-w-3xl max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl">
         {/* Header */}
         <div className="relative border-b border-gray-100 p-6 bg-gradient-to-r from-gray-50 to-white">
@@ -100,7 +100,7 @@ const UpgradeModal = ({ isOpen, onClose }) => {
                 <FiZap className="text-white" size={20} />
               </div>
               <div>
-                <h2 className=" text-lg lg:text-xl font-semibold text-gray-900 m-0">
+                <h2 className=" text-lg ovo-regular lg:text-xl font-semibold text-gray-900 m-0">
                   Top Up Credits
                 </h2>
                 <p className="text-xs lg:text-sm text-gray-500 mt-0.5 m-0">
@@ -142,7 +142,9 @@ const UpgradeModal = ({ isOpen, onClose }) => {
                     </motion.button>
                   ))}
                 </div>
-                <div><p className='text-sm lg:hidden flex'>Limited time Offer!</p></div>
+                <div>
+                  <p className="text-sm lg:hidden flex">Limited time Offer!</p>
+                </div>
               </div>
               <button
                 className="text-gray-400 lg:flex hidden hover:text-gray-600 p-2 rounded-lg hover:bg-gray-100 transition-all"
@@ -213,19 +215,19 @@ const UpgradeModal = ({ isOpen, onClose }) => {
 
                       {/* Plan Info */}
                       <div>
-                        <p className="text-md font-semibold text-gray-900 m-0">
+                        <p className="text-lg ovo-regular font-semibold text-gray-900 m-0">
                           {plan.name}
                         </p>
                         <motion.span
-                            key={currencyView + plan.product_id}
-                            initial={{ opacity: 0, y: 5 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -5 }}
-                            transition={{ duration: 0.2 }}
-                            className="text-md mt-2 block"
-                          >
-                            {formatPrice(plan.price)}
-                          </motion.span>
+                          key={currencyView + plan.product_id}
+                          initial={{ opacity: 0, y: 5 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -5 }}
+                          transition={{ duration: 0.2 }}
+                          className="text-md mt-2 geist  block"
+                        >
+                          {formatPrice(plan.price)}
+                        </motion.span>
                       </div>
                     </div>
 
@@ -233,10 +235,9 @@ const UpgradeModal = ({ isOpen, onClose }) => {
                       {/* Price */}
                       <div className="text-right">
                         <AnimatePresence mode="wait">
-                        
-                           <p className="text-sm font-bold lg:text-lg text-gray-500 m-0 mt-0.5 flex items-center gap-1">
-                          {plan.credits} credits
-                        </p>
+                          <p className="text-sm ovo-regular !font-bold lg:text-lg text-gray-500 m-0 mt-0.5 flex items-center gap-1">
+                            {plan.credits} credits
+                          </p>
                         </AnimatePresence>
                       </div>
 

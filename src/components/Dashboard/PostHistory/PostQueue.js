@@ -107,7 +107,7 @@ const PostQueue = () => {
               <FaClock />
             </div>
             <div>
-              <h2 className="text-md sm:text-xl m-0 p-0 text-gray-800">
+              <h2 className="text-md ovo-regular sm:text-xl m-0 p-0 text-gray-800">
                 Post History
               </h2>
             </div>
@@ -155,14 +155,14 @@ const PostQueue = () => {
   }
 
   return (
-    <div className="bg-gray-50  min-h-screen rounded-xl ">
-      <div className="flex lg:flex-row flex-col pt-1 gap-3 px-4 bg-white  justify-between items-center ">
+    <div className="bg-[#fafafa]  min-h-screen rounded-xl ">
+      <div className="flex lg:flex-row flex-col pt-1 gap-3 px-4  justify-between items-center ">
         <div className="flex items-center space-x-2">
-          <div className="p-2 bg-[#0c4a6e] rounded-lg text-white text-md sm:text-md">
+          {/* <div className="p-2 bg-[#0c4a6e] rounded-lg text-white text-md sm:text-md">
             <FaClock />
-          </div>
+          </div> */}
           <div>
-            <h2 className="text-lg m-0 p-0 sm:text-xl text-gray-800">
+            <h2 className="lg:text-xl ovo-regular m-0 p-0 sm:text-xl text-gray-800">
               Post History
             </h2>
           </div>

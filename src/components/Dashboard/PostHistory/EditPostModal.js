@@ -233,14 +233,14 @@ const EditPostModal = ({ isOpen, onClose, post, onSave, isEditing }) => {
     <div className="fixed inset-0 w-full z-[70] flex items-center justify-center bg-black/70 backdrop-blur-md transition-all duration-300">
       <div className="bg-white flex flex-col rounded-3xl  h-[95vh] lg:w-3/4 xl:w-2/3 2xl:w-1/2 w-11/12 relative shadow-2xl border border-gray-100 overflow-hidden">
         {/* Header with gradient background */}
-        <div className="relative p-4">
+        <div className="relative px-4 pt-3">
           <div className="relative flex items-center justify-between">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12  backdrop-blur-sm rounded-2xl flex items-center justify-center">
                 <FiEdit3 className="w-6 h-6 text-black" />
               </div>
               <div>
-                <h2 className="text-2xl font-bold text-black m-0 ">
+                <h2 className="text-2xl ovo-regular text-black m-0 ">
                   Edit Post
                 </h2>
                 <p className="text-black  text-sm mt-1 mb-0">
@@ -302,7 +302,7 @@ const EditPostModal = ({ isOpen, onClose, post, onSave, isEditing }) => {
             </div>
 
             {/* Status Section */}
-            <div className="w-full p-2 px-4 bg-gradient-to-r from-gray-50 to-blue-50  flex items-center rounded-2xl justify-start gap-4">
+            <div className="w-full  flex items-center rounded-2xl justify-start gap-4">
               <label className="text-sm font-semibold text-gray-700">
                 Status
               </label>
@@ -326,10 +326,8 @@ const EditPostModal = ({ isOpen, onClose, post, onSave, isEditing }) => {
             </div>
 
             {/* Content Section */}
-            <div className="space-y-3">
-              <label className="text-sm font-semibold text-gray-700">
-                Content
-              </label>
+            <div className="space-y-3 mt-2">
+
               <div className="relative">
                 <textarea
                   className={`w-full font-normal leading-8 border-2 rounded-2xl p-6 transition-all duration-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none resize-none bg-white/50 backdrop-blur-sm ${
@@ -428,7 +426,7 @@ const EditPostModal = ({ isOpen, onClose, post, onSave, isEditing }) => {
                 type="submit"
                 onClick={handleSave}
                 disabled={loading}
-                className={`px-6 py-3 bg-[#0c4a6e] text-white rounded-full font-semibold transition-all duration-200 shadow-lg hover:shadow-xl text-md ${
+                className={`px-6 py-3 bg-[#0c4a6e] text-white rounded-full font-semibold transition-all duration-200 text-md ${
                   loading
                     ? 'opacity-50 cursor-not-allowed'
                     : 'hover:scale-105 active:scale-95'

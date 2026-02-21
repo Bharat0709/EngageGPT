@@ -8,7 +8,7 @@ const MembersProfileDropDown = ({
   onCopy,
 }) => (
   <div className="relative group">
-    <div className="flex items-center space-x-3 py-1 px-2 bg-white hover:bg-gray-50 rounded-full border border-gray-300 hover:border-gray-300 transition-all duration-200 cursor-pointer">
+    <div className="flex items-center space-x-3 py-1 px-2 bg-[#fafafa] hover:bg-gray-50 rounded-full border border-gray-300 hover:border-gray-300 transition-all duration-200 cursor-pointer">
       <div className="flex items-center gap-3">
         <div className="flex items-center gap-2">
           <img
@@ -22,6 +22,14 @@ const MembersProfileDropDown = ({
             }
             alt="Profile"
             className="block w-8 h-8 rounded-full object-cover"
+            onError={(e) => {
+              const profile = profiles.find(
+                (p) => (p.id || p._id) === selectedProfileId,
+              );
+              e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                profile?.name || 'User',
+              )}&background=6366f1&color=fff&size=40`;
+            }}
           />
           <span className="text-gray-900 font-semibold">{profiles.length}</span>
           <span className="text-sm text-gray-800 hidden sm:block">
@@ -35,7 +43,7 @@ const MembersProfileDropDown = ({
       </div>
     </div>
 
-    <div className="absolute -left-9 lg:right-0 lg:top-9 mt-2 w-80 bg-white border border-gray-200 rounded-2xl hidden group-hover:block z-20 overflow-hidden backdrop-blur-sm">
+    <div className="absolute right-0 lg:top-9 mt-2 w-80 bg-white border border-gray-200 rounded-2xl hidden group-hover:block z-20 overflow-hidden backdrop-blur-sm">
       <div className="p-4 border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white">
         <h3 className="text-sm p-0 m-0 font-semibold text-gray-900">
           Team Members
@@ -53,7 +61,11 @@ const MembersProfileDropDown = ({
             <div
               key={uniqueKey}
               onClick={() => onProfileChange(profile)}
-              className="flex items-center justify-between p-4 hover:bg-gradient-to-r hover:from-gray-50 hover:to-blue-50 cursor-pointer transition-all duration-200 group/item"
+              className={`flex items-center justify-between p-4 hover:bg-gradient-to-r hover:from-gray-50 hover:to-blue-50 cursor-pointer transition-all duration-200 group/item ${
+                (profile.id || profile._id) === selectedProfileId
+                  ? 'bg-gray-100 shadow-inner'
+                  : ''
+              }`}
             >
               <div className="flex items-center gap-3">
                 <div className="relative">
@@ -77,8 +89,8 @@ const MembersProfileDropDown = ({
                       profile.isConnected === 'connected'
                         ? 'bg-green-400'
                         : profile.isConnected === 'invited'
-                        ? 'bg-yellow-400'
-                        : 'bg-gray-400'
+                          ? 'bg-yellow-400'
+                          : 'bg-gray-400'
                     }`}
                   ></div>
                 </div>
@@ -92,8 +104,8 @@ const MembersProfileDropDown = ({
                         profile.isConnected === 'connected'
                           ? 'bg-green-400'
                           : profile.isConnected === 'invited'
-                          ? 'bg-yellow-400'
-                          : 'bg-gray-400'
+                            ? 'bg-yellow-400'
+                            : 'bg-gray-400'
                       }`}
                     ></div>
                     <p
@@ -101,15 +113,15 @@ const MembersProfileDropDown = ({
                         profile.isConnected === 'connected'
                           ? 'text-green-600'
                           : profile.isConnected === 'invited'
-                          ? 'text-yellow-600'
-                          : 'text-gray-500'
+                            ? 'text-yellow-600'
+                            : 'text-gray-500'
                       }`}
                     >
                       {profile.isConnected === 'connected'
                         ? 'Connected'
                         : profile.isConnected === 'invited'
-                        ? 'Invited'
-                        : 'Disconnected'}
+                          ? 'Invited'
+                          : 'Disconnected'}
                     </p>
                   </div>
                 </div>

@@ -141,18 +141,18 @@ const Editor = ({
   };
 
   return (
-    <div className="flex h-full lg:flex-row flex-col-reverse lg:overflow-y-scroll scrollbar-hide p-3 rounded-tl-2xl rounded-bl-2xl bg-gray-50">
+    <div className="flex h-full lg:flex-row flex-col-reverse lg:overflow-y-scroll scrollbar-hide p-2 rounded-tl-2xl rounded-bl-2xl bg-gray-50">
       {/* Left Sidebar - Form */}
       <div className="lg:w-1/3 w-full h-full rounded-tl-2xl rounded-bl-2xl  bg-white backdrop-blur-sm lg:p-6 p-4 lg:overflow-y-scroll scrollbar-hide">
         <div className="space-y-4">
           {/* Header */}
-          <div className="flex items-center justify-between">
+          {/* <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-2xl m-0 p-0 font-semibold text-gray-900">
+              <h2 className="text-md ovo-regular m-0 p-0 font-semibold text-gray-900">
                 {selectedTemplate ? 'Edit Template' : 'Create Template'}
               </h2>
             </div>
-          </div>
+          </div> */}
 
           <div className="space-y-6">
             {/* Template Name */}

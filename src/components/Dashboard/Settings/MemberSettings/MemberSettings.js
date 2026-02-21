@@ -126,7 +126,7 @@ const MemberSettings = () => {
       <div
         className={`${
           showAccountSettings ? 'w-1/2' : 'w-full'
-        } h-full rounded-xl scrollbar-hide overflow-auto overflow-y-scroll mx-auto lg:p-6 p-4 bg-[#ededed] shadow-md transition-all duration-300`}
+        } h-full rounded-xl scrollbar-hide overflow-auto overflow-y-scroll mx-auto lg:p-6 p-4 bg-[#fafafa] shadow-md transition-all duration-300`}
       >
         <MemberProfile
           memberData={memberData}

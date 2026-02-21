@@ -36,19 +36,6 @@ const HiringPostsPage = () => {
     fetchAndSetMemberData();
   }, [refreshMembers]);
 
-  const handleAddMembers = async (newPersons) => {
-    try {
-      for (const person of newPersons) {
-        await addNewMember(person);
-      }
-      message.success('Invite sent successfully!');
-      setRefreshMembers(!refreshMembers);
-      setIsAddMemberModalOpen(false);
-    } catch (err) {
-      message.error(err.message);
-    }
-  };
-
   const handleRefresh = () => {
     setRefreshMembers(!refreshMembers);
   };
@@ -117,18 +104,12 @@ const HiringPostsPage = () => {
 
   // No member selected component
   const NoMemberSelected = () => (
-    <div className="bg-white p-8 m-2  rounded-2xl flex flex-col justify-center gap-2 text-center">
+    <div className=" p-8 m-2  rounded-2xl flex flex-col justify-center gap-2 text-center">
       <img src={NotFound} alt="Not Found" className="h-50 w-60 mx-auto" />
-      <h3 className="text-lg font-medium mb-2">No Member Selected</h3>
-      <p className="text-gray-600 mb-4">
-        Please select a member to view their saved leads or add a new member.
+      <h3 className="text-lg  geist font-medium mb-2">No Profile Added</h3>
+      <p className="text-gray-600 geist  mb-4">
+        Please add a profile from settings page.
       </p>
-      <button
-        onClick={() => setIsAddMemberModalOpen(true)}
-        className="btn-primary flex items-center gap-2 self-center mx-auto whitespace-nowrap px-6 py-2 text-sm font-medium bg-white border border-black text-black w-fit transition-all shadow-[3px_3px_0px_black] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]"
-      >
-        Add Member
-      </button>
     </div>
   );
 
@@ -148,14 +129,7 @@ const HiringPostsPage = () => {
         handleProfileChange={handleProfileChange}
         setIsAddMemberModalOpen={setIsAddMemberModalOpen}
       />
-
       <div>{renderTabContent()}</div>
-
-      <AddMembersModal
-        isOpen={isAddMemberModalOpen}
-        onClose={() => setIsAddMemberModalOpen(false)}
-        onSubmit={handleAddMembers}
-      />
     </div>
   );
 };

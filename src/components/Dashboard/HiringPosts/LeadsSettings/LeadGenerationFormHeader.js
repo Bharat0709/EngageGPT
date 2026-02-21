@@ -85,7 +85,7 @@ const LeadGenerationHeader = ({ currentStep, stepCompletion }) => {
         <div className="flex items-center flex-col gap-3 justify-between py-4">
           <div className="flex items-center w-full space-x-4">
             <div>
-              <h1 className="text-2xl w-full text-center m-0 p-0  font-bold text-gray-900">
+              <h1 className="text-2xl ovo-regular w-full text-center m-0 p-0  font-bold text-gray-900">
                 Lead Generation Setup
               </h1>
               <p className="text-sm  text-center m-0 p-0 text-gray-600">
@@ -121,8 +121,8 @@ const LeadGenerationHeader = ({ currentStep, stepCompletion }) => {
                         getStepStatus(step.number) === 'current'
                           ? 'text-black'
                           : getStepStatus(step.number) === 'completed'
-                          ? 'text-green-600'
-                          : 'text-gray-500'
+                            ? 'text-green-600'
+                            : 'text-gray-500'
                       }`}
                     >
                       {step.title}

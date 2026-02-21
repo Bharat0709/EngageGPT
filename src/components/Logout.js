@@ -17,11 +17,11 @@ const LogoutButton = () => {
 
   return (
     <button
-      className={`flex items-center bg-transparent w-full px-1 gap-2 py-2 rounded-md`}
+      className={`flex items-center justify-center w-full px-1 gap-2 py-2`}
       onClick={handleLogout}
     >
       <Icons.LogOut size={16} className="text-white" />
-      <span className={`text-white text-sm`}>Logout</span>
+      <span className={`text-white geist uppercase text-sm text-center`}> Yes, Logout</span>
     </button>
   );
 };

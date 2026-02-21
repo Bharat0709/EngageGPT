@@ -4,12 +4,19 @@ import { FiX } from 'react-icons/fi';
 import { sendHelpMail } from '@services/Organization';
 import { IoLogoWhatsapp } from 'react-icons/io';
 import EngageGPTLogo from '@assets/images/EngageGPTLogo.png';
+import { getCalApi } from '@calcom/embed-react';
 
 const handleWhatsAppContact = () => {
+  useEffect(() => {
+    (async function () {
+      const cal = await getCalApi({ namespace: '30min' });
+      cal('ui', { hideEventTypeDetails: false, layout: 'month_view' });
+    })();
+  }, []);
   const WHATSAPP_NUMBER = `${process.env.REACT_APP_CONTACT_NUMBER}`;
+
   const usermessage = encodeURIComponent('Hi, I need help with your service.');
   const phoneNumber = WHATSAPP_NUMBER.replace(/[^0-9]/g, '');
-
   const isMobile = /iPhone|Android/i.test(navigator.userAgent);
   const whatsappUrl = isMobile
     ? `whatsapp://send?phone=${phoneNumber}&text=${usermessage}`
@@ -83,7 +90,7 @@ const HelpModal = ({ isVisible, onClose }) => {
           alt="EngageGPT Logo"
           className="w-30 h-12 mx-auto mb-4"
         />
-        <h1 className="lg:text-2xl text-lg text-center mt-2 mb-4">
+        <h1 className="lg:text-2xl ovo-regular text-lg text-center mt-2 mb-4">
           How can we assist you?
         </h1>
         <textarea
@@ -119,13 +126,7 @@ const HelpModal = ({ isVisible, onClose }) => {
           <IoLogoWhatsapp size={20} />
           Contact Founder (Text Only)
         </button>
-        <a
-          href={bookingURL}
-          className="w-full px-4 lg:mt-0 mt-2 py-2 bg-blue-700 text-white rounded-full hover:bg-green-600 transition-colors flex items-center justify-center gap-2"
-        >
-          Book a Demo
-        </a>
-        <p className="text-xs text-center text-gray-500 mt-2">
+        <p className="text-sm text-center text-gray-500">
           You can also reach us on WhatsApp for immediate assistance.
         </p>
       </div>

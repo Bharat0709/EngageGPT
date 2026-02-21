@@ -36,16 +36,18 @@ const TabNavigation = ({ activeTab, setActiveTab, postHistory }) => {
         return (
           <button
             key={tab.key}
-            className={`py-4 px-3 text-center text-sm flex items-center justify-center gap-2 transition-all ${
+            className={`py-4 px-3  geist  text-center text-sm flex items-center justify-center gap-2 transition-all ${
               activeTab === tab.key
-                ? 'font-semibold border-b-2 border-black text-black bg-white shadow-sm'
+                ? 'font-semibold border-b-2 border-blue-600 text-blue-600'
                 : 'text-gray-500 hover:text-gray-700'
             }`}
             onClick={() => setActiveTab(tab.key)}
           >
             <Icon
               size={15}
-              className={activeTab === tab.key ? 'text-black' : 'text-gray-400'}
+              className={
+                activeTab === tab.key ? 'text-blue-600' : 'text-gray-400'
+              }
             />
             <span>{tab.label}</span>
           </button>

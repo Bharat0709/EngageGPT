@@ -17,13 +17,6 @@ const CreditsConsumptionModal = ({ isOpen, onClose }) => {
 
   const features = [
     {
-      name: 'AI Post Generation (Extension)',
-      description: 'Generate tailored LinkedIn posts using Gemini',
-      credits: 10,
-      icon: FiZap,
-      color: 'from-purple-500 to-pink-500',
-    },
-    {
       name: 'AI Content Generation (Website)',
       description:
         'Generate tailored LinkedIn posts using ChatGPT, Gemini, Grok, Perplexity',
@@ -52,14 +45,14 @@ const CreditsConsumptionModal = ({ isOpen, onClose }) => {
       icon: FiTarget,
       color: 'from-green-500 to-emerald-500',
     },
-      {
+    {
       name: 'HTML/Text Mailing feature (Coming Soon)',
       description: 'Send tailored emails to each lead',
       credits: 5,
       icon: FiZap,
       color: 'from-purple-500 to-pink-500',
     },
-     {
+    {
       name: 'Leads Automation + Automated Email (Coming Soon)',
       description: 'Generates & Sends automated tailored emails to each lead',
       credits: 20,
@@ -119,7 +112,7 @@ const CreditsConsumptionModal = ({ isOpen, onClose }) => {
               <FiTrendingUp className="text-white" size={20} />
             </div>
             <div>
-              <h2 className="text-lg lg:text-xl font-semibold text-gray-900 m-0">
+              <h2 className="text-lg lg:text-xl ovo-regular font-semibold text-gray-900 m-0">
                 Credits Consumption Overview
               </h2>
               <p className="text-xs lg:text-sm text-gray-500 mt-0.5 m-0">

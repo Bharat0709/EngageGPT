@@ -48,11 +48,13 @@ function MemberProfile({ memberData, view, handleViewToggle } = props) {
           >
             <Icons.ChevronLeft size={20} />
           </button>
-          <h2 className="text-2xl text-semibold m-0">Member Settings</h2>
+          <h2 className="text-2xl ovo-regular text-semibold m-0">
+            Member Settings
+          </h2>
         </div>
       </div>
 
-      <div className="mb-2 bg-[#f6f6f6] rounded-xl p-4 flex flex-col md:flex-row gap-4 items-center md:items-center">
+      <div className="mb-2 bg-[#f6f6f6] geist rounded-xl p-4 flex flex-col md:flex-row gap-4 items-center md:items-center">
         <img
           src={memberData?.profilePicture}
           alt={memberData?.name}

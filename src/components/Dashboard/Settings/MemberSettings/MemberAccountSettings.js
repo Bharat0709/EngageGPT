@@ -30,9 +30,9 @@ const AccountSettings = ({ onClose, memberData }) => {
     <div className="fixed inset-0 z-50 overflow-hidden bg-black bg-opacity-50 flex items-center justify-center p-4 backdrop-blur-sm transition-opacity">
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl h-fit lg:h-fit flex flex-col">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-200">
+        <div className="flex items-center justify-between p-4 border-b border-gray-200">
           <div className="flex items-center gap-3">
-            <h2 className="text-2xl font-semibold text-gray-900">
+            <h2 className="text-xl m-0 p-0 ovo-regular font-semibold text-gray-900">
               Account Settings
             </h2>
           </div>
@@ -46,20 +46,17 @@ const AccountSettings = ({ onClose, memberData }) => {
 
         <div className="flex flex-1 overflow-hidden">
           {/* Content */}
-          <div className="flex-1 overflow-y-scroll scrollbar-hide p-6">
+          <div className="flex-1 overflow-y-scroll scrollbar-hide">
             <div className="space-y-6">
-              <div className="bg-sky-50 rounded-xl p-4 border-red-200">
-                <div className="mb-4 pb-4 border-b border-gray-200">
+              <div className="rounded-xl p-4 border-red-200">
+                <div className="border-b border-gray-200">
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <Icons.Alert className="w-5 h-5 text-gray-700" />
+                    <div className="flex items-start gap-3">
+                      <Icons.Alert className="w-5  mt-1 mb-3 h-5 text-gray-700" />
                       <div>
-                        <h3 className="text-lg font-semibold text-gray-900">
+                        <h3 className="text-lg ovo-regular  m-0 p-0  font-semibold text-gray-900">
                           Dangerous Actions
                         </h3>
-                        <p className="text-sm text-gray-600 mt-1">
-                          These actions cannot be undone
-                        </p>
                       </div>
                     </div>
                   </div>

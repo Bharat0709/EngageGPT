@@ -33,9 +33,9 @@ const MediaUploader = ({ postDetails, setPostDetails }) => {
   };
 
   return (
-    <div className="p-2 mb-2  mt-3 rounded-2xl bg-white ">
+    <div className="p-2 mb-2 mx-2 mt-3 rounded-2xl bg-white ">
       <div className="flex px-2 items-center justify-between">
-        <h4 className="text-lg font-semibold text-gray-700 mb-4">
+        <h4 className="text-lg  ovo-regular font-semibold text-gray-700 mb-4">
           Upload Media
         </h4>
         <div className="flex gap-4 mb-4">

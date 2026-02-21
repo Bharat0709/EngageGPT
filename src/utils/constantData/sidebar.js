@@ -37,6 +37,15 @@ export const menuItems = [
   },
   {
     type: 'link',
+    to: '/dashboard/mcp',
+    icon: <Icons.Code size={18} />,
+    label: 'EngageGPT MCP',
+    activeClass: 'bg-slate-200 border-l-4 border-blue-600 text-black',
+    hoverClass: 'hover:bg-gray-100 hover:translate-x-1 hover:text-black',
+    tag: { text: 'NEW', color: 'bg-blue-600' },
+  },
+  {
+    type: 'link',
     to: '/dashboard/post-history',
     icon: <Icons.Clock size={18} />,
     label: 'Post History',
@@ -62,15 +71,15 @@ export const menuItems = [
     hoverClass: 'hover:bg-gray-100 hover:translate-x-1 hover:text-black',
     tag: { text: 'NEW', color: 'bg-blue-500' },
   },
-  {
-    type: 'link',
-    to: '/dashboard/leads-automation',
-    icon: <Icons.Robot size={18} />,
-    label: 'Automation',
-    activeClass: 'bg-slate-200  border-l-4 border-yellow-500    text-black',
-    hoverClass: 'hover:bg-gray-100 hover:translate-x-1 hover:text-black',
-    tag: { text: 'NEW', color: 'bg-blue-500' },
-  },
+  // {
+  //   type: 'link',
+  //   to: '/dashboard/leads-automation',
+  //   icon: <Icons.Robot size={18} />,
+  //   label: 'Automation',
+  //   activeClass: 'bg-slate-200  border-l-4 border-yellow-500    text-black',
+  //   hoverClass: 'hover:bg-gray-100 hover:translate-x-1 hover:text-black',
+  //   tag: { text: 'NEW', color: 'bg-blue-500' },
+  // },
 
   // --- Section 3: Email & Other (Green Theme) ---
   // {

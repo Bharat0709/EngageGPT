@@ -84,7 +84,7 @@ const AutomationSettingsStep = ({
   };
 
   return (
-    <div className="bg-gray-50 px-2">
+    <div className="bg-gray-50 mx-2 px-2">
       <div className="mx-auto">
         <div className="bg-white rounded-2xl overflow-y-auto">
           {/* Header */}
@@ -98,7 +98,7 @@ const AutomationSettingsStep = ({
           />
 
           {/* Form Content */}
-          <div className="px-8 pb-8 space-y-8">
+          <div className="px-8 pb-8 rounded-3xl space-y-8">
             {/* Final Setup Automation */}
             <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-6 border border-green-200">
               <div className="flex items-start space-x-3">
@@ -396,18 +396,18 @@ const AutomationSettingsStep = ({
                           {formData.automationType === 'semi'
                             ? 'Semi-Automated (Review required)'
                             : formData.automationType === 'full'
-                            ? 'Fully Automated'
-                            : 'Not configured'}
+                              ? 'Fully Automated'
+                              : 'Not configured'}
                         </p>
                         <p>
                           • <strong>Mode:</strong>{' '}
                           {formData.executionMode === 'realtime'
                             ? 'Real-time processing'
                             : formData.executionMode === 'scheduled'
-                            ? 'Scheduled execution'
-                            : formData.executionMode === 'manual'
-                            ? 'Manual only'
-                            : 'Hybrid approach'}
+                              ? 'Scheduled execution'
+                              : formData.executionMode === 'manual'
+                                ? 'Manual only'
+                                : 'Hybrid approach'}
                         </p>
                         <p>
                           • <strong>Daily Limit:</strong>{' '}
@@ -436,8 +436,8 @@ const AutomationSettingsStep = ({
                 </h4>
                 <p className="text-gray-500">
                   You can complete the setup now and enable automation later
-                  from your dashboard. <br /> <br />  (Automations will be available in
-                  future updates)
+                  from your dashboard. <br /> <br /> (Automations will be
+                  available in future updates)
                 </p>
               </div>
             )}

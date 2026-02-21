@@ -14,7 +14,7 @@ const SidebarLink = ({
   <Link
     to={to}
     onClick={onClick}
-    className={`flex pl-3 pr-3 items-center bg-white max-h-[38px] gap-3 rounded-md transition-all duration-500 ease-in-out relative
+    className={`flex pl-3 pr-3 geist items-center bg-white max-h-[38px] gap-3 rounded-md transition-all duration-500 ease-in-out relative
     ${isOpen ? 'py-2' : 'py-2'} 
     ${isActive ? activeClass : hoverClass}
   `}
@@ -32,7 +32,7 @@ const SidebarLink = ({
     {/* Tag element - only shows when sidebar is open */}
     {tag && isOpen && (
       <span
-        className={`absolute right-2 px-1.5 py-0.5 rounded-full text-[9px] font-bold text-white ${tag.color}`}
+        className={`absolute geist right-2 px-1.5 py-0.5 rounded-full text-[9px] font-bold text-white ${tag.color}`}
       >
         {tag.text}
       </span>

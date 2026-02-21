@@ -1,5 +1,5 @@
 import { Icons } from '@utils/constantData/icons';
-
+import binIcon from '@assets/images/bin.png';
 export const DeleteAccountModal = ({
   loading,
   setShowDeleteModal,
@@ -13,10 +13,13 @@ export const DeleteAccountModal = ({
           onClick={() => setShowDeleteModal(false)}
         ></div>
         <div className="relative bg-white rounded-2xl shadow-xl max-w-lg w-full">
-          <div className="flex items-center justify-between p-6 border-b border-gray-200">
-            <h3 className="text-lg font-semibold text-gray-900">
-              Delete Account
-            </h3>
+          <div className="flex items-center justify-between p-4 border-b border-gray-200">
+            <div className='flex gap-3 items-center'>
+              <img className="h-8 w-8" src={binIcon} alt="binIcon" />
+              <h3 className="text-xl m-0 p-0 ovo-regular font-semibold text-gray-900">
+                Delete Account
+              </h3>
+            </div>
             <button
               onClick={() => setShowDeleteModal(false)}
               className="text-gray-400 hover:text-gray-600 transition-colors"
@@ -24,11 +27,11 @@ export const DeleteAccountModal = ({
               <Icons.Cross size={20} />
             </button>
           </div>
-          <div className="p-6">
+          <div className="p-4">
             <div className="space-y-4">
               <div className="flex items-center gap-3 p-4 bg-red-50 rounded-lg">
                 <Icons.Trash className="w-5 h-5 text-red-500 mt-0.5" />
-                <p className="text-sm text-red-700">
+                <p className="text-sm text-red-700 m-0 p-0 ">
                   This will permanently delete your account and all associated
                   data. This action cannot be undone.
                 </p>

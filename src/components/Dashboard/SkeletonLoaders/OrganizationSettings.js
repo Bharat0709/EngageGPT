@@ -3,16 +3,12 @@ import { Skeleton } from 'antd';
 
 const OrganizationProfileSkeleton = () => {
   return (
-    <div className="w-full h-full rounded-xl scrollbar-hide overflow-auto overflow-y-scroll mx-auto lg:p-6 p-4 bg-[#ededed] shadow-md">
-      <h2 className="text-2xl p-0 mt-0 text-semibold mb-4">
+    <div className="w-full h-full rounded-xl scrollbar-hide overflow-auto overflow-y-scroll mx-auto lg:p-4 p-4 bg-[#ededed] shadow-md">
+      <h2 className="text-2xl ovo-regular p-0 mt-0 text-semibold mb-2">
         Organization Settings
       </h2>
 
-      <div className="flex bg-gray-50 rounded-xl p-3 text-sm justify-start gap-4 items-center mb-2">
-        <button className="text-black font-semibold">General</button>
-      </div>
-
-      <div className="mb-6 bg-white rounded-xl p-2 pr-4 flex flex-col gap-3 justify-between">
+      <div className="mb-6 mt-3 bg-white rounded-xl p-2 pr-4 flex flex-col gap-3 justify-between">
         <div className="p-2 pr-2 rounded-xl flex gap-6 items-start justify-between">
           <div className="flex justify-start items-center gap-4">
             <Skeleton.Avatar

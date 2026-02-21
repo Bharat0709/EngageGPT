@@ -41,7 +41,6 @@ const TableFooter = ({ dataToUse }) => {
       autoFollowUp: dataToUse.filter((p) => p.autoFollowUp === true).length,
     },
 
-
     // Contact information
     contactInfo: {
       withEmail: dataToUse.filter(
@@ -116,7 +115,7 @@ const TableFooter = ({ dataToUse }) => {
   );
 
   return (
-    <div className="px-6 py-4 bg-white border-y border-b-gray-200">
+    <div className="px-6 py-4 bg-white rounded-b-2xl">
       <div className="space-y-3">
         {/* Row 1: Status and Priority */}
         <div className="flex items-center justify-between text-xs">

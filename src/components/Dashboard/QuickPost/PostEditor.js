@@ -194,15 +194,15 @@ const PostContentEditor = ({
   }
 
   return (
-    <div className="bg-white rounded-2xl transition-all duration-300 lg:p-4 p-4">
+    <div className="rounded-2xl transition-all duration-300 lg:p-2 p-4">
       {/* Header Section */}
-      <div className="flex items-center lg:flex-row flex-col justify-center gap-4 lg:justify-between mb-6">
+      <div className="flex items-center lg:flex-row flex-col justify-center gap-4 lg:justify-between mb-3">
         <div className="flex items-center gap-3">
-          <div className="p-2 bg-[#0c4a6e] rounded-lg text-white text-lg sm:text-xl">
+          {/* <div className="p-2 bg-[#0c4a6e] rounded-lg text-white text-lg sm:text-xl">
             <EditIcon />
-          </div>
+          </div> */}
           <div>
-            <h2 className="text-lg m-0 p-0 sm:text-xl text-gray-800">
+            <h2 className="lg:text-xl ovo-regular m-0 p-0 sm:text-xl text-gray-800">
               Quick Post on LinkedIn
             </h2>
           </div>
@@ -232,43 +232,6 @@ const PostContentEditor = ({
         </div>
       )}
 
-      {/* LinkedIn Formatting Toolbar */}
-      <div className="mb-2 p-2 px-4 bg-white rounded-xl border border-slate-200">
-        <div className="flex items-center justify-between">
-          <p className="text-xs font-medium text-slate-600 mb-2">
-            Special Elements
-          </p>
-          <div className="flex flex-wrap gap-1">
-            <button
-              onClick={() => insertLinkedInFormat('emoji-bullet', 'list item')}
-              className="flex items-center gap-1 p-2 hover:bg-white hover  rounded-lg transition-all duration-150 text-slate-600 hover:text-slate-800"
-              title="Emoji Bullet"
-            >
-              <span>✅</span>
-              <span className="text-xs font-medium">Check</span>
-            </button>
-            <button
-              onClick={() =>
-                insertLinkedInFormat('callout', 'important message')
-              }
-              className="flex items-center gap-1 p-2 hover:bg-white hover  rounded-lg transition-all duration-150 text-slate-600 hover:text-slate-800"
-              title="Callout"
-            >
-              <span>📢</span>
-              <span className="text-xs font-medium">Alert</span>
-            </button>
-            <button
-              onClick={() => insertLinkedInFormat('line')}
-              className="flex items-center gap-1 p-2 hover:bg-white hover  rounded-lg transition-all duration-150 text-slate-600 hover:text-slate-800"
-              title="Divider Line"
-            >
-              <span>───</span>
-              <span className="text-xs font-medium">Line</span>
-            </button>
-          </div>
-        </div>
-      </div>
-
       {/* Text Area */}
       <div className="relative">
         <textarea
@@ -277,18 +240,11 @@ const PostContentEditor = ({
           onChange={handlePostChange}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
-          placeholder="Start writing your LinkedIn post... 
-
-💡 Pro tip: Use the formatting tools above to make your post stand out!
-
-Try starting with:
-🎯 Here's something that might surprise you:
-❓ Quick question for my network:
-📖 Let me share a quick story:"
-          className={`w-full h-80 p-4 scrollbar-hide border-2 rounded-xl resize-none transition-all duration-200 bg-slate-50 focus:bg-white text-slate-700 placeholder-slate-400 text-sm leading-relaxed ${
+          placeholder="Start writing your LinkedIn post..."
+          className={`w-full h-80 p-4 bg-white  scrollbar-hide border-1 rounded-xl resize-none transition-all duration-200  text-slate-700 placeholder-slate-400 text-sm leading-relaxed ${
             isFocused
-              ? 'border-blue-500  ring-4 ring-blue-100'
-              : 'border-slate-200 hover:border-slate-300'
+              ? 'border-blue-500'
+              : 'border-slate-800 border hover:border-slate-300'
           }`}
           maxLength={3000}
         />
