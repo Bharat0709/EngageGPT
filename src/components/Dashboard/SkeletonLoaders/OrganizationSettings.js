@@ -3,8 +3,8 @@ import { Skeleton } from 'antd';
 
 const OrganizationProfileSkeleton = () => {
   return (
-    <div className="w-full h-full rounded-xl scrollbar-hide overflow-auto overflow-y-scroll mx-auto lg:p-4 p-4 bg-[#ededed] shadow-md">
-      <h2 className="text-2xl ovo-regular p-0 mt-0 text-semibold mb-2">
+    <div className="w-full h-full rounded-xl scrollbar-hide overflow-auto overflow-y-scroll mx-auto lg:p-4 p-4 bg-[#fafafa] shadow-md">
+      <h2 className="text-xl ovo-regular p-0 mt-0 text-semibold mb-2">
         Organization Settings
       </h2>
 

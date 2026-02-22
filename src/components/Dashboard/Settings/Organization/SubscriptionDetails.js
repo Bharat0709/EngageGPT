@@ -108,7 +108,7 @@ export const SubscriptionCard = ({ userData }) => {
               {userData?.credits?.balance || 0}
             </p>
             <div className="flex flex-col gap-1">
-              <p className="text-white/80 flex  justify-between gap-6 items-end m-0 p-0 text-sm font-medium tracking-wide m-0 uppercase">
+              <p className="text-white/80 flex  justify-between gap-6 items-end m-0 p-0 text-xs font-medium tracking-wide m-0 uppercase">
                 Available Credits{' '}
                 {userData?.credits?.expiresAt && (
                   <p className="text-white/70 text-xs p-0 mb-[0.5] m-0">
@@ -135,7 +135,7 @@ export const SubscriptionCard = ({ userData }) => {
           <p className="text-4xl instrument font-medium mb-2">
             {userData?.credits?.totalUsed || 0}
           </p>
-          <p className="text-white/70 text-sm tracking-wide m-0 uppercase">
+          <p className="text-white/70 text-xs tracking-wide m-0 uppercase">
             Lifetime Usage
           </p>
         </div>
@@ -153,7 +153,7 @@ export const SubscriptionCard = ({ userData }) => {
           <p className="text-4xl instrument font-medium mb-2">
             {transactions.length}
           </p>
-          <p className="text-white/70 text-sm tracking-wide m-0 uppercase">
+          <p className="text-white/70 text-xs tracking-wide m-0 uppercase">
             Total Events Logged
           </p>
         </div>
@@ -162,7 +162,7 @@ export const SubscriptionCard = ({ userData }) => {
       {/* History Sections */}
       <div className="bg-white rounded-3xl overflow-hidden">
         {/* Tab Navigation */}
-        <div className="px-6 pt-6 border-b border-gray-50">
+        <div className="px-6 pt-6 border-b border-gray-100">
           <div className="flex gap-8">
             <button
               onClick={() => setActiveTab('transactions')}
@@ -214,7 +214,7 @@ export const SubscriptionCard = ({ userData }) => {
                   {displayedTransactions.map((transaction, index) => (
                     <div
                       key={transaction.id || transaction._id || index}
-                      className="group flex flex-col sm:flex-row sm:items-center justify-between px-6 py-5 hover:bg-gray-50/50 transition-colors"
+                      className="group flex flex-col sm:flex-row sm:items-center justify-between border-b border-gray-100 px-6 py-5 hover:bg-gray-50 transition-colors"
                     >
                       <div className="flex items-center gap-4 flex-1">
                         <div
@@ -311,40 +311,67 @@ export const SubscriptionCard = ({ userData }) => {
                 payments.map((payment, index) => (
                   <div
                     key={payment.id || payment._id || index}
-                    className="group flex flex-col sm:flex-row sm:items-center justify-between px-6 py-5 hover:bg-gray-50/50 transition-colors"
+                    className="group flex flex-col sm:flex-row sm:items-center justify-between border-b border-gray-100  px-6 py-6 hover:bg-gray-50 transition-colors"
                   >
-                    <div className="flex items-center gap-4 flex-1">
-                      <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-100/50 flex items-center justify-center text-emerald-600">
-                        <Icons.CreditCard size={16} />
+                    <div className="flex items-start gap-4 flex-1">
+                      <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-100/50 flex items-center justify-center text-emerald-600 mt-1">
+                        <Icons.CreditCard size={20} />
                       </div>
-                      <div className="min-w-0">
-                        <p className="text-sm font-medium text-gray-900 m-0">
-                          {payment.creditsAdded.toLocaleString()} Credits Added
-                        </p>
-                        <p className="text-[11px] text-gray-400 font-medium tracking-tight m-0 mt-1 uppercase">
-                          {formatDate(payment.createdAt)} •{' '}
-                          {payment.paymentMethod || 'Stripe'}
-                        </p>
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center gap-2 mb-1">
+                          <p className="text-sm font-semibold text-gray-900 m-0">
+                            {payment.creditsAdded.toLocaleString()} Credits
+                          </p>
+                          <span
+                            className={`inline-block text-[9px] font-bold tracking-widest uppercase px-2 py-0.5 rounded border ${
+                              payment.status === 'succeeded'
+                                ? 'bg-emerald-50 border-emerald-100 text-emerald-600'
+                                : 'bg-gray-50 border-gray-100 text-gray-400'
+                            }`}
+                          >
+                            {payment.status}
+                          </span>
+                        </div>
+                        <div className="mt-2 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-1">
+                          <div className="flex items-center gap-2">
+                            <span className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">
+                              Payment ID
+                            </span>
+                            <span className="text-[11px] text-gray-600 geist-mono truncate">
+                              {payment.paymentId || 'N/A'}
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">
+                              Date
+                            </span>
+                            <span className="text-[11px] text-gray-500 font-medium whitespace-nowrap">
+                              {formatDate(payment.createdAt)}
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">
+                              Method
+                            </span>
+                            <span className="text-[11px] text-gray-500 font-medium uppercase">
+                              {payment.paymentMethod || 'UPI'}
+                            </span>
+                          </div>
+                        </div>
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-8 mt-4 sm:mt-0">
+                    <div className="flex items-center gap-8 mt-4 sm:mt-0 sm:ml-6 pl-14 sm:pl-0">
                       <div className="text-right">
-                        <p className="text-sm text-gray-900 geist-mono font-medium m-0">
+                        <p className="text-base text-gray-900 geist-mono font-bold m-0 italic">
                           ₹
                           {(payment.amount / 100).toLocaleString(undefined, {
                             minimumFractionDigits: 2,
                           })}
                         </p>
-                        <span
-                          className={`inline-block text-[9px] font-bold tracking-widest uppercase mt-1 px-2 py-0.5 rounded border ${
-                            payment.status === 'succeeded'
-                              ? 'bg-emerald-50 border-emerald-100 text-emerald-600'
-                              : 'bg-gray-50 border-gray-100 text-gray-400'
-                          }`}
-                        >
-                          {payment.status}
-                        </span>
+                        <p className="text-[10px] text-gray-400 font-medium m-0 tracking-wide uppercase">
+                          Amount Paid
+                        </p>
                       </div>
                     </div>
                   </div>

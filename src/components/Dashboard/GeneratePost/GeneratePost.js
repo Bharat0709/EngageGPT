@@ -506,7 +506,7 @@ const LinkedInPostGenerator = () => {
                       }
                     }}
                     placeholder="What would you like to write about? Be specific about your topic, audience, and style..."
-                    className="w-full resize-none rounded-2xl border border-gray-200 px-4 py-3 pr-12 text-sm focus:outline-none focus:ring-2 focus:ring-[#0c4a6e] focus:border-transparent placeholder-gray-400 bg-gray-50 transition-all"
+                    className="w-full bg-white resize-none rounded-2xl border border-gray-800 px-4 py-3 pr-12 text-sm focus:outline-none focus:ring-2 focus:ring-[#0c4a6e] focus:border-transparent placeholder-gray-400 bg-gray-50 transition-all"
                     rows="2"
                     disabled={loading}
                     style={{ maxHeight: '150px' }}
@@ -543,9 +543,9 @@ const LinkedInPostGenerator = () => {
               showPreview ? 'flex' : 'hidden lg:flex'
             }`}
           >
-            <div className="p-4 border-b bg-white flex-shrink-0">
+            <div className="p-4 border-b flex-shrink-0">
               <div className="flex items-center justify-between">
-                <h3 className="font-semibold text-gray-800">Post Preview</h3>
+                <h3 className="font-semibold m-0 p-0 text-gray-800">Post Preview</h3>
                 {generatedPost && (
                   <div className="flex space-x-2">
                     <button

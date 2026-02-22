@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getAllMembers, addNewMember } from '@services/Members';
+import { fetchOrganizationData } from '@services/Organization';
 import { Icons } from '@utils/constantData/icons';
 import { useNotifications } from '@components/Common/Notification';
 import McpInfoModal from './McpInfoModal';
@@ -16,12 +17,32 @@ const EngageGPTMCP = () => {
   const [selectedProfile, setSelectedProfile] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
+  const [mcpTransactions, setMcpTransactions] = useState([]);
+  const [userData, setUserData] = useState(null);
 
   useEffect(() => {
-    const fetchProfiles = async () => {
+    const fetchData = async () => {
       try {
-        const members = await getAllMembers();
+        const [members, orgData] = await Promise.all([
+          getAllMembers(),
+          fetchOrganizationData(),
+        ]);
+
         setProfiles(members);
+        setUserData(orgData);
+
+        // Filter MCP related transactions
+        const transactions = orgData?.credits?.transactions || [];
+        const mcpOps = transactions
+          .filter(
+            (t) =>
+              t.description?.toLowerCase().includes('mcp') ||
+              t.metadata?.tool?.includes('mcp'),
+          )
+          .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+        setMcpTransactions(mcpOps);
+
         const connected = members.find((m) => m.isConnected === 'connected');
         const defaultProfile = connected || members[0] || null;
         setSelectedProfile(defaultProfile);
@@ -31,12 +52,12 @@ const EngageGPTMCP = () => {
           navigate('/dashboard');
         }
       } catch (error) {
-        message.error('Failed to load profile data');
+        message.error('Failed to load data');
       } finally {
         setLoading(false);
       }
     };
-    fetchProfiles();
+    fetchData();
   }, [navigate]);
 
   const handleProfileChange = (profile) => {
@@ -62,6 +83,15 @@ const EngageGPTMCP = () => {
     message.success(`${type} copied to clipboard!`);
   };
 
+  const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-full">
@@ -78,11 +108,10 @@ const EngageGPTMCP = () => {
         <div className="flex justify-between w-full items-center gap-6">
           <div className="flex flex-col">
             <h1 className="lg:text-xl ovo-regular font-bold text-gray-900 flex items-center gap-2">
-              {/* <Icons.Code className="text-blue-600" /> */}
               EngageGPT MCP Server
             </h1>
           </div>
-          {profiles.length != 0 && (
+          {profiles.length !== 0 && (
             <div className="mr-4 flex items-center gap-4">
               <MembersProfileDropDown
                 profiles={profiles}
@@ -113,7 +142,7 @@ const EngageGPTMCP = () => {
       <div className="grid lg:grid-cols-2 mt-6 gap-8">
         <div className="space-y-6">
           <div className="space-y-4">
-            <h2 className="text-lg geist  font-semibold text-gray-800 flex items-center gap-2">
+            <h2 className="text-lg geist font-semibold text-gray-800 flex items-center gap-2">
               <Icons.Settings size={20} className="text-gray-400" />
               1. Claude Desktop Config
             </h2>
@@ -173,49 +202,97 @@ const EngageGPTMCP = () => {
           </button>
         </div>
 
-        <div className="space-y-4 h-fit">
-          <h2 className="text-lg geist font-semibold text-gray-800 flex items-center gap-2">
-            <Icons.Sparkles size={20} className="text-amber-500" />
-            3. Sample Prompt
-          </h2>
-          <div className="bg-blue-50/50 border border-blue-100 p-6 rounded-2xl space-y-4">
-            <div className="bg-white p-4 rounded-xl shadow-sm border border-blue-50 relative group">
-              <button
-                onClick={() =>
-                  copyToClipboard(
-                    'Using my写作风格 (writing persona) from EngageGPT, draft a new LinkedIn post about the impact of AI on specialized software engineering careers.',
-                  )
-                }
-                className="absolute right-3 top-3 p-1.5 text-gray-400 hover:text-blue-600 transition-colors"
-              >
-                <Icons.Copy size={16} />
-              </button>
-              <p className="text-gray-700 text-sm italic pr-8">
-                "Using my writing persona from EngageGPT, draft a new LinkedIn
-                post about the impact of AI on specialized software engineering
-                careers."
-              </p>
+        <div className="space-y-6">
+          <div className="space-y-4">
+            <h2 className="text-lg geist font-semibold text-gray-800 flex items-center gap-2">
+              <Icons.Sparkles size={20} className="text-amber-500" />
+              3. Sample Prompt
+            </h2>
+            <div className="bg-blue-50/50 border border-blue-100 p-6 rounded-2xl space-y-4">
+              <div className="bg-white p-4 rounded-xl shadow-sm border border-blue-50 relative group">
+                <button
+                  onClick={() =>
+                    copyToClipboard(
+                      'Using my (writing persona) from EngageGPT, draft a new LinkedIn post about the impact of AI on specialized software engineering careers.',
+                      'Prompt',
+                    )
+                  }
+                  className="absolute right-3 top-3 p-1.5 text-gray-400 hover:text-blue-600 transition-colors"
+                >
+                  <Icons.Copy size={16} />
+                </button>
+                <p className="text-gray-700 text-sm italic pr-8 m-0 p-0">
+                  "Using my writing persona from EngageGPT, draft a new LinkedIn
+                  post about the impact of AI on specialized software
+                  engineering careers."
+                </p>
+              </div>
             </div>
-            <div className="space-y-2">
-              <p className="text-xs font-semibold text-blue-800 uppercase tracking-wider">
-                What happens next?
-              </p>
-              <ul className="text-sm text-blue-700 space-y-2 list-none p-0">
-                <li className="flex gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-blue-300 mt-1.5 shrink-0" />
-                  Claude fetches your top 25 high-engagement posts via our MCP
-                  server.
-                </li>
-                <li className="flex gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-blue-300 mt-1.5 shrink-0" />
-                  It analyzes your hooks, paragraph spacing, emoji usage, and
-                  unique voice.
-                </li>
-                <li className="flex gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-blue-300 mt-1.5 shrink-0" />
-                  Generates fresh content that feels authentically yours.
-                </li>
-              </ul>
+          </div>
+
+          {/* New Transaction Section */}
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <h2 className="text-lg geist font-semibold text-gray-800 flex items-center gap-2">
+                <Icons.Clock size={20} className="text-gray-400" />
+                Recent MCP Activity
+              </h2>
+              <span className="text-[10px] bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">
+                {mcpTransactions.length} Total Hits
+              </span>
+            </div>
+
+            <div className="bg-white border border-gray-100 rounded-3xl overflow-hidden shadow-sm">
+              <div className="divide-y divide-gray-50 max-h-[300px] overflow-y-auto scrollbar-hide">
+                {mcpTransactions.length === 0 ? (
+                  <div className="p-12 text-center text-gray-400">
+                    <Icons.Activity
+                      size={32}
+                      className="mx-auto mb-3 opacity-20"
+                    />
+                    <p className="text-sm m-0 p-0">
+                      No recent activity detected
+                    </p>
+                    <p className="text-[10px] mt-1">
+                      Start using the tools in Claude to see logs
+                    </p>
+                  </div>
+                ) : (
+                  mcpTransactions.map((transaction, index) => (
+                    <div
+                      key={transaction.id || transaction._id || index}
+                      className="px-6 py-4 hover:bg-gray-50 transition-colors"
+                    >
+                      <div className="flex items-center justify-between gap-4">
+                        <div className="min-w-0 flex-1">
+                          <p className="text-sm geist font-medium text-gray-800 m-0 truncate">
+                            {transaction.description.replace(
+                              'using EngageGPT MCP',
+                              '',
+                            )}
+                          </p>
+                          <div className="flex items-center gap-2 mt-1">
+                            <span className="text-[10px] text-gray-400 font-bold uppercase tracking-tight">
+                              {formatDate(transaction.createdAt)}
+                            </span>
+                            <span className="w-1 h-1 rounded-full bg-gray-200" />
+                            <span className="text-[10px] text-blue-500 font-bold uppercase tracking-tight">
+                              EngageGPT MCP
+                            </span>
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <span className="text-xs font-bold text-gray-400 geist-mono uppercase tracking-wide">
+                            {transaction.amount === 0
+                              ? 'FREE'
+                              : `-${transaction.amount}`}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
             </div>
           </div>
         </div>

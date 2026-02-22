@@ -1,46 +1,56 @@
 // utils/navigationRoutes.js
 import React from 'react';
-import { 
-  MdDashboard, 
-  MdBolt, 
-  MdAutoAwesome, 
-  MdHistory, 
-  MdBookmark, 
-  MdRepeat, 
-  MdEmail, 
-  MdSettings, 
-  MdPerson, 
-  MdCalendarToday, 
+import {
+  MdDashboard,
+  MdBolt,
+  MdAutoAwesome,
+  MdHistory,
+  MdBookmark,
+  MdRepeat,
+  MdEmail,
+  MdSettings,
+  MdPerson,
+  MdCalendarToday,
   MdNotifications,
   MdHelp,
   MdFeedback,
   MdLogout,
   MdLock,
-  MdInfo
+  MdInfo,
 } from 'react-icons/md';
 import { Icons } from './constantData/icons';
 import { isAction } from 'redux';
 
 export const navigationRoutes = [
-  // ===== MAIN DASHBOARD =====
+  // ===== ENGAGEGPT MCP =====
   {
-    title : "Add More Credits",
-    description : "Add more credits to your account",
-    icon : <Icons.Credits size={20} className="text-gray-700" />,
-    keywords: ['upgarde' , 'top-up'],
-    category : "Main",
-    isAction : true,
-    path: "#upgrade",
+    title: 'EngageGPT MCP',
+    description: 'Connect your writing persona to Claude AI via MCP',
+    path: '/dashboard/mcp',
+    icon: <Icons.Code size={20} className="text-gray-700" />,
+    keywords: ['mcp', 'claude', 'persona', 'connect', 'server', 'engagegpt'],
+    category: 'Main',
   },
 
-    {
-    title : "Credits & Usage",
-    description : "Know how your credits are being spent by various features",
-    icon : <Icons.TrendingUp size={20} className="text-gray-700" />,
-    keywords: ['credits' , 'spent'],
-    category : "Main",
-    isAction : true,
-    path: "#usage",
+  // ===== MAIN DASHBOARD =====
+  {
+    title: 'Add More Credits',
+    description: 'Add more credits to your account',
+    icon: <Icons.Credits size={20} className="text-gray-700" />,
+    keywords: ['upgarde', 'top-up'],
+    category: 'Main',
+    isAction: true,
+    path: '#upgrade',
+  },
+
+  {
+    title: 'Credits & Usage',
+    description: 'Know how your credits are being spent by various features',
+    icon: <Icons.TrendingUp size={20} className="text-gray-700" />,
+    keywords: ['credits', 'spent'],
+    category: 'Main',
+    isAction: true,
+    path: '#usage',
   },
   {
     title: 'Dashboard',
@@ -48,7 +58,7 @@ export const navigationRoutes = [
     path: '/dashboard',
     icon: <MdDashboard size={20} className="text-gray-700" />,
     keywords: ['home', 'overview', 'main', 'start', 'dashboard'],
-    category: 'Main'
+    category: 'Main',
   },
 
   // ===== CONTENT CREATION =====
@@ -58,15 +68,22 @@ export const navigationRoutes = [
     path: '/dashboard/quick-post',
     icon: <MdBolt size={20} className="text-gray-700" />,
     keywords: ['create', 'new post', 'quick', 'schedule', 'post', 'publish'],
-    category: 'Content'
+    category: 'Content',
   },
   {
     title: 'AI Content Creator',
     description: 'Generate LinkedIn posts using AI',
     path: '/dashboard/create-post',
     icon: <MdAutoAwesome size={20} className="text-gray-700" />,
-    keywords: ['ai', 'generate', 'content', 'creator', 'linkedin', 'artificial intelligence'],
-    category: 'Content'
+    keywords: [
+      'ai',
+      'generate',
+      'content',
+      'creator',
+      'linkedin',
+      'artificial intelligence',
+    ],
+    category: 'Content',
   },
   {
     title: 'Post History',
@@ -74,7 +91,7 @@ export const navigationRoutes = [
     path: '/dashboard/post-history',
     icon: <MdHistory size={20} className="text-gray-700" />,
     keywords: ['history', 'previous', 'past posts', 'old', 'queue'],
-    category: 'Content'
+    category: 'Content',
   },
 
   // ===== LEADS MANAGEMENT =====
@@ -84,7 +101,7 @@ export const navigationRoutes = [
     path: '/dashboard/saved-leads',
     icon: <MdBookmark size={20} className="text-gray-700" />,
     keywords: ['saved', 'leads', 'hiring', 'posts', 'bookmarked', 'favorites'],
-    category: 'Leads'
+    category: 'Leads',
   },
 
   // ===== AUTOMATION =====
@@ -94,7 +111,7 @@ export const navigationRoutes = [
     path: '/dashboard/leads-automation',
     icon: <MdRepeat size={20} className="text-gray-700" />,
     keywords: ['automation', 'workflow', 'automatic', 'leads', 'rules'],
-    category: 'Automation'
+    category: 'Automation',
   },
   {
     title: 'Email Templates',
@@ -102,7 +119,7 @@ export const navigationRoutes = [
     path: '/dashboard/email-templates',
     icon: <MdEmail size={20} className="text-gray-700" />,
     keywords: ['email', 'templates', 'messages', 'drafts', 'outreach'],
-    category: 'Automation'
+    category: 'Automation',
   },
   // ===== SETTINGS & PROFILE =====
   {
@@ -110,8 +127,14 @@ export const navigationRoutes = [
     description: 'Configure your account settings',
     path: '/dashboard/settings',
     icon: <MdSettings size={20} className="text-gray-700" />,
-    keywords: ['settings', 'configuration', 'preferences', 'options', 'account'],
-    category: 'Settings'
+    keywords: [
+      'settings',
+      'configuration',
+      'preferences',
+      'options',
+      'account',
+    ],
+    category: 'Settings',
   },
   {
     title: 'Survey & Feedback',
@@ -119,7 +142,7 @@ export const navigationRoutes = [
     path: '/survey',
     icon: <MdFeedback size={20} className="text-gray-700" />,
     keywords: ['survey', 'feedback', 'uninstall', 'opinion'],
-    category: 'Support'
+    category: 'Support',
   },
   {
     title: 'Updates & Info',
@@ -127,7 +150,7 @@ export const navigationRoutes = [
     path: '/update-info',
     icon: <MdInfo size={20} className="text-gray-700" />,
     keywords: ['updates', 'info', 'information', 'news', 'changes'],
-    category: 'Support'
+    category: 'Support',
   },
 
   // ===== QUICK ACTIONS =====
@@ -138,7 +161,7 @@ export const navigationRoutes = [
     icon: <MdHelp size={20} className="text-gray-700" />,
     keywords: ['help', 'support', 'faq', 'contact', 'assistance'],
     category: 'Quick Actions',
-    isAction: true // Special flag for actions that don't navigate
+    isAction: true, // Special flag for actions that don't navigate
   },
   {
     title: 'Give Feedback',
@@ -147,7 +170,7 @@ export const navigationRoutes = [
     icon: <MdFeedback size={20} className="text-gray-700" />,
     keywords: ['feedback', 'suggestion', 'comment', 'review'],
     category: 'Quick Actions',
-    isAction: true
+    isAction: true,
   },
   {
     title: 'Logout',
@@ -156,6 +179,6 @@ export const navigationRoutes = [
     icon: <MdLogout size={20} className="text-gray-700" />,
     keywords: ['logout', 'sign out', 'exit', 'leave'],
     category: 'Quick Actions',
-    isAction: true
+    isAction: true,
   },
 ];

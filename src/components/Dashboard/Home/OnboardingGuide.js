@@ -53,7 +53,7 @@ const OnboardingGuide = ({
   };
 
   return (
-    <div className="container  px-4 lg:py-4 py-2 max-w-8xl animate-fade-in">
+    <div className="container  px-4 lg:py-4 py-2 animate-fade-in">
       {/* <UpdateBanner/> */}
       <div className="text-center mb-2 border border-gray-600">
         <img
@@ -245,7 +245,7 @@ const OnboardingGuide = ({
         <div className="bg-white border border-gray-600 p-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div>
-              <h3 className="font-semibold text-gray-800 text-lg">
+              <h3 className="font-semibold ovo-regular text-gray-800 text-lg">
                 Ready to boost your LinkedIn presence?
               </h3>
               <p className="text-gray-600">
