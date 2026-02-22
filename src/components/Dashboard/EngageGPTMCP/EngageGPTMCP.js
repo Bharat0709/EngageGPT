@@ -8,6 +8,7 @@ import McpInfoModal from './McpInfoModal';
 import MembersProfileDropDown from '../Global/MembersDropDown';
 import AddMembersModal from '../Global/AddPeopleModal';
 import ConnectionInfoModal from '../Home/ConnectionInfoModal';
+import EngageGPTMCPSkeleton from '../SkeletonLoaders/EngageGPTMCPSkeleton';
 
 const EngageGPTMCP = () => {
   const navigate = useNavigate();
@@ -93,11 +94,7 @@ const EngageGPTMCP = () => {
   };
 
   if (loading) {
-    return (
-      <div className="flex items-center justify-center h-full">
-        <Icons.Loader className="animate-spin text-blue-600" size={40} />
-      </div>
-    );
+    return <EngageGPTMCPSkeleton />;
   }
 
   const isSynced = selectedProfile?.lastSyncedAt;
