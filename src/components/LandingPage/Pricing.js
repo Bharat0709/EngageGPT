@@ -29,7 +29,7 @@ export const TextParallaxContentExample = () => {
         backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='2' height='40' fill='rgba(0,0,0,0.05)'/%3E%3Crect y='0' x='0' width='40' height='2' fill='rgba(0,0,0,0.05)'/%3E%3C/svg%3E")`,
         backgroundSize: '40px 40px',
       }}
-      className="bg-white"
+      className="bg-white pt-8"
     >
       <div className="text-center mb-16 lg:mx-0 mx-6 ">
         <h2 className="lg:text-3xl geist  lg:mt-1 mt-6 text-xl font-bold text-center mb-8 border-4 border-black shadow-[5px_5px_0px_black] py-2 px-6 max-w-md mx-auto bg-white">

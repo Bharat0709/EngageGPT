@@ -121,7 +121,7 @@ const HeroSection = () => {
             LinkedIn Growth Assistant
           </p>
         </div>
-        <p className="text-lg w-full text-center ml-8 ovo-regular  lg:text-2xl text-gray-600 mt-6 max-w-5xl mb-6">
+        <p className="text-lg w-full text-center lg:ml-8 ovo-regular  lg:text-2xl text-gray-600 mt-6 max-w-5xl mb-6">
           Engage - Analyze - Automate
         </p>
         <div className="flex flex-col w-full gap-3 items-center justify-center">
