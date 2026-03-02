@@ -4,13 +4,18 @@ import {
   statusConfig,
 } from '@utils/constantData/leadsFunctions/tabsFuncitons';
 
-const TableFooter = ({ dataToUse }) => {
+const TableFooter = ({ dataToUse, globalFilters }) => {
   // Calculate all statistics
   const stats = {
     // Status counts
     statusCounts: Object.entries(statusConfig).reduce(
       (acc, [status, config]) => {
-        const count = dataToUse.filter((p) => p.leadStatus === status).length;
+        let count = 0;
+        if (globalFilters?.statusCounts) {
+          count = globalFilters.statusCounts[status] || 0;
+        } else {
+          count = dataToUse.filter((p) => p.leadStatus === status).length;
+        }
         if (count > 0) acc[status] = { count, config };
         return acc;
       },

@@ -1,5 +1,4 @@
 const mapExistingMemberDataToForm = (memberData) => {
-
   const mappedFormData = {
     // Step 1: Lead Saving Settings
     leadSavingSettings: {
@@ -59,7 +58,7 @@ const mapExistingMemberDataToForm = (memberData) => {
     },
 
     // Step 4: Custom Requirements
-    customRequirements: memberData || '',
+    customRequirements: memberData.customRequirements || '',
 
     // Step 5: Automation Settings
     automationSettings: {
@@ -139,7 +138,6 @@ const loadExistingData = async () => {
       );
       setStepCompletion(completion);
     } else {
-
       // Load existing member data from API
       const existingMemberData = await getMemberDetails(memberId);
       if (existingMemberData) {
@@ -169,7 +167,7 @@ const loadExistingData = async () => {
           `leadGeneration_${memberId}`,
           JSON.stringify(dataToSave),
         );
-      } 
+      }
     }
   } catch (error) {
     message.error('Failed to load existing data');

@@ -10,7 +10,7 @@ const FeatureCard = ({ feature, index }) => {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
       viewport={{ once: true }}
-      className="group relative border-b border-r border-gray-100 p-8 flex flex-col min-h-[300px] hover:bg-neutral-50/50 transition-colors"
+      className="group relative  border border-gray-100 p-8 flex flex-col min-h-[300px] hover:bg-neutral-50/50 transition-colors"
     >
       {/* Corner Accents */}
       <div className="absolute top-0 left-0 w-8 h-8 border-t border-l border-gray-600 opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -30,7 +30,7 @@ const FeatureCard = ({ feature, index }) => {
         )}
       </div>
 
-      <h3 className="text-xl font-bold ovo-regular mb-3 text-neutral-900 geist">
+      <h3 className="text-2xl font-bold ovo-regular mb-3 text-neutral-900 geist">
         {feature.title}
       </h3>
       <p className="text-sm text-neutral-500 leading-relaxed geist mb-8 flex-grow">

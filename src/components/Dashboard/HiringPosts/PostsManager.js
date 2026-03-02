@@ -15,7 +15,12 @@ import SavedPostsSkeleton from '../SkeletonLoaders/SavedPostsSkeletonLoading';
 import LeadsTable from './LeadsTable/LeadsTable';
 import { useNotifications } from '@components/Common/Notification';
 
-const HiringPostsDashboard = ({ memberId, activeTab, setActiveTab , setCurrentLead }) => {
+const HiringPostsDashboard = ({
+  memberId,
+  activeTab,
+  setActiveTab,
+  setCurrentLead,
+}) => {
   const [refresh, setRefresh] = useState(false);
   const [allSavedPosts, setAllSavedPosts] = useState({});
   const [isLoading, setIsLoading] = useState(true);
@@ -27,22 +32,76 @@ const HiringPostsDashboard = ({ memberId, activeTab, setActiveTab , setCurrentLe
   const [isEditing, setIsEditing] = useState(false);
   const message = useNotifications();
 
+  // Pagination and Filter State
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalResults, setTotalResults] = useState(0);
+  const [globalFilters, setGlobalFilters] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
+  const [filterStatus, setFilterStatus] = useState('all');
+  const [filterPriority, setFilterPriority] = useState('all');
+  const [sortField, setSortField] = useState('createdAt');
+  const [sortDirection, setSortDirection] = useState('desc');
+
+  // Debouncing Search Term
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm);
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [searchTerm]);
+
+  useEffect(() => {
+    if (memberId !== undefined && memberId !== null) {
+      setCurrentPage(1); // Reset to page 1 on search or filter change
+    }
+  }, [
+    debouncedSearchTerm,
+    filterStatus,
+    filterPriority,
+    sortField,
+    sortDirection,
+  ]);
+
   useEffect(() => {
     if (memberId !== undefined && memberId !== null) {
       fetchSavedPosts();
     }
-  }, [memberId, refresh]);
+  }, [
+    memberId,
+    refresh,
+    currentPage,
+    debouncedSearchTerm,
+    filterStatus,
+    filterPriority,
+    sortField,
+    sortDirection,
+  ]);
 
   const fetchSavedPosts = async () => {
     try {
       setIsLoading(true);
-      const params = {};
+      const params = {
+        page: currentPage,
+        limit: 30,
+        search: debouncedSearchTerm,
+        status: filterStatus !== 'all' ? filterStatus : undefined,
+        priority: filterPriority !== 'all' ? filterPriority : undefined,
+        sortBy: sortField,
+        order: sortDirection,
+      };
+
       if (memberId) {
         params.memberId = memberId;
       }
 
       const data = await getSavedPosts(params);
-      setAllSavedPosts(data.data);
+      setAllSavedPosts(data.data || []);
+      setTotalPages(data.totalPages || 1);
+      setTotalResults(data.totalResults || 0);
+      setGlobalFilters(data.filters || null);
       setIsLoading(false);
     } catch (error) {
       message.error('Failed to load posts');
@@ -178,7 +237,7 @@ const HiringPostsDashboard = ({ memberId, activeTab, setActiveTab , setCurrentLe
         <div className="flex w-full flex-col gap-4">
           <LeadsTable
             posts={allSavedPosts}
-            setCurrentLead = {setCurrentLead}
+            setCurrentLead={setCurrentLead}
             onBulkDelete={(leadIds) => onConfirmBulkDelete(leadIds)}
             onBulkUpdateStatus={(leadIds, status) =>
               onConfirmBulkStatusUpdate(leadIds, status)
@@ -198,6 +257,24 @@ const HiringPostsDashboard = ({ memberId, activeTab, setActiveTab , setCurrentLe
             onCardClick={onCardClick}
             formatDate={formatDate}
             memberId={memberId}
+            // Pagination and Filter Props
+            currentPage={currentPage}
+            totalPages={totalPages}
+            totalResults={totalResults}
+            onPageChange={setCurrentPage}
+            searchTerm={searchTerm}
+            onSearchChange={setSearchTerm}
+            filterStatus={filterStatus}
+            onStatusChange={setFilterStatus}
+            filterPriority={filterPriority}
+            onPriorityChange={setFilterPriority}
+            sortField={sortField}
+            sortDirection={sortDirection}
+            onSort={(field, direction) => {
+              setSortField(field);
+              setSortDirection(direction);
+            }}
+            globalFilters={globalFilters}
           />
         </div>
       )}

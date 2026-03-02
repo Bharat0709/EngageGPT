@@ -112,72 +112,68 @@ const LeadGenerationSetup = ({ memberId, onComplete }) => {
     try {
       setIsLoading(true);
 
-      // First, check localStorage for saved data
+      // 1. Fetch from API first to get latest truth
+      const existingMemberData = await getMemberDetails(memberId);
+      let apiMappedData = null;
+      let apiStepCompletion = null;
+
+      if (existingMemberData && hasExistingSetup(existingMemberData)) {
+        apiMappedData = mapExistingMemberDataToForm(existingMemberData);
+        apiStepCompletion = calculateStepCompletion(apiMappedData);
+        setIsFirstTimeSetup(false);
+      }
+
+      // 2. Check localStorage for any unsaved drafts
       const savedData = localStorage.getItem(`leadGeneration_${memberId}`);
       if (savedData) {
         const parsedData = JSON.parse(savedData);
-
-        // Handle both old and new localStorage structures
         const savedFormData = parsedData.formData || parsedData;
-        const savedStepCompletion = parsedData.stepCompletion;
-        const savedCurrentStep = parsedData.currentStep;
 
-        setFormData((prev) => ({ ...prev, ...savedFormData }));
+        // Merge strategy: If API has keywords but local doesn't, use API keywords
+        const apiKeywords = apiMappedData?.leadSavingSettings?.keywords || [];
+        const localKeywords = savedFormData.leadSavingSettings?.keywords || [];
 
-        if (savedStepCompletion) {
-          setStepCompletion(savedStepCompletion);
-        } else {
-          // Calculate step completion if not saved
-          const completion = calculateStepCompletion(savedFormData);
-          setStepCompletion(completion);
-        }
+        const finalKeywords =
+          apiKeywords.length > 0 && localKeywords.length === 0
+            ? apiKeywords
+            : localKeywords;
 
-        if (savedCurrentStep) {
-          setCurrentStep(savedCurrentStep);
-        }
+        const finalFormData = {
+          ...savedFormData,
+          leadSavingSettings: {
+            ...savedFormData.leadSavingSettings,
+            keywords: finalKeywords,
+          },
+        };
 
+        setFormData(finalFormData);
+        setStepCompletion(
+          parsedData.stepCompletion || calculateStepCompletion(finalFormData),
+        );
+        if (parsedData.currentStep) setCurrentStep(parsedData.currentStep);
         setIsFirstTimeSetup(false);
+      } else if (apiMappedData) {
+        // 3. If no localStorage, just use API data
+        setFormData(apiMappedData);
+        setStepCompletion(apiStepCompletion);
+
+        // Save to localStorage so it's consistent
+        const dataToSave = {
+          formData: apiMappedData,
+          stepCompletion: apiStepCompletion,
+          currentStep: 1,
+          lastLoaded: new Date().toISOString(),
+          source: 'api-initial',
+        };
+        localStorage.setItem(
+          `leadGeneration_${memberId}`,
+          JSON.stringify(dataToSave),
+        );
       } else {
-        // Load existing member data from API
-        const existingMemberData = await getMemberDetails(memberId);
-
-        if (existingMemberData && hasExistingSetup(existingMemberData)) {
-          // Map API data to form structure
-          const mappedData = mapExistingMemberDataToForm(existingMemberData);
-
-          // Update form data
-          setFormData((prev) => ({
-            ...prev,
-            ...mappedData,
-          }));
-
-          // Calculate and update step completion
-          const completion = calculateStepCompletion(mappedData);
-          setStepCompletion(completion);
-
-          // Save mapped data to localStorage for future use
-          const dataToSave = {
-            formData: mappedData,
-            stepCompletion: completion,
-            currentStep: 1,
-            lastLoaded: new Date().toISOString(),
-            source: 'api',
-          };
-
-          localStorage.setItem(
-            `leadGeneration_${memberId}`,
-            JSON.stringify(dataToSave),
-          );
-
-          setIsFirstTimeSetup(false);
-          message.info(
-            'Existing setup data loaded. You can edit and update your preferences.',
-          );
-        } else {
-          setIsFirstTimeSetup(true);
-        }
+        setIsFirstTimeSetup(true);
       }
     } catch (error) {
+      console.error('Error loading data:', error);
       message.error('Failed to load existing data');
     } finally {
       setIsLoading(false);

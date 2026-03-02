@@ -26,17 +26,27 @@ const LeadsTable = ({
   columns = COLUMN_CONFIG,
   setActiveTab,
   showActions = true,
+  // New Pagination/Filter Props
+  currentPage,
+  totalPages,
+  totalResults,
+  onPageChange,
+  searchTerm,
+  onSearchChange,
+  filterStatus,
+  onStatusChange,
+  filterPriority,
+  onPriorityChange,
+  sortField,
+  sortDirection,
+  onSort,
+  globalFilters,
 }) => {
-  const [sortField, setSortField] = useState('createdAt');
-  const [sortDirection, setSortDirection] = useState('desc');
   const [showLeadModal, setShowLeadModal] = useState(false);
-  const [filterStatus, setFilterStatus] = useState('all');
-  const [filterPriority, setFilterPriority] = useState('all');
-  const [searchTerm, setSearchTerm] = useState('');
   const [selectedLeads, setSelectedLeads] = useState(new Set());
   const [isMailModalOpen, setSendMailModalOpen] = useState(false);
   const [selectedLead, setSelectedLead] = useState(null);
-  const dataToUse = posts.length > 0 ? posts : [];
+  const dataToUse = posts || [];
 
   const [bulkModal, setBulkModal] = useState({
     isOpen: false,
@@ -44,50 +54,13 @@ const LeadsTable = ({
     data: null,
   });
 
-  const filteredAndSortedPosts = useMemo(() => {
-    let filtered = dataToUse.filter((post) => {
-      const matchesSearch =
-        post.author?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        post.content?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        post.industry?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        post.category?.toLowerCase().includes(searchTerm.toLowerCase());
-
-      const matchesStatus =
-        filterStatus === 'all' || post.leadStatus === filterStatus;
-      const matchesPriority =
-        filterPriority === 'all' || post.leadPriority === filterPriority;
-
-      return matchesSearch && matchesStatus && matchesPriority;
-    });
-
-    return filtered.sort((a, b) => {
-      let aValue = a[sortField];
-      let bValue = b[sortField];
-
-      if (sortField === 'createdAt' || sortField === 'updatedAt') {
-        aValue = new Date(aValue);
-        bValue = new Date(bValue);
-      }
-
-      if (aValue < bValue) return sortDirection === 'asc' ? -1 : 1;
-      if (aValue > bValue) return sortDirection === 'asc' ? 1 : -1;
-      return 0;
-    });
-  }, [
-    dataToUse,
-    sortField,
-    sortDirection,
-    filterStatus,
-    filterPriority,
-    searchTerm,
-  ]);
+  const filteredAndSortedPosts = dataToUse;
 
   const handleSort = (field) => {
     if (sortField === field) {
-      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+      onSort(field, sortDirection === 'asc' ? 'desc' : 'asc');
     } else {
-      setSortField(field);
-      setSortDirection('desc');
+      onSort(field, 'desc');
     }
   };
 
@@ -211,8 +184,11 @@ const LeadsTable = ({
       <div className=" rounded-2xl bg-white p-0">
         <TableHeader
           searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
-          filteredAndSortedPosts={filteredAndSortedPosts}
+          setSearchTerm={onSearchChange}
+          postsLength={totalResults}
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={onPageChange}
         />
         <div className="text-center mt-4">
           <img src={LeadsIcon} alt="leads" className="mx-auto  mb-4 lg:w-1/2" />
@@ -225,8 +201,11 @@ const LeadsTable = ({
     <div className="bg-white rounded-xl">
       <TableHeader
         searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
-        postsLength={filteredAndSortedPosts.length}
+        setSearchTerm={onSearchChange}
+        postsLength={totalResults}
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={onPageChange}
       />
 
       {isMailModalOpen && (
@@ -363,7 +342,10 @@ const LeadsTable = ({
           </tbody>
         </table>
       </div>
-      <TableFooter dataToUse={filteredAndSortedPosts} />
+      <TableFooter
+        dataToUse={filteredAndSortedPosts}
+        globalFilters={globalFilters}
+      />
     </div>
   );
 };

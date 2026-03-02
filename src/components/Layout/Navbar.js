@@ -55,7 +55,7 @@ const SlideTabs = () => {
             opacity: 0,
           }));
         }}
-        className="relative mx-auto lg:flex rounded-full hidden px-2 w-fit  border border-[#004182] lg:bg-white p-0"
+        className="relative mx-auto lg:flex rounded-full hidden px-2 w-fit  border border-[#004182] bg-white p-0"
       >
         <Tab setPosition={setPosition} section="features">
           Features
@@ -128,7 +128,7 @@ const Tab = ({ children, setPosition, section }) => {
         });
       }}
       onClick={handleClick}
-      className="nav-item lg:flex hidden relative z-10 cursor-pointer px-3 py-1.5 text-sm text-white mix-blend-difference md:px-5 md:py-3 md:text-base"
+      className="nav-item lg:flex text-white hidden relative z-10 hover:text-white cursor-pointer px-3 py-1.5 text-sm  mix-blend-difference md:px-5 md:py-3 md:text-base"
     >
       {children}
     </li>

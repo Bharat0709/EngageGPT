@@ -6,9 +6,9 @@ import StepHeader from './FormHeader';
 
 const LeadSavingSettings = ({ onNext, initialData = {} }) => {
   const [formData, setFormData] = useState({
-    enabled: initialData.enabled || true,
-    enableCustomKeywords: initialData.enableCustomKeywords || false,
-    keywords: initialData.keywords || ['hiring', 'apply now', 'job opening'],
+    enabled: initialData.enabled ?? true,
+    enableCustomKeywords: initialData.enableCustomKeywords ?? true,
+    keywords: initialData.keywords ?? ['hiring', 'apply now', 'job opening'],
     excludeKeywords: initialData.excludeKeywords || [],
     saveAllPosts: initialData.saveAllPosts || false,
     minCharCount: initialData.minCharCount || 50,

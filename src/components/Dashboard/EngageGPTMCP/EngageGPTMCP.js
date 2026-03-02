@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getAllMembers, addNewMember } from '@services/Members';
+import {
+  getAllMembers,
+  addNewMember,
+  updateMemberSettings,
+} from '@services/Members';
 import { fetchOrganizationData } from '@services/Organization';
 import { Icons } from '@utils/constantData/icons';
 import { useNotifications } from '@components/Common/Notification';
@@ -16,6 +20,7 @@ const EngageGPTMCP = () => {
   const [loading, setLoading] = useState(true);
   const [profiles, setProfiles] = useState([]);
   const [selectedProfile, setSelectedProfile] = useState(null);
+  const [allowReferencing, setAllowReferencing] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
   const [mcpTransactions, setMcpTransactions] = useState([]);
@@ -47,6 +52,7 @@ const EngageGPTMCP = () => {
         const connected = members.find((m) => m.isConnected === 'connected');
         const defaultProfile = connected || members[0] || null;
         setSelectedProfile(defaultProfile);
+        setAllowReferencing(defaultProfile?.allowReferencing || false);
 
         if (defaultProfile && !defaultProfile.lastSyncedAt) {
           message.error('Please sync your profile to use the MCP server');
@@ -68,6 +74,34 @@ const EngageGPTMCP = () => {
       return;
     }
     setSelectedProfile(profile);
+    setAllowReferencing(profile?.allowReferencing || false);
+  };
+
+  const handleToggleReferencing = async (checked) => {
+    if (!selectedProfile) return;
+
+    const previousState = allowReferencing;
+    setAllowReferencing(checked);
+
+    try {
+      await updateMemberSettings(selectedProfile.id || selectedProfile._id, {
+        allowReferencing: checked,
+      });
+      message.success(
+        `Referencing ${checked ? 'enabled' : 'disabled'} successfully!`,
+      );
+      // Update the profile in the list
+      setProfiles((prev) =>
+        prev.map((p) =>
+          (p.id || p._id) === (selectedProfile.id || selectedProfile._id)
+            ? { ...p, allowReferencing: checked }
+            : p,
+        ),
+      );
+    } catch (error) {
+      setAllowReferencing(previousState);
+      message.error('Failed to update referencing preference');
+    }
   };
 
   const mcpConfig = {
@@ -190,6 +224,38 @@ const EngageGPTMCP = () => {
             </p>
           </div>
 
+          <div className="space-y-4">
+            <h2 className="text-lg geist font-semibold text-gray-800 flex items-center gap-2">
+              <Icons.Share size={20} className="text-purple-500" />
+              User Content Sharing
+            </h2>
+            <div className="bg-white border border-gray-100 p-6 rounded-2xl shadow-sm space-y-4">
+              <div className="flex items-center justify-between">
+                <div className="space-y-1">
+                  <p className="text-sm font-semibold text-gray-800 geist m-0">
+                    Allow Referencing
+                  </p>
+                  <p className="text-xs text-gray-400 m-0">
+                    Let others use your top posts as references to create new
+                    posts
+                  </p>
+                </div>
+                <div
+                  onClick={() => handleToggleReferencing(!allowReferencing)}
+                  className={`w-12 h-6 rounded-full p-1 cursor-pointer transition-colors duration-200 ease-in-out ${
+                    allowReferencing ? 'bg-blue-600' : 'bg-gray-200'
+                  }`}
+                >
+                  <div
+                    className={`w-4 h-4 rounded-full bg-white shadow-sm transform transition-transform duration-200 ease-in-out ${
+                      allowReferencing ? 'translate-x-6' : 'translate-x-0'
+                    }`}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
           <button
             onClick={() => setIsModalOpen(true)}
             className="text-blue-600 hover:text-blue-700 text-sm font-medium flex items-center gap-1.5 transition-colors underline-offset-4 hover:underline"
@@ -222,6 +288,24 @@ const EngageGPTMCP = () => {
                   "Using my writing persona from EngageGPT, draft a new LinkedIn
                   post about the impact of AI on specialized software
                   engineering careers."
+                </p>
+              </div>
+
+              <div className="bg-white p-4 rounded-xl shadow-sm border border-purple-50 relative group">
+                <button
+                  onClick={() =>
+                    copyToClipboard(
+                      'Search for top authors in EngageGPT and use the posts of [Author Name] as a reference to write a post about [Topic].',
+                      'Prompt',
+                    )
+                  }
+                  className="absolute right-3 top-3 p-1.5 text-gray-400 hover:text-purple-600 transition-colors"
+                >
+                  <Icons.Copy size={16} />
+                </button>
+                <p className="text-gray-700 text-sm italic pr-8 m-0 p-0">
+                  "Search for top authors in EngageGPT and use the posts of
+                  [Author Name] as a reference to write a post about [Topic]."
                 </p>
               </div>
             </div>
