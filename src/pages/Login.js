@@ -10,6 +10,7 @@ import { goTo } from '@utils/navigator';
 import { useNotifications } from '@components/Common/Notification';
 import { setAuthTokenAction } from '@redux/auth/authActions';
 import { useLocation } from 'react-router-dom';
+import fahhhhAudio from '@assets/audio/fahhhhh.mp3';
 
 const Login = () => {
   useAuthCheck();
@@ -75,8 +76,9 @@ const Login = () => {
         goTo(`/dashboard`);
         message.success('Login successful!');
       }
-
     } catch (error) {
+      const audio = new Audio(fahhhhAudio);
+      audio.play().catch((e) => console.error('Error playing audio:', e));
       message.error(error.message || 'Login failed.');
     } finally {
       setIsLoading(false);
